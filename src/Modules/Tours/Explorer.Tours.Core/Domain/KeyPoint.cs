@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using Explorer.BuildingBlocks.Core.Domain;
-namespace Explorer.Tours.Core.Domain
+
+namespace Explorer.Tours.Core.Domain;
+public class KeyPoint : Entity
 {
-    public class KeyPoint : Entity
-    {
         public string Name { get; private set; }
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }
@@ -18,7 +12,7 @@ namespace Explorer.Tours.Core.Domain
 
         public KeyPoint(string name, double longitude, double latitude, string description, string image)
         {
-            ValidateArguments(name, longitude, latitude, description, image);
+            Validate(name, longitude, latitude, description, image);
             Name = name;
             Longitude = longitude;
             Latitude = latitude;
@@ -28,7 +22,7 @@ namespace Explorer.Tours.Core.Domain
             
         }
 
-        public void ValidateArguments(string name, double longitude, double latitude, string description, string image)
+        public void Validate(string name, double longitude, double latitude, string description, string image)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Invalid Description.");
@@ -38,5 +32,5 @@ namespace Explorer.Tours.Core.Domain
         }
 
 
-    }
 }
+
