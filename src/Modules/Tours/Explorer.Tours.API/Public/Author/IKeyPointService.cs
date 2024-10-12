@@ -2,7 +2,7 @@
 using FluentResults;
 
 
-namespace Explorer.Tours.API.Public.Administration;
+namespace Explorer.Tours.API.Public.Author;
 
 public interface IKeyPointService
 {

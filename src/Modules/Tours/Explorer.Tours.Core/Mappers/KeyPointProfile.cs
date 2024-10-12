@@ -6,8 +6,9 @@ namespace Explorer.Tours.Core.Mappers;
 
 public class KeyPointProfile : Profile
 {
-    public KeyPointProfile() { 
-    
+    public KeyPointProfile()
+    {
+
         CreateMap<KeyPointDto, KeyPoint>().ReverseMap();
     }
 }
