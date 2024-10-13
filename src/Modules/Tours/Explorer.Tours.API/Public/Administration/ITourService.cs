@@ -13,7 +13,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result <TourDto> Create (TourDto dto);
 
         Result <List<TourDto>> GetByUserId (long userId);
-        Result<TourDto> AddEquipmentToTour(TourDto dto, long equipmentId);
-        Result<TourDto> RemoveEquipmentFromTour(TourDto dto, long equipmentId);
+        Result AddEquipmentToTour(long tourId, long equipmentId);
+        Result RemoveEquipmentFromTour(long tourId, long equipmentId);
     }
 }
