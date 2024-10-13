@@ -22,6 +22,8 @@ namespace Explorer.Tours.API.Dtos
 
         public List<long> KeyPointIds { get; set; }
 
+        public TourDto() { }
+
         public TourDto(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
