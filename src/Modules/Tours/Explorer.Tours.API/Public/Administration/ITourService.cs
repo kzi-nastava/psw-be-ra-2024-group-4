@@ -13,5 +13,9 @@ namespace Explorer.Tours.API.Public.Administration
         Result <TourDto> Create (TourDto dto);
 
         Result <List<TourDto>> GetByUserId (long userId);
+
+        Result<TourDto> Get(int id);
+
+        Result<TourDto> AddKeyPoint(int tourId, long keyPointId);
     }
 }

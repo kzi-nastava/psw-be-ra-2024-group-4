@@ -23,5 +23,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .Where(t => t.UserId == userId)
                          .ToList();
         }
+
+        public Tour GetById(long tourId)
+        {
+            return (Tour)_dbContext.Tour.Where(t => t.Id == tourId);
+        }
     }
 }

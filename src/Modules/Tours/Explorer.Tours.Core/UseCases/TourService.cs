@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TourStatus = Explorer.Tours.API.Dtos.TourStatus;
 using TourTags = Explorer.Tours.API.Dtos.TourTags;
 
 namespace Explorer.Tours.Core.UseCases
@@ -41,14 +42,56 @@ namespace Explorer.Tours.Core.UseCases
                     Name = t.Name,
                     Description = t.Description,
                     Difficulty = t.Difficulty,
-                    Tags = t.Tags.Select(tag => (TourTags)tag).ToList(),  
-                    UserId = t.UserId
+                    Tags = t.Tags.Select(tag => (TourTags)tag).ToList(),
+                    UserId = t.UserId,
+                    Status = (TourStatus)t.Status,
+                    Price = t.Price,
+                    EquipmentIds = t.EquipmentIds,
+                    KeyPointIds = t.KeyPointIds,
+
+
 
                 }).ToList();
 
                 return Result.Ok(tourDtos);
 
             }
+        }
+
+        public Result<TourDto> AddKeyPoint(long tourId, long keyPointId)
+        {
+            var tour = _tourRepository.GetById(tourId);
+            
+
+            if(tour == null)
+            {
+                return Result.Fail<TourDto>("No tour found.");
+
+            }
+
+            var tourDto = new TourDto
+            {
+                Name = tour.Name,
+                Description = tour.Description,
+                Difficulty = tour.Difficulty,
+                Tags = tour.Tags.Select(tag => (TourTags)tag).ToList(),
+                UserId = tour.UserId,
+                Status = (TourStatus)tour.Status,
+                Price = tour.Price,
+                EquipmentIds = tour.EquipmentIds,
+                KeyPointIds = tour.KeyPointIds
+               
+
+
+            };
+
+
+            if(!tourDto.KeyPointIds.Contains(keyPointId))
+                tourDto.KeyPointIds.Add(keyPointId);
+
+            return Update(tourDto);
+
+
         }
     }
 }
