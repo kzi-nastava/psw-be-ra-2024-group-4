@@ -51,7 +51,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         }
 
         [HttpGet("getbyid/{id:int}")]
-        public ActionResult<List<KeyPointDto>> GetAll(int id)
+        public ActionResult<KeyPointDto> GetById(int id)
         {
             var result = _keyPointService.Get(id);
             return CreateResponse(result);
