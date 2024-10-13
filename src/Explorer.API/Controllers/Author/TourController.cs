@@ -29,18 +29,19 @@ namespace Explorer.API.Controllers.Author
             var result = _tourService.GetByUserId(id);
             return CreateResponse(result);
         }
-
-        [HttpPost("{tourId:int}/equipment/{equipmentId:int}/add")]
-        public ActionResult<TourDto> AddEquipmentToTour([FromBody] TourDto tour, int equipmentId)
+        
+        [HttpPost("{tourId:int}/equipment/{equipmentId:int}")]
+        public ActionResult AddEquipmentToTour(int tourId, int equipmentId)
         {
-            var result = _tourService.AddEquipmentToTour(tour, equipmentId);
+            var result = _tourService.AddEquipmentToTour(tourId, equipmentId);
             return CreateResponse(result);
         }
+        
 
-        [HttpPut("{tourId:int}/equipment/{equipmentId:int}/remove")]
-        public ActionResult<TourDto> RemoveEquipmentFromTour([FromBody] TourDto tour, int equipmentId)
+        [HttpDelete("{tourId:int}/equipment/{equipmentId:int}")]
+        public ActionResult RemoveEquipmentFromTour(int tourId, int equipmentId)
         {
-            var result = _tourService.RemoveEquipmentFromTour(tour, equipmentId);
+            var result = _tourService.RemoveEquipmentFromTour(tourId, equipmentId);
             return CreateResponse(result);
         }
     }
