@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Author;
+using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.Core.Domain;
 
-namespace Explorer.Tours.Core.UseCases.Author;
+namespace Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 
 public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointService
 {
