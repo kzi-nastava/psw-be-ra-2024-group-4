@@ -29,5 +29,19 @@ namespace Explorer.API.Controllers.Author
             var result = _tourService.GetByUserId(id);
             return CreateResponse(result);
         }
+
+        [HttpPost("{tourId:int}/equipment/{equipmentId:int}/add")]
+        public ActionResult<TourDto> AddEquipmentToTour([FromBody] TourDto tour, int equipmentId)
+        {
+            var result = _tourService.AddEquipmentToTour(tour, equipmentId);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("{tourId:int}/equipment/{equipmentId:int}/remove")]
+        public ActionResult<TourDto> RemoveEquipmentFromTour([FromBody] TourDto tour, int equipmentId)
+        {
+            var result = _tourService.RemoveEquipmentFromTour(tour, equipmentId);
+            return CreateResponse(result);
+        }
     }
 }
