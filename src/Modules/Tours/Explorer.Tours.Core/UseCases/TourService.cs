@@ -50,5 +50,30 @@ namespace Explorer.Tours.Core.UseCases
 
             }
         }
+
+        public Result<TourDto> AddEquipmentToTour(TourDto tour, long equipmentId)
+        {
+            if (tour != null)
+            {
+                tour.EquipmentIds.Add(equipmentId);
+                Update(tour);
+                return Result.Ok(tour);
+            }
+            else
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(new KeyNotFoundException().Message);
+            }
+        }
+
+        public Result<TourDto> RemoveEquipmentFromTour(TourDto tour, long equipmentId)
+        {
+            if (tour != null)
+            {
+                tour.EquipmentIds.Remove(equipmentId);
+                Update(tour);
+            }
+
+            return tour;
+        }
     }
 }
