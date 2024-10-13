@@ -10,4 +10,8 @@ public interface IKeyPointService
     Result<KeyPointDto> Update(KeyPointDto keyPointDto);
     Result Delete(int id);
 
+    Result<List<KeyPointDto>> GetByUserId(long userId);
+
+    Result<KeyPointDto> Get(int id);
+
 }

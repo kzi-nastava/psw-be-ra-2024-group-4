@@ -9,6 +9,4 @@ public class KeyPointDto
     public string Image { get; set; }
     public long UserId { get; set; }
 
-    public long TourId { get; set; }
-
 }

@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
+using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,20 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         public ActionResult Delete(int id)
         {
             var result = _keyPointService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("getbyuser/{userId:long}")]
+        public ActionResult<List<KeyPointDto>> GetAllByUserId(long userId)
+        {
+            var result = _keyPointService.GetByUserId(userId);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("getbyid/{id:int}")]
+        public ActionResult<List<KeyPointDto>> GetAll(int id)
+        {
+            var result = _keyPointService.Get(id);
             return CreateResponse(result);
         }
 
