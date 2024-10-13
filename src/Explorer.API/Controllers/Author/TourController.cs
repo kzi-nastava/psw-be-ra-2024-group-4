@@ -30,7 +30,7 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }
 
-        [HttpPost("{id:int}/keypointaddition/{keypointid:int")]
+        [HttpPost("{id:int}/keypointaddition/{keypointid:int}")]
         public ActionResult<TourDto> AddKeyPoint(int id, int keypointid)
         {
             var result = _tourService.AddKeyPoint(id, keypointid);
