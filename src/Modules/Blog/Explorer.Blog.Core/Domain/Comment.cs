@@ -15,15 +15,15 @@ namespace Explorer.Blog.Core.Domain;
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set;}
         public long UserId { get; private set; }
-        public long BlogId { get; private set; }
+        public long PostId { get; private set; }
 
-    public Comment(string text, DateTime createdAt, DateTime? updatedAt, long userId, long blogId)
+    public Comment(string text, DateTime createdAt, DateTime? updatedAt, long userId, long postId)
     {
         Text = text;
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
         UserId = userId;
-        BlogId = blogId;
+        PostId = postId;
         Validate();
     }
     private void Validate() {
@@ -32,7 +32,7 @@ namespace Explorer.Blog.Core.Domain;
         if (CreatedAt == default(DateTime)) throw new ArgumentException("Invalid CreatedAt date");
         if (UpdatedAt == default(DateTime)) throw new ArgumentException("Invalid UpdatedAt date");
         if (UserId == 0) throw new ArgumentException("Invalid UserId.");
-        if (BlogId == 0) throw new ArgumentException("Invalid BlogId.");
+        if (PostId == 0) throw new ArgumentException("Invalid PostId.");
     }
 }
 
