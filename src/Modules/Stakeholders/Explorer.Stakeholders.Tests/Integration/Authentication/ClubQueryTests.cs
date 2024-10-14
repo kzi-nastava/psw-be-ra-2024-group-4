@@ -27,7 +27,7 @@ public class ClubQueryTests : BaseStakeholdersIntegrationTest
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
 
-        // Act
+        
         var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<ClubDto>;
 
         // Assert
@@ -42,6 +42,8 @@ public class ClubQueryTests : BaseStakeholdersIntegrationTest
         {
             ControllerContext = BuildContext("-1")
         };
+
+
     }
 }
 
