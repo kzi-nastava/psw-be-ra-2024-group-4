@@ -23,7 +23,7 @@ namespace Explorer.API.Controllers.Person2
             return CreateResponse(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{userId:int}")]
         public ActionResult<AppReviewDto> Update([FromBody] AppReviewDto appReview)
         {
             var result = _appReviewService.Update(appReview);
