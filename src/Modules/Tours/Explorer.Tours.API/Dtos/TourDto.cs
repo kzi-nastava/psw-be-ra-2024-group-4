@@ -8,6 +8,7 @@ namespace Explorer.Tours.API.Dtos
 {
     public class TourDto
     {
+        public long Id { get; set; }    
         public string Name { get; set; }
         public string? Description { get; set; }
 
@@ -24,8 +25,9 @@ namespace Explorer.Tours.API.Dtos
 
         public TourDto() { }
 
-        public TourDto(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, List<long> eq, List<long> kp) 
         {
+            Id = id;
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
             Description = description;
@@ -38,8 +40,8 @@ namespace Explorer.Tours.API.Dtos
             UserId = userId;
             Status = TourStatus.Draft;
             Price = 0;
-            EquipmentIds = new List<long>();
-            KeyPointIds = new List<long>();
+            EquipmentIds = eq;
+            KeyPointIds = kp;
         }
     }
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Author
 {
-    [Authorize(Policy = "authorPolicy")]
+   // [Authorize(Policy = "authorPolicy")]
     [Route("api/author/tour")]
     public class TourController : BaseApiController
     {
@@ -24,7 +24,7 @@ namespace Explorer.API.Controllers.Author
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<List<EquipmentDto>> GetAllByUserId(int id)
+        public ActionResult<List<TourDto>> GetAllByUserId(int id)
         {
             var result = _tourService.GetByUserId(id);
             return CreateResponse(result);
