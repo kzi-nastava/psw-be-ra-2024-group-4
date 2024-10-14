@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.API.Dtos;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 
 namespace Explorer.API.Controllers.Person2
 {
@@ -15,6 +17,13 @@ namespace Explorer.API.Controllers.Person2
             _appReviewService = appReviewService;
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult<AppReviewDto> Get(int id) 
+        {
+            var result = _appReviewService.Get(id);
+            return CreateResponse(result);
+        }
+
 
         [HttpPost]
         public ActionResult<AppReviewDto> Create([FromBody] AppReviewDto appReview)
@@ -23,7 +32,7 @@ namespace Explorer.API.Controllers.Person2
             return CreateResponse(result);
         }
 
-        [HttpPut("{userId:int}")]
+        [HttpPut("{id:int}")]
         public ActionResult<AppReviewDto> Update([FromBody] AppReviewDto appReview)
         {
             var result = _appReviewService.Update(appReview);

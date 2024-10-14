@@ -18,6 +18,7 @@ public class StakeholdersContext : DbContext
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
         ConfigureStakeholder(modelBuilder);
+        ConfigureAppReview(modelBuilder);
     }
 
     private static void ConfigureStakeholder(ModelBuilder modelBuilder)
@@ -26,5 +27,13 @@ public class StakeholdersContext : DbContext
             .HasOne<User>()
             .WithOne()
             .HasForeignKey<Person>(s => s.UserId);
+    }
+
+    private static void ConfigureAppReview(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AppReview>()
+            .HasOne<User>() 
+            .WithOne() 
+            .HasForeignKey<AppReview>(ar => ar.UserId); 
     }
 }
