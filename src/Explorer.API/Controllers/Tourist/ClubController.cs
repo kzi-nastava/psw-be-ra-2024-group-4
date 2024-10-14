@@ -32,9 +32,9 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<ClubDto> Update([FromBody] ClubDto equipment)
+        public ActionResult<ClubDto> Update([FromBody] ClubDto club)
         {
-            var result = _clubService.Update(equipment);
+            var result = _clubService.Update(club);
             return CreateResponse(result);
         }
 
