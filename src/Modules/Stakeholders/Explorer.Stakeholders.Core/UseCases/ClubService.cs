@@ -15,37 +15,40 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubService:CrudService<ClubDto,Club>,IClubService
     {
-        private readonly IClubRepository _clubRepository;
+       // private readonly IClubRepository _clubRepository;
         private readonly IUserRepository _userRepository;
-        public ClubService(ICrudRepository<Club> repository, IMapper mapper,IClubRepository clubRepository,IUserRepository userRepository) : base(repository, mapper) 
+        public ClubService(ICrudRepository<Club> repository, IMapper mapper,IUserRepository userRepository) : base(repository, mapper) 
         {
-            _clubRepository= clubRepository;
+            //_clubRepository= clubRepository;
             _userRepository= userRepository;
 
         }
-        //public  Result<ClubDto> Update(ClubDto clubDto, long userId)
+        //public Result<ClubDto> Update(ClubDto clubDto, long userId)
         //{
         //    var club = CrudRepository.Get(clubDto.Id);
-
-        //    // Check if the user is the owner of the club
         //    if (club.UserId != userId)
         //    {
         //        return Result.Fail("Only the owner can update the club.");
         //    }
 
-        //    return base.Update(clubDto); // Call the base method to perform the update
+        //    return base.Update(clubDto); 
         //}
 
-        //public Result<ClubDto> Create(ClubDto clubDto, long userId)
+        //public Result<ClubDto> Create(ClubDto clubDto, string username)
         //{
-        //    // Check if the user is a tourist
-        //    var user = _userRepository.GetActiveById(userId); // Assumes you have a method to get active user by ID
+        //    var user = _userRepository.GetActiveByName(username);
         //    if (user.Role != UserRole.Tourist)
         //    {
         //        return Result.Fail("Only tourists can create a club.");
         //    }
 
-        //    return base.Create(clubDto); // Call the base method to perform the create
+        //    return base.Create(clubDto); 
+        //}
+
+        //public Result<ClubDto> GetAll()
+        //{
+        //    var clubs= _clubRepository.GetAll();
+            
         //}
 
 

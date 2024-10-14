@@ -20,7 +20,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 
         public Club GetById(long clubId)
         {
-            //return (Club)_dbContext.Clubs.Where(c => c.Id == clubId);
             return _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
         }
 
