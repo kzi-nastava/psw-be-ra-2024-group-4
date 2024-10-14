@@ -12,17 +12,7 @@ namespace Explorer.Modules.Core.Domain
     {
         public int IdTour { get; private set; }
         public int IdTourist { get; private set; }
-        private int rating;
-        public int Rating
-        {
-            get { return rating; }
-            private set
-            {
-                if (value > 5 || value < 1)
-                    throw new ArgumentException("Invalid Rating.");
-                Rating = value;
-            }
-        }
+        public int Rating { get; private set; }
         public string Comment { get; private set; }
         public DateTime DateTour { get; private set; }
         public DateTime DateComment { get; private set; }

@@ -1,11 +1,11 @@
 ﻿using Explorer.Modules.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Public.Administration;
 using AutoMapper;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.API.Public.TourReviewing;
 
-namespace Explorer.Tours.Core.UseCases.Administration
+namespace Explorer.Tours.Core.UseCases.TourReviewing
 {
     public class TourReviewService : CrudService<TourReviewDto, TourReview>, ITourReviewService
     {
