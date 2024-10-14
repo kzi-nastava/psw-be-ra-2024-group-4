@@ -11,7 +11,7 @@ namespace Explorer.Stakeholders.API.Public
     public interface IPersonService
     {
         Result<PersonUpdateDto> Update(PersonUpdateDto personUpdate);
-
+        Result<PersonUpdateDto> Get(int id);
 
     }
 }
