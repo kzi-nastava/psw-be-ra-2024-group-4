@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<ClubJoinRequestDto> Update(ClubJoinRequestDto dto);
         Result<PagedResult<ClubJoinRequestDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
+        Result<List<ClubJoinRequestDto>> GetRequestsForClubMembers(int clubId);
     }
 }

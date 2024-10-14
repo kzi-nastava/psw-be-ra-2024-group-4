@@ -23,6 +23,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubJoinRequestService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+        [HttpGet("{clubId:int}")]
+        public ActionResult<PagedResult<ClubJoinRequestDto>> GetClubMembers([FromQuery] int page, [FromQuery] int pageSize, int clubId)
+        {
+            var result = _clubJoinRequestService.GetRequestsForClubMembers(clubId);
+            return CreateResponse(result);
+        }
         [HttpPost]
         public ActionResult<ClubJoinRequestDto> Create([FromBody] ClubJoinRequestDto dto)
         {
