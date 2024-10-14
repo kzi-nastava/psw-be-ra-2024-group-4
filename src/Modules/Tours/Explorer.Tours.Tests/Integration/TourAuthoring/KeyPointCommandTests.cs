@@ -29,7 +29,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var newEntity = new KeyPointDto
         {
-           
+            
             Name = "Test",
             Longitude = 2,
             Latitude = 2,
@@ -67,7 +67,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var updatedEntity = new KeyPointDto
         {
-            Id = 1,
+            Id = 4,
             Name = "TestUpdate",
             Longitude = 2,
             Latitude = 2,
