@@ -28,7 +28,7 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
             var newEntity = new TourDto
             {
-                Id = 5,
+                Id = -3,
                 Name = "Obuća za grub teren",
                 Description = "Patike sa tvrdim đonom i kramponima koje daju stabilnost na neravnom i rastresitom terenu.",
                 Difficulty = "Medium",

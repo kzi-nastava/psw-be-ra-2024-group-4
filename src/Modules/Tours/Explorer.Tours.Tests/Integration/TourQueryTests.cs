@@ -30,12 +30,11 @@ namespace Explorer.Tours.Tests.Integration
             var controller = CreateController(scope);
 
             // Act
-            var result = ((ObjectResult)controller.GetAllByUserId(1).Result)?.Value as PagedResult<TourDto>;
+            var result = ((ObjectResult)controller.GetAllByUserId(1).Result)?.Value as List<TourDto>;
 
             // Assert
             result.ShouldNotBeNull();
-            result.Results.Count.ShouldBe(1);
-            result.TotalCount.ShouldBe(1);
+            result.Count.ShouldBe(1);
         }
 
         private static TourController CreateController(IServiceScope scope)
