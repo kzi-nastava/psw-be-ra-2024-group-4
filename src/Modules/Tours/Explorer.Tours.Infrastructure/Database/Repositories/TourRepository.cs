@@ -24,9 +24,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ToList();
         }
 
-        public Tour GetById(long tourId)
+        public Tour GetSpecificTourByUser(long tourId, long userId)
         {
-            return (Tour)_dbContext.Tour.Where(t => t.Id == tourId);
+            return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
         }
     }
 }

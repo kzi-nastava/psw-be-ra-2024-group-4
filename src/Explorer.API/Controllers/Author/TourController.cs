@@ -24,16 +24,16 @@ namespace Explorer.API.Controllers.Author
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<List<EquipmentDto>> GetAllByUserId(int id)
+        public ActionResult<List<TourDto>> GetAllByUserId(int id)
         {
             var result = _tourService.GetByUserId(id);
             return CreateResponse(result);
         }
 
-        [HttpPost("{id:int}/keypointaddition/{keypointid:int}")]
-        public ActionResult<TourDto> AddKeyPoint(int id, int keypointid)
+        [HttpPost("{id:int}/keypointaddition/{keypointid:int}/{userid:int}")]
+        public ActionResult<TourDto> AddKeyPoint(int id, int keypointid, int userid)
         {
-            var result = _tourService.AddKeyPoint(id, keypointid);
+            var result = _tourService.AddKeyPoint(id, keypointid, userid);
             return CreateResponse(result);
         }
     }

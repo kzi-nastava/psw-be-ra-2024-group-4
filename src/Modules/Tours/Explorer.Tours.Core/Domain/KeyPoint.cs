@@ -4,6 +4,7 @@ using Explorer.BuildingBlocks.Core.Domain;
 namespace Explorer.Tours.Core.Domain;
 public class KeyPoint : Entity
 {
+        
         public string Name { get; private set; }
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }

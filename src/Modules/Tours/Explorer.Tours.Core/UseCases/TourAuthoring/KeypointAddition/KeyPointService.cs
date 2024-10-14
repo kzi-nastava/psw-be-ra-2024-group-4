@@ -27,6 +27,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
 
             var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
             {
+                Id = kp.Id,
                 Name = kp.Name,
                 Longitude = kp.Longitude,
                 Latitude = kp.Latitude,

@@ -39,6 +39,7 @@ namespace Explorer.Tours.Core.UseCases
 
                 var tourDtos = tours.Select(t => new TourDto
                 {
+                    Id = t.Id,
                     Name = t.Name,
                     Description = t.Description,
                     Difficulty = t.Difficulty,
@@ -58,9 +59,9 @@ namespace Explorer.Tours.Core.UseCases
             }
         }
 
-        public Result<TourDto> AddKeyPoint(long tourId, long keyPointId)
+        public Result<TourDto> AddKeyPoint(long tourId, long keyPointId, long userId)
         {
-            var tour = _tourRepository.GetById(tourId);
+            var tour = _tourRepository.GetSpecificTourByUser(tourId, userId);
             
 
             if(tour == null)
@@ -71,6 +72,7 @@ namespace Explorer.Tours.Core.UseCases
 
             var tourDto = new TourDto
             {
+                Id = tour.Id,
                 Name = tour.Name,
                 Description = tour.Description,
                 Difficulty = tour.Difficulty,
