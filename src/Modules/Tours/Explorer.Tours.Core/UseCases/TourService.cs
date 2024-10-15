@@ -70,9 +70,9 @@ namespace Explorer.Tours.Core.UseCases
 
             }
 
-            var tourDto = new TourDto
+           /* var tourDto = new TourDto
             {
-                
+                Id = tourId,
                 Name = tour.Name,
                 Description = tour.Description,
                 Difficulty = tour.Difficulty,
@@ -85,7 +85,8 @@ namespace Explorer.Tours.Core.UseCases
                
 
 
-            };
+            };*/
+           var tourDto = MapToDto(tour);
 
 
             if(!tourDto.KeyPointIds.Contains(keyPointId))
