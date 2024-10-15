@@ -18,13 +18,13 @@ namespace Explorer.Stakeholders.Core.UseCases
         private readonly IClubRepository _clubRepository;
         private readonly IUserRepository _userRepository;
 
-        private readonly IMapper _mapper;
+       
 
         public ClubService(ICrudRepository<Club> repository, IMapper mapper,IUserRepository userRepository, IClubRepository clubRepository) : base(repository, mapper) 
         {
             _clubRepository= clubRepository;
             _userRepository= userRepository;
-            this._mapper = mapper;
+            
 
         }
         //public Result<ClubDto> Update(ClubDto clubDto, long userId)
@@ -56,11 +56,11 @@ namespace Explorer.Stakeholders.Core.UseCases
         //}
 
 
-        public Result<ClubDto> RemoveMember(long memberId, int clubId)
+        public Result DeleteMember(long memberId, int clubId, int userId)
         {
             try
             {
-                // Pronađi odgovarajući klub
+                
                 var club = CrudRepository.Get(clubId);
                 if (club == null)
                 {
@@ -68,7 +68,12 @@ namespace Explorer.Stakeholders.Core.UseCases
                                  .WithError($"Club with ID {clubId} not found.");
                 }
 
-                // Pokušaj uklanjanja korisnika iz liste
+                if (club.UserId != userId)
+                {
+                    return Result.Fail(FailureCode.Forbidden)
+                                 .WithError("Only the owner of the club can remove members.");
+                }
+
                 bool removed = club.UserIds.Remove(memberId);
                 if (!removed)
                 {
@@ -76,16 +81,16 @@ namespace Explorer.Stakeholders.Core.UseCases
                                  .WithError($"Member with ID {memberId} not found in the club.");
                 }
 
-                // Ažuriraj klub u bazi podataka
+                
                 var updatedClub = CrudRepository.Update(club);
 
-                // Koristi instancu mapper-a za mapiranje
-                var clubDto = _mapper.Map<ClubDto>(updatedClub);
-                return Result.Ok(clubDto);
+               
+               // var clubDto = _mapper.Map<ClubDto>(updatedClub);
+                return Result.Ok();
             }
             catch (Exception e)
             {
-                return Result.Fail<ClubDto>("Result failed");
+                return Result.Fail("Result failed");
             }
         }
 

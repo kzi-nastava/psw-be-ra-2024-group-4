@@ -3,6 +3,7 @@ using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Explorer.Stakeholders.Core.UseCases;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -42,6 +43,13 @@ namespace Explorer.API.Controllers.Tourist
         public ActionResult Delete(int id)
         {
             var result = _clubService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpDelete("member/{memberId:long}/{clubId:int}/{userId:int}")]
+        public ActionResult DeleteMember(long memberId, int clubId, int userId)
+        {
+            var result = _clubService.DeleteMember(memberId,clubId, userId);
             return CreateResponse(result);
         }
     }
