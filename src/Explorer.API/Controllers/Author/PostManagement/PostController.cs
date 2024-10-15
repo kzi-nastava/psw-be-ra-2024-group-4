@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Explorer.API.Controllers.Author.BlogPosts
+namespace Explorer.API.Controllers.Author.PostManagement
 {
     [Authorize(Policy = "authorPolicy")]
-    [Route("api/blogposts/post")]
+    [Route("api/postmanagement/post")]
     public class PostController : BaseApiController
     {
         private readonly IPostService _postService;

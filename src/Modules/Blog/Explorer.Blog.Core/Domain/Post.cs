@@ -31,8 +31,7 @@ namespace Explorer.Blog.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(Title))throw new ArgumentException("Invalid Title");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
-            if (CreatedAt == default(DateTime))throw new ArgumentException("Invalid CreatedAt date");
-            if (string.IsNullOrWhiteSpace(ImageUrl))throw new ArgumentException("Invalid ImageUrl");
+            if (CreatedAt == default)throw new ArgumentException("Invalid CreatedAt date");
             if (!Enum.IsDefined(typeof(Status), Status)) throw new ArgumentException("Invalid Status");
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
         }
