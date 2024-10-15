@@ -19,7 +19,6 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 public class ClubQueryTests : BaseStakeholdersIntegrationTest
 {
     public ClubQueryTests(StakeholdersTestFactory factory) : base(factory) { }
-
     [Fact]
     public void Retrieves_all()
     {

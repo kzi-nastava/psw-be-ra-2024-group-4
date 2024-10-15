@@ -37,7 +37,6 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
             UserId = 12,
             UserIds = new List<long>()
         };
-
         // Act
         var result = ((ObjectResult)controller.Create(newEntity).Result)?.Value as ClubDto;
 
