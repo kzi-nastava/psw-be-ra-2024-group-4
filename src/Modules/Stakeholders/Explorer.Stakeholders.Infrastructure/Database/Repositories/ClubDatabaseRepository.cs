@@ -12,7 +12,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
     {
 
         private readonly StakeholdersContext _dbContext;
-
         public ClubDatabaseRepository(StakeholdersContext dbContext)
         {
             _dbContext = dbContext;

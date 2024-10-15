@@ -21,7 +21,6 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             _clubRepository= clubRepository;
             _userRepository= userRepository;
-
         }
     
 

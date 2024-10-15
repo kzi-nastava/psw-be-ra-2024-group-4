@@ -29,6 +29,7 @@ public static class StakeholdersStartup
         services.AddScoped<ITokenGenerator, JwtGenerator>();
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
+
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
