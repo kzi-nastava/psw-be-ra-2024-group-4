@@ -12,7 +12,6 @@ namespace Explorer.API.Controllers.Tourist
     {
 
         private readonly IClubInvitationService _clubInvitationService;
-
         public ClubInvitationController(IClubInvitationService clubInvitationService)
         {
             _clubInvitationService = clubInvitationService;
