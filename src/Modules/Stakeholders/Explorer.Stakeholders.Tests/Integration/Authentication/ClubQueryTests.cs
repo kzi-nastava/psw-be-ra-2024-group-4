@@ -34,6 +34,7 @@ public class ClubQueryTests : BaseStakeholdersIntegrationTest
         result.ShouldNotBeNull();
         result.Results.Count.ShouldBe(2);
         result.TotalCount.ShouldBe(2);
+
     }
 
     private static ClubController CreateController(IServiceScope scope)

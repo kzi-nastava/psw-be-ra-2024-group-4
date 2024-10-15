@@ -23,35 +23,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             _userRepository= userRepository;
 
         }
-        //public Result<ClubDto> Update(ClubDto clubDto, long userId)
-        //{
-        //    var club = CrudRepository.Get(clubDto.Id);
-        //    if (club.UserId != userId)
-        //    {
-        //        return Result.Fail("Only the owner can update the club.");
-        //    }
-
-        //    return base.Update(clubDto); 
-        //}
-
-        //public Result<ClubDto> Create(ClubDto clubDto, string username)
-        //{
-        //    var user = _userRepository.GetActiveByName(username);
-        //    if (user.Role != UserRole.Tourist)
-        //    {
-        //        return Result.Fail("Only tourists can create a club.");
-        //    }
-
-        //    return base.Create(clubDto); 
-        //}
-
-        //public Result<ClubDto> GetAll()
-        //{
-        //    var clubs= _clubRepository.GetAll();
-            
-        //}
-
-
+    
 
     }
 }
