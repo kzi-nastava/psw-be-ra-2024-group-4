@@ -41,7 +41,7 @@ public class KeyPointQueryTests : BaseToursIntegrationTest
     {
         return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>())
         {
-            ControllerContext = BuildContext("1")
+            ControllerContext = BuildContext("-1")
         };
     }
 }

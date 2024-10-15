@@ -16,10 +16,11 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
     public class KeyPointController : BaseApiController
     {
         private readonly IKeyPointService _keyPointService;
-
+     
         public KeyPointController(IKeyPointService keyPointService)
         {
             _keyPointService = keyPointService;
+           
         }
 
         [HttpPost]
@@ -40,6 +41,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         public ActionResult Delete(int id)
         {
             var result = _keyPointService.Delete(id);
+           
             return CreateResponse(result);
         }
 
