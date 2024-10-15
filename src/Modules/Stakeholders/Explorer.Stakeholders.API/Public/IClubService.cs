@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<ClubDto> Update(ClubDto dto);
         Result<PagedResult<ClubDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
+
     }
 }

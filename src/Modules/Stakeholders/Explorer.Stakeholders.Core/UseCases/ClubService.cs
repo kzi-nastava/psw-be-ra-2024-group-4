@@ -15,11 +15,11 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubService:CrudService<ClubDto,Club>,IClubService
     {
-       // private readonly IClubRepository _clubRepository;
+        private readonly IClubRepository _clubRepository;
         private readonly IUserRepository _userRepository;
-        public ClubService(ICrudRepository<Club> repository, IMapper mapper,IUserRepository userRepository) : base(repository, mapper) 
+        public ClubService(ICrudRepository<Club> repository, IMapper mapper,IUserRepository userRepository,IClubRepository clubRepository) : base(repository, mapper) 
         {
-            //_clubRepository= clubRepository;
+            _clubRepository= clubRepository;
             _userRepository= userRepository;
 
         }
