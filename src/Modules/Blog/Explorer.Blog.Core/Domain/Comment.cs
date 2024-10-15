@@ -13,11 +13,11 @@ namespace Explorer.Blog.Core.Domain;
     {
         public string Text { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set;}
+        public DateTime UpdatedAt { get; private set;}
         public long UserId { get; private set; }
         public long PostId { get; private set; }
 
-    public Comment(string text, DateTime createdAt, DateTime? updatedAt, long userId, long postId)
+    public Comment(string text, DateTime createdAt, DateTime updatedAt, long userId, long postId)
     {
         Text = text;
         CreatedAt = createdAt;
@@ -29,7 +29,7 @@ namespace Explorer.Blog.Core.Domain;
     private void Validate() {
 
         if (string.IsNullOrWhiteSpace(Text)) throw new ArgumentException("Invalid Text.");
-        if (CreatedAt == default(DateTime)) throw new ArgumentException("Invalid CreatedAt date");
+        if (CreatedAt >= DateTime.UtcNow) throw new ArgumentException("Invalid CreatedAt date");
         if (UpdatedAt == default(DateTime)) throw new ArgumentException("Invalid UpdatedAt date");
         if (UserId == 0) throw new ArgumentException("Invalid UserId.");
         if (PostId == 0) throw new ArgumentException("Invalid PostId.");
