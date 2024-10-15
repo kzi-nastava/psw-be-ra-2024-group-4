@@ -72,7 +72,7 @@ namespace Explorer.Tours.Core.UseCases
 
             var tourDto = new TourDto
             {
-                Id = tour.Id,
+                
                 Name = tour.Name,
                 Description = tour.Description,
                 Difficulty = tour.Difficulty,
