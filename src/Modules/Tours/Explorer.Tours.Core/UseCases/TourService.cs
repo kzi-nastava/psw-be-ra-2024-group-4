@@ -21,8 +21,10 @@ namespace Explorer.Tours.Core.UseCases
         //Posto koleginica zavisi od toga kad cu ja zavrsiti ja cu predati sada.
 
         ITourRepository _tourRepository { get; set; }
+        IMapper _mapper { get; set; }
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) {
             _tourRepository = tourRepository;
+            _mapper = mapper;
         }
 
         public Result<List<TourDto>> GetByUserId(long userId)
@@ -42,13 +44,21 @@ namespace Explorer.Tours.Core.UseCases
                     Description = t.Description,
                     Difficulty = t.Difficulty,
                     Tags = t.Tags.Select(tag => (TourTags)tag).ToList(),  
-                    UserId = t.UserId
-
+                    UserId = t.UserId,
+                    EquipmentIds = t.EquipmentIds  
                 }).ToList();
 
                 return Result.Ok(tourDtos);
 
             }
+        }
+
+        public Result<PagedResult<EquipmentDto>> GetEquipment(long tourId)
+        {
+            var equipment = _tourRepository.GetEquipment(tourId);
+            var result = new PagedResult<Equipment>(equipment, equipment.Count);
+            var items = result.Results.Select(_mapper.Map<EquipmentDto>).ToList();
+            return new PagedResult<EquipmentDto>(items, result.TotalCount);
         }
 
         public Result AddEquipmentToTour(long tourId, long equipmentId)

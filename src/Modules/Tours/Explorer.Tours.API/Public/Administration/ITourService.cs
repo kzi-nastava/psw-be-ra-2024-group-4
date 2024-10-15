@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result <TourDto> Create (TourDto dto);
 
         Result <List<TourDto>> GetByUserId (long userId);
+        Result<PagedResult<EquipmentDto>> GetEquipment(long tourId); 
         Result AddEquipmentToTour(long tourId, long equipmentId);
         Result RemoveEquipmentFromTour(long tourId, long equipmentId);
     }

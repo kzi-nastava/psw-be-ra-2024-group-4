@@ -25,6 +25,24 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ToList();
         }
 
+        public List<Equipment> GetEquipment(long tourId) 
+        {
+            var tour = _dbContext.Tour
+                .FirstOrDefault(t => t.Id == tourId); 
+
+            if (tour == null)
+            {
+                return new List<Equipment>(); 
+            }
+
+            var equipmentList = _dbContext.Equipment
+                .Where(e => tour.EquipmentIds.Contains(e.Id)) 
+                .ToList();
+
+            return equipmentList;
+        }
+
+
         public void AddEquipmentToTour(long tourId, long equipmentId)
         {
             var tour = _dbContext.Tour

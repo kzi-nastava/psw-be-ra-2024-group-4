@@ -29,7 +29,14 @@ namespace Explorer.API.Controllers.Author
             var result = _tourService.GetByUserId(id);
             return CreateResponse(result);
         }
-        
+
+        [HttpGet("tourEquipment/{tourId:int}")] 
+        public ActionResult GetEquipment(int tourId)
+        {
+            var result = _tourService.GetEquipment(tourId);
+            return CreateResponse(result);
+        }
+
         [HttpPost("{tourId:int}/equipment/{equipmentId:int}")]
         public ActionResult AddEquipmentToTour(int tourId, int equipmentId)
         {

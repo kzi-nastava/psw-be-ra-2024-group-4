@@ -4,7 +4,7 @@ using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Administrator.Administration
+namespace Explorer.API.Controllers.Author
 {
     [Route("api/author/equipment")]
     public class EquipmentControllerAuthor : BaseApiController
@@ -22,6 +22,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _equipmentService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+
 
         [HttpPost]
         public ActionResult<EquipmentDto> Create([FromBody] EquipmentDto equipment)
