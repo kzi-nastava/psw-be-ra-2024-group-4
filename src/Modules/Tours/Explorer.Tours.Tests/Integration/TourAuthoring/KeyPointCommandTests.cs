@@ -29,7 +29,6 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var newEntity = new KeyPointDto
         {
-            Id = 4,
             Name = "Test",
             Longitude = 2,
             Latitude = 2,
@@ -67,7 +66,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var updatedEntity = new KeyPointDto
         {
-            Id=1,
+            Id=-1,
             Name = "TestUpdate",
             Longitude = 2,
             Latitude = 2,
@@ -81,7 +80,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.Id.ShouldBe(1);
+        result.Id.ShouldBe(-1);
         result.Name.ShouldBe(updatedEntity.Name);
         result.Longitude.ShouldBe(updatedEntity.Longitude);
         result.Latitude.ShouldBe(updatedEntity.Latitude);
@@ -107,14 +106,14 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
         // Act
-        var result = (OkResult)controller.Delete(3);
+        var result = (OkResult)controller.Delete(-3);
 
         // Assert - Response
         result.ShouldNotBeNull();
         result.StatusCode.ShouldBe(200);
 
         // Assert - Database
-        var storedCourse = dbContext.KeyPoints.FirstOrDefault(i => i.Id == 3);
+        var storedCourse = dbContext.KeyPoints.FirstOrDefault(i => i.Id == -3);
         storedCourse.ShouldBeNull();
     }
 
@@ -123,7 +122,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
     {
         return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>())
         {
-            ControllerContext = BuildContext("1")
+            ControllerContext = BuildContext("-1")
         };
     }
 }
