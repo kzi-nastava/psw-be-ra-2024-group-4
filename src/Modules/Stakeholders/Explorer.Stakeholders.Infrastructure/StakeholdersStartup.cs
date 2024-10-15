@@ -32,6 +32,7 @@ public static class StakeholdersStartup
         services.AddScoped<IClubJoinRequestService, ClubJoinRequestService>();
     }
 
+
     private static void SetupInfrastructure(IServiceCollection services)
     {
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));

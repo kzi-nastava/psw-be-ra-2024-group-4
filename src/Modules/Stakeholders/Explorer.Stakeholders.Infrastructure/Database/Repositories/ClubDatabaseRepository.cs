@@ -23,6 +23,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
         }
 
+
         public List<Club> GetAll()
         {
             return _dbContext.Clubs.ToList();

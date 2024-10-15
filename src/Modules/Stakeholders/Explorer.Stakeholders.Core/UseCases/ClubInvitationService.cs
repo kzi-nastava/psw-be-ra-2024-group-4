@@ -18,5 +18,5 @@ namespace Explorer.Stakeholders.Core.UseCases
         public ClubInvitationService(ICrudRepository<ClubInvitation> repository, IMapper mapper) : base(repository, mapper) { }
     
     }
-    
+   
 }

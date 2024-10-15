@@ -28,9 +28,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return clubInvitation;
         }
 
-        public List<Club> GetAll()
-        {
-            return _dbContext.Clubs.ToList();
-        }
+       
+
     }
 }
