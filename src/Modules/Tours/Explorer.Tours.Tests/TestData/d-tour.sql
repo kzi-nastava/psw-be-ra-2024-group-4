@@ -26,6 +26,6 @@ VALUES (
     0,
     0,
     2, 
-    ARRAY[]::integer[], 
+    ARRAY[-3, -1]::integer[], 
     ARRAY[]::integer[]
 );

@@ -37,6 +37,22 @@ namespace Explorer.Tours.Tests.Integration
             result.Count.ShouldBe(1);
         }
 
+        [Fact]
+        public void Retrieve_tour_equipment()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+
+            // Act
+            var result = ((ObjectResult)controller.GetEquipment(tourId: -2))?.Value as PagedResult<EquipmentDto>;
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Results.Count.ShouldBe(2);
+            result.TotalCount.ShouldBe(2);
+        }
+
         private static TourController CreateController(IServiceScope scope)
         {
             return new TourController(scope.ServiceProvider.GetRequiredService<ITourService>())
