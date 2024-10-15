@@ -30,14 +30,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubService.Create(club);
             return CreateResponse(result);
         }
-
         [HttpPut("{id:int}")]
         public ActionResult<ClubDto> Update([FromBody] ClubDto club)
         {
             var result = _clubService.Update(club);
             return CreateResponse(result);
         }
-
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
