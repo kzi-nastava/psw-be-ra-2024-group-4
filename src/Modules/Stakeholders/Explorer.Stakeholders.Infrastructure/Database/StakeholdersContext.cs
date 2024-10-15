@@ -30,6 +30,4 @@ public class StakeholdersContext : DbContext
             .HasForeignKey<Person>(s => s.UserId);
     }
 
-
-
 }

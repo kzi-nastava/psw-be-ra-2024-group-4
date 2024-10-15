@@ -16,6 +16,7 @@ namespace Explorer.Stakeholders.Core.UseCases
     public class ClubInvitationService : CrudService<ClubInvitationDto, ClubInvitation>, IClubInvitationService
     {
         public ClubInvitationService(ICrudRepository<ClubInvitation> repository, IMapper mapper) : base(repository, mapper) { }
+    
     }
     
 }

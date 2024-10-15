@@ -84,8 +84,6 @@ namespace Explorer.Stakeholders.Core.UseCases
                 
                 var updatedClub = CrudRepository.Update(club);
 
-               
-               // var clubDto = _mapper.Map<ClubDto>(updatedClub);
                 return Result.Ok();
             }
             catch (Exception e)

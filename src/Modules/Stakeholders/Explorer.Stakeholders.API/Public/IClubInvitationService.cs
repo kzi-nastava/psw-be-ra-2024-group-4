@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<ClubInvitationDto> Create(ClubInvitationDto invitation);
         Result<ClubInvitationDto> Update(ClubInvitationDto invitation);
         Result Delete(int id);
+
     }
 }
