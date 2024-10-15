@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.ObjectAddition;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,13 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
         public ObjectController(IObjectService objectService)
         {
             _objectService = objectService;
+        }
+
+        [HttpGet]
+        public ActionResult<PagedResult<ObjectDTO>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        { 
+            var result = _objectService.GetPaged(page, pageSize);
+            return CreateResponse(result);
         }
 
         [HttpPost]
