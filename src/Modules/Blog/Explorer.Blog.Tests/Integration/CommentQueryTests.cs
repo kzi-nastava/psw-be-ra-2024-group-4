@@ -29,7 +29,7 @@ namespace Explorer.Blog.Tests.Integration
             var controller = CreateController(scope);
 
             // Act
-            var result = ((ObjectResult)controller.GetAll(0, 0).Result)?.Value as PagedResult<CommentDto>;
+            var result = ((ObjectResult)controller.GetAll(1,0, 0).Result)?.Value as PagedResult<CommentDto>;
 
             // Assert
             result.ShouldNotBeNull();

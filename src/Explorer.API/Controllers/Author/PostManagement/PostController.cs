@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Explorer.API.Controllers.Author.PostManagement
 {
-    [Authorize(Policy = "authorPolicy")]
+   // [Authorize(Policy = "authorPolicy")]
     [Route("api/postmanagement/post")]
     public class PostController : BaseApiController
     {
