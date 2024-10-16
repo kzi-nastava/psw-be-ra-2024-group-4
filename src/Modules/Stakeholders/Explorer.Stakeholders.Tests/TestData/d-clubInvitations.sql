@@ -6,4 +6,4 @@ INSERT INTO stakeholders."ClubInvitations"(
 VALUES (2, 2, 2, 0);
 INSERT INTO stakeholders."ClubInvitations"(
     "Id", "ClubId", "MemberId", "Status")
-VALUES (3, 3, 3, 0); 
+VALUES (3, 3, 3, 0);  

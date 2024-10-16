@@ -13,7 +13,6 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
     {
         public ClubInvitationCommandTests(StakeholdersTestFactory factory) : base(factory) { }
 
-
         [Fact]
         public void Creates()
         {

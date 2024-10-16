@@ -28,5 +28,6 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
                 club.UserIds.ShouldNotContain(userIdToRemove);  // Id ne bi trebao da postoji u listi
             }
         
+
     }
 }
