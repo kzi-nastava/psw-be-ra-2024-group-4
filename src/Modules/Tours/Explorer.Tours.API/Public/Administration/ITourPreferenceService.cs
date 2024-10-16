@@ -9,7 +9,7 @@ using FluentResults;
 namespace Explorer.Tours.API.Public.Administration {
     public interface ITourPreferenceService {
 
-        Result <TourPreferenceDto> GetTourPreferenceAsync(int touristId);
-        Result UpdateTourPreferenceAsync(int touristId, TourPreferenceDto preference);
+        Result <TourPreferenceDto> GetTourPreference(int touristId);
+        Result UpdateTourPreference(int touristId, TourPreferenceDto preference);
     }
 }
