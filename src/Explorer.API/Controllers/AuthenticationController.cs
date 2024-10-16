@@ -1,4 +1,4 @@
-﻿using Explorer.Stakeholders.API.Dtos;
+﻿ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Mvc;
 

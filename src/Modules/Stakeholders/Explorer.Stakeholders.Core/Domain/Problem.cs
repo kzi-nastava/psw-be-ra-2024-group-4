@@ -12,13 +12,13 @@ namespace Explorer.Stakeholders.Core.Domain
 {
     public class Problem: Entity
     {
-        private long UserId { get; init; }
-        private long TourId { get; init; }
-        //private Category Catgory { get; set; }
-        private string Category { get; init; }
-        private string Description { get; init; }
-        private int Priority { get; set; }
-        private DateTime Time { get; set; }
+        public long UserId { get; init; }
+        public long TourId { get; init; }
+        //public Category Catgory { get; set; }
+        public string Category { get; init; }
+        public string Description { get; init; }
+        public int Priority { get; set; }
+        public DateTime Time { get; set; }
 
         public Problem(long userId, long tourId, string category, string description, int priority, DateTime time)
         {
@@ -31,7 +31,7 @@ namespace Explorer.Stakeholders.Core.Domain
             Validate();
         }
 
-        private void Validate()
+        public void Validate()
         {
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
             if (TourId == 0) throw new ArgumentException("Invalid TourId");
