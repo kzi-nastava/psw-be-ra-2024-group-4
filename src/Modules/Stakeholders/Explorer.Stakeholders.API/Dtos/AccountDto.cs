@@ -16,3 +16,4 @@ namespace Explorer.Stakeholders.API.Dtos
         public bool IsActive { get; set; }
     }
 }
+
