@@ -28,8 +28,11 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
             Email = "turistaA@gmail.com",
             Password = "turistaA",
             Name = "Žika",
-            Surname = "Žikić"
-        };
+            Surname = "Žikić",
+            ProfilePicture = "zikilepi",
+            Biography ="lepota",
+            Motto="zivot je lep"
+};
 
         // Act
         var authenticationResponse = ((ObjectResult)controller.RegisterTourist(account).Result).Value as AuthenticationTokensDto;
@@ -51,6 +54,9 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
         storedPerson.ShouldNotBeNull();
         storedPerson.UserId.ShouldBe(storedAccount.Id);
         storedPerson.Name.ShouldBe(account.Name);
+        //storedPerson.Biography.ShouldBe(account.Biography);
+        //storedPerson.ProfilePicture.ShouldBe(account.ProfilePicture);
+        //storedPerson.Motto.ShouldBe(account.Motto);
     }
 
     private static AuthenticationController CreateController(IServiceScope scope)

@@ -8,6 +8,7 @@ using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+using System.Xml.Linq;
 
 namespace Explorer.Stakeholders.Tests.Integration.PersonTests;
 
@@ -25,8 +26,8 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
         var updatedEntity = new PersonUpdateDto
         {
-            Id = 5,
-            UserId = 5,
+            Id = -11,
+            UserId = -11,
             Name = "string",
             Surname = "string",
             Email = "string@gmail.com",
@@ -61,36 +62,32 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         oldEntity.ShouldBeNull();
     }
 
-    //[Fact]
-    //public void GetById_Returns_CorrectPersonFromDatabase()
-    //{
-    //    // Arrange
-    //    using var scope = Factory.Services.CreateScope();
-    //    var controller = CreateController(scope);
-    //    var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+    [Fact]
+    public void GetPersonById()
+    {
+        //Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
 
-    //    var existingPersonId = 5;
+        // Act
+        //var result = ((ObjectResult)controller.Get(-11).Result)?.Value as PersonUpdateDto;
 
-    //    // Act - pozivamo Get metodu
-    //    var result = controller.Get(existingPersonId); // Očekujemo Result<PersonUpdateDto>
+        var actionResult = controller.Get(-11);
+        // 1. Poziv metode i pristupanje rezultatu
+        var objectResult = actionResult as ObjectResult;               // 2. Kastovanje u ObjectResult
+        var result = objectResult?.Value as PersonUpdateDto;  // 3. Pristup vrednosti i kastovanje u PersonUpdateDto
 
-    //    // Assert
-    //    result.ShouldNotBeNull();
-    //    result.IsSuccess.ShouldBeTrue(); // Proverava da li je operacija bila uspešna
 
-    //    var personDto = result.Value; // Dobijanje DTO objekta iz rezultata
-    //    personDto.ShouldNotBeNull();
-    //    personDto.Id.ShouldBe(existingPersonId);
-
-    //    var storedEntity = dbContext.People.FirstOrDefault(i => i.Id == existingPersonId);
-    //    storedEntity.ShouldNotBeNull();
-    //    personDto.Name.ShouldBe(storedEntity.Name);
-    //    personDto.Surname.ShouldBe(storedEntity.Surname);
-    //    personDto.Email.ShouldBe(storedEntity.Email);
-    //    personDto.ProfilePicture.ShouldBe(storedEntity.ProfilePicture);
-    //    personDto.Biography.ShouldBe(storedEntity.Biography);
-    //    personDto.Motto.ShouldBe(storedEntity.Motto);
-    //}
+        // Assert
+        result.ShouldNotBeNull();
+        result.UserId.ShouldBe(-11);
+        result.Name.ShouldBe("string");
+        result.Surname.ShouldBe("string");
+        result.Email.ShouldBe("string@gmailcom");
+        result.ProfilePicture.ShouldBe("string");
+        result.Biography.ShouldBe("string");
+        result.Motto.ShouldBe("string");
+    }
 
 
     private static PersonController CreateController(IServiceScope scope)
