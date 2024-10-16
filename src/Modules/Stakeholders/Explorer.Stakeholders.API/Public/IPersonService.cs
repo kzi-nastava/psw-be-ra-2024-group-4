@@ -5,7 +5,7 @@ namespace Explorer.Stakeholders.API.Public;
 
 public interface IPersonService
 {
-    Result<PersonDto> UpdatePersonEquipment(PersonDto personDto, List<int> equipmentIds);
+    Result<PersonDto> UpdatePersonEquipment(int id, List<int> equipmentIds);
 }
 
 
