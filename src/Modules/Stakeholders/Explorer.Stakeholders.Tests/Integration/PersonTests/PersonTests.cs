@@ -51,14 +51,14 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         result.Motto.ShouldBe(updatedEntity.Motto);
 
         // Assert - Database
-        var storedEntity = dbContext.People.FirstOrDefault(i => i.Email == updatedEntity.Email);
-        storedEntity.Id.ShouldBe(updatedEntity.Id);
+        var storedEntity = dbContext.People.FirstOrDefault(i => i.Id == updatedEntity.Id);
+        storedEntity.Email.ShouldBe(updatedEntity.Email);
         storedEntity.ShouldNotBeNull();
         storedEntity.Name.ShouldBe(updatedEntity.Name);
         storedEntity.Surname.ShouldBe(updatedEntity.Surname);
         storedEntity.Biography.ShouldBe(updatedEntity.Biography);
 
-        var oldEntity = dbContext.People.FirstOrDefault(i => i.Email == "string@gmail.com");
+        var oldEntity = dbContext.People.FirstOrDefault(i => i.Email == "autor1@gmail.com");
         oldEntity.ShouldBeNull();
     }
 
@@ -70,12 +70,9 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         var controller = CreateController(scope);
 
         // Act
-        //var result = ((ObjectResult)controller.Get(-11).Result)?.Value as PersonUpdateDto;
-
         var actionResult = controller.Get(-11);
-        // 1. Poziv metode i pristupanje rezultatu
-        var objectResult = actionResult as ObjectResult;               // 2. Kastovanje u ObjectResult
-        var result = objectResult?.Value as PersonUpdateDto;  // 3. Pristup vrednosti i kastovanje u PersonUpdateDto
+        var objectResult = actionResult as ObjectResult;           
+        var result = objectResult?.Value as PersonUpdateDto; 
 
 
         // Assert
@@ -83,7 +80,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         result.UserId.ShouldBe(-11);
         result.Name.ShouldBe("string");
         result.Surname.ShouldBe("string");
-        result.Email.ShouldBe("string@gmailcom");
+        result.Email.ShouldBe("string@gmail.com");
         result.ProfilePicture.ShouldBe("string");
         result.Biography.ShouldBe("string");
         result.Motto.ShouldBe("string");
