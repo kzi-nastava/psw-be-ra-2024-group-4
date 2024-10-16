@@ -12,7 +12,7 @@ namespace Explorer.Tours.Core.Domain
 
     public class Object: Entity
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string Image { get; private set; }
@@ -21,7 +21,7 @@ namespace Explorer.Tours.Core.Domain
         public double Latitude { get; private set; }
         public long UserId { get; private set; }
 
-        public Object(int id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
+        public Object(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
         {
             Validate(id, name, description, image, category, longitude, latitude, userId);
             Id = id;
@@ -34,10 +34,9 @@ namespace Explorer.Tours.Core.Domain
             UserId = userId;
         }
 
-        public void Validate(int id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
+        public void Validate(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
         {
-            if (id <= 0)
-                throw new ArgumentException("Invalid ID. ID must be greater than 0.");
+          
 
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Invalid Name.");

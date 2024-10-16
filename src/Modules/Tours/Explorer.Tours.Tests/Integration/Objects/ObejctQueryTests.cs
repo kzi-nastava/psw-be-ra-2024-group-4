@@ -28,11 +28,11 @@ public class ObejctQueryTests: BaseToursIntegrationTest
         var controller = CreateController(scope);
 
         // Act
-        var result = ((ObjectResult)controller.GetAll(0,0).Result)?.Value as List<KeyPointDto>;
+        var result = ((ObjectResult)controller.GetAll(0,0).Result)?.Value as PagedResult<ObjectDTO>;
 
         //Assert
         result.ShouldNotBeNull();
-        result.Count.ShouldBe(3);
+        result.Results.Count.ShouldBe(3);
 
     }
 
