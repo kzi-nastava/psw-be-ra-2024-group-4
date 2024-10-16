@@ -59,40 +59,27 @@ namespace Explorer.Tours.Core.UseCases
             }
         }
 
-        public Result<TourDto> AddKeyPoint(long tourId, long keyPointId, long userId)
+        public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
         {
-            var tour = _tourRepository.GetSpecificTourByUser(tourId, userId);
-            
+         
 
             if(tour == null)
             {
-                return Result.Fail<TourDto>("No tour found.");
+                return Result.Fail("No tour found.");
 
             }
 
-           /* var tourDto = new TourDto
+
+            if (!tour.KeyPointIds.Contains(keyPointId))
             {
-                Id = tourId,
-                Name = tour.Name,
-                Description = tour.Description,
-                Difficulty = tour.Difficulty,
-                Tags = tour.Tags.Select(tag => (TourTags)tag).ToList(),
-                UserId = tour.UserId,
-                Status = (TourStatus)tour.Status,
-                Price = tour.Price,
-                EquipmentIds = tour.EquipmentIds,
-                KeyPointIds = tour.KeyPointIds
-               
+                tour.KeyPointIds.Add(keyPointId);
+                Update(tour);
+                return Result.Ok(tour);
+            }
 
-
-            };*/
-           var tourDto = MapToDto(tour);
-
-
-            if(!tourDto.KeyPointIds.Contains(keyPointId))
-                tourDto.KeyPointIds.Add(keyPointId);
-
-            return Update(tourDto);
+            return Result.Fail("Keypoint already exists in this tour.");
+            
+          
 
 
         }
