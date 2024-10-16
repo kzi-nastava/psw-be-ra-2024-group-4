@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Administrator.Administration
 {
-    //Pošto nije bilo potrebe ya dodavanjem novog entiteta, nisam imala šta da odradim za ovaj zadatak
     [Authorize(Policy = "administratorPolicy")]
     [Route("api/administration")]
     public class AccountController : BaseApiController
