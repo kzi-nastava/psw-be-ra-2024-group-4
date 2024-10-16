@@ -25,6 +25,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ToList();
         }
 
+
         public List<Equipment> GetEquipment(long tourId) 
         {
             var tour = _dbContext.Tour
@@ -71,6 +72,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
             tour.EquipmentIds.Remove(equipment.Id);
             _dbContext.SaveChanges();
+        }
+
+        public Tour GetSpecificTourByUser(long tourId, long userId)
+        {
+            return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
+
         }
     }
 }

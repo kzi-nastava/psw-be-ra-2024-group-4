@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TourStatus = Explorer.Tours.API.Dtos.TourStatus;
 using TourTags = Explorer.Tours.API.Dtos.TourTags;
 
 namespace Explorer.Tours.Core.UseCases
@@ -40,18 +41,27 @@ namespace Explorer.Tours.Core.UseCases
 
                 var tourDtos = tours.Select(t => new TourDto
                 {
+                    Id = t.Id,
                     Name = t.Name,
                     Description = t.Description,
                     Difficulty = t.Difficulty,
-                    Tags = t.Tags.Select(tag => (TourTags)tag).ToList(),  
+                    Tags = t.Tags.Select(tag => (TourTags)tag).ToList(),
                     UserId = t.UserId,
-                    EquipmentIds = t.EquipmentIds  
+                    Status = (TourStatus)t.Status,
+                    Price = t.Price,
+                    EquipmentIds = t.EquipmentIds,
+                    KeyPointIds = t.KeyPointIds,
+
+
+
+
                 }).ToList();
 
                 return Result.Ok(tourDtos);
 
             }
         }
+
 
         public Result<PagedResult<EquipmentDto>> GetEquipment(long tourId)
         {
@@ -85,6 +95,31 @@ namespace Explorer.Tours.Core.UseCases
             {
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
+        }
+        public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
+        {
+         
+
+            if(tour == null)
+            {
+                return Result.Fail("No tour found.");
+
+            }
+
+
+            if (!tour.KeyPointIds.Contains(keyPointId))
+            {
+                tour.KeyPointIds.Add(keyPointId);
+                Update(tour);
+                return Result.Ok(tour);
+            }
+
+            return Result.Fail("Keypoint already exists in this tour.");
+            
+          
+
+
+
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Author
 {
-   // [Authorize(Policy = "authorPolicy")]
+    [Authorize(Policy = "authorPolicy")]
     [Route("api/author/tour")]
     public class TourController : BaseApiController
     {
@@ -30,6 +30,7 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }
 
+
         [HttpGet("tourEquipment/{tourId:int}")] 
         public ActionResult GetEquipment(int tourId)
         {
@@ -43,12 +44,20 @@ namespace Explorer.API.Controllers.Author
             var result = _tourService.AddEquipmentToTour(tourId, equipmentId);
             return CreateResponse(result);
         }
-        
+
 
         [HttpDelete("{tourId:int}/equipment/{equipmentId:int}")]
         public ActionResult RemoveEquipmentFromTour(int tourId, int equipmentId)
         {
             var result = _tourService.RemoveEquipmentFromTour(tourId, equipmentId);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("keypointaddition/{keypointid:int}")]
+        public ActionResult<TourDto> AddKeyPoint([FromBody] TourDto tour, int keypointid)
+        {
+            var result = _tourService.AddKeyPoint(tour, keypointid);
+
             return CreateResponse(result);
         }
     }
