@@ -17,7 +17,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
     public class ClubInvitationQueryTests : BaseStakeholdersIntegrationTest
     {
 
-        
+      
         public ClubInvitationQueryTests(StakeholdersTestFactory factory) : base(factory) { }
 
         [Fact]

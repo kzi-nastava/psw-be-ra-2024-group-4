@@ -27,8 +27,16 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return clubInvitation;
         }
-
-       
+        public int GetMaxId()
+        {
+            return _dbContext.ClubInvitations.Max(ci => (int?)ci.Id) ?? 0;
+        }
+        public List<ClubInvitation> GetInvitationsByClubId(long clubId)
+        {
+            return _dbContext.ClubInvitations
+                .Where(ci => ci.ClubId == clubId)
+                .ToList();
+        }
 
     }
 }

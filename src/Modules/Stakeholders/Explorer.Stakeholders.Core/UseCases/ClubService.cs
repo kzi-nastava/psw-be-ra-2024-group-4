@@ -13,17 +13,20 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class ClubService:CrudService<ClubDto,Club>,IClubService
+    public class ClubService : CrudService<ClubDto, Club>, IClubService
     {
         private readonly IClubRepository _clubRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-       
+
+
 
         public ClubService(ICrudRepository<Club> repository, IMapper mapper,IUserRepository userRepository, IClubRepository clubRepository) : base(repository, mapper) 
         {
             _clubRepository= clubRepository;
             _userRepository= userRepository;
+            _mapper= mapper;
             
 
         }
@@ -55,7 +58,25 @@ namespace Explorer.Stakeholders.Core.UseCases
 
         //}
 
+        public Result<List<long>> GetUserIds(int clubId)
+        {
+            try
+            {
+                var club = CrudRepository.Get(clubId);
+                if (club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                                 .WithError($"Club with ID {clubId} not found.");
+                }
 
+                return Result.Ok(club.UserIds);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("An error occurred while retrieving user IDs.")
+                             .WithError(e.Message);
+            }
+        }
         public Result DeleteMember(long memberId, int clubId, int userId)
         {
             try
@@ -92,6 +113,81 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
         }
 
+        public Result<List<UserDto>> GetActiveUsersInClub(int clubId)
+        {
+            try
+            {
+                var club = _clubRepository.GetById(clubId);
+                if (club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                                 .WithError($"Club with ID {clubId} not found.");
+                }
 
+                var activeUsers = _userRepository.GetActiveUsers();
+
+                var usersInClub = activeUsers
+           .Where(user => club.UserIds.Contains(user.Id))
+           .Select(user => _mapper.Map<UserDto>(user))  // Koristimo AutoMapper
+           .ToList();
+
+                return Result.Ok(usersInClub);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("An error occurred while retrieving users.")
+                             .WithError(e.Message);
+            }
+        }
+
+
+        public Result<List<UserDto>> GetEligibleUsersForClub(int clubId)
+        {
+            try
+            {
+                var club = _clubRepository.GetById(clubId);
+                if (club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                                 .WithError($"Club with ID {clubId} not found.");
+                }
+
+                var activeUsers = _userRepository.GetActiveUsers();
+
+                // Filtriramo samo one korisnike koji nisu u UserIds i koji nisu vlasnici kluba
+                var eligibleUsers = activeUsers
+                    .Where(user => !club.UserIds.Contains(user.Id) && user.Id != club.UserId)
+                    .Select(user => _mapper.Map<UserDto>(user))
+                    .ToList();
+
+                return Result.Ok(eligibleUsers);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("An error occurred while retrieving eligible users.")
+                             .WithError(e.Message);
+            }
+        }
+
+        public Result<ClubDto> GetById(long id)
+        {
+            try
+            {
+                var club = _clubRepository.GetById(id);
+                if (club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                                 .WithError($"Club with ID {id} not found.");
+                }
+
+                var clubDto = _mapper.Map<ClubDto>(club);
+                return Result.Ok(clubDto);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("An error occurred while retrieving the club.")
+                             .WithError(e.Message);
+            }
+        }
     }
 }

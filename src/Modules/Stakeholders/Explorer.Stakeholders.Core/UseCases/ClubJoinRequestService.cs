@@ -31,6 +31,9 @@ namespace Explorer.Stakeholders.Core.UseCases
             return MapToDto(acceptedRequests);
         }
 
+        //lista usera da dobavi
+        //napracvim user controller
+
         public Result DeleteMember(int requestId)
         {
             try

@@ -13,6 +13,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
     {
         public ClubInvitationCommandTests(StakeholdersTestFactory factory) : base(factory) { }
 
+
         [Fact]
         public void Creates()
         {
@@ -38,7 +39,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
 
                  // Assert - Database
                  var storedEntity = dbContext.ClubInvitations.FirstOrDefault(i => i.Id == newEntity.Id);
-         storedEntity.ShouldNotBeNull();
+                    storedEntity.ShouldNotBeNull();
                  storedEntity.Id.ShouldBe(result.Id);
          }
         

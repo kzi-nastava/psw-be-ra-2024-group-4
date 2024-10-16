@@ -44,5 +44,28 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubInvitationService.Delete(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("next-id")]
+        public IActionResult GetNextClubInvitationId()
+        {
+           
+            var nextId = _clubInvitationService.GetMaxId() + 1; 
+            return Ok(nextId);
+        }
+
+        [HttpGet("club/{clubId}/invitations")]
+        public IActionResult GetInvitationsByClubId(long clubId)
+        {
+            var result = _clubInvitationService.GetInvitationsByClubId(clubId);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value); 
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
+        }
     }
 }

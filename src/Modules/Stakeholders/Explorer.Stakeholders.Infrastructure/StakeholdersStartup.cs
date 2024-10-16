@@ -30,6 +30,7 @@ public static class StakeholdersStartup
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
         services.AddScoped<IClubJoinRequestService, ClubJoinRequestService>();
+        services.AddScoped<IPersonService, PersonService>();
     }
 
 
@@ -39,9 +40,13 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Club>), typeof(CrudDatabaseRepository<Club, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped<IClubRepository, ClubDatabaseRepository>();
+        services.AddScoped<IClubInvitationRepository, ClubInvitationDatabaseRepository>();
+        services.AddScoped<IPersonRepository, PersonDatabaseRepository>();
         services.AddScoped<IClubJoinRequestRepository, ClubJoinRequestRepository>();
         services.AddScoped(typeof(ICrudRepository<ClubInvitation>), typeof(CrudDatabaseRepository<ClubInvitation, StakeholdersContext>));
-        services.AddScoped(typeof(ICrudRepository<ClubJoinRequest>), typeof(CrudDatabaseRepository<ClubJoinRequest, StakeholdersContext>)); 
+        services.AddScoped(typeof(ICrudRepository<ClubJoinRequest>), typeof(CrudDatabaseRepository<ClubJoinRequest, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
+
 
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),

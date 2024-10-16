@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
 {
-    public interface IClubInvitationRepository
+    public interface IPersonRepository
     {
-        ClubInvitation Create(ClubInvitation clubInvitation);
-        int GetMaxId();
-        List<ClubInvitation> GetInvitationsByClubId(long clubId);
-
+        List<Person> GetAll();
     }
 }
