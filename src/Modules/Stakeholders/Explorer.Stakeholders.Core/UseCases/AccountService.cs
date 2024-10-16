@@ -10,32 +10,35 @@ namespace Explorer.Stakeholders.Core.UseCases
 
     public class AccountService : CrudService<AccountDto, User>, IAccountService
     {
+        public readonly ICrudRepository<User> _userRepository;
         public readonly ICrudRepository<Person> _personRepository;
 
         public AccountService(ICrudRepository<User> userRepository,ICrudRepository<Person> personRepository
             ,  IMapper mapper) : base(userRepository, mapper)
         {
+            _userRepository = userRepository;
             _personRepository = personRepository;
         }
 
         public new Result<PagedResult<AccountDto>> GetPaged(int page, int pageSize)
         {
-            var result = GetPaged(page, pageSize);
+            var result = _userRepository.GetPaged(page, pageSize);
+            var mappedResults = MapToDto(result);
 
-            if (result.IsFailed)
+            if (mappedResults.IsFailed)
             {
-                return Result.Fail(result.Errors);
+                return Result.Fail(mappedResults.Errors);
             }
 
-            var pagedAccounts = result.Value;
+            var pagedAccounts = mappedResults.Value;
             Person? personResult;
-            AccountDto? userResult;
+            User? userResult;
 
             foreach (var account in pagedAccounts.Results)
             {
                 try
                 {
-                    userResult = GetPaged(0, 0).Value.Results.Find(x => x.Username == account.Username);
+                    userResult = result.Results.Find(x => x.Username == account.Username);
                     personResult = _personRepository.GetPaged(0,0).Results.Find(p => p.UserId == userResult.Id);
 
                     account.Email = personResult?.Email ?? "N/A";
