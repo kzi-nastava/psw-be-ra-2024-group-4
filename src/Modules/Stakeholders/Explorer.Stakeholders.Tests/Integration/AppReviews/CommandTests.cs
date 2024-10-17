@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
+using Explorer.API.Controllers.Person;
 
 namespace Explorer.Stakeholders.Tests.Integration.AppReviews
 {
@@ -87,9 +88,9 @@ namespace Explorer.Stakeholders.Tests.Integration.AppReviews
             storedEntity.Comment.ShouldBe(updatedEntity.Comment);
         }
 
-        private static Explorer.API.Controllers.Person2.AppReviewController CreateController(IServiceScope scope)
+        private static AppReviewController CreateController(IServiceScope scope)
         {
-            return new Explorer.API.Controllers.Person2.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
+            return new Explorer.API.Controllers.Person.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
             {
                 ControllerContext = BuildContext("-1")
             };

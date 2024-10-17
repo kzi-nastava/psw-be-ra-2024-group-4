@@ -5,10 +5,10 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 
-namespace Explorer.API.Controllers.Person2
+namespace Explorer.API.Controllers.Person
 {
     [Route("api/person/appReview")]
-    public class AppReviewController: BaseApiController
+    public class AppReviewController : BaseApiController
     {
         private readonly IAppReviewService _appReviewService;
 
@@ -18,7 +18,7 @@ namespace Explorer.API.Controllers.Person2
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<AppReviewDto> Get(int id) 
+        public ActionResult<AppReviewDto> Get(int id)
         {
             var result = _appReviewService.Get(id);
             return CreateResponse(result);

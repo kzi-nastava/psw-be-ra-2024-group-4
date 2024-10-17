@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.API.Controllers.Person;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Mvc;
@@ -54,9 +55,9 @@ namespace Explorer.Stakeholders.Tests.Integration.AppReviews
             };
         }
 
-        private static Explorer.API.Controllers.Person2.AppReviewController CreatePersonController(IServiceScope scope)
+        private static AppReviewController CreatePersonController(IServiceScope scope)
         {
-            return new Explorer.API.Controllers.Person2.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
+            return new Explorer.API.Controllers.Person.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
             {
                 ControllerContext = BuildContext("-1")
             };
