@@ -20,10 +20,9 @@ namespace Explorer.Stakeholders.Core.UseCases
             _personRepository = personRepository;
         }
 
-        public new Result<PagedResult<AccountDto>> GetPaged(int page, int pageSize)
+        public new Result<PagedResult<AccountDto>> GetPagedAccount(int page, int pageSize)
         {
-            var result = _userRepository.GetPaged(page, pageSize);
-            var mappedResults = MapToDto(result);
+            var mappedResults = GetPaged(page, pageSize);
 
             if (mappedResults.IsFailed)
             {
@@ -32,17 +31,18 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             var pagedAccounts = mappedResults.Value;
             Person? personResult;
-            User? userResult;
+            AccountDto? userResult;
+
+            var personList = _personRepository.GetPaged(0, 0).Results;
 
             foreach (var account in pagedAccounts.Results)
             {
                 try
                 {
-                    userResult = result.Results.Find(x => x.Username == account.Username);
-                    personResult = _personRepository.GetPaged(0,0).Results.Find(p => p.UserId == userResult.Id);
+                    userResult = mappedResults.Value.Results.Find(x => x.Username == account.Username);
+                    personResult = personList.Find(p => p.UserId == userResult.Id);
 
                     account.Email = personResult?.Email ?? "N/A";
-
                 }
                 catch (Exception ex)
                 {
