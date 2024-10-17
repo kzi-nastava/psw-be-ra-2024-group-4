@@ -10,15 +10,15 @@ namespace Explorer.Modules.Core.Domain
 {
     public class TourReview : Entity
     {
-        public int IdTour { get; private set; }
-        public int IdTourist { get; private set; }
+        public long IdTour { get; private set; }
+        public long IdTourist { get; private set; }
         public int Rating { get; private set; }
         public string? Comment { get; private set; }
         public DateTime? DateTour { get; private set; }
         public DateTime? DateComment { get; private set; }
         public List<string>? Images { get; private set; }
 
-        public TourReview(int idTour, int idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images)
+        public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images)
         {
             if(idTour == 0) throw new ArgumentException("idTour");
             IdTour = idTour;

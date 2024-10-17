@@ -8,9 +8,9 @@ namespace Explorer.Tours.API.Dtos
 {
     public class TourReviewDto
     {
-        public int Id { get; set; }
-        public int IdTour { get; set; }
-        public int IdTourist { get; set; }
+        public long Id { get; set; }
+        public long IdTour { get; set; }
+        public long IdTourist { get; set; }
         public string? Comment { get; set; }
         public int Rating { get; set; }
         public DateTime? DateTour { get; set; }
@@ -22,7 +22,7 @@ namespace Explorer.Tours.API.Dtos
             Images = new List<string>();
         }
 
-        public TourReviewDto(int id, int idTour, int idTourist, int rating, string comment, DateTime dateTour, DateTime dateComment, List<string> images)
+        public TourReviewDto(long id, long idTour, long idTourist, int rating, string comment, DateTime dateTour, DateTime dateComment, List<string> images)
         {
             Id = id;
             IdTour = idTour;
