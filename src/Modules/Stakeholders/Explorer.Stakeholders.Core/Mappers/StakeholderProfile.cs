@@ -9,5 +9,6 @@ public class StakeholderProfile : Profile
     public StakeholderProfile()
     {
         CreateMap<AppReviewDto, AppReview>().ReverseMap();
+        CreateMap<PersonUpdateDto, Person>().ReverseMap();
     }
 }
