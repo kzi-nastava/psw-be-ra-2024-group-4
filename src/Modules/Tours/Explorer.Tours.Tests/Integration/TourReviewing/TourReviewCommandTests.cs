@@ -80,8 +80,8 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
             Id = -1,
             IdTour = 1,
             IdTourist = 2,
-            Rating = 3,
-            Comment = "Nije nit dobro nit lose",
+            Rating = 4,
+            Comment = "dzouns",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
             Images = new()
@@ -102,9 +102,9 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
         result.Images.ShouldBe(updatedEntity.Images);
 
         // Assert - Database
-        var storedEntity = dbContext.TourReview.FirstOrDefault(i => i.Comment == "Nije nit dobro nit lose");
+        var storedEntity = dbContext.TourReview.FirstOrDefault(i => i.Comment == "dzouns");
         storedEntity.ShouldNotBeNull();
-        storedEntity.DateTour.ShouldBe(updatedEntity.DateTour);
+        storedEntity.Rating.ShouldBe(updatedEntity.Rating);
         var oldEntity = dbContext.TourReview.FirstOrDefault(i => i.Comment == "Mnogo dobra tura.");
         oldEntity.ShouldBeNull();
     }
