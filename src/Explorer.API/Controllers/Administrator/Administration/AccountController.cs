@@ -19,9 +19,9 @@ namespace Explorer.API.Controllers.Administrator.Administration
         }
 
         [HttpGet]
-        public ActionResult<PagedResult<AccountDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<PagedResult<AccountDto>> GetAllAccount([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _accountService.GetPaged(page, pageSize);
+            var result = _accountService.GetPagedAccount(page, pageSize);
             return CreateResponse(result);
         }
 
