@@ -8,7 +8,7 @@ namespace Explorer.Stakeholders.API.Dtos
 {
     public class ProblemDTO
     {
-        public long Id { get; set; } 
+        public long? Id { get; set; }
         public long UserId { get; init; }
         public long TourId { get; init; }
         //public Category Catgory { get; set; }
@@ -17,4 +17,5 @@ namespace Explorer.Stakeholders.API.Dtos
         public int Priority { get; set; }
         public DateTime Time { get; set; }
     }
+
 }

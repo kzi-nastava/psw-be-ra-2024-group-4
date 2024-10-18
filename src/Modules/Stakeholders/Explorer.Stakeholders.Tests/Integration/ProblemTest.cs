@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Stakeholders.Tests.Integration
 {
+    [Collection("Sequential")]
     public class ProblemTest : BaseStakeholdersIntegrationTest
     {
         public ProblemTest(StakeholdersTestFactory factory) : base(factory) { }
@@ -33,7 +34,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var newEntity = new ProblemDTO
             {
                 Id=-5,
-                UserId=2,
+                UserId=-1,
                 TourId=3,
                 Category="ucitavanje",
                 Description="Slika nije ucitana",
@@ -64,14 +65,14 @@ namespace Explorer.Stakeholders.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Act
-            var result = (OkResult)controller.Delete(-3);
+            var result = (OkResult)controller.Delete(-4);
 
             // Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             // Assert - Database
-            var storedCourse = dbContext.Problem.FirstOrDefault(i => i.Id == -3);
+            var storedCourse = dbContext.Problem.FirstOrDefault(i => i.Id == -4);
             storedCourse.ShouldBeNull();
         }
 
@@ -103,7 +104,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             long tourId = 2;
 
             // Act
-            var result = ((ObjectResult)controller.GetByUserId(tourId).Result)?.Value as List<ProblemDTO>;
+            var result = ((ObjectResult)controller.GetByTourId(tourId).Result)?.Value as List<ProblemDTO>;
 
             // Assert - Database
             result.ShouldNotBeNull();

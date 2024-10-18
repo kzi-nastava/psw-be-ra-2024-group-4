@@ -54,4 +54,5 @@ public class AuthenticationService : IAuthenticationService
             // There is a subtle issue here. Can you find it?
         }
     }
+
 }

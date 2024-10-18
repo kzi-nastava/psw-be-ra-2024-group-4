@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Explorer.Stakeholders.Core.Domain
 {
     public class Problem: Entity
     {
+        [Key]
+        public long? Id { get; set; }
         public long UserId { get; init; }
         public long TourId { get; init; }
         //public Category Catgory { get; set; }
@@ -22,6 +25,7 @@ namespace Explorer.Stakeholders.Core.Domain
 
         public Problem(long userId, long tourId, string category, string description, int priority, DateTime time)
         {
+            
             UserId = userId;
             TourId = tourId;
             Category = category;
