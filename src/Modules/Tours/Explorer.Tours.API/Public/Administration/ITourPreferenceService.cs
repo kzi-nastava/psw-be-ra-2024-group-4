@@ -10,6 +10,8 @@ namespace Explorer.Tours.API.Public.Administration {
     public interface ITourPreferenceService {
 
         Result <TourPreferenceDto> GetTourPreference(int touristId);
+        Task<List<TourPreferenceDto>> GetAllPreferencesAsync();
         Result UpdateTourPreference(int touristId, TourPreferenceDto preference);
+        Result AddTourPreference(int touristId, TourPreferenceDto preference);
     }
 }

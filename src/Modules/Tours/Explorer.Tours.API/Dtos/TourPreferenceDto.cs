@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.API.Dtos {
     public class TourPreferenceDto {
+        public int Id { get; set; }
+
+        public int TouristID { get; set; }
         public int WeightPreference { get; set; }
         public int WalkingRating { get; set; }
         public int BikeRating { get; set; }
