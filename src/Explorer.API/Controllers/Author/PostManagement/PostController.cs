@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Explorer.API.Controllers.Author.PostManagement
 {
-   // [Authorize(Policy = "authorPolicy")]
+
+    //[Authorize(Policy = "authorPolicy")]
     [Route("api/postmanagement/post")]
     public class PostController : BaseApiController
     {
@@ -23,7 +24,6 @@ namespace Explorer.API.Controllers.Author.PostManagement
             var result=_postService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
-
         [HttpPost]
         public ActionResult<PostDto> Create([FromBody] PostDto postDto) 
         {
