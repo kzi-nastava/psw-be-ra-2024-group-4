@@ -1,4 +1,5 @@
-﻿using Explorer.Stakeholders.API.Public;
+﻿using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,17 @@ namespace Explorer.API.Controllers.Tourist
             _personService = personService;
         }
 
-        [HttpPut("{id:int}")]
-        public ActionResult UpdatePersonEquipment(int id, List<int> equipmentIds)
+        [HttpGet("{id:int}")]
+        public ActionResult Get(int id)
         {
-            var result = _personService.UpdatePersonEquipment(id, equipmentIds);
+            var result = _personService.Get(id);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Update([FromBody]PersonDto personDto)
+        {
+            var result = _personService.Update(personDto);
             return CreateResponse(result);
         }
     }

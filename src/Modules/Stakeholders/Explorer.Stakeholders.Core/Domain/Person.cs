@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain;
 using System.Net.Mail;
 
 namespace Explorer.Stakeholders.Core.Domain;
@@ -12,9 +13,19 @@ public class Person : Entity
     public string ImageUrl {  get; private set; }
     public string Biography { get; private set; }
     public string Moto { get; private set; }
-    public List<int> EquipmentIds {  get; private set; }
+    public List<Equipment> Equipment {  get; private set; }
 
-    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string moto, List<int> equipmentId)
+
+    public Person(long userId, string name, string surname, string email)
+    {
+        UserId = userId;
+        Name = name;
+        Surname = surname;
+        Email = email;
+        Validate();
+    }
+
+    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string moto, List<Equipment> equipment)
     {
         UserId = userId;
         Name = name;
@@ -23,13 +34,13 @@ public class Person : Entity
         ImageUrl = imageUrl;
         Biography = biography;
         Moto = moto;
-        if(equipmentId == null)
+        if(equipment == null)
         {
-            EquipmentIds = new List<int>();
+            Equipment = new List<Equipment>();
         }
         else
         {
-            EquipmentIds = equipmentId;
+            Equipment = equipment;
         }
         Validate();
     }
