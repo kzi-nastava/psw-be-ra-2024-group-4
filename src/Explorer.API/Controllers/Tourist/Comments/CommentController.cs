@@ -18,9 +18,9 @@ namespace Explorer.API.Controllers.Tourist.Comments
         }
 
         [HttpGet]
-        public ActionResult<PagedResult<CommentDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<PagedResult<CommentDto>> GetAll([FromQuery] int id, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _commentService.GetPaged(page, pageSize);
+            var result = _commentService.GetPaged(id,page, pageSize);
             return CreateResponse(result);
         }
 
