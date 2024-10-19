@@ -10,5 +10,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces {
         Task<List<TourPreference>> GetAll();
         List<TourPreference> GetByTouristId(int touristId);
         Task Add(TourPreference preference);
+        void Update(TourPreference preference);
     }
 }

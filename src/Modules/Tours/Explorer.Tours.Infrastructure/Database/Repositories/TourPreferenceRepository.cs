@@ -32,6 +32,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories {
         public List<TourPreference> GetByTouristId(int touristId) {
             return _context.TourPreferences.Where(tp => tp.TouristId == touristId).ToList();
         }
+        public void Update(TourPreference preference) {
+            _context.TourPreferences.Update(preference);
+            _context.SaveChanges();
+        }
 
     }
 }

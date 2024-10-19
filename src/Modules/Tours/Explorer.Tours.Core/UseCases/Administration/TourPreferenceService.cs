@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Explorer.Tours.Core.UseCases.Administration {
     public class TourPreferenceService : ITourPreferenceService {
@@ -29,14 +30,23 @@ namespace Explorer.Tours.Core.UseCases.Administration {
             return _mapper.Map<List<TourPreferenceDto>>(preferences);
         }
         public Result<TourPreferenceDto> GetTourPreference(int touristId) {
-            throw new NotImplementedException();
+            var preference = _tourPreferenceRepository.Get(touristId);
+            return _mapper.Map<TourPreferenceDto>(preference);
         }
 
         public Result UpdateTourPreference(int touristId, TourPreferenceDto preference) {
-            throw new NotImplementedException();
+            var existingPreferenceResult = _tourPreferenceRepository.Get(touristId);
+            if (existingPreferenceResult == null) {
+                return Result.Fail("Tour preference for wanted tourist not found!");
+            }
+            var existingPreference = existingPreferenceResult;
+            _mapper.Map(preference, existingPreference);
+            _tourPreferenceRepository.Update(existingPreference);
+
+            return Result.Ok();
         }
         public Result AddTourPreference(int touristId, TourPreferenceDto preference) {
-            newPreference.TouristId = touristId;
+            preference.TouristId = touristId;
             var newPreference = _mapper.Map<TourPreference>(preference);
             _tourPreferenceRepository.Add(newPreference);
             return Result.Ok();
