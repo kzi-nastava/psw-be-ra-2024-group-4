@@ -11,10 +11,12 @@ namespace Explorer.API.Controllers.Tourist.Comments
     public class CommentController : BaseApiController
     {
         private readonly ICommentService _commentService;
+        private readonly IPostService _postService;
 
-        public CommentController(ICommentService commentService)
+        public CommentController(ICommentService commentService, IPostService postService)
         {
             _commentService = commentService;
+            _postService = postService;
         }
 
         [HttpGet]
@@ -23,7 +25,12 @@ namespace Explorer.API.Controllers.Tourist.Comments
             var result = _commentService.GetPaged(id,page, pageSize);
             return CreateResponse(result);
         }
-
+        [HttpGet("posts")]
+        public ActionResult<PagedResult<PostDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _postService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
         [HttpPost]
         public ActionResult<CommentDto> Create([FromBody] CommentDto comment)
         {
