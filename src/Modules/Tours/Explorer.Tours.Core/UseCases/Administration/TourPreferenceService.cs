@@ -30,16 +30,16 @@ namespace Explorer.Tours.Core.UseCases.Administration {
             return _mapper.Map<List<TourPreferenceDto>>(preferences);
         }
         public Result<TourPreferenceDto> GetTourPreference(int touristId) {
-            var preference = _tourPreferenceRepository.Get(touristId);
+            var preference = _tourPreferenceRepository.GetByTouristId(touristId).FirstOrDefault();
             return _mapper.Map<TourPreferenceDto>(preference);
         }
 
         public Result UpdateTourPreference(int touristId, TourPreferenceDto preference) {
-            var existingPreferenceResult = _tourPreferenceRepository.Get(touristId);
-            if (existingPreferenceResult == null) {
+            var existingPreferenceResult = _tourPreferenceRepository.GetByTouristId(touristId);
+            if (existingPreferenceResult == null || !existingPreferenceResult.Any()) {
                 return Result.Fail("Tour preference for wanted tourist not found!");
             }
-            var existingPreference = existingPreferenceResult;
+            var existingPreference = existingPreferenceResult.FirstOrDefault();
             _mapper.Map(preference, existingPreference);
             _tourPreferenceRepository.Update(existingPreference);
 
