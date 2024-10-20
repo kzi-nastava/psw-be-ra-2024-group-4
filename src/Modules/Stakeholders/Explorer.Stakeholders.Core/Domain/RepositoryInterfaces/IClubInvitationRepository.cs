@@ -9,6 +9,8 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
     public interface IClubInvitationRepository
     {
         ClubInvitation Create(ClubInvitation clubInvitation);
-    
+        int GetMaxId();
+        List<ClubInvitation> GetInvitationsByClubId(long clubId);
+
     }
 }

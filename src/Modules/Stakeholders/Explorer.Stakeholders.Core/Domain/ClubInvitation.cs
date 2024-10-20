@@ -11,7 +11,6 @@ namespace Explorer.Stakeholders.Core.Domain
     {
         
         public int ClubId { get; set; }
-        //public int OwnerId { get; set; }
         public int MemberId { get; set; }
         public Status Status { get; set; }
 
@@ -19,7 +18,6 @@ namespace Explorer.Stakeholders.Core.Domain
         public ClubInvitation(int clubId, int memberId, Status status)
         {
             ClubId = clubId;
-            //OwnerId = ownerId;
             MemberId = memberId;    
             Status = status;
             Validate();
@@ -28,7 +26,6 @@ namespace Explorer.Stakeholders.Core.Domain
         private void Validate()
         {
             if (ClubId == 0) throw new ArgumentException("Invalid clubId");
-           // if (OwnerId == 0) throw new ArgumentException("Invalid ownerId");
             if (MemberId == 0) throw new ArgumentException("Invalid memberId");
         }
     }

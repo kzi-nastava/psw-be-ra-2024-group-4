@@ -61,5 +61,11 @@ namespace Explorer.API.Controllers.Tourist
                 return Ok(false);
             }
         }
+        [HttpDelete("member/{requestId:int}")]
+        public ActionResult DeleteMember(int requestId)
+        {
+            var result = _clubJoinRequestService.DeleteMember(requestId);
+            return CreateResponse(result);
+        }
     }
 }

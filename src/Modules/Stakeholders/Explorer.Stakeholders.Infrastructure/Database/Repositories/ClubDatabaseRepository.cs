@@ -12,7 +12,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
     {
 
         private readonly StakeholdersContext _dbContext;
-
         public ClubDatabaseRepository(StakeholdersContext dbContext)
         {
             _dbContext = dbContext;
@@ -23,9 +22,24 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
         }
 
+
+
         public List<Club> GetAll()
         {
             return _dbContext.Clubs.ToList();
         }
+
+
+        public List<long> GetUserIdsByClubId(long clubId)
+        {
+            var club = _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
+            if (club == null)
+            {
+                throw new KeyNotFoundException($"Club with ID {clubId} not found.");
+            }
+
+            return club.UserIds;
+        }
+
     }
 }

@@ -11,6 +11,8 @@ public class StakeholdersContext : DbContext
     public DbSet<ClubInvitation> ClubInvitations { get; set; }
     public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
 
+
+
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +31,6 @@ public class StakeholdersContext : DbContext
             .WithOne()
             .HasForeignKey<Person>(s => s.UserId);
     }
-
 
 
 }

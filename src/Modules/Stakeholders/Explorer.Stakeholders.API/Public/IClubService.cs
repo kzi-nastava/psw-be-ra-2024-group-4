@@ -16,5 +16,11 @@ namespace Explorer.Stakeholders.API.Public
         Result<PagedResult<ClubDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
         Result AddMember(long memberId, int clubId, int userId);
+        Result DeleteMember(long memberId, int clubId, int userId);
+        Result<List<long>> GetUserIds(int clubId);
+        Result<List<UserDto>> GetActiveUsersInClub(int clubId);
+        Result<List<UserDto>> GetEligibleUsersForClub(int clubId);
+        Result<ClubDto> GetById(long id);
+
     }
 }
