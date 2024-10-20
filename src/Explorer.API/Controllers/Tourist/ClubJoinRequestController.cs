@@ -47,5 +47,19 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubJoinRequestService.Delete(id);
             return CreateResponse(result);
         }
+        [HttpGet("{clubId:int}/{userId:int}")]
+        public ActionResult UserRequestExists(int clubId, int userId)
+        {
+            //vraca 200 ako je korisnik vec poslao zahtev za taj klub, 404 ako nije
+            bool requestExists = _clubJoinRequestService.UserRequestExists(clubId, userId);
+            if (requestExists)
+            {
+                return Ok(true);  
+            }
+            else
+            {
+                return Ok(false);
+            }
+        }
     }
 }

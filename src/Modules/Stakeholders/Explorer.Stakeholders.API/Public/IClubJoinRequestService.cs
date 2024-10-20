@@ -16,5 +16,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<PagedResult<ClubJoinRequestDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
         Result<List<ClubJoinRequestDto>> GetRequestsForClubMembers(int clubId);
+        bool UserRequestExists(int clubId, int userId);
     }
 }

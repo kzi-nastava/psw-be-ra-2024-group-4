@@ -24,8 +24,8 @@ namespace Explorer.Stakeholders.Core.Domain
 
         private void Validate()
         {
-            if(UserId <= 0) throw new ArgumentException("Invalid UserId");
-            if(ClubId <= 0) throw new ArgumentException("Invalid ClubId");
+            if(UserId == 0) throw new ArgumentException("Invalid UserId");
+            if(ClubId == 0) throw new ArgumentException("Invalid ClubId");
         }
 
     }

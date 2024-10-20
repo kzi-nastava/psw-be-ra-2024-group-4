@@ -29,6 +29,12 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             return MapToDto(acceptedRequests);
         }
+        public bool UserRequestExists(int clubId, int userId)
+        {
+            var request = _clubJoinRequestRepository.GetAll().FirstOrDefault(r => r.ClubId == clubId && r.UserId == userId);
+            return request != null;
+
+        }
     }
 
 }

@@ -48,10 +48,42 @@ namespace Explorer.Stakeholders.Core.UseCases
         //public Result<ClubDto> GetAll()
         //{
         //    var clubs= _clubRepository.GetAll();
-            
+
         //}
 
+       public Result AddMember(long memberId, int clubId, int userId)
+        {
+            try
+            {
+                var club = CrudRepository.Get(clubId);
+                if(club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound).WithError($"Club with ID {clubId} not found.");
+                }
 
+                if (club.UserId != userId)
+                {
+                    return Result.Fail(FailureCode.Forbidden)
+                                 .WithError("Only the owner of the club can add members.");
+                }
+
+                if (club.UserIds.Contains(memberId))
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                          .WithError($"Member with ID {memberId} is already a member in the club.");
+                }
+
+                club.UserIds.Add(memberId);
+                var updatedClub = CrudRepository.Update(club);
+
+                return Result.Ok();
+
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("Result failed");
+            }
+        }
 
     }
 }

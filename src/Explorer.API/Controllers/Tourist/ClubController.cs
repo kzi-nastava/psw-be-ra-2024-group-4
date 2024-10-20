@@ -44,5 +44,13 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubService.Delete(id);
             return CreateResponse(result);
         }
+
+        //dodaje membera u klub
+        [HttpGet("member/{memberId:long}/{clubId:int}/{userId:int}")]
+        public ActionResult AddMember(long memberId, int clubId, int userId)
+        {
+            var result = _clubService.AddMember(memberId, clubId, userId);
+            return CreateResponse(result);
+        }
     }
 }
