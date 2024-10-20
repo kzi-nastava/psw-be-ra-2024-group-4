@@ -12,6 +12,7 @@ public class StakeholdersContext : DbContext
     public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
 
 
+
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

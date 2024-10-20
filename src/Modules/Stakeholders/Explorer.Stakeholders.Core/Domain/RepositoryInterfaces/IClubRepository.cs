@@ -10,8 +10,10 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
     public interface IClubRepository
     {
         Club GetById(long id);
+
         List<Club> GetAll();
         List<long> GetUserIdsByClubId(long clubId);
+
 
 
     }

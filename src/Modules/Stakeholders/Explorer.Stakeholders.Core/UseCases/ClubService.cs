@@ -30,34 +30,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             
 
         }
-        //public Result<ClubDto> Update(ClubDto clubDto, long userId)
-        //{
-        //    var club = CrudRepository.Get(clubDto.Id);
-        //    if (club.UserId != userId)
-        //    {
-        //        return Result.Fail("Only the owner can update the club.");
-        //    }
-
-        //    return base.Update(clubDto); 
-        //}
-
-        //public Result<ClubDto> Create(ClubDto clubDto, string username)
-        //{
-        //    var user = _userRepository.GetActiveByName(username);
-        //    if (user.Role != UserRole.Tourist)
-        //    {
-        //        return Result.Fail("Only tourists can create a club.");
-        //    }
-
-        //    return base.Create(clubDto); 
-        //}
-
-        //public Result<ClubDto> GetAll()
-        //{
-        //    var clubs= _clubRepository.GetAll();
-
-        //}
-
+      
         public Result<List<long>> GetUserIds(int clubId)
         {
             try
@@ -141,6 +114,7 @@ namespace Explorer.Stakeholders.Core.UseCases
         }
 
 
+
         public Result<List<UserDto>> GetEligibleUsersForClub(int clubId)
         {
             try
@@ -154,7 +128,6 @@ namespace Explorer.Stakeholders.Core.UseCases
 
                 var activeUsers = _userRepository.GetActiveUsers();
 
-                // Filtriramo samo one korisnike koji nisu u UserIds i koji nisu vlasnici kluba
                 var eligibleUsers = activeUsers
                     .Where(user => !club.UserIds.Contains(user.Id) && user.Id != club.UserId)
                     .Select(user => _mapper.Map<UserDto>(user))

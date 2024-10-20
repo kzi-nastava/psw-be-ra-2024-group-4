@@ -20,5 +20,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<List<UserDto>> GetActiveUsersInClub(int clubId);
         Result<List<UserDto>> GetEligibleUsersForClub(int clubId);
         Result<ClubDto> GetById(long id);
+
     }
 }

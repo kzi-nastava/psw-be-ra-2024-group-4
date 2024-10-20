@@ -12,7 +12,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
     {
 
         private readonly StakeholdersContext _dbContext;
-
         public ClubDatabaseRepository(StakeholdersContext dbContext)
         {
             _dbContext = dbContext;
@@ -22,6 +21,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         {
             return _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
         }
+
 
 
         public List<Club> GetAll()
