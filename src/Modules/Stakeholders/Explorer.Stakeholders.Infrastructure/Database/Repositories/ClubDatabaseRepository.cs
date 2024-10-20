@@ -29,6 +29,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return _dbContext.Clubs.ToList();
         }
 
+
         public List<long> GetUserIdsByClubId(long clubId)
         {
             var club = _dbContext.Clubs.FirstOrDefault(c => c.Id == clubId);
