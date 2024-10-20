@@ -23,7 +23,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             var newEntity = new ClubInvitationDto
             {
                 Id = 5,
-                ClubId = 1,
+                ClubId = -1,
                 MemberId = 1,
                 Status = Status.PROCESSING
              };
