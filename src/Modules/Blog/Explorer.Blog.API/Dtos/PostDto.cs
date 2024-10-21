@@ -10,10 +10,10 @@ namespace Explorer.Blog.API.Dtos
         public DateTime CreatedAt { get; set; }
         public string ImageUrl { get; set; }
         public long UserId { get; set; }
-        public Status Status { get; set; }
+        public BlogStatus Status { get; set; }
     }
 
-    public enum Status
+    public enum BlogStatus
     {
         Draft,
         Published,

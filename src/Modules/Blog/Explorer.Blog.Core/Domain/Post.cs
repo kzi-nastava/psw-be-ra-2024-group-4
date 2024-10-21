@@ -13,11 +13,11 @@ namespace Explorer.Blog.Core.Domain
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public string ImageUrl {  get; private set; }
-        public Status Status { get; private set; } 
+        public BlogStatus Status { get; private set; } 
         public long UserId { get; private set; }
         
 
-        public Post(string title, string description, DateTime createdAt, string imageUrl, Status status, long userId)
+        public Post(string title, string description, DateTime createdAt, string imageUrl, BlogStatus status, long userId)
         {
             Title = title;
             Description = description;
@@ -32,12 +32,12 @@ namespace Explorer.Blog.Core.Domain
             if (string.IsNullOrWhiteSpace(Title))throw new ArgumentException("Invalid Title");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
             if (CreatedAt == default)throw new ArgumentException("Invalid CreatedAt date");
-            if (!Enum.IsDefined(typeof(Status), Status)) throw new ArgumentException("Invalid Status");
+            if (!Enum.IsDefined(typeof(BlogStatus), Status)) throw new ArgumentException("Invalid Status");
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
         }
 
     }
-    public enum Status
+    public enum BlogStatus
     {
         Draft,
         Published,

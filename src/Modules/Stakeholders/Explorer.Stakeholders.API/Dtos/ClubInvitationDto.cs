@@ -12,10 +12,10 @@ namespace Explorer.Stakeholders.API.Dtos
        public long Id { get; set; }
         public int ClubId { get; set; }
         public int MemberId { get; set; }
-        public Status Status { get; set; }
+        public ClubStatus Status { get; set; }
     }
 
-    public enum Status
+    public enum ClubStatus
     {
         PROCESSING,
         ACCEPTED,
