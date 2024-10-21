@@ -11,7 +11,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Email { get; init; }
         public string ImageUrl { get; set; }
         public string Biography { get; set; }
-        public string Moto { get; set; }
+        public string Motto { get; set; }
         public List<int> Equipment { get; set; }
 
         

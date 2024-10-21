@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Integration\NewFolder1\**" />
+    <Compile Remove="Integration\NewFolder\**" />
+    <EmbeddedResource Remove="Integration\NewFolder1\**" />
+    <EmbeddedResource Remove="Integration\NewFolder\**" />
+    <None Remove="Integration\NewFolder1\**" />
+    <None Remove="Integration\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
     <PackageReference Include="Shouldly" Version="4.2.1" />
@@ -27,11 +36,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Explorer.BuildingBlocks.Tests\Explorer.BuildingBlocks.Tests.csproj" />
     <ProjectReference Include="..\..\..\Explorer.API\Explorer.API.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Integration\NewFolder1\" />
-    <Folder Include="Integration\NewFolder\" />
   </ItemGroup>
 
 </Project>

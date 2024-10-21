@@ -25,7 +25,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
                 Id = 5,
                 ClubId = -1,
                 MemberId = 1,
-                Status = Status.PROCESSING
+                Status = ClubStatus.PROCESSING
              };
 
          // Act

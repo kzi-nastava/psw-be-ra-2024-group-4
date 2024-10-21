@@ -2,9 +2,6 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Infrastructure.Database;
-using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -37,7 +34,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
             result.Email.ShouldBe("autor1@gmail.com");
             result.ImageUrl.ShouldBe("https1");
             result.Biography.ShouldBe("KaoJa");
-            result.Moto.ShouldBe("Samo Jako Bro"); 
+            result.Motto.ShouldBe("Samo Jako Bro"); 
             result.Equipment.ShouldBe((new[] { 1, 2 }).ToArray());
         }
 
@@ -57,7 +54,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
                 Email = "uros@gmailo.com",
                 ImageUrl = "https1",
                 Biography = "KaoJa",
-                Moto = "Preko mora i okeana",
+                Motto = "Preko mora i okeana",
                 Equipment = new() { 1,2 ,3},
             };
             var actionResult = controller.Update(updatedEntity);
