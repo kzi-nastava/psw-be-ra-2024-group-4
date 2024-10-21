@@ -12,10 +12,10 @@ namespace Explorer.Stakeholders.Core.Domain
         
         public int ClubId { get; set; }
         public int MemberId { get; set; }
-        public Status Status { get; set; }
+        public ClubStatus Status { get; set; }
 
 
-        public ClubInvitation(int clubId, int memberId, Status status)
+        public ClubInvitation(int clubId, int memberId, ClubStatus status)
         {
             ClubId = clubId;
             MemberId = memberId;    
@@ -29,7 +29,7 @@ namespace Explorer.Stakeholders.Core.Domain
             if (MemberId == 0) throw new ArgumentException("Invalid memberId");
         }
     }
-    public enum Status
+    public enum ClubStatus
     {
         PROCESSING,
         ACCEPTED,
