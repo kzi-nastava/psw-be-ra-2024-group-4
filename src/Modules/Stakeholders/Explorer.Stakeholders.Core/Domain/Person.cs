@@ -11,7 +11,7 @@ public class Person : Entity
     public string Email { get; init; }
     public string? ImageUrl {  get; private set; }
     public string? Biography { get; private set; }
-    public string? Moto { get; private set; }
+    public string? Motto { get; private set; }
     public List<int>? Equipment {  get; private set; }
 
     public Person(long userId, string name, string surname, string email)
@@ -22,7 +22,7 @@ public class Person : Entity
         Email = email;
         Validate();
     }
-    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string moto)
+    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string motto)
     {
         UserId = userId;
         Name = name;
@@ -30,10 +30,10 @@ public class Person : Entity
         Email = email;
         ImageUrl = imageUrl;
         Biography = biography;
-        Moto = moto;
+        Motto = motto;
         Validate();
     }
-
+    
     private void Validate()
     {
         if (UserId == 0) throw new ArgumentException("Invalid UserId");

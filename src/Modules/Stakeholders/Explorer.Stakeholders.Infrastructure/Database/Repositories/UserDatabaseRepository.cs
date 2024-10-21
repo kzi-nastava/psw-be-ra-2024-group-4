@@ -36,4 +36,10 @@ public class UserDatabaseRepository : IUserRepository
         return person.Id;
     }
 
+    public List<User> GetActiveUsers()
+    {
+        return _dbContext.Users
+            .Where(user => user.IsActive && user.Role == UserRole.Tourist)
+            .ToList();
+    }
 }

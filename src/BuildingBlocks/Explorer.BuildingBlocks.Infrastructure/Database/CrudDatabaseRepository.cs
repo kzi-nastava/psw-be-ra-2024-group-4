@@ -42,6 +42,7 @@ public class CrudDatabaseRepository<TEntity, TDbContext> : ICrudRepository<TEnti
     {
         try
         {
+          
             DbContext.Update(entity);
             DbContext.SaveChanges();
         }
