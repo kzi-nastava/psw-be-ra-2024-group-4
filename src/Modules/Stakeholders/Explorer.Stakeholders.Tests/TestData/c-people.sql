@@ -1,6 +1,6 @@
 ﻿INSERT INTO stakeholders."People"(
     "Id", "UserId", "Name", "Surname", "Email", "ImageUrl", "Biography", "Moto", "Equipment")
-VALUES (-11, -11, 'Ana', 'Anić', 'autor1@gmail.com','https1','KaoJa', 'Samo Jako Bro', ARRAY([1, 2]));
+VALUES (-11, -11, 'Ana', 'Anić', 'autor1@gmail.com','https1','KaoJa', 'Samo Jako Bro', ARRAY[1, 2]::integer);
 INSERT INTO stakeholders."People"(
     "Id", "UserId", "Name", "Surname", "Email")
 VALUES (-12, -12, 'Lena', 'Lenić', 'autor2@gmail.com');

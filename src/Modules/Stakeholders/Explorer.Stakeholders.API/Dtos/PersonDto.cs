@@ -13,5 +13,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Biography { get; set; }
         public string Moto { get; set; }
         public List<int> Equipment { get; set; }
+
+        
     }
 }
