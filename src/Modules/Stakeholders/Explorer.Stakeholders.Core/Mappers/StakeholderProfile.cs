@@ -8,6 +8,12 @@ public class StakeholderProfile : Profile
 {
     public StakeholderProfile()
     {
+        CreateMap<ClubDto,Club>().ReverseMap();
+        CreateMap<ClubInvitationDto, ClubInvitation>().ReverseMap();
+        CreateMap<ClubJoinRequestDto, ClubJoinRequest>().ReverseMap();
+        CreateMap<UserDto, User>().ReverseMap();
+
+
         CreateMap<AccountDto, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
