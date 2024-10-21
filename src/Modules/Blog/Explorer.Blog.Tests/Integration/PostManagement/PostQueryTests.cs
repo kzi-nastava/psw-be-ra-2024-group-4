@@ -40,7 +40,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
 
         private static PostController CreateController(IServiceScope scope)
         {
-            return new PostController(scope.ServiceProvider.GetRequiredService<IPostService>())
+            return new PostController(scope.ServiceProvider.GetRequiredService<IPostService>(),scope.ServiceProvider.GetRequiredService<ICommentService>())
             {
                 ControllerContext = BuildContext("-1")
             };
