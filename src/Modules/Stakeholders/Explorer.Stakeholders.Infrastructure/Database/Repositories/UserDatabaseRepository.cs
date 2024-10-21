@@ -35,4 +35,11 @@ public class UserDatabaseRepository : IUserRepository
         if (person == null) throw new KeyNotFoundException("Not found.");
         return person.Id;
     }
+
+    public List<User> GetActiveUsers()
+    {
+        return _dbContext.Users
+            .Where(user => user.IsActive && user.Role == UserRole.Tourist)
+            .ToList();
+    }
 }

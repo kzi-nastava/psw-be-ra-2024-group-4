@@ -10,6 +10,11 @@ public class StakeholdersContext : DbContext
     public DbSet<Person> People { get; set; }
     public DbSet<Problem> Problem { get; set; }
 
+    public DbSet<Club> Clubs { get; set; }
+    public DbSet<ClubInvitation> ClubInvitations { get; set; }
+    public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
+
+
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +35,4 @@ public class StakeholdersContext : DbContext
             .HasForeignKey<Person>(s => s.UserId);
     }
 
-
-    
 }
