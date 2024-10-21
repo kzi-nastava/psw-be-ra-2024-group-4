@@ -7,6 +7,11 @@ public class StakeholdersContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<Club> Clubs { get; set; }
+    public DbSet<ClubInvitation> ClubInvitations { get; set; }
+    public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
+
+
 
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
@@ -26,4 +31,6 @@ public class StakeholdersContext : DbContext
             .WithOne()
             .HasForeignKey<Person>(s => s.UserId);
     }
+
+
 }
