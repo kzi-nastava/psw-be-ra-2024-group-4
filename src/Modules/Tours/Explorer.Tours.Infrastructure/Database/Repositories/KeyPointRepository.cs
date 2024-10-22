@@ -26,6 +26,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                          .ToList();
         }
 
+        public int GetMaxId(long userId)
+        {
+            return _dbContext.KeyPoints.Max(kp => (int?)kp.Id) ?? 0;
+        }
+
 
     }
 }
