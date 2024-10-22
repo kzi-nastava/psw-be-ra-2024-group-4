@@ -44,7 +44,8 @@ public class AuthenticationService : IAuthenticationService
         try
         {
             var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true));
-            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email));
+            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email, account.ProfilePicture, account.Biography, account.Motto
+        ));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);
         }
@@ -54,4 +55,5 @@ public class AuthenticationService : IAuthenticationService
             // There is a subtle issue here. Can you find it?
         }
     }
+
 }

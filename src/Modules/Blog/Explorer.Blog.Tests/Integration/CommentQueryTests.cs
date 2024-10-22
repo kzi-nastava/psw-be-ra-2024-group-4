@@ -38,7 +38,8 @@ namespace Explorer.Blog.Tests.Integration
         }
         private static CommentController CreateController(IServiceScope scope)
         {
-            return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(), scope.ServiceProvider.GetRequiredService<IPostService>())
+            return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(),scope.ServiceProvider.GetRequiredService<IPostService>())
+
             {
                 ControllerContext = BuildContext("-1")
             };

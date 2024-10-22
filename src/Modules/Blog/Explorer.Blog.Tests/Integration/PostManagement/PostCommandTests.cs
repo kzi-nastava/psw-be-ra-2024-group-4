@@ -26,7 +26,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
                 Description = "How to travel the world on a budget.",
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = "https://example.com/images/budget-travel.jpg",
-                Status = Status.Draft,
+                Status = BlogStatus.Draft,
                 UserId =3
             };
 
@@ -82,7 +82,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
                 Description = "A journey through the ugly big mountains.",
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = "https://example.com/images/budget-travel.jpg",
-                Status = Status.Draft,
+                Status = BlogStatus.Draft,
                 UserId = 5
             };
 
@@ -128,6 +128,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
         private static PostController CreateController(IServiceScope scope)
         {
             return new PostController(scope.ServiceProvider.GetRequiredService<IPostService>(), scope.ServiceProvider.GetRequiredService<ICommentService>())
+
             {
                 ControllerContext = BuildContext("-1")
             };
