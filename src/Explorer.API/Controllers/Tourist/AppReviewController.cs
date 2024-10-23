@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.API.Dtos;
-using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Person
+namespace Explorer.API.Controllers.Tourist
 {
-    [Route("api/person/appReview")]
-    public class AppReviewController : BaseApiController
+    [Authorize(Policy = "touristPolicy")]
+    [Route("api/tourist/appReview")]
+    public class AppReviewController: BaseApiController
     {
         private readonly IAppReviewService _appReviewService;
 

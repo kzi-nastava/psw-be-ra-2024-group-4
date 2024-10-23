@@ -1,5 +1,4 @@
-﻿using Explorer.API.Controllers.Person;
-using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +35,7 @@ namespace Explorer.Stakeholders.Tests.Integration.AppReviews
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
-            var controller = CreatePersonController(scope);
+            var controller = CreateTouristController(scope);
 
             // Act
             var result = ((ObjectResult)controller.Get(-1).Result)?.Value as AppReviewDto;
@@ -55,9 +54,9 @@ namespace Explorer.Stakeholders.Tests.Integration.AppReviews
             };
         }
 
-        private static AppReviewController CreatePersonController(IServiceScope scope)
+        private static Explorer.API.Controllers.Tourist.AppReviewController CreateTouristController(IServiceScope scope)
         {
-            return new Explorer.API.Controllers.Person.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
+            return new Explorer.API.Controllers.Tourist.AppReviewController(scope.ServiceProvider.GetRequiredService<IAppReviewService>())
             {
                 ControllerContext = BuildContext("-1")
             };
