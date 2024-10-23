@@ -1,13 +1,16 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Modules.Core.Domain;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.API.Public.TourAuthoring.ObjectAddition;
+using Explorer.Tours.API.Public.TourReviewing;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Mappers;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
+using Explorer.Tours.Core.UseCases.TourReviewing;
 using Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 using Explorer.Tours.Core.UseCases.TourAuthoring.ObjectAddition;
 using Explorer.Tours.Infrastructure.Database;
@@ -34,7 +37,7 @@ public static class ToursStartup
         services.AddScoped<IKeyPointService, KeyPointService>();
         services.AddScoped<ITourService, TourService>();
         services.AddScoped<IObjectService, ObjectService>();
-
+        services.AddScoped<ITourReviewService, TourReviewService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -46,6 +49,8 @@ public static class ToursStartup
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
 
+
+        services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
