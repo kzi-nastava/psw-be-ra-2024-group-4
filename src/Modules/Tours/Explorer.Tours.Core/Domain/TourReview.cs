@@ -20,20 +20,13 @@ namespace Explorer.Modules.Core.Domain
 
         public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images)
         {
-            if(idTour == 0) throw new ArgumentException("idTour");
-            IdTour = idTour;
-            if (idTourist == 0) throw new ArgumentException("idTourist");
-            IdTourist = idTourist;
-            if (rating < 1 || rating > 5) throw new ArgumentException("Invalid Rating");
-            Rating = rating;
-            if (string.IsNullOrWhiteSpace(comment)) comment = "";
-            Comment = comment;
-            if (dateTour == null) throw new ArgumentNullException("Invalid Date");
-            DateTour = dateTour;
-            if (dateComment == null) throw new ArgumentNullException("Invalid Date");
-            DateComment = dateComment;
-            if(images == null) images = new List<string>();
-            Images = images;
+            IdTour = idTour != 0 ? idTour : throw new ArgumentException("Invalid idTour");
+            IdTourist = idTourist != 0 ? idTourist : throw new ArgumentException("Invalid idTourist");
+            Rating = rating >= 1 && rating <= 5 ? rating : throw new ArgumentException("Invalid Rating");
+            Comment = string.IsNullOrWhiteSpace(comment) ? "" : comment;
+            DateTour = dateTour != null ? dateTour : throw new ArgumentNullException("Invalid Date");
+            DateComment = dateComment != null ? dateComment : throw new ArgumentNullException("Invalid Date");
+            Images = images ?? new List<string>(); //if images is null, new List<string>()
         }
 
         public TourReview() 
