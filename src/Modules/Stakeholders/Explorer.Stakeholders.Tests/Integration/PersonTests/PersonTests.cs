@@ -23,20 +23,20 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
         var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
-        var updatedEntity = new PersonUpdateDto
+        var updatedEntity = new PersonDto
         {
             Id = -11,
             UserId = -11,
             Name = "string",
             Surname = "string",
             Email = "string@gmail.com",
-            ProfilePicture = "string",
+            ImageUrl = "string",
             Biography = "string",
             Motto = "string"
         };
 
         // Act
-        var result = ((ObjectResult)controller.Update(updatedEntity).Result)?.Value as PersonUpdateDto;
+        var result = ((ObjectResult)controller.Update(updatedEntity).Result)?.Value as PersonDto;
 
         // Assert - Response
         result.ShouldNotBeNull();
@@ -45,7 +45,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         result.Name.ShouldBe(updatedEntity.Name);
         result.Surname.ShouldBe(updatedEntity.Surname);
         result.Email.ShouldBe(updatedEntity.Email);
-        result.ProfilePicture.ShouldBe(updatedEntity.ProfilePicture);
+        result.ImageUrl.ShouldBe(updatedEntity.ImageUrl);
         result.Biography.ShouldBe(updatedEntity.Biography);
         result.Motto.ShouldBe(updatedEntity.Motto);
 
@@ -71,7 +71,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         // Act
         var actionResult = controller.Get(-11);
         var objectResult = actionResult as ObjectResult;           
-        var result = objectResult?.Value as PersonUpdateDto; 
+        var result = objectResult?.Value as PersonDto; 
 
 
         // Assert
@@ -80,7 +80,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
         result.Name.ShouldBe("string");
         result.Surname.ShouldBe("string");
         result.Email.ShouldBe("string@gmail.com");
-        result.ProfilePicture.ShouldBe("string");
+        result.ImageUrl.ShouldBe("string");
         result.Biography.ShouldBe("string");
         result.Motto.ShouldBe("string");
     }

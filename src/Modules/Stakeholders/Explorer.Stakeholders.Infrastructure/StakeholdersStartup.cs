@@ -26,14 +26,14 @@ public static class StakeholdersStartup
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddScoped<IPersonService, PersoneUpdateService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
         services.AddScoped<IAppReviewService, AppReviewService>();
+        services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IProblemService, ProblemService>();
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
         services.AddScoped<IClubJoinRequestService, ClubJoinRequestService>();
-          services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IAccountService, AccountService>();
     }
 
 

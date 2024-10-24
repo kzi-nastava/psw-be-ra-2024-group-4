@@ -1,29 +1,21 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
 {
-
     [Authorize(Policy = "touristPolicy")]
-    [Route("api/tourist/person")]
-    public class PersonController: BaseApiController
+    [Route("api/person/tourist")]
+    public class TouristController :BaseApiController
     {
         private readonly IPersonService _personService;
 
-        public PersonController(IPersonService personService)
+        public TouristController(IPersonService personService)
         {
             _personService = personService;
         }
-
-        [HttpPut("{id:int}")]
-        public ActionResult<PersonDto> Update([FromBody] PersonDto person)
-        {
-            var result = _personService.Update(person);
-            return CreateResponse(result);
-        }
-
 
         [HttpGet("{id:int}")]
         public ActionResult Get(int id)
@@ -31,6 +23,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _personService.Get(id);
             return CreateResponse(result);
         }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Update([FromBody]PersonDto personDto)
+        {
+            var result = _personService.Update(personDto);
+            return CreateResponse(result);
+        }
     }
 }
-

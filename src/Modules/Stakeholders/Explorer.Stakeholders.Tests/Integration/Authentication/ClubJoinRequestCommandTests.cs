@@ -132,7 +132,6 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
 
             //Act
             var result = (OkResult)controller.Delete(4);
-
             //Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
