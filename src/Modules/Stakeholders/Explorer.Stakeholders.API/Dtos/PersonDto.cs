@@ -1,4 +1,5 @@
 ﻿using Explorer.Tours.API.Dtos;
+using Explorer.Tours.Core.Domain;
 
 namespace Explorer.Stakeholders.API.Dtos
 {
@@ -13,7 +14,5 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Biography { get; set; }
         public string Motto { get; set; }
         public List<int> Equipment { get; set; }
-
-        
     }
 }
