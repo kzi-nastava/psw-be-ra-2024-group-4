@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Tours.Core.Domain;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -13,11 +15,12 @@ namespace Explorer.API.Controllers.Tourist
     public class ClubController : BaseApiController
     {
         private readonly IClubService _clubService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-
-        public ClubController(IClubService clubService)
+        public ClubController(IClubService clubService, IWebHostEnvironment webHostEnvironment)
         {
             _clubService = clubService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -30,12 +33,55 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPost]
         public ActionResult<ClubDto> Create([FromBody] ClubDto club)
         {
+            if (!string.IsNullOrEmpty(club.ImageBase64))
+            {
+                var imageData = Convert.FromBase64String(club.ImageBase64.Split(',')[1]);
+                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "clubs");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                var filePath = Path.Combine(folderPath, fileName);
+                System.IO.File.WriteAllBytes(filePath, imageData);
+                club.Image = $"images/clubs/{fileName}";
+            }
             var result = _clubService.Create(club);
             return CreateResponse(result);
         }
         [HttpPut("{id:int}")]
         public ActionResult<ClubDto> Update([FromBody] ClubDto club)
         {
+            if (!string.IsNullOrEmpty(club.ImageBase64))
+            {
+                // Konvertovanje slike iz base64 formata
+                var imageData = Convert.FromBase64String(club.ImageBase64.Split(',')[1]);
+                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "clubs");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                var filePath = Path.Combine(folderPath, fileName);
+
+                // Brisanje stare slike ako postoji
+                if (!string.IsNullOrEmpty(club.Image))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, club.Image);
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                // Čuvanje nove slike
+                System.IO.File.WriteAllBytes(filePath, imageData);
+                club.Image = $"images/clubs/{fileName}";
+            }
             var result = _clubService.Update(club);
             return CreateResponse(result);
         }

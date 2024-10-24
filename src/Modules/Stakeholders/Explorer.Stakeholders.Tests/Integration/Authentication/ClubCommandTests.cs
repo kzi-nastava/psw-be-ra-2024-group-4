@@ -6,6 +6,7 @@ using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Infrastructure.Database;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -135,7 +136,7 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
 
     private static ClubController CreateController(IServiceScope scope)
     {
-        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>())
+        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
         {
             ControllerContext = BuildContext("-1")
         };

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shouldly;
-
+using Microsoft.AspNetCore.Hosting;
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 
@@ -38,7 +38,7 @@ public class ClubQueryTests : BaseStakeholdersIntegrationTest
 
     private static ClubController CreateController(IServiceScope scope)
     {
-        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>())
+        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
         {
             ControllerContext = BuildContext("-1")
         };

@@ -14,6 +14,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public string? Image { get; set; }
         public long UserId { get; set; }
         public List<long> UserIds {get; set;}
+        public string ImageBase64 {  get; set; }
 
     }
 }

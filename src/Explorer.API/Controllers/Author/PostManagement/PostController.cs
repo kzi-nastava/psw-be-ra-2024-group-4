@@ -1,6 +1,7 @@
 ﻿using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -16,10 +17,12 @@ namespace Explorer.API.Controllers.Author.PostManagement
     {
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        public PostController(IPostService postService,ICommentService commentService)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public PostController(IPostService postService,ICommentService commentService,IWebHostEnvironment webHostEnvironment)
         {
             _postService = postService;
             _commentService = commentService;
+            _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet("comments")]
         public ActionResult<PagedResult<CommentDto>> GetAll([FromQuery] int id, [FromQuery] int page, [FromQuery] int pageSize)
@@ -36,6 +39,21 @@ namespace Explorer.API.Controllers.Author.PostManagement
         [HttpPost]
         public ActionResult<PostDto> Create([FromBody] PostDto postDto) 
         {
+            if (!string.IsNullOrEmpty(postDto.ImageBase64))
+            {
+                var imageData = Convert.FromBase64String(postDto.ImageBase64.Split(',')[1]);
+                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "blogs");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                var filePath = Path.Combine(folderPath, fileName);
+                System.IO.File.WriteAllBytes(filePath, imageData);
+                postDto.ImageUrl = $"images/blogs/{fileName}";
+            }
             var result=_postService.Create(postDto);
             return CreateResponse(result);  
         }
