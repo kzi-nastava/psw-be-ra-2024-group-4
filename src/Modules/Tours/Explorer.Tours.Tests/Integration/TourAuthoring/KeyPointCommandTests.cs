@@ -4,6 +4,7 @@ using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.Infrastructure.Database;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -120,7 +121,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
 
     private static KeyPointController CreateController(IServiceScope scope)
     {
-        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>())
+        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
         {
             ControllerContext = BuildContext("-1")
         };
