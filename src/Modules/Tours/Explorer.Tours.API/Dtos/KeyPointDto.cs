@@ -11,6 +11,11 @@ public class KeyPointDto : Entity
     public string Image { get; set; }
     public long UserId { get; set; }
 
+
+    public string ImageBase64 { get; set; }
+    public KeyPointDto() { }
+
    
+
 
 }
