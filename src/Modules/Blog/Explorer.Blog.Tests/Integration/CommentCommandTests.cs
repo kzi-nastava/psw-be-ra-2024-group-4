@@ -37,7 +37,8 @@ namespace Explorer.Blog.Tests.Integration
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 UserId = 1,
-                PostId = 1
+                PostId = 1,
+                Username= "Testic"
             };
 
             // Act
@@ -51,6 +52,7 @@ namespace Explorer.Blog.Tests.Integration
             result.PostId.ShouldBe(newComment.PostId);
             result.CreatedAt.ShouldNotBe(default);
             result.UpdatedAt.ShouldNotBe(default);
+            result.Username.ShouldBe(newComment.Username);
             // Assert - Database
             var storedComment = dbContext.Comments.FirstOrDefault(c => c.Text == newComment.Text);
             storedComment.ShouldNotBeNull();
@@ -91,7 +93,8 @@ namespace Explorer.Blog.Tests.Integration
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 UserId = 1,
-                PostId = 1
+                PostId = 1,
+                Username= "Testici"
 
             };
 
@@ -147,7 +150,8 @@ namespace Explorer.Blog.Tests.Integration
         }
         private static CommentController CreateController(IServiceScope scope)
         {
-            return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(),scope.ServiceProvider.GetRequiredService<IPostService>())
+            return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(), scope.ServiceProvider.GetRequiredService<IPostService>())
+
             {
                 ControllerContext = BuildContext("-1")
             };

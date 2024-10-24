@@ -1,17 +1,15 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace Explorer.API.Controllers.Person
+namespace Explorer.API.Controllers.Author
 {
-    //[Authorize(Policy = "AuthorPolicy")]
-    //[Authorize(Policy = "TouristPolicy")]
-    [Route("api/person")]
-    public class PersonController : BaseApiController
+    [Authorize(Policy = "authorPolicy")]
+    [Route("api/author/person")]
+    public class PersonController: BaseApiController
     {
+
         private readonly IPersonService _personService;
 
         public PersonController(IPersonService personService)

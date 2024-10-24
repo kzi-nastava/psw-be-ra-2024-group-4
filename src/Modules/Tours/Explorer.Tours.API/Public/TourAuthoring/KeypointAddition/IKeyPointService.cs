@@ -14,4 +14,6 @@ public interface IKeyPointService
 
     Result<KeyPointDto> Get(int id);
 
+    int GetMaxId(long userId);
+
 }

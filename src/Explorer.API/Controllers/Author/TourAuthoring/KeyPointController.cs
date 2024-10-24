@@ -81,9 +81,14 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpGet("next-id/{userid:long}")]
+        public ActionResult<int> GetNextClubInvitationId(long userid)
+        {
 
+            var nextId = _keyPointService.GetMaxId(userid) + 1;
+            return Ok(nextId);
+        }
 
-       
 
     }
 }

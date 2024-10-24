@@ -31,8 +31,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             var result = ((ObjectResult)controller.GetAllAccount(0, 0).Result)?.Value as PagedResult<AccountDto>;
 
             result.ShouldNotBeNull();
-            result.Results.Count.ShouldBe(7);
-            result.TotalCount.ShouldBe(7);
+            result.Results.Count.ShouldBe(9);
+            result.TotalCount.ShouldBe(9);
         }
 
         private static AccountController CreateController(IServiceScope scope)

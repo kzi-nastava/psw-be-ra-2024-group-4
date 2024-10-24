@@ -28,6 +28,7 @@ public static class StakeholdersStartup
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IPersonService, PersoneUpdateService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
+        services.AddScoped<IAppReviewService, AppReviewService>();
         services.AddScoped<IProblemService, ProblemService>();
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
@@ -39,6 +40,7 @@ public static class StakeholdersStartup
     private static void SetupInfrastructure(IServiceCollection services)
     {
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<AppReview>), typeof(CrudDatabaseRepository<AppReview, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<Club>), typeof(CrudDatabaseRepository<Club, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, StakeholdersContext>));

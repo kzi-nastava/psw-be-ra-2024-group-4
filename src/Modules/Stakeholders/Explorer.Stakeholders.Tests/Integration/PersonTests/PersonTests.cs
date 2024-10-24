@@ -1,5 +1,4 @@
 ﻿
-using Explorer.API.Controllers.Person;
 using Explorer.Stakeholders.API.Dtos; 
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
@@ -87,9 +86,9 @@ public class PersonTests : BaseStakeholdersIntegrationTest
     }
 
 
-    private static PersonController CreateController(IServiceScope scope)
+    private static Explorer.API.Controllers.Tourist.PersonController CreateController(IServiceScope scope)
     {
-        return new PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>())
+        return new Explorer.API.Controllers.Tourist.PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>())
         {
             ControllerContext = BuildContext("-1")
         };

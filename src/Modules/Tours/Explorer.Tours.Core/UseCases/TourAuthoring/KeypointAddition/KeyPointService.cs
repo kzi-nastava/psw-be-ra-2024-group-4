@@ -44,4 +44,9 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         }
     }
 
+    public int GetMaxId(long userId)
+    {
+        return _keyPointRepository.GetMaxId(userId);
+    }
+
 }

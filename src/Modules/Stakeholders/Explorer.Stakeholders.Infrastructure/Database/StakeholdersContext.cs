@@ -8,6 +8,7 @@ public class StakeholdersContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<AppReview> AppReviews { get; set; }
     public DbSet<Problem> Problem { get; set; }
 
     public DbSet<Club> Clubs { get; set; }
@@ -25,6 +26,7 @@ public class StakeholdersContext : DbContext
         modelBuilder.Entity<Problem>().HasIndex(p => p.Id).IsUnique();
 
         ConfigureStakeholder(modelBuilder);
+        ConfigureAppReview(modelBuilder);
     }
 
     private static void ConfigureStakeholder(ModelBuilder modelBuilder)
@@ -35,4 +37,11 @@ public class StakeholdersContext : DbContext
             .HasForeignKey<Person>(s => s.UserId);
     }
 
+    private static void ConfigureAppReview(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AppReview>()
+            .HasOne<User>() 
+            .WithOne() 
+            .HasForeignKey<AppReview>(ar => ar.UserId); 
+    }
 }

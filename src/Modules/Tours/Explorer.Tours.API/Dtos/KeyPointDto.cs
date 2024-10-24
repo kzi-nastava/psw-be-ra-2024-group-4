@@ -1,5 +1,7 @@
-﻿namespace Explorer.Tours.API.Dtos;
-public class KeyPointDto
+﻿using Explorer.BuildingBlocks.Core.Domain;
+
+namespace Explorer.Tours.API.Dtos;
+public class KeyPointDto : Entity
 {
     public long Id { get; set; }
     public string Name { get; set; }
@@ -9,7 +11,11 @@ public class KeyPointDto
     public string Image { get; set; }
     public long UserId { get; set; }
 
+
     public string ImageBase64 { get; set; }
     public KeyPointDto() { }
+
+   
+
 
 }
