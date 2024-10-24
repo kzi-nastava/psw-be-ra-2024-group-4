@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace Explorer.API.Controllers.Author.PostManagement
 {
     [Authorize(Policy = "authorPolicy")]
+
+    //[Authorize(Policy = "authorPolicy")]
+
     [Route("api/postmanagement/post")]
     public class PostController : BaseApiController
     {
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
-        public PostController(IPostService postService, ICommentService commentService)
+        public PostController(IPostService postService,ICommentService commentService)
         {
             _postService = postService;
             _commentService = commentService;

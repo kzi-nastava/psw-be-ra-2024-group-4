@@ -14,5 +14,6 @@ namespace Explorer.Blog.API.Dtos
         public DateTime UpdatedAt { get; set; }
         public long UserId { get; set; }
         public long PostId { get; set; }
+        public string Username { get; set; }
     }
 }
