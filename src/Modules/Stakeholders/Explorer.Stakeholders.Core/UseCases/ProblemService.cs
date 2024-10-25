@@ -20,24 +20,14 @@ namespace Explorer.Stakeholders.Core.UseCases
             _problemRepository = problemRepository;
         }
 
-        public Result<List<ProblemDTO>> GetByUserId(long id)
+        public Result<List<ProblemDTO>> GetByTouristId(long id)
         {
             var problems = _problemRepository.GetByUserId(id);
             if (problems.Count == 0)
                 return Result.Fail<List<ProblemDTO>>("No found problems");
 
-            var problemsDTO = problems.Select(problem => new ProblemDTO
-            {
-                Id=problem.Id,
-                UserId = problem.UserId,
-                TourId = problem.TourId,
-                Category = problem.Category,
-                Description = problem.Description,
-                Priority = problem.Priority,
-                Time = problem.Time
-            }).ToList();
 
-            return Result.Ok(problemsDTO);
+            return MapToDto(problems);
 
         }
         public Result<List<ProblemDTO>> GetByTourId(long id)
@@ -46,18 +36,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             if (problems.Count == 0)
                 return Result.Fail<List<ProblemDTO>>("No found problems");
 
-            var problemsDTO = problems.Select(problem => new ProblemDTO
-            {
-                Id = problem.Id,
-                UserId = problem.UserId,
-                TourId = problem.TourId,
-                Category = problem.Category,
-                Description = problem.Description,
-                Priority = problem.Priority,
-                Time = problem.Time
-            }).ToList();
-
-            return Result.Ok(problemsDTO);
+            return MapToDto(problems);
         }
     }
 }
