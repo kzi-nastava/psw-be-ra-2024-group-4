@@ -15,7 +15,7 @@ namespace Explorer.Stakeholders.API.Public
         Result<ProblemDTO> Create(ProblemDTO problemDto);
         Result<ProblemDTO> Update(ProblemDTO problemDto);
         Result Delete(int id);
-        Result<List<ProblemDTO>> GetByUserId(long id);
+        Result<List<ProblemDTO>> GetByTouristId(long id);
         Result<List<ProblemDTO>> GetByTourId(long id);
     }
 }

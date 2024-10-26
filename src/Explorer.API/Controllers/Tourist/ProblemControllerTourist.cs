@@ -7,28 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
 {
- //   [Authorize(Policy = "touristPolicy")]
+    [Authorize(Policy = "touristPolicy")]
     [Route("api/problem")]
-    public class ProblemController : BaseApiController
+    public class ProblemControllerTourist : BaseApiController
     {
         private readonly IProblemService _problemService;
         
-        public ProblemController(IProblemService problemService)
+        public ProblemControllerTourist(IProblemService problemService)
         {
             _problemService = problemService;
         }
 
-        [HttpGet]
-        public ActionResult<PagedResult<ProblemDTO>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        [HttpGet("byTourist/{userId:long}")]
+        public ActionResult<List<ProblemDTO>> GetByTouristId(long userId)
         {
-            var result = _problemService.GetPaged(page, pageSize);
-            return CreateResponse(result);
-        }
-
-        [HttpGet("byUser/{userId:long}")]
-        public ActionResult<List<ProblemDTO>> GetByUserId(long userId)
-        {
-            var result = _problemService.GetByUserId(userId);
+            var result = _problemService.GetByTouristId(userId);
             return CreateResponse(result);
         }
 
