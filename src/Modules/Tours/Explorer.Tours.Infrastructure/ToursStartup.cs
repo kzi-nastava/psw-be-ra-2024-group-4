@@ -8,7 +8,6 @@ using Explorer.Tours.API.Public.TourReviewing;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Mappers;
-using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
 using Explorer.Tours.Core.UseCases.TourReviewing;
 using Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
@@ -17,6 +16,8 @@ using Explorer.Tours.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Explorer.Tours.API.Public.TourAuthoring;
+using Explorer.Tours.Core.UseCases.TourAuthoring;
 
 namespace Explorer.Tours.Infrastructure;
 

@@ -10,7 +10,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         List<Tour> GetToursByUserId(long userId);
 
-        List<Equipment> GetEquipment(long tourId);  //
+        List<Equipment> GetEquipment(long tourId);  
         void AddEquipmentToTour(long tourId, long equipmentId);
         void RemoveEquipmentFromTour(long tourId, long equipmentId);
 
