@@ -35,7 +35,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Description = kp.Description,
                 Image = kp.Image,
                 UserId = kp.UserId,
-                TourId = kp.TourId
+               
 
 
 
@@ -51,10 +51,6 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         return _keyPointRepository.GetMaxId(userId);
     }
 
-    public Result<KeyPointDto> AddKeypointToTour(long tourId, KeyPointDto keyPointDto)
-    {
-        keyPointDto.TourId = tourId;
-        return Update(keyPointDto);
-    }
+   
 
 }

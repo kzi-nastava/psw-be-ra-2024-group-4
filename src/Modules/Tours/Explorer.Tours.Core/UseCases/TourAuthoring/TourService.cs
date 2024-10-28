@@ -2,6 +2,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring;
+using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.Tours;
@@ -9,6 +10,7 @@ using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TourStatus = Explorer.Tours.API.Dtos.TourStatus;
@@ -26,11 +28,14 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
         IKeyPointRepository _keyPointRepository { get; set; }
         IMapper _mapper { get; set; }
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository, IKeyPointRepository keyPointRepository) : base(repository, mapper)
+
+        IKeyPointService _keyPointService { get; set; }
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository, IKeyPointRepository keyPointRepository, IKeyPointService keyPointService) : base(repository, mapper)
         {
             _tourRepository = tourRepository;
             _keyPointRepository = keyPointRepository;
             _mapper = mapper;
+            _keyPointService = keyPointService;
         }
 
         public Result<List<TourDto>> GetByUserId(long userId)
@@ -44,7 +49,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     return Result.Fail<List<TourDto>>("No tours found for the specified user.");
                 }
 
-                /* var tourDtos = tours.Select(t => new TourDto
+                 var tourDtos = tours.Select(t => new TourDto
                  {
                      Id = t.Id,
                      Name = t.Name,
@@ -55,18 +60,32 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                      Status = (TourStatus)t.Status,
                      Price = t.Price,
                      EquipmentIds = t.EquipmentIds,
-                     KeyPoints = t.KeyPoints,
+                     KeyPoints = MapListToDto(t.KeyPoints),
 
 
 
 
-                 }).ToList();*/
+                 }).ToList();
 
                 return MapToDto(tours);
 
             }
         }
 
+        private List<KeyPointDto> MapListToDto(List<KeyPoint> keyPoints)
+        {
+            var result = keyPoints.Select(kp => new KeyPointDto
+            {
+                Id = kp.Id,
+                Name = kp.Name,
+                Description = kp.Description,
+                Longitude = kp.Longitude,
+                Latitude = kp.Latitude,
+                Image = kp.Image,
+                UserId = kp.UserId,
+            }).ToList();
+            return result;
+        }
 
         public Result<PagedResult<EquipmentDto>> GetEquipment(long tourId)
         {
@@ -101,6 +120,31 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
         }
-     
+
+        public Result<TourDto> AddKeypointToTour(TourDto tour, KeyPointDto keypoint)
+        {
+            if (tour == null)
+            {
+                return Result.Fail("No tour found.");
+
+            }
+
+    
+
+            if(keypoint == null)
+            {
+                return Result.Fail("No keypoint found.");
+            }
+
+
+            if (!tour.KeyPoints.Any(kp => kp.Id == keypoint.Id))
+            {
+                tour.KeyPoints.Add(keypoint);
+                Update(tour);
+                return Result.Ok(tour);
+            }
+
+            return Result.Fail("Keypoint already exists in this tour.");
+        }
     }
 }

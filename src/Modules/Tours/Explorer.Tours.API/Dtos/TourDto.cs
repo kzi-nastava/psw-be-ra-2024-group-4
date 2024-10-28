@@ -26,7 +26,7 @@ namespace Explorer.Tours.API.Dtos
 
         public List<KeyPointDto> KeyPoints { get; set; }
 
-        public TourDto() { KeyPoints = new List<KeyPointDto>();  }
+        public TourDto() {   }
 
 
         public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, List<long> equipmentIds, List<KeyPointDto> keyPoints)

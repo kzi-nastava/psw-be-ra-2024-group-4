@@ -20,6 +20,8 @@ namespace Explorer.Tours.API.Public.TourAuthoring
 
 
         Result<TourDto> Get(int id);
+
+        Result<TourDto> AddKeypointToTour(TourDto tour, KeyPointDto keypoint);
     }
      
 }

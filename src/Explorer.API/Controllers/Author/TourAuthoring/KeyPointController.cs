@@ -89,12 +89,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return Ok(nextId);
         }
 
-        [HttpPut("addtotour/{tourid:long}")]
-        public ActionResult<KeyPointDto> AddKeypointToTour(long tourid, [FromBody] KeyPointDto keypoint)
-        {
-            var result = _keyPointService.AddKeypointToTour(tourid, keypoint);
-            return CreateResponse(result);
-        }
+        
 
     }
 }

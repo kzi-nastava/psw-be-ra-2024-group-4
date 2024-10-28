@@ -13,6 +13,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         List<KeyPoint> GetKeyPointsByUserId(long userId);
         int GetMaxId(long userId);
 
-        KeyPoint AddKeyPointToTour(long tourId, KeyPoint keyPoint);
+        
+    
     }
 }

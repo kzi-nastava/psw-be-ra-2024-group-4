@@ -53,6 +53,14 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
-      
+        [HttpPut("keypointaddition")]
+        
+        public ActionResult<TourDto> AddKeyPoint([FromBody] TourKeypointDto tourKeyPoint)
+        {
+            var result = _tourService.AddKeypointToTour(tourKeyPoint.Tour, tourKeyPoint.KeyPoint);
+
+            return CreateResponse(result);
+        }
+
     }
 }

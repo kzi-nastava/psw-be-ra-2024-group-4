@@ -17,12 +17,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext = dbContext;
         }
 
-        public KeyPoint AddKeyPointToTour(long tourId, KeyPoint keyPoint)
-        {
-            keyPoint.setTourId(tourId);
-            return keyPoint;
-
-        }
+      
 
         public List<KeyPoint> GetKeyPointsByUserId(long userId)
         {
