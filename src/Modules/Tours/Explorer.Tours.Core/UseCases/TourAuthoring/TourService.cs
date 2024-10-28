@@ -18,13 +18,10 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 {
     public class TourService : CrudService<TourDto, Tour>, ITourService
     {
-        //ova klasa ce biti podlozna promenama.
-        //Za sada sam ovako uradila, ali kad potvrdim sa asistenom i kolegama mozda promenim.
-        //Posto koleginica zavisi od toga kad cu ja zavrsiti ja cu predati sada.
 
         ITourRepository _tourRepository { get; set; }
         IMapper _mapper { get; set; }
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper)
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
         {
             _tourRepository = tourRepository;
             _mapper = mapper;
