@@ -53,5 +53,11 @@ namespace Explorer.API.Controllers.Tourist
             var result = _problemService.Delete(id);
             return CreateResponse(result);
         }
+        [HttpPost("tourist/postComment")]
+        public ActionResult<ProblemDTO> PostComment([FromBody] ProblemCommentDto commentDto)
+        {
+            var result = _problemService.PostComment(commentDto);
+            return CreateResponse(result);
+        }
     }
 }

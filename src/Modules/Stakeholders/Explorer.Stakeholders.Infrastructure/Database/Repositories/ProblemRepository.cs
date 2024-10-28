@@ -1,4 +1,4 @@
-﻿using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.Stakeholders.Core.Domain.Problems;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.UseCases;
 using System;
@@ -17,6 +17,10 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         {
             _db = db;
         }
+        public Problem? GetById(long id)
+        {
+            return _db.Problem.FirstOrDefault(p => p.Id == id);
+        }
         public List<Problem> GetByUserId(long id)
         {
             var problems = new List<Problem>();
@@ -32,6 +36,17 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         public List<Problem> GetByTourId(long id)
         {
             return _db.Problem.Where(t => t.TourId == id).ToList();
+        }
+        public Problem PostComment(ProblemComment comment)
+        {
+            var problem = GetById(comment.ProblemId);
+            if (problem != null)
+            {
+                problem.PostComment(comment);
+                _db.Problem.Update(problem);
+                _db.SaveChanges();
+            }
+            return problem;
         }
     }
 }
