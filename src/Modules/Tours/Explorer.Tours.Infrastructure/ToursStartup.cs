@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.UseCases.TourAuthoring;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Infrastructure;
 

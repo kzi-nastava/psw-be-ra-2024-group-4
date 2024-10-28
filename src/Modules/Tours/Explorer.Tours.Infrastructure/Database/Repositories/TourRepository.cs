@@ -1,5 +1,6 @@
 ﻿using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -79,5 +80,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
 
         }
+
+       
     }
 }

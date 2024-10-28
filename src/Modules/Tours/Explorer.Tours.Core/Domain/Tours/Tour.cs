@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,7 +25,7 @@ namespace Explorer.Tours.Core.Domain
 
         public List<long> EquipmentIds { get; private set; }
 
-        public List<long> KeyPointIds {  get; private set; }
+        public List<KeyPoint> KeyPoints {  get; private set; }
 
         public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
@@ -42,7 +43,7 @@ namespace Explorer.Tours.Core.Domain
             Price = 0; 
             LengthInKm = 0;
             EquipmentIds = new List<long>();
-            KeyPointIds = new List<long>();
+            KeyPoints = new List<KeyPoint>();
 
         }
 

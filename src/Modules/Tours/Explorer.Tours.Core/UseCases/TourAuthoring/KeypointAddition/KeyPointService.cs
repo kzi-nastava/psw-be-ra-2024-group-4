@@ -11,7 +11,8 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointService
 {
     IKeyPointRepository _keyPointRepository { get; set; }
-    public KeyPointService(ICrudRepository<KeyPoint> repository, IMapper mapper, IKeyPointRepository keyPointRepository) : base(repository, mapper) {
+    public KeyPointService(ICrudRepository<KeyPoint> repository, IMapper mapper, IKeyPointRepository keyPointRepository) : base(repository, mapper)
+    {
         _keyPointRepository = keyPointRepository;
     }
     public Result<List<KeyPointDto>> GetByUserId(long userId)
@@ -33,7 +34,8 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Latitude = kp.Latitude,
                 Description = kp.Description,
                 Image = kp.Image,
-                UserId = kp.UserId
+                UserId = kp.UserId,
+                TourId = kp.TourId
 
 
 
@@ -47,6 +49,12 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
     public int GetMaxId(long userId)
     {
         return _keyPointRepository.GetMaxId(userId);
+    }
+
+    public Result<KeyPointDto> AddKeypointToTour(long tourId, KeyPointDto keyPointDto)
+    {
+        keyPointDto.TourId = tourId;
+        return Update(keyPointDto);
     }
 
 }

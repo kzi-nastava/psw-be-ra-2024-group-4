@@ -24,12 +24,12 @@ namespace Explorer.Tours.API.Dtos
 
         public List<long> EquipmentIds { get; set; }
 
-        public List<long> KeyPointIds { get; set; }
+        public List<KeyPointDto> KeyPoints { get; set; }
 
-        public TourDto() { }
+        public TourDto() { KeyPoints = new List<KeyPointDto>();  }
 
 
-        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, List<long> equipmentIds, List<long> keyPointIds)
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, List<long> equipmentIds, List<KeyPointDto> keyPoints)
 
         {
             Id = id;
@@ -48,7 +48,7 @@ namespace Explorer.Tours.API.Dtos
             Price = price;
             LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
-            KeyPointIds = keyPointIds;
+            KeyPoints = keyPoints;
 
         }
     }

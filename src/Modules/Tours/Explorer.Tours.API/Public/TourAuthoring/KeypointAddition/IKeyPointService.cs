@@ -16,4 +16,6 @@ public interface IKeyPointService
 
     int GetMaxId(long userId);
 
+    Result<KeyPointDto> AddKeypointToTour(long tourId, KeyPointDto keyPointDto);    
+
 }
