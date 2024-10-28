@@ -20,6 +20,8 @@ namespace Explorer.Tours.API.Dtos
         public double Price { get;  set; }
         public long UserId { get;  set; }
 
+        public double LengthInKm { get; set; }
+
         public List<long> EquipmentIds { get; set; }
 
         public List<long> KeyPointIds { get; set; }
@@ -27,7 +29,7 @@ namespace Explorer.Tours.API.Dtos
         public TourDto() { }
 
 
-        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, List<long> equipmentIds, List<long> keyPointIds)
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, List<long> equipmentIds, List<long> keyPointIds)
 
         {
             Id = id;
@@ -44,6 +46,7 @@ namespace Explorer.Tours.API.Dtos
 
             Status = status;
             Price = price;
+            LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
             KeyPointIds = keyPointIds;
 
@@ -53,7 +56,8 @@ namespace Explorer.Tours.API.Dtos
     public enum TourStatus
     {
         Draft,
-        Published
+        Published,
+        Archived
     }
 
     public enum TourTags

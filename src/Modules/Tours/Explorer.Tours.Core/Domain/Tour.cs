@@ -20,6 +20,8 @@ namespace Explorer.Tours.Core.Domain
         public double Price { get; private set; }
         public long UserId { get; private set; }
 
+        public double LengthInKm { get; private set; }
+
         public List<long> EquipmentIds { get; private set; }
 
         public List<long> KeyPointIds {  get; private set; }
@@ -38,6 +40,7 @@ namespace Explorer.Tours.Core.Domain
             UserId = userId;
             Status = TourStatus.Draft;  
             Price = 0; 
+            LengthInKm = 0;
             EquipmentIds = new List<long>();
             KeyPointIds = new List<long>();
 
@@ -49,7 +52,8 @@ namespace Explorer.Tours.Core.Domain
     public enum TourStatus
     {
         Draft,
-        Published
+        Published,
+        Archived
     }
 
     public enum TourTags
