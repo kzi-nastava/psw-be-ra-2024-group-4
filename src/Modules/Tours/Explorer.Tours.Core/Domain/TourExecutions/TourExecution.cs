@@ -36,7 +36,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         {
            LastActivity = DateTime.UtcNow;
             Status = TourExecutionStatus.Active;
-            CompletedKeys = new List<CompletedKeyPoint>();
         }
 
         public CompletedKeyPoint CompleteKeyPoint(long keyPointId)

@@ -23,7 +23,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             _dbSet = _dbContext.Set<TourExecution>();
         }
 
-        public new TourExecution? Get(long id)
+        public new TourExecution? Get(long id) //ovde nisam uspela kao na tutoru puca mi al nadam se da radi bez toga...
         {
             return _dbContext.TourExecution
         .Where(t => t.Id == id)
