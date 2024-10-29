@@ -2,7 +2,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Problems;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using System;
@@ -16,48 +16,42 @@ namespace Explorer.Stakeholders.Core.UseCases
     public class ProblemService: CrudService<ProblemDTO, Problem>, IProblemService
     {
         public IProblemRepository _problemRepository { get; set; }
+        private readonly IMapper _mapper;
         public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository) : base(repository, mapper) {
             _problemRepository = problemRepository;
+            _mapper = mapper;
         }
 
-        public Result<List<ProblemDTO>> GetByUserId(long id)
+        public Result<List<ProblemDTO>> GetByTouristId(long id)
         {
             var problems = _problemRepository.GetByUserId(id);
-            if (problems.Count == 0)
-                return Result.Fail<List<ProblemDTO>>("No found problems");
+            //ako vracas Result.Fail kada je count 0 imaces bug na frontu: ako imas 1 problem i obrises ga, bice problem jer mu vraca code 500. radi kada vratis praznu listu
+            /*if (problems.Count == 0)
+                return Result.Fail<List<ProblemDTO>>("No found problems");*/
 
-            var problemsDTO = problems.Select(problem => new ProblemDTO
-            {
-                Id=problem.Id,
-                UserId = problem.UserId,
-                TourId = problem.TourId,
-                Category = problem.Category,
-                Description = problem.Description,
-                Priority = problem.Priority,
-                Time = problem.Time
-            }).ToList();
 
-            return Result.Ok(problemsDTO);
+            return MapToDto(problems);
 
         }
         public Result<List<ProblemDTO>> GetByTourId(long id)
         {
             var problems = _problemRepository.GetByTourId(id);
-            if (problems.Count == 0)
-                return Result.Fail<List<ProblemDTO>>("No found problems");
+            /*if (problems.Count == 0)
+                return Result.Fail<List<ProblemDTO>>("No found problems");*/
 
-            var problemsDTO = problems.Select(problem => new ProblemDTO
+            return MapToDto(problems);
+        }
+        public Result<ProblemDTO> PostComment(ProblemCommentDto commentDto)
+        {
+            //kako mapirati 
+            //var problem = _problemRepository.PostComment(new ProblemComment(commentDto.ProblemId, commentDto.UserId, commentDto.Text, commentDto.TimeSent));
+            var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+            if(problem == null)
             {
-                Id = problem.Id,
-                UserId = problem.UserId,
-                TourId = problem.TourId,
-                Category = problem.Category,
-                Description = problem.Description,
-                Priority = problem.Priority,
-                Time = problem.Time
-            }).ToList();
-
-            return Result.Ok(problemsDTO);
+                return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");
+            }
+           // return Result.Ok();
+            return MapToDto(problem);
         }
     }
 }
