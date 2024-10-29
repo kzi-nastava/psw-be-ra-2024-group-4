@@ -14,5 +14,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Biography { get; set; }
         public string Motto { get; set; }
         public List<int> Equipment { get; set; }
+        public string ImageBase64 { get; set; }
     }
 }

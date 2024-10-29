@@ -4,6 +4,7 @@ using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Infrastructure.Database;
 using FluentResults;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -88,7 +89,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
 
     private static Explorer.API.Controllers.Tourist.PersonController CreateController(IServiceScope scope)
     {
-        return new Explorer.API.Controllers.Tourist.PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>())
+        return new Explorer.API.Controllers.Tourist.PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
         {
             ControllerContext = BuildContext("-1")
         };

@@ -9,23 +9,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Explorer.Stakeholders.Core.Domain
+namespace Explorer.Stakeholders.Core.Domain.Problems
 {
-    public class Problem: Entity
+    public class Problem : Entity
     {
         [Key]
         public long? Id { get; set; }
-        public long UserId { get; init; }
-        public long TourId { get; init; }
-        //public Category Catgory { get; set; }
-        public string Category { get; init; }
-        public string Description { get; init; }
+        public long UserId { get; set; }
+        public long TourId { get; set; }
+        public string Category { get; set; }
+        public string Description { get; set; }
         public int Priority { get; set; }
         public DateTime Time { get; set; }
+        public List<ProblemComment>? Comments { get; protected set; }
 
         public Problem(long userId, long tourId, string category, string description, int priority, DateTime time)
         {
-            
+
             UserId = userId;
             TourId = tourId;
             Category = category;
@@ -33,6 +33,7 @@ namespace Explorer.Stakeholders.Core.Domain
             Priority = priority;
             Time = time;
             Validate();
+            Comments = new List<ProblemComment>();
         }
 
         public void Validate()
@@ -42,6 +43,11 @@ namespace Explorer.Stakeholders.Core.Domain
             if (Priority == 0) throw new ArgumentException("Invalid Priority");
             if (string.IsNullOrWhiteSpace(Category)) throw new ArgumentException("Invalid Category");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
+        }
+
+        public void PostComment(ProblemComment comment)
+        {
+            Comments.Add(comment);
         }
     }
 }
