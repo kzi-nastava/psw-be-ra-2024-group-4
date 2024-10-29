@@ -1,5 +1,6 @@
 ﻿using Explorer.Modules.Core.Domain;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.Tours.Infrastructure.Database;
@@ -20,5 +21,14 @@ public class ToursContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("tours");
+        ConfigureTour(modelBuilder);
+    }
+
+    private static void ConfigureTour(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Tour>()
+           .HasMany(t => t.KeyPoints)
+           .WithOne()
+           .HasForeignKey(kp => kp.TourId);
     }
 }

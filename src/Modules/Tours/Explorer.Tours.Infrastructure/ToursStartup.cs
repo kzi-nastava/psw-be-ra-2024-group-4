@@ -17,6 +17,7 @@ using Explorer.Tours.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Infrastructure;
 
