@@ -26,7 +26,7 @@ namespace Explorer.Tours.API.Dtos
         public List<long> EquipmentIds { get; set; }
 
         public List<long> KeyPointIds { get; set; }
-        public ICollection<KeyPointDto> KeyPoints { get; private set; } = new List<KeyPointDto>();
+        public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public TourDto() { }
 
 
