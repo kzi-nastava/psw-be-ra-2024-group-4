@@ -1,6 +1,9 @@
 ﻿using Explorer.Modules.Core.Domain;
 using Explorer.Tours.Core.Domain;
+<<<<<<< HEAD
 using Explorer.Tours.Core.Domain.TourExecutions;
+=======
+>>>>>>> ba0e327dd0b05fccc473b0ae786494af65d8376f
 using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +28,19 @@ public class ToursContext : DbContext
     {
         modelBuilder.HasDefaultSchema("tours");
 
+
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeys).HasColumnType("jsonb"); //value object cuva kao json
+
+        ConfigureTour(modelBuilder);
+    }
+
+    private static void ConfigureTour(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Tour>()
+           .HasMany(t => t.KeyPoints)
+           .WithOne()
+           .HasForeignKey(kp => kp.TourId);
+
     }
 
 

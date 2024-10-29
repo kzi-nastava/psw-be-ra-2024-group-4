@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace Explorer.Tours.API.Dtos
         public List<long> EquipmentIds { get; set; }
 
         public List<long> KeyPointIds { get; set; }
-
+        public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public TourDto() { }
 
 
