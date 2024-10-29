@@ -1,9 +1,6 @@
 ﻿using Explorer.Modules.Core.Domain;
 using Explorer.Tours.Core.Domain;
-<<<<<<< HEAD
 using Explorer.Tours.Core.Domain.TourExecutions;
-=======
->>>>>>> ba0e327dd0b05fccc473b0ae786494af65d8376f
 using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 
