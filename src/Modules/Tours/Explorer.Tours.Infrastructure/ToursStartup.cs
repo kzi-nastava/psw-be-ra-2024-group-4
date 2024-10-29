@@ -26,7 +26,7 @@ using Explorer.Tours.Core.UseCases.Execution;
 using Explorer.Tours.Infrastructure.Database.Repositories.Execution;
 
 using Explorer.Tours.Core.Domain.Tours;
-
+using Explorer.Tours.Core.Domain.TourExecutions;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -50,6 +50,7 @@ public static class ToursStartup
         services.AddScoped<IObjectService, ObjectService>();
         services.AddScoped<ITourReviewService, TourReviewService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
+        services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -62,8 +63,10 @@ public static class ToursStartup
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
         services.AddScoped<ITourExecutionRepository, TourExecutionRepository>();
-
+     
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
+   
+        services.AddScoped<IPositionSimulatorRepository, PositionSimulatorRepository>();
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),

@@ -19,6 +19,7 @@ public class ToursContext : DbContext
 
     public DbSet<Explorer.Tours.Core.Domain.Object> Objects { get; set; }
 
+    public DbSet<PositionSimulator> Positions { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,17 +29,18 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeys).HasColumnType("jsonb"); //value object cuva kao json
 
-        ConfigureTour(modelBuilder);
-    }
 
-    private static void ConfigureTour(ModelBuilder modelBuilder)
-    {
+        modelBuilder.Entity<PositionSimulator>()
+          .HasIndex(ps => ps.TouristId)
+          .IsUnique();
+
         modelBuilder.Entity<Tour>()
-           .HasMany(t => t.KeyPoints)
-           .WithOne()
-           .HasForeignKey(kp => kp.TourId);
-
+          .HasMany(t => t.KeyPoints)
+          .WithOne()
+          .HasForeignKey(kp => kp.TourId);
     }
+
+   
 
 
 }
