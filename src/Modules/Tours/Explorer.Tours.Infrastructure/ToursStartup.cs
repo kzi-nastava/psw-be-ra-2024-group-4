@@ -24,6 +24,9 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution;
 using Explorer.Tours.Core.UseCases.Execution;
 using Explorer.Tours.Infrastructure.Database.Repositories.Execution;
 
+using Explorer.Tours.Core.Domain.Tours;
+
+
 namespace Explorer.Tours.Infrastructure;
 
 public static class ToursStartup
