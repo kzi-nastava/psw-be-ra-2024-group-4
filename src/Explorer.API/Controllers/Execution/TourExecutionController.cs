@@ -31,6 +31,11 @@ namespace Explorer.API.Controllers.Execution
         public ActionResult CompleteTourExecution(int executionId)
         {
             var result = _executionService.CompleteTourExecution(executionId);
+            if (result == null)
+            {
+                return NotFound($"TourExecution with ID {executionId} not found.");
+            }
+
             return CreateResponse(result);
         }
 
@@ -38,6 +43,11 @@ namespace Explorer.API.Controllers.Execution
         public ActionResult<TourDto> AbandonTourExecution(int executionId)
         {
             var result = _executionService.AbandonTourExecution(executionId);
+            if (result == null)
+            {
+                return NotFound($"TourExecution with ID {executionId} not found.");
+            }
+
             return CreateResponse(result);
         }
     }

@@ -27,11 +27,12 @@ namespace Explorer.Tours.Core.UseCases.Execution
             _mapper = mapper;
         }
 
-        public Result<TourExecutionDto> AbandonTourExecution(long id)
+        public Result<TourExecutionDto> Create(TourExecutionDto execution)
         {
-            var result = tourExecutionRepository.AbandonExecution(id);
+            var result = tourExecutionRepository.StartExecution(MapToDomain(execution));
 
             return Result.Ok(MapToDto(result));
+
         }
 
         public Result<TourExecutionDto> CompleteTourExecution(long id)
@@ -41,12 +42,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return Result.Ok(MapToDto(result));
         }
 
-        public Result<TourExecutionDto> Create(TourExecutionDto execution)
+        public Result<TourExecutionDto> AbandonTourExecution(long id)
         {
-            var result = tourExecutionRepository.StartExecution(MapToDomain(execution));
+            var result = tourExecutionRepository.AbandonExecution(id);
 
             return Result.Ok(MapToDto(result));
-
         }
+
+        
+
+        
     }
 }
