@@ -120,5 +120,23 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
 
         }
+
+        public Result Archive(long id, long authorId)
+        {
+            try
+            {
+                _tourRepository.Archive(id, authorId);
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
     }
 }

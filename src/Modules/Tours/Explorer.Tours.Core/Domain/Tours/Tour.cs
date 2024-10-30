@@ -24,7 +24,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public DateTime PublishedTime { get; private set; }
 
-        public DateTime ArchiveTime { get; private set; }
+        public DateTime? ArchiveTime { get; private set; }
 
         public List<long> EquipmentIds { get; private set; }
 
@@ -53,6 +53,16 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         }
 
+        public bool Archive(long authorId)
+        {
+            if (Status == TourStatus.Published && UserId == authorId)
+            {
+                ArchiveTime = DateTime.UtcNow;
+                Status = TourStatus.Archived;
+                return true;
+            }
+            return false;
+        }
 
     }
 

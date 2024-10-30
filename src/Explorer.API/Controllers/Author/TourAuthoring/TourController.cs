@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
 {
@@ -58,6 +59,19 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         {
             var result = _tourService.AddKeyPoint(tour, keypointid);
 
+            return CreateResponse(result);
+        }
+
+        [HttpPut("archive/{tourId:int}")]
+        public ActionResult<TourDto> Archive(long tourId)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            long authorId = -1;
+            if (identity != null && identity.IsAuthenticated)
+            {
+                authorId = long.Parse(identity.FindFirst("id").Value);
+            }
+            var result = _tourService.Archive(tourId, authorId);
             return CreateResponse(result);
         }
     }

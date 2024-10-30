@@ -13,10 +13,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
     public class TourRepository : ITourRepository
     {
         private readonly ToursContext _dbContext;
+        private readonly DbSet<Tour> _dbSet;
 
         public TourRepository(ToursContext dbContext)
         {
             _dbContext = dbContext;
+            _dbSet = dbContext.Set<Tour>();
         }
 
         public List<Tour> GetToursByUserId(long userId)
@@ -80,5 +82,18 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
 
         }
+
+        public void Archive(long id, long authorId)
+        {
+            var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+            if (tour == null)
+            {
+                throw new ArgumentException("Tour not found.");
+            }
+
+            tour.Archive(authorId);
+            _dbContext.SaveChanges();
+        }
+
     }
 }
