@@ -29,6 +29,7 @@ public class ToursContext : DbContext
         modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeys).HasColumnType("jsonb"); //value object cuva kao json
 
         ConfigureTour(modelBuilder);
+        ConfigureTourExecution(modelBuilder);
     }
 
     private static void ConfigureTour(ModelBuilder modelBuilder)
@@ -37,6 +38,14 @@ public class ToursContext : DbContext
            .HasMany(t => t.KeyPoints)
            .WithOne()
            .HasForeignKey(kp => kp.TourId);
+
+    }
+    private static void ConfigureTourExecution(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TourExecution>()
+            .HasOne<Tour>()
+            .WithMany()
+            .HasForeignKey(s => s.TourId);
 
     }
 
