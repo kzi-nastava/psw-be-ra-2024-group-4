@@ -1,5 +1,6 @@
 ﻿using Explorer.Blog.Core.Domain.Posts;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -11,21 +12,46 @@ using System.Threading.Tasks;
 
 namespace Explorer.Blog.Infrastructure.Database.Repositories
 {
-    public class PostDatabaseRepository : CrudDatabaseRepository<Post,BlogContext>, IPostRepository //nasledjujemo i implementaciju osnovnih crud a i redefinisemo te koje su nama potrebne tj cija smo zaglavlja def u IPostRepo-u
+    public class PostDatabaseRepository : IPostRepository
     {   
-        public PostDatabaseRepository(BlogContext context): base(context) { } //u crud database se context se koristi kao DbContext
+        private readonly BlogContext _blogContext;
+        public PostDatabaseRepository(BlogContext blogContext)
+        { 
+            _blogContext = blogContext;
+        }
 
-        public new Post Get(long id)
+        public PagedResult<Post> GetPaged(int page, int pageSize)
         {
-            Post? post= DbContext.Posts.Where(b => b.Id == id)
+            var task = _blogContext.Posts.GetPagedById(page, pageSize);
+            task.Wait();
+            return task.Result;
+        }
+
+        public Post Create(Post entity)
+        {
+            _blogContext.Posts.Add(entity);
+            _blogContext.SaveChanges();
+            return entity;
+        }
+
+        public Post Get(long id)
+        {
+            Post? post= _blogContext.Posts.Where(b => b.Id == id)
            .Include(b => b.Comments!).FirstOrDefault();
             return post == null ? throw new KeyNotFoundException("Not found: " +id) : post;
         }
-        public new Post Update(Post post)
+        public Post Update(Post post)
         {
-            DbContext.Entry(post).State = EntityState.Modified;
-            DbContext.SaveChanges();
+            _blogContext.Entry(post).State = EntityState.Modified;
+            _blogContext.SaveChanges();
             return post;
+        }
+
+        public void Delete(long id)
+        {
+            var entity = Get(id);
+            _blogContext.Posts.Remove(entity);
+            _blogContext.SaveChanges();
         }
     }
 }

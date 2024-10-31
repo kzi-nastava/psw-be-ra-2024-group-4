@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Blog.Core.Domain.RepositoryInterfaces
 {
-    public interface IPostRepository: ICrudRepository<Post>
+    public interface IPostRepository
     {
         PagedResult<Post> GetPaged(int page, int pageSize);
         Post Get(long id);
