@@ -53,5 +53,50 @@ namespace Explorer.Stakeholders.Core.UseCases
            // return Result.Ok();
             return MapToDto(problem);
         }
+
+        public Result<ProblemDTO> UpdateActiveStatus(long id, bool isActive)
+        {/*
+            var problem = _problemRepository.GetById(id);
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+            problem.IsActive = isActive;
+
+            var updateResult = Update(MapToDto(problem));
+
+            if (updateResult.IsFailed)
+            {
+                return Result.Fail<ProblemDTO>("Failed to update problem.");
+            }
+
+            return Result.Ok(updateResult.Value);*/
+            var problem = _problemRepository.GetById(id);
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+
+            // Ažuriraj status
+            problem.IsActive = isActive;
+
+            // Praćenje i update kroz kontekst
+            _problemRepository.Update(problem);
+
+            return Result.Ok(MapToDto(problem));
+        }
+
+        public Result<ProblemDTO> GetById(long id)
+        {
+            var problem = _problemRepository.GetById(id);
+
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+
+            return MapToDto(problem);  
+        }
+
     }
 }
