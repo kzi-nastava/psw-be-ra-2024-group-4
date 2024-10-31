@@ -47,6 +47,11 @@ public class ToursContext : DbContext
             .WithMany()
             .HasForeignKey(s => s.TourId);
 
+        modelBuilder.Entity<TourExecution>()
+            .HasOne<PositionSimulator>()
+            .WithMany()
+            .HasForeignKey(s => s.LocationId);
+
     }
 
    

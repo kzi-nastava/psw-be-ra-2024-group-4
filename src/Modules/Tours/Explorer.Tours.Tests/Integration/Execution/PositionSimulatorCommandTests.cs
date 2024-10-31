@@ -11,11 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.TourExecution;
+namespace Explorer.Tours.Tests.Integration.Execution;
 [Collection("Sequential")]
 public class PositionSimulatorCommandTests : BaseToursIntegrationTest
 {
-    public PositionSimulatorCommandTests(ToursTestFactory factory) : base(factory) {}
+    public PositionSimulatorCommandTests(ToursTestFactory factory) : base(factory) { }
 
     [Fact]
     public void Creates()
@@ -56,10 +56,10 @@ public class PositionSimulatorCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var updatedEntity = new PositionSimulatorDto
         {
-            Id = 1,
+            Id = -1,
             Longitude = 10,
             Latitude = 10,
-            TouristId = 3
+            TouristId = 1
         };
 
         //Act
@@ -67,13 +67,13 @@ public class PositionSimulatorCommandTests : BaseToursIntegrationTest
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.Id.ShouldBe(1);
+        result.Id.ShouldBe(-1);
         result.Latitude.ShouldBe(updatedEntity.Latitude);
         result.Longitude.ShouldBe(updatedEntity.Longitude);
         result.TouristId.ShouldBe(updatedEntity.TouristId);
 
         // Assert - Database
-        var storedEntity = dbContext.Positions.FirstOrDefault(i => i.Id == 1);
+        var storedEntity = dbContext.Positions.FirstOrDefault(i => i.Id == -1);
         storedEntity.ShouldNotBeNull();
         storedEntity.Id.ShouldBe(result.Id);
     }

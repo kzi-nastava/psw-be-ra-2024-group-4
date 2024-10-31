@@ -4,11 +4,7 @@ INSERT INTO tours."KeyPoints"(
 
 INSERT INTO tours."KeyPoints"(
 	"Id", "Name", "Longitude", "Latitude", "Description", "Image", "UserId", "TourId")
-<<<<<<<< HEAD:src/Modules/Tours/Explorer.Tours.Tests/TestData/d-keypoints.sql
 	VALUES (-2, 'Chiesa di Sant Ignazio di Loyola, Rome', 12.4797, 41.8992,  'The Church of St. Ignatius of Loyola at Campus Martius is a Latin Catholic titular church, of deaconry rank, dedicated to Ignatius of Loyola, the founder of the Society of Jesus, located in Rome, Italy.', 'https://d1c233nw6edifh.cloudfront.net/wp-content/uploads/sites/60/2018/06/volta-chiesa-sant-ignazio-roma.jpg', 2, -2);
-========
-	VALUES (-2, 'Chiesa di Sant Ignazio di Loyola, Rome', 12.4797, 41.8992,  'The Church of St. Ignatius of Loyola at Campus Martius is a Latin Catholic titular church, of deaconry rank, dedicated to Ignatius of Loyola, the founder of the Society of Jesus, located in Rome, Italy.', 'https://d1c233nw6edifh.cloudfront.net/wp-content/uploads/sites/60/2018/06/volta-chiesa-sant-ignazio-roma.jpg', 2, -1);
->>>>>>>> 941236a38b310ec494aa5ff041ce744c6410961d:src/Modules/Tours/Explorer.Tours.Tests/TestData/e-keypoints.sql
 
 INSERT INTO tours."KeyPoints"(
 	"Id", "Name", "Longitude", "Latitude", "Description", "Image", "UserId", "TourId")

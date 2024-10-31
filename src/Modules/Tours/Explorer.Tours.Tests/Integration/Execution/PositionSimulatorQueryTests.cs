@@ -9,11 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.TourExecution;
+namespace Explorer.Tours.Tests.Integration.Execution;
 [Collection("Sequential")]
 public class PositionSimulatorQueryTests : BaseToursIntegrationTest
 {
-    public PositionSimulatorQueryTests(ToursTestFactory factory) : base(factory){}
+    public PositionSimulatorQueryTests(ToursTestFactory factory) : base(factory) { }
 
     [Fact]
     public void Retrieves_one()
@@ -23,7 +23,7 @@ public class PositionSimulatorQueryTests : BaseToursIntegrationTest
         var controller = CreateController(scope);
 
         //Act
-        var result = ((ObjectResult)controller.Get(-1).Result);
+        var result = (ObjectResult)controller.Get(-1).Result;
 
         //Assert
         result.ShouldNotBe(null);
