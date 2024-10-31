@@ -17,6 +17,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 
         Tour GetSpecificTourByUser(long id, long userId);
         void Archive(long id, long authorId);
+        void Reactivate(long id, long authorId);
 
     }
 }

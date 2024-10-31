@@ -138,5 +138,24 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result Reactivate(long id, long authorId)
+        {
+            try
+            {
+                _tourRepository.Reactivate(id, authorId);
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+
+
     }
 }

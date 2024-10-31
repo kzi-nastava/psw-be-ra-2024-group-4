@@ -95,5 +95,22 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
         }
 
+        public void Reactivate(long id, long authorId)
+        {
+            var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+            if (tour == null)
+            {
+                throw new ArgumentException("Tour not found.");
+            }
+
+            if (!tour.Reactivate(authorId))
+            {
+                throw new UnauthorizedAccessException("You are not authorized to reactivate this tour.");
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+
     }
 }

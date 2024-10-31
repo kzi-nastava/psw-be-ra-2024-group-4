@@ -64,6 +64,18 @@ namespace Explorer.Tours.Core.Domain.Tours
             return false;
         }
 
+        public bool Reactivate(long authorId)
+        {
+            if (Status == TourStatus.Archived && UserId == authorId)
+            {
+                Status = TourStatus.Published;
+                ArchiveTime = null;
+                return true;
+            }
+            return false;
+        }
+
+
     }
 
     public enum TourStatus

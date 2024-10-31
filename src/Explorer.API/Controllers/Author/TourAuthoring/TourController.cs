@@ -74,5 +74,19 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var result = _tourService.Archive(tourId, authorId);
             return CreateResponse(result);
         }
+
+        [HttpPut("reactivate/{tourId:int}")]
+        public ActionResult<TourDto> Reactivate(long tourId)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            long authorId = -1;
+            if (identity != null && identity.IsAuthenticated)
+            {
+                authorId = long.Parse(identity.FindFirst("id").Value);
+            }
+            var result = _tourService.Reactivate(tourId, authorId);
+            return CreateResponse(result);
+        }
+
     }
 }
