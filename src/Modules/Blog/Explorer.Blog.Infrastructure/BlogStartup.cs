@@ -31,7 +31,6 @@ public static class BlogStartup
     {
 
        services.AddScoped<ICommentService, CommentService>();
-
         services.AddScoped<IPostService, PostService>();
 
     }
