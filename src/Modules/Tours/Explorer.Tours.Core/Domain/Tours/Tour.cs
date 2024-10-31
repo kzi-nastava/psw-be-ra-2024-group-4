@@ -53,27 +53,36 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         }
 
-        public bool Archive(long authorId)
+        public void Archive(long authorId)
         {
-            if (Status == TourStatus.Published && UserId == authorId)
-            {
-                ArchiveTime = DateTime.UtcNow;
-                Status = TourStatus.Archived;
-                return true;
-            }
-            return false;
+            if (Status != TourStatus.Published) throw new ArgumentException("Tour must be published in order to be archived");
+            IsAuthor(authorId);
+
+            ArchiveTime = DateTime.UtcNow;
+            Status = TourStatus.Archived;
+        }
+
+        private void IsAuthor(long userId)
+        {
+            if (UserId != userId) throw new UnauthorizedAccessException("User is not the author of the tour");
         }
 
         public bool Reactivate(long authorId)
         {
-            if (Status == TourStatus.Archived && UserId == authorId)
+            if (Status != TourStatus.Archived)
             {
-                Status = TourStatus.Published;
-                ArchiveTime = null;
-                return true;
+                throw new ArgumentException("Tour must be archived in order to be reactivated");
             }
-            return false;
+
+            IsAuthor(authorId);
+
+            Status = TourStatus.Published;
+
+            ArchiveTime = null;
+
+            return true;
         }
+
 
 
     }

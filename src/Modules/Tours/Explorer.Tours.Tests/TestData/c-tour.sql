@@ -26,7 +26,7 @@ VALUES (
     'A challenging tour through the high mountains, suitable for experienced hikers.',
     'Hard',
     ARRAY[2, 3, 5]::integer[], 
-    0,
+    1,
     0,  
     2, 
     10.0,  
