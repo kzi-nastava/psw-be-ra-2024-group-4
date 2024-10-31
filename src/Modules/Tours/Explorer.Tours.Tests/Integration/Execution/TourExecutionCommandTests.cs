@@ -34,7 +34,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
                 Id = -4,
                 TourId = -1,
                 TouristId = -21,
-                LocationId = 105,
+                LocationId = -3,
                 LastActivity = DateTime.UtcNow,
                 Status = API.Dtos.TourExecutionDtos.TourExecutionStatus.Active,
                 CompletedKeys = new List<CompletedKeyPointDto>()
