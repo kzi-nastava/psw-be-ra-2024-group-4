@@ -10,6 +10,7 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Explorer.Blog.Core.Domain.Posts;
 
 namespace Explorer.Blog.Infrastructure;
 

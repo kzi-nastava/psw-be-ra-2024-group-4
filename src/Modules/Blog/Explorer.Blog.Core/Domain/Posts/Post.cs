@@ -5,17 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Blog.Core.Domain
+namespace Explorer.Blog.Core.Domain.Posts
 {
     public class Post : Entity
     {
         public string Title { get; private set; }
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        public string ImageUrl {  get; private set; }
-        public BlogStatus Status { get; private set; } 
+        public string ImageUrl { get; private set; }
+        public BlogStatus Status { get; private set; }
         public long UserId { get; private set; }
-        
+        public List<Comment> Comments { get; private set; }
+        public List<Rating> Ratings { get; private set; }
+
 
         public Post(string title, string description, DateTime createdAt, string imageUrl, BlogStatus status, long userId)
         {
@@ -25,13 +27,15 @@ namespace Explorer.Blog.Core.Domain
             ImageUrl = imageUrl;
             Status = status;
             UserId = userId;
+            Comments = new List<Comment>();
+            Ratings= new List<Rating>();
             Validate();
         }
         private void Validate()
         {
-            if (string.IsNullOrWhiteSpace(Title))throw new ArgumentException("Invalid Title");
+            if (string.IsNullOrWhiteSpace(Title)) throw new ArgumentException("Invalid Title");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
-            if (CreatedAt == default)throw new ArgumentException("Invalid CreatedAt date");
+            if (CreatedAt == default) throw new ArgumentException("Invalid CreatedAt date");
             if (!Enum.IsDefined(typeof(BlogStatus), Status)) throw new ArgumentException("Invalid Status");
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
         }
