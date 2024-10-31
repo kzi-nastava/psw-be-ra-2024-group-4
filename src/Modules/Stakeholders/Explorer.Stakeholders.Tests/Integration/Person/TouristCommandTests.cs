@@ -36,6 +36,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
             result.Biography.ShouldBe("KaoJa");
             result.Motto.ShouldBe("Samo Jako Bro"); 
             result.Equipment.ShouldBe((new[] { 1, 2 }).ToArray());
+            result.Wallet.ShouldBe(1000);
         }
 
         [Fact]
@@ -56,6 +57,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
                 Biography = "KaoJa",
                 Motto = "Preko mora i okeana",
                 Equipment = new() { 1,2 ,3},
+                Wallet = 1000
             };
             var actionResult = controller.Update(updatedEntity);
             var objectResult = actionResult as ObjectResult;
