@@ -63,17 +63,17 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         }
 
         [HttpPut("archive/{tourId:int}")]
-        public ActionResult<TourDto> Archive(long tourId, [FromBody] long authorId)
+        public ActionResult<TourDto> Archive(long tourId)
         {
-            var result = _tourService.Archive(tourId, authorId);
+            var result = _tourService.Archive(tourId);
             return CreateResponse(result);
         }
 
 
         [HttpPut("reactivate/{tourId:int}")]
-        public ActionResult<TourDto> Reactivate(long tourId, [FromBody] long authorId)
+        public ActionResult<TourDto> Reactivate(long tourId)
         {
-            var result = _tourService.Reactivate(tourId, authorId);
+            var result = _tourService.Reactivate(tourId);
             return CreateResponse(result);
         }
 

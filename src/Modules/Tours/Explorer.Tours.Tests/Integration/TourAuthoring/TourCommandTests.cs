@@ -236,7 +236,7 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             // Act
-            var result = (OkResult)controller.Archive(tourId, authorId).Result;
+            var result = (OkResult)controller.Archive(tourId).Result;
 
             // Assert - Response
             result.ShouldNotBeNull();
@@ -263,7 +263,7 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             // Act
-            var result = controller.Archive(tourId, authorId).Result;
+            var result = controller.Archive(tourId).Result;
 
 
             // Assert - Response
@@ -292,7 +292,7 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             // Act
-            var result = controller.Archive(tourId, authorId).Result;
+            var result = controller.Archive(tourId).Result;
 
             // Assert - Response
             var objectResult = Assert.IsType<ObjectResult>(result);
@@ -320,7 +320,7 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             // Act
-            var result = (OkResult)controller.Reactivate(tourId, authorId).Result;
+            var result = (OkResult)controller.Reactivate(tourId).Result;
 
             // Assert - Response
             result.ShouldNotBeNull();

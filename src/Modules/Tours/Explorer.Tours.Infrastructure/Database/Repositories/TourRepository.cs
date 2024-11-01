@@ -21,6 +21,21 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbSet = dbContext.Set<Tour>();
         }
 
+        public Tour GetById(long id)
+        {
+             var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+             if (tour == null)
+             { 
+                 throw new ArgumentException("Tour not found.");
+             }
+             return tour;
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
+
         public List<Tour> GetToursByUserId(long userId)
         {
             return _dbContext.Tour
@@ -81,34 +96,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
 
-        }
-
-        public void Archive(long id, long authorId)
-        {
-            var tour = _dbSet.FirstOrDefault(t => t.Id == id);
-            if (tour == null)
-            {
-                throw new ArgumentException("Tour not found.");
-            }
-
-            tour.Archive(authorId);
-            _dbContext.SaveChanges();
-        }
-
-        public void Reactivate(long id, long authorId)
-        {
-            var tour = _dbSet.FirstOrDefault(t => t.Id == id);
-            if (tour == null)
-            {
-                throw new ArgumentException("Tour not found.");
-            }
-
-            if (!tour.Reactivate(authorId))
-            {
-                throw new UnauthorizedAccessException("You are not authorized to reactivate this tour.");
-            }
-
-            _dbContext.SaveChanges();
         }
 
 

@@ -121,11 +121,13 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
         }
 
-        public Result Archive(long id, long authorId)
+        public Result Archive(long id)
         {
             try
             {
-                _tourRepository.Archive(id, authorId);
+                var tour = _tourRepository.GetById(id);
+                tour.Archive(tour.UserId);
+                _tourRepository.Save();
                 return Result.Ok();
             }
             catch (ArgumentException e)
@@ -136,13 +138,17 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             {
                 return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
             }
+
+
         }
 
-        public Result Reactivate(long id, long authorId)
+        public Result Reactivate(long id)
         {
             try
             {
-                _tourRepository.Reactivate(id, authorId);
+                var tour = _tourRepository.GetById(id);
+                tour.Reactivate(tour.UserId);
+                _tourRepository.Save();
                 return Result.Ok();
             }
             catch (ArgumentException e)
