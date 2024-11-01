@@ -45,25 +45,33 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 .Distinct()
                 .Count();
 
-            var tours = _dbContext.Tour
-                .Where(t => _dbContext.TourExecution.Any(te => 
+            var activeTours = _dbContext.Tour
+                .Where(t => _dbContext.TourExecution.Any(te =>
                     te.TourId == t.Id && te.Status == TourExecutionStatus.Active))
                 .OrderBy(t => t.PublishedTime)
-                .Select(t => new TourOverview
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var tours = activeTours.Select(t =>
+            {
+                var keyPointId = t.KeyPointIds.FirstOrDefault();
+
+                var firstKeyPoint = _dbContext.KeyPoints
+                    .Where(kp => kp.Id == keyPointId)
+                    .FirstOrDefault();
+
+                return new TourOverview
                 {
                     TourId = t.Id,
                     TourName = t.Name,
                     TourDifficulty = t.Difficulty,
                     Tags = t.Tags,
-                    FirstKeyPoint = (KeyPoint)_dbContext.KeyPoints
-                        .Where(kp => kp.TourId == t.Id && kp.Id == t.KeyPointIds.First())
-                })
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+                    FirstKeyPoint = firstKeyPoint
+                };
+            }).ToList();
 
             var pagedResult = new PagedResult<TourOverview>(tours, totalCount);
-
             return pagedResult;
         }
     }
