@@ -39,7 +39,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-        public Result<List<OrderItemDto>> GetAll(long itemId)
+        public Result<List<OrderItemDto>> GetAll(long cartId)
         {
             try
             {
@@ -54,7 +54,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                     CardId = item.CartId
                 }).ToList();
 
-                return Result.Ok(orderItemDtos);
+                var result = orderItemDtos.Where(item => item.CardId == cartId).ToList();
+
+                return Result.Ok(result);
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface IOrderItemRepository
     {
-        Result<List<OrderItemDto>> GetAll(long itemId);
+        Result<List<OrderItemDto>> GetAll(long cartId);
         Result<decimal> CalculateTotalPrice(long itemId);
     }
 }

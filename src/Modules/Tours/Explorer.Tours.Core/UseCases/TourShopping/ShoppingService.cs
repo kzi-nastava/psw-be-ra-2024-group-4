@@ -24,19 +24,6 @@ namespace Explorer.Tours.Core.UseCases.TourShopping
             _shoppingCartRepository = shoppingCartRepository;
         }
 
-        public Result<ShoppingCartDto> Create(ShoppingCartDto orderItemDto)
-        {
-
-            return _shoppingCartRepository.Create(orderItemDto);
-        }
-        public Result<ShoppingCartDto> Update(ShoppingCartDto orderItemDto)
-        {
-            return _shoppingCartRepository.Update(orderItemDto);
-        }
-        public Result Delete(int itemId)
-        {
-            return _shoppingCartRepository.Delete(itemId);
-        }
         public Result<List<ShoppingCartDto>> GetAll()
         {
             return _shoppingCartRepository.GetAll();
@@ -45,9 +32,6 @@ namespace Explorer.Tours.Core.UseCases.TourShopping
         {
             return _shoppingCartRepository.CalculateTotalPrice(cartId);
         }
-        public Result<ShoppingCartDto> Get(int cardId)
-        {
-            return _shoppingCartRepository.Get(cardId);
-        }
+      
     }
 }
