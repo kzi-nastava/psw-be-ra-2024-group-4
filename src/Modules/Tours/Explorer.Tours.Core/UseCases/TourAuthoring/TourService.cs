@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -13,24 +14,22 @@ using System.Threading.Tasks;
 using TourStatus = Explorer.Tours.API.Dtos.TourStatus;
 using TourTags = Explorer.Tours.API.Dtos.TourTags;
 
-namespace Explorer.Tours.Core.UseCases
+namespace Explorer.Tours.Core.UseCases.TourAuthoring
 {
     public class TourService : CrudService<TourDto, Tour>, ITourService
     {
-        //ova klasa ce biti podlozna promenama.
-        //Za sada sam ovako uradila, ali kad potvrdim sa asistenom i kolegama mozda promenim.
-        //Posto koleginica zavisi od toga kad cu ja zavrsiti ja cu predati sada.
 
         ITourRepository _tourRepository { get; set; }
         IMapper _mapper { get; set; }
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) {
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
+        {
             _tourRepository = tourRepository;
             _mapper = mapper;
         }
 
         public Result<List<TourDto>> GetByUserId(long userId)
         {
-            
+
             {
                 var tours = _tourRepository.GetToursByUserId(userId);
 
@@ -98,9 +97,9 @@ namespace Explorer.Tours.Core.UseCases
         }
         public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
         {
-         
 
-            if(tour == null)
+
+            if (tour == null)
             {
                 return Result.Fail("No tour found.");
 
@@ -115,8 +114,8 @@ namespace Explorer.Tours.Core.UseCases
             }
 
             return Result.Fail("Keypoint already exists in this tour.");
-            
-          
+
+
 
 
 

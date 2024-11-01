@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,14 +23,18 @@ namespace Explorer.Tours.API.Dtos
 
         public double LengthInKm { get; set; }
 
+        public DateTime PublishedTime { get; set; }
+
+        public DateTime ArchiveTime { get; set; }
+
         public List<long> EquipmentIds { get; set; }
 
         public List<long> KeyPointIds { get; set; }
-
+        public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public TourDto() { }
 
 
-        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, List<long> equipmentIds, List<long> keyPointIds)
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, DateTime publishedTime, DateTime archivedTime ,List<long> equipmentIds, List<long> keyPointIds)
 
         {
             Id = id;
@@ -48,6 +53,8 @@ namespace Explorer.Tours.API.Dtos
             Price = price;
             LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
+            PublishedTime = publishedTime;
+            ArchiveTime = archivedTime;
             KeyPointIds = keyPointIds;
 
         }

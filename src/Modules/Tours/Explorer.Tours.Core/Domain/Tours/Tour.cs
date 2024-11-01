@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Core.Domain
+namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Tour : Entity
     {
@@ -22,10 +22,15 @@ namespace Explorer.Tours.Core.Domain
 
         public double LengthInKm { get; private set; }
 
+        public DateTime PublishedTime { get; private set; }
+
+        public DateTime ArchiveTime { get; private set; }
+
         public List<long> EquipmentIds { get; private set; }
 
-        public List<long> KeyPointIds {  get; private set; }
+        public List<long> KeyPointIds { get; private set; }
 
+        public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
         public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
@@ -38,9 +43,11 @@ namespace Explorer.Tours.Core.Domain
             if (userId <= 0)
                 throw new ArgumentException("Invalid UserId. UserId must be a positive number.");
             UserId = userId;
-            Status = TourStatus.Draft;  
-            Price = 0; 
+            Status = TourStatus.Draft;
+            Price = 0;
             LengthInKm = 0;
+            PublishedTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
+            ArchiveTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             EquipmentIds = new List<long>();
             KeyPointIds = new List<long>();
 
