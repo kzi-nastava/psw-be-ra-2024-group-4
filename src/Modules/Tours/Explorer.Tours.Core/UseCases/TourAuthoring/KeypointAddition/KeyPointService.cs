@@ -5,6 +5,8 @@ using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
+using Geolocation;
+using System.Drawing;
 
 namespace Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 
@@ -49,4 +51,38 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         return _keyPointRepository.GetMaxId(userId);
     }
 
+    Result<List<KeyPointDto>> IKeyPointService.GetByCoordinated(long v1, long v2, int v3)
+    {
+        var res = new List<KeyPoint>();
+        var centralCoordinate = new Coordinate(11.9, 18.9);
+        var keyPoints = _keyPointRepository.GetAll();
+
+
+        foreach (var kp in keyPoints)
+        {
+            double dist = GeoCalculator.GetDistance(
+            centralCoordinate,
+            new Coordinate(kp.Latitude, kp.Longitude),
+            4,
+            DistanceUnit.Kilometers);
+            if (dist < 16)
+                res.Add(kp);
+        }
+
+        var r = res.Select(kp => new KeyPointDto
+        {
+            Id = kp.Id,
+            Name = kp.Name,
+            Longitude = kp.Longitude,
+            Latitude = kp.Latitude,
+            Description = kp.Description,
+            Image = kp.Image,
+            UserId = kp.UserId
+
+
+
+        }).ToList();
+
+        return r;
+    }
 }

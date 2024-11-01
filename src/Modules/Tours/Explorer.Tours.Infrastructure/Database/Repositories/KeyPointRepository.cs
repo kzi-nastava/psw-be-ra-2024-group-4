@@ -31,6 +31,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.KeyPoints.Max(kp => (int?)kp.Id) ?? 0;
         }
 
+        public List<KeyPoint> GetAll()
+        {
 
+            return _dbContext.KeyPoints.ToList();
+        }
     }
 }

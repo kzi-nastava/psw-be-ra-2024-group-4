@@ -121,5 +121,10 @@ namespace Explorer.Tours.Core.UseCases
 
 
         }
+
+        /*    public Result<List<TourDto>> getByChosenDestination(double longitude, double latitude)
+            {
+                var tours=_tourRepository.get
+            }*/
     }
 }
