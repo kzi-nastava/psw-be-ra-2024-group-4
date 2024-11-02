@@ -50,6 +50,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
                     KeyPointIds = t.KeyPointIds,
+                    LengthInKm = t.LengthInKm,
 
 
 
