@@ -9,8 +9,9 @@ namespace Explorer.Tours.Core.Domain
 {
     public class ShoppingCart : Entity
     {
-        public List<OrderItem> Items;
-        public List<TourPurchaseToken> PurchaseTokens;
+        public long UserId { get; private set; }
+        public List<OrderItem> Items { get; private set; }
+        public List<TourPurchaseToken> PurchaseTokens { get; private set; }
         public ShoppingCart()
         {
             Items = new List<OrderItem>();

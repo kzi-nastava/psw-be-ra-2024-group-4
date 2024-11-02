@@ -24,9 +24,9 @@ namespace Explorer.Tours.Core.UseCases.TourShopping
             _shoppingCartRepository = shoppingCartRepository;
         }
 
-        public Result<List<ShoppingCartDto>> GetAll()
+        public Result<List<ShoppingCartDto>> GetAll(long userId)
         {
-            return _shoppingCartRepository.GetAll();
+            return _shoppingCartRepository.GetAll(userId);
         }
         public Result<decimal> CalculateTotalPrice(long cartId)
         {

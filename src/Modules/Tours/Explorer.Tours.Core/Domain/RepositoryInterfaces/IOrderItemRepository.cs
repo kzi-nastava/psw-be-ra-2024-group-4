@@ -12,5 +12,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         Result<List<OrderItemDto>> GetAll(long cartId);
         Result<decimal> CalculateTotalPrice(long itemId);
+
+      
     }
 }

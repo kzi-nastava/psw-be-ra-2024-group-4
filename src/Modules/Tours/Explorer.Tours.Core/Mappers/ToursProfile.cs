@@ -18,5 +18,6 @@ public class ToursProfile : Profile
         CreateMap<TourReviewDto, TourReview>().ReverseMap();
         CreateMap<OrderItemDto, OrderItem>().ReverseMap();
         CreateMap<ShoppingCartDto, ShoppingCart>().ReverseMap();
+        CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
     }
 }

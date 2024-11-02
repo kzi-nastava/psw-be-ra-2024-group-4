@@ -39,10 +39,10 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
         }
 
 
-        [HttpGet]
-        public ActionResult<List<ShoppingCartDto>> GetAll()
+        [HttpGet("getByUser/{userid:int}")]
+        public ActionResult<List<ShoppingCartDto>> GetAll(int userid)
         {
-            var result = _shoppingCartService.GetAll();
+            var result = _shoppingCartService.GetAll(userid);
             return CreateResponse(result);
         }
 

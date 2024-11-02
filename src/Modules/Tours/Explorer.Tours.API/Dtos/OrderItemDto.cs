@@ -12,7 +12,7 @@ namespace Explorer.Tours.API.Dtos
         public string TourName { get; set; }    
         public decimal Price { get; set; }       
         public long TourId { get; set; }      
-        public long CardId { get; set; }
+        public long CartId { get; set; }
 
     }
 }

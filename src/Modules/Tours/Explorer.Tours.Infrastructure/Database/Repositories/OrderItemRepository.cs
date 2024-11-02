@@ -51,10 +51,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                     TourName = item.TourName,
                     Price = item.Price,
                     TourId = item.TourId,
-                    CardId = item.CartId
+                    CartId = item.CartId
                 }).ToList();
 
-                var result = orderItemDtos.Where(item => item.CardId == cartId).ToList();
+                var result = orderItemDtos.Where(item => item.CartId == cartId).ToList();
 
                 return Result.Ok(result);
             }

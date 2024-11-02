@@ -13,7 +13,7 @@ namespace Explorer.Tours.API.Public.TourShopping
         Result<ShoppingCartDto> Create(ShoppingCartDto orderItemDto);
         Result<ShoppingCartDto> Update(ShoppingCartDto orderItemDto);
         Result Delete(int itemId);
-        Result<List<ShoppingCartDto>> GetAll();
+        Result<List<ShoppingCartDto>> GetAll(long userId);
         Result<decimal> CalculateTotalPrice(long cartId);
         Result<ShoppingCartDto> Get(int cardId);
     }

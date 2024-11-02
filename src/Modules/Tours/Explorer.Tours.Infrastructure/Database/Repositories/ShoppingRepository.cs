@@ -26,6 +26,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             return _dbSet
                 .Include(cart => cart.Items) 
+                .Include(cart => cart.PurchaseTokens)
                 .FirstOrDefault(cart => cart.Id == id);
         }
         public ShoppingCartDto Create(ShoppingCartDto entity)
@@ -52,34 +53,45 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
             return Result.Fail("Entitet nije pronađen.");
         }
-        public Result<List<ShoppingCartDto>> GetAll()
+        public Result<List<ShoppingCartDto>> GetAll(long userId)
         {
             try
             {
                 var shoppingCarts = _dbContext.ShoppingCarts
                     .Include(cart => cart.Items)
+                    .Include(cart => cart.PurchaseTokens)
                     .ToList();
 
+                
+                
                 var shoppingCartDtos = shoppingCarts.Select(cart => new ShoppingCartDto
-                (
-                    cart.Items.Select(item => new OrderItemDto
+                {
+                    Id = cart.Id,
+                    UserId = cart.UserId,
+                    Items = cart.Items.Select(item => new OrderItemDto
                     {
                         Id = item.Id,
                         TourName = item.TourName,
                         Price = item.Price,
                         TourId = item.TourId,
-                        CardId = item.CartId
+                        CartId = item.CartId,
                     }).ToList(),
-                    cart.PurchaseTokens.Select(token=> new TourPurchaseTokenDto
+                   PurchaseTokens = cart.PurchaseTokens.Select(token => new TourPurchaseTokenDto
                     {
+                        Id = token.Id,
                         UserId = token.UserId,
                         TourId = token.TourId,
-                        PurchaseDate = token.PurchaseDate
+                        PurchaseDate = token.PurchaseDate,
+                        CartId = token.CartId,
+                        OrderId = token.OrderId
 
-                    }).ToList()
-                )).ToList();
+                    }).ToList(),
+                   TotalPrice = cart.Items.Sum(item => item.Price)
 
-                return Result.Ok(shoppingCartDtos);
+            }).ToList();
+
+                var result = shoppingCartDtos.Where(cart => cart.UserId == userId).ToList();
+                return Result.Ok(result);
             }
             catch (Exception ex)
             {
@@ -93,6 +105,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             {
                 var shoppingCart = _dbContext.ShoppingCarts
                     .Include(cart => cart.Items)
+                    .Include(cart => cart.PurchaseTokens)
                     .FirstOrDefault(cart => cart.Id == cartId);
 
                 if (shoppingCart == null)

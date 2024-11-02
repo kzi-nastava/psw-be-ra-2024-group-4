@@ -44,6 +44,7 @@ public static class ToursStartup
         services.AddScoped<ITourReviewService, TourReviewService>();
         services.AddScoped<IShoppingCartService, ShoppingService>();
         services.AddScoped<IOrderItemService, OrderItemService>();
+        services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -55,11 +56,12 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<OrderItem>), typeof(CrudDatabaseRepository<OrderItem, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Core.Domain.Object>), typeof(CrudDatabaseRepository<Core.Domain.Object, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, ToursContext>));
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
         services.AddScoped<IShoppingCartRepository, ShoppingRepository>();
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
-
+        services.AddScoped<ITourPurchaseTokenRepository, TourPurchaseTokenRepository>();
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
 
         services.AddDbContext<ToursContext>(opt =>

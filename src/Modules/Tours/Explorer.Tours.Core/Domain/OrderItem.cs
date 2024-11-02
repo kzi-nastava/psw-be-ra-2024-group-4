@@ -9,7 +9,6 @@ namespace Explorer.Tours.Core.Domain
 {
     public class OrderItem : Entity
     {
-        public long Id { get; set; }
         public string TourName { get; set; }
         public decimal Price { get; set; }
         public long TourId { get; set; }
@@ -18,9 +17,9 @@ namespace Explorer.Tours.Core.Domain
         {
 
         }
-        public OrderItem(long id, string tourName, decimal price, long tourId, long cartId)
+        public OrderItem(string tourName, decimal price, long tourId, long cartId)
         {
-            Id = id;
+            
             TourName = tourName;
             Price = price;
             TourId = tourId;

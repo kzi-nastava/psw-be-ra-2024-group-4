@@ -17,13 +17,14 @@ public class ToursContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Explorer.Tours.Core.Domain.Object> Objects { get; set; }
 
+    public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
+
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("tours");
         ConfigureTour(modelBuilder);
-        modelBuilder.Entity<ShoppingCart>().Property(sc => sc.PurchaseTokens).HasColumnType("jsonb");
     }
 
     private static void ConfigureTour(ModelBuilder modelBuilder)
@@ -36,5 +37,12 @@ public class ToursContext : DbContext
             .HasMany(sc => sc.Items)
             .WithOne()
             .HasForeignKey(sc => sc.CartId);
+
+        modelBuilder.Entity<ShoppingCart>()
+            .HasMany(sc => sc.PurchaseTokens)
+            .WithOne()
+            .HasForeignKey(sc => sc.CartId);
+
+      
     }
 }

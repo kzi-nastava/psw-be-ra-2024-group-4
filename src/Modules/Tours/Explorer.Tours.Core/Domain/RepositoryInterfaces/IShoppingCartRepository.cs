@@ -10,7 +10,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface IShoppingCartRepository
     {
-        Result<List<ShoppingCartDto>> GetAll();
+        Result<List<ShoppingCartDto>> GetAll(long userId);
         Result<decimal> CalculateTotalPrice(long cartId);
         ShoppingCartDto Create(ShoppingCartDto entity);
         ShoppingCartDto Update(ShoppingCartDto aggregateRoot);
