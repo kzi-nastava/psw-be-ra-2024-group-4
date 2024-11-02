@@ -22,6 +22,8 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         Result<TourDto> Get(int id);
 
         Result<TourDto> AddKeyPoint(TourDto tour, long keypointId);
+
+        Result UpdateDistance(long id, double distance);
         Result Archive(long id);
         Result Reactivate(long id);
 
