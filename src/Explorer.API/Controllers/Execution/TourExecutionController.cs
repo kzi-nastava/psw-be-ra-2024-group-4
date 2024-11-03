@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Execution
 {
     //[Authorize(Policy = "touristPolicy")]
-    [Route("api/tour/execution")]
+    [Route("api/tourist/execution")]
     public class TourExecutionController : BaseApiController
     {
         private readonly ITourExecutionService _executionService;
@@ -27,7 +27,7 @@ namespace Explorer.API.Controllers.Execution
         }
 
 
-        [HttpPost("tour/complete/{executionId:int}")]
+        [HttpPost("/complete/{executionId:long}")]
         public ActionResult CompleteTourExecution(int executionId)
         {
             var result = _executionService.CompleteTourExecution(executionId);
@@ -39,7 +39,7 @@ namespace Explorer.API.Controllers.Execution
             return CreateResponse(result);
         }
 
-        [HttpPost("tour/abandon/{executionId:int}")]
+        [HttpPost("/abandon/{executionId:long}")]
         public ActionResult<TourDto> AbandonTourExecution(int executionId)
         {
             var result = _executionService.AbandonTourExecution(executionId);
