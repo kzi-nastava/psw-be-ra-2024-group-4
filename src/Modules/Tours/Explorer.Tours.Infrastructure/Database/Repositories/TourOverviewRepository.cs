@@ -39,19 +39,22 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public PagedResult<TourOverview> GetAllWithoutReviews(int page, int pageSize)
         {
-            var totalCount = _dbContext.TourExecution
-                .Where(te => te.Status == TourExecutionStatus.Active)
-                .Select(te => te.TourId)
-                .Distinct()
-                .Count();
+            //var totalCount = _dbContext.TourExecution
+            //    .Where(te => te.Status == TourExecutionStatus.Active)
+            //    .Select(te => te.TourId)
+            //    .Distinct()
+            //    .Count();
 
-            var activeTours = _dbContext.Tour
-                .Where(t => _dbContext.TourExecution.Any(te =>
-                    te.TourId == t.Id && te.Status == TourExecutionStatus.Active))
-                .OrderBy(t => t.PublishedTime)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            //var activeTours = _dbContext.Tour
+            //    .Where(t => _dbContext.TourExecution.Any(te =>
+            //        te.TourId == t.Id && te.Status == TourExecutionStatus.Active))
+            //    .OrderBy(t => t.PublishedTime)
+            //    .Skip((page - 1) * pageSize)
+            //    .Take(pageSize)
+            //    .ToList();
+
+            var activeTours = _dbContext.Tour.ToList();
+            var totalCount = activeTours.Count();
 
             var tours = activeTours.Select(t =>
             {
@@ -66,6 +69,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                     TourId = t.Id,
                     TourName = t.Name,
                     TourDifficulty = t.Difficulty,
+                    TourDescription = t.Description,
                     Tags = t.Tags,
                     FirstKeyPoint = firstKeyPoint
                 };
