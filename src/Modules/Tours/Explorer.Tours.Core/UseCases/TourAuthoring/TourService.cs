@@ -161,6 +161,11 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result DeleteTour(int id)
+        {
+            return Delete(id); 
+        }
+
 
 
     }

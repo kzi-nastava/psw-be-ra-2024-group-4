@@ -20,5 +20,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<ProblemDTO> PostComment(ProblemCommentDto commentDto);
         Result<ProblemDTO> UpdateActiveStatus(long id, bool isActive);
         Result<ProblemDTO> GetById(long id);
+        Result DeleteProblem(int id);
     }
 }

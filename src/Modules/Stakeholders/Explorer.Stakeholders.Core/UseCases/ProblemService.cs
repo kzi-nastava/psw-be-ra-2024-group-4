@@ -106,5 +106,10 @@ namespace Explorer.Stakeholders.Core.UseCases
             return MapToDto(problem);  
         }
 
+        public Result DeleteProblem(int id)
+        {
+            return Delete(id);
+        }
+
     }
 }

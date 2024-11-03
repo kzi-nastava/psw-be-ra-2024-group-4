@@ -84,7 +84,6 @@ namespace Explorer.Tours.Core.Domain.Tours
         }
 
 
-
     }
 
     public enum TourStatus
