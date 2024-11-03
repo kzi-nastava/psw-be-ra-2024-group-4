@@ -1,9 +1,10 @@
 ﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
-namespace Explorer.API.Controllers.Author
+namespace Explorer.API.Controllers.Author.TourAuthoring
 {
     [Authorize(Policy = "authorPolicy")]
     [Route("api/author/tour")]
@@ -31,7 +32,7 @@ namespace Explorer.API.Controllers.Author
         }
 
 
-        [HttpGet("tourEquipment/{tourId:int}")] 
+        [HttpGet("tourEquipment/{tourId:int}")]
         public ActionResult GetEquipment(int tourId)
         {
             var result = _tourService.GetEquipment(tourId);
@@ -60,5 +61,21 @@ namespace Explorer.API.Controllers.Author
 
             return CreateResponse(result);
         }
+
+        [HttpPut("archive/{tourId:int}")]
+        public ActionResult<TourDto> Archive(long tourId)
+        {
+            var result = _tourService.Archive(tourId);
+            return CreateResponse(result);
+        }
+
+
+        [HttpPut("reactivate/{tourId:int}")]
+        public ActionResult<TourDto> Reactivate(long tourId)
+        {
+            var result = _tourService.Reactivate(tourId);
+            return CreateResponse(result);
+        }
+
     }
 }
