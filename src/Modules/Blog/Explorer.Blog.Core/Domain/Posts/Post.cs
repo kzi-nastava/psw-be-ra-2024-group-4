@@ -1,9 +1,12 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.BuildingBlocks.Core.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Explorer.Blog.Core.Domain.Posts
 {
@@ -40,6 +43,25 @@ namespace Explorer.Blog.Core.Domain.Posts
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
         }
 
+        public void AddComment(Comment comment)
+        {
+            if (Comments.Any(c => c.Id == comment.Id))
+                throw new ArgumentException("Comment already exists.");
+            Comments.Add(comment);
+        }
+
+        public void DeleteComment(long commentId)
+        {
+            var comment = Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment == null)
+                throw new KeyNotFoundException("Comment not found.");
+            Comments.Remove(comment);
+        }
+      
+        public List<Comment> GetAll()
+        {
+            return Comments.ToList();
+        }
     }
     public enum BlogStatus
     {
@@ -47,4 +69,6 @@ namespace Explorer.Blog.Core.Domain.Posts
         Published,
         Closed
     }
+
+   
 }
