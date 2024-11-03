@@ -29,24 +29,45 @@ namespace Explorer.Tours.Core.UseCases.Execution
 
         public Result<TourExecutionDto> Create(TourExecutionDto execution)
         {
-            var result = tourExecutionRepository.StartExecution(MapToDomain(execution));
+            var ex = tourExecutionRepository.Create(MapToDomain(execution));
+            if (ex != null) {
+                ex.StartTourExecution();
+                var result = tourExecutionRepository.Update(ex);
+                if (result != null)
+                {
+                    return Result.Ok(MapToDto(result));
+                }
+                    
 
-            return Result.Ok(MapToDto(result));
+            }
+            return null;
 
         }
 
         public Result<TourExecutionDto> CompleteTourExecution(long id)
         {
-            var result = tourExecutionRepository.CompleteExecution(id);
+            var ex = tourExecutionRepository.Get(id);
+            if (ex != null) {
+                ex.CompleteTourExecution();
+                var result = tourExecutionRepository.Update(ex);
+                return Result.Ok(MapToDto(result));
+            }
+            return null;
+            
 
-            return Result.Ok(MapToDto(result));
+            
         }
 
         public Result<TourExecutionDto> AbandonTourExecution(long id)
         {
-            var result = tourExecutionRepository.AbandonExecution(id);
-
-            return Result.Ok(MapToDto(result));
+            var ex = tourExecutionRepository.Get(id);
+            if (ex != null)
+            {
+                ex.AbandonTourExecution();
+                var result = tourExecutionRepository.Update(ex);
+                return Result.Ok(MapToDto(result));
+            }
+            return null;
         }
 
         
