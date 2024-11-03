@@ -27,7 +27,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LocationId = locationId;
             LastActivity = lastActivity;
             Status = status;
-            if (!DateTime.TryParse(LastActivity.ToString(), out _)) throw new ArgumentException("Invalid date time format");
+            if (!DateTime.TryParse(LastActivity.ToString(), out _)) lastActivity = DateTime.UtcNow;
 
             CompletedKeys = completedKeys;
         }
