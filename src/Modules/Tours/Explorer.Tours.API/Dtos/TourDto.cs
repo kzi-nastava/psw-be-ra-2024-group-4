@@ -24,8 +24,6 @@ namespace Explorer.Tours.API.Dtos
         public double LengthInKm { get; set; }
 
         public List<long> EquipmentIds { get; set; }
-
-        public List<long> KeyPointIds { get; set; }
         public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
         public TourDto() { }
 
@@ -49,7 +47,6 @@ namespace Explorer.Tours.API.Dtos
             Price = price;
             LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
-            KeyPointIds = keyPointIds;
 
         }
     }

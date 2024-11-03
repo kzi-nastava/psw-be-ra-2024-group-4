@@ -24,8 +24,6 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public List<long> EquipmentIds { get; private set; }
 
-        public List<long> KeyPointIds { get; private set; }
-
         public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
         public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
@@ -43,7 +41,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Price = 0;
             LengthInKm = 0;
             EquipmentIds = new List<long>();
-            KeyPointIds = new List<long>();
+           
 
         }
 
