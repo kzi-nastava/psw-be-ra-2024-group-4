@@ -45,7 +45,15 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             //kako mapirati 
             //var problem = _problemRepository.PostComment(new ProblemComment(commentDto.ProblemId, commentDto.UserId, commentDto.Text, commentDto.TimeSent));
-            var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+            // var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+            //problemrepo.getbyid
+            var problem = _problemRepository.GetById(commentDto.ProblemId);
+
+            // problem.PostComment()
+            problem.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+           //problemrepo.Update(problem)
+           _problemRepository.Update(problem);
+
             if(problem == null)
             {
                 return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");

@@ -51,10 +51,8 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 
         public void Update(Problem problem)
         {
-            // Obeleži entitet kao modifikovan
+          
             _db.Entry(problem).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-            // Sačuvaj promene u bazi
             _db.SaveChanges();
         }
     }
