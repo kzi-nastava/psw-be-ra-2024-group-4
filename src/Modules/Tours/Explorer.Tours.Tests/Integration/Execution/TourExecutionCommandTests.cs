@@ -118,6 +118,27 @@ namespace Explorer.Tours.Tests.Integration.Execution
             }
         }
 
+        [Theory]
+        [InlineData(-5, -1, 200)]
+        public void CompleteKeyPoint(int executionId, int keyPointId, int expectedResponseCode)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            var result = (ObjectResult)controller.CompleteKeyPoint(executionId, keyPointId).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.TourExecution.FirstOrDefault(t => t.Id == executionId);
+            var rating = storedEntity.CompletedKeys.FirstOrDefault(t => t.KeyPointId == keyPointId);
+            rating.ShouldNotBeNull();
+        }
+
 
 
         private static TourExecutionController CreateController(IServiceScope scope)
