@@ -49,8 +49,33 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return Result.Ok(MapToDto(result));
         }
 
-        
+        public Result<TourExecutionDto> CompleteKeyPoint(long executionId, long keyPointId)
+        {
+            var execution = tourExecutionRepository.Get(executionId);
+            if (execution == null)
+            {
+                return Result.Fail<TourExecutionDto>($"Tour execution with ID {executionId} not found.");
+            }
 
-        
+            if (!tourExecutionRepository.KeyPointExists(keyPointId))
+            {
+                return Result.Fail<TourExecutionDto>($"Key point with ID {keyPointId} does not exist.");
+            }
+
+            try
+            {
+                execution.CompleteKeyPoint(keyPointId);
+                tourExecutionRepository.Update(execution);
+                return Result.Ok(MapToDto(execution));
+            }
+            catch (ArgumentException ex)
+            {
+                return Result.Fail<TourExecutionDto>(ex.Message);
+            }
+        }
+
+
+
+
     }
 }

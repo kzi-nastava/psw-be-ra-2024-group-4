@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Execution
 {
-    //[Authorize(Policy = "touristPolicy")]
+    [Authorize(Policy = "touristPolicy")]
     [Route("api/tour/execution")]
     public class TourExecutionController : BaseApiController
     {
@@ -50,5 +50,27 @@ namespace Explorer.API.Controllers.Execution
 
             return CreateResponse(result);
         }
+
+        [HttpPut("tour/completeKeyPoint/{executionId:long}/{keyPointId:long}")]
+        public ActionResult<TourExecutionDto> CompleteKeyPoint(long executionId, long keyPointId)
+        {
+            try
+            {
+                var result = _executionService.CompleteKeyPoint(executionId, keyPointId);
+
+                return result.IsFailed
+                    ? Conflict(new { message = result.Errors.First().Message })
+                    : CreateResponse(result);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(new { message = ex.Message }); 
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
+            }
+        }
+
     }
 }

@@ -57,18 +57,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             }
         }
 
-        public TourExecution CompleteKeyPoint(long executionId, long keyPointId)
-        {
-            var execution = Get(executionId);
-            if(execution != null)
-            {
-                var completedKeyPoint = execution.CompleteKeyPoint(keyPointId);
-                Update(execution);
-            }
-            return null;
-            
-        }
-
         public TourExecution StartExecution(TourExecution execution)
         {
             Create(execution);
@@ -106,6 +94,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             }
             return null;
 
+        }
+
+        public bool KeyPointExists(long keyPointId)
+        {
+            return _dbContext.KeyPoints.Any(kp => kp.Id == keyPointId);
         }
     }
 }
