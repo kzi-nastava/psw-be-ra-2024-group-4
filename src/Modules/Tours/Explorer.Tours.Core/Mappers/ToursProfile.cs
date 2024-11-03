@@ -26,5 +26,6 @@ public class ToursProfile : Profile
             .ForMember(dest => dest.CompletedKeys, opt => 
             opt.MapFrom(src => src.CompletedKeys.Select((completedKey) => 
             new CompletedKeyPoint(completedKey.KeyPointId, completedKey.CompletedTime))));
+        CreateMap<TourOverviewDto, TourOverview>().ReverseMap();
     }
 }
