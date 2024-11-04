@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.Domain;
+﻿using Explorer.Blog.API.Dtos;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,8 @@ namespace Explorer.Blog.Core.Domain.Posts
         {
             return Comments.ToList();
         }
+   
+
     }
     public enum BlogStatus
     {

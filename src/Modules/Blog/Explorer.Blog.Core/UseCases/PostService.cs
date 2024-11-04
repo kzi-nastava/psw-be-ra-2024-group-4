@@ -131,36 +131,32 @@ namespace Explorer.Blog.Core.UseCases
             }
         }
 
-        public Result UpdateCommentInPost(long postId, int commentId, CommentDto updatedCommentDto)
+        public Result UpdateCommentInPost(long postId, CommentDto updatedCommentDto)
         {
-
-            var post = repository.Get(postId);
-
-
-            // Pronađi komentar po ID-ju unutar kolekcije komentara u okviru posta
-            var existingComment = post.Comments.FirstOrDefault(c => c.Id == commentId);
-
-            // Ažuriraj podatke o komentaru koristeći CommentService
-            updatedCommentDto.Id = commentId; // Postavi ID za ažuriranje
-           // updatedCommentDto.Text = updatedCommentDto.Text;
-           // updatedCommentDto.CreatedAt = existingComment.CreatedAt;
-           // updatedCommentDto.UpdatedAt = DateTime.UtcNow;
-           //// updatedCommentDto.UserId = existingComment.UserId;
-           //// updatedCommentDto.PostId = postId;
-            //updatedCommentDto.Username = existingComment.Username;
-
-            var updateResult = commentService.Update(updatedCommentDto);
-
-            if (updateResult.IsFailed)
+            try
             {
-                return Result.Fail(updateResult.Errors);
+                var post = repository.Get(postId);
+                if (post == null)
+                {
+                    return Result.Fail("Post sa datim ID-jem nije pronađen.");
+                }
+
+                var comment = post.Comments.FirstOrDefault(c => c.Id == updatedCommentDto.Id);
+                if (comment == null)
+                {
+                    return Result.Fail("Komentar sa datim ID-jem nije pronađen u postu.");
+                }
+
+                mapper.Map(updatedCommentDto, comment);
+                repository.Update(post);
+
+                return Result.Ok();
             }
-
-            repository.Update(post);
-            return Result.Ok();
+            catch (Exception e)
+            {
+                return Result.Fail("Došlo je do greške: " + e.Message);
+            }
         }
-
-
 
 
         public Result<PagedResult<CommentDto>> GetCommentsForPost(int postId, int page, int pageSize)

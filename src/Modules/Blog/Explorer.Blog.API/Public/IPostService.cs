@@ -18,8 +18,9 @@ namespace Explorer.Blog.API.Public
         Result Delete(int id);
         Result AddComment(long postId, CommentDto commentDto);
         Result DeleteCommentFromPost(long postId, long commentId);
-        Result UpdateCommentInPost(long postId, int commentId, CommentDto updatedCommentDto);
+    
         Result<PagedResult<CommentDto>> GetCommentsForPost(int postId, int page, int pageSize);
         Result<PostDto> Get(int id);
+        Result UpdateCommentInPost(long postId, CommentDto updatedCommentDto);
     }
 }

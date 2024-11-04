@@ -52,7 +52,7 @@ namespace Explorer.API.Controllers.Tourist.Comments
             return CreateResponse(result);
         }
 
-        [HttpPost("{postId}/comments")]
+        [HttpPost("{postId}")]
         public IActionResult AddCommentToPost(long postId, [FromBody] CommentDto commentDto)
         {
             var result = _postService.AddComment(postId, commentDto);
@@ -61,7 +61,7 @@ namespace Explorer.API.Controllers.Tourist.Comments
             return CreateResponse(result);
         }
 
-        [HttpDelete("{postId}/comments/{commentId}")]
+        [HttpDelete("{postId}/{commentId}")]
         public IActionResult DeleteCommentFromPost(long postId, long commentId)
         {
             var result = _postService.DeleteCommentFromPost(postId, commentId);
@@ -69,16 +69,16 @@ namespace Explorer.API.Controllers.Tourist.Comments
                 return BadRequest(result.Errors);
             return CreateResponse(result);
         }
-
         [HttpPut("{postId}/{commentId}")]
-        public IActionResult UpdateCommentInPost(long postId, int commentId, [FromBody] CommentDto updatedCommentDto)
+        public IActionResult UpdateCommentInPost(long postId, long commentId, [FromBody] CommentDto updatedCommentDto)
         {
-            var result = _postService.UpdateCommentInPost(postId, commentId, updatedCommentDto);
+            var result = _postService.UpdateCommentInPost(postId, updatedCommentDto);
             if (result.IsFailed)
                 return BadRequest(result.Errors);
-            return CreateResponse(result);
+            return Ok();
         }
-        [HttpGet("{postId}/comments")]
+
+        [HttpGet("{postId}")]
         public ActionResult<PagedResult<CommentDto>> GetCommentsForPost(int postId, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _postService.GetCommentsForPost(postId, page, pageSize);

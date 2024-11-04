@@ -37,5 +37,7 @@ namespace Explorer.Blog.Core.Domain;
         if (PostId == 0) throw new ArgumentException("Invalid PostId.");
         if (string.IsNullOrWhiteSpace(Username)) throw new ArgumentException("Invalid Username.");
     }
+
+
 }
 
