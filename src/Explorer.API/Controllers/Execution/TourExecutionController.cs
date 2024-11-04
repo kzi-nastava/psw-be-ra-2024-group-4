@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Execution
 {
-    //[Authorize(Policy = "touristPolicy")]
+    [Authorize(Policy = "touristPolicy")]
     [Route("api/tourist/execution")]
     public class TourExecutionController : BaseApiController
     {
