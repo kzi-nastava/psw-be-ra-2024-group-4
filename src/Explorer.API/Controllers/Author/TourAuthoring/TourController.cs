@@ -77,5 +77,12 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpPut("updateDistance/{tourId:int}")]
+        public ActionResult<TourDto> UpdateDistance(long tourId, [FromBody] double distance)
+        {
+            var result = _tourService.UpdateDistance(tourId, distance);
+            return CreateResponse(result);
+        }
+
     }
 }

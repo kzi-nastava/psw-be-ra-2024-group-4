@@ -50,6 +50,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
                     KeyPointIds = t.KeyPointIds,
+                    LengthInKm = t.LengthInKm,
 
 
 
@@ -161,7 +162,23 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
-
-
+        public Result UpdateDistance(long id, double distance)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.UpdateLength(distance);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
     }
 }
