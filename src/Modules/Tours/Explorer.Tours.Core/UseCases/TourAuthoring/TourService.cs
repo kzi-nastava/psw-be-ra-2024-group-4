@@ -56,10 +56,11 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Name = kp.Name,
                         Longitude = kp.Longitude,
                         Latitude = kp.Latitude,
-                        Image = kp.Image,
-                   
+                        Image = kp.Image,                  
 
-                    }).ToList()
+                    }
+                    // BITNO  dodati daurations ovde, prvo pretvoriti listu TourDuration u DTO pa ovde
+                    ).ToList()
                 }).ToList();
 
                 return Result.Ok(tourDtos);
