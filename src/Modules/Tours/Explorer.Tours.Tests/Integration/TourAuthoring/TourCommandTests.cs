@@ -42,7 +42,7 @@ namespace Explorer.Tours.Tests
                 Price = 100.00,
                 UserId = 1,
                 EquipmentIds = new List<long>(),
-                KeyPointIds = new List<long>()
+             
             };
 
             // Act

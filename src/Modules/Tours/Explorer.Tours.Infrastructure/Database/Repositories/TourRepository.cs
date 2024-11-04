@@ -39,7 +39,8 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public List<Tour> GetToursByUserId(long userId)
         {
-            return _dbContext.Tour
+         
+            return _dbContext.Tour.Include(t => t.KeyPoints)
                          .Where(t => t.UserId == userId)
                          .ToList();
         }

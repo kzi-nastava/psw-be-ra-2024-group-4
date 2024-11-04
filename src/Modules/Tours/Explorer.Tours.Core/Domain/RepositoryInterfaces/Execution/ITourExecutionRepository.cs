@@ -18,10 +18,8 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution
 
         public void Delete(long id);
 
-        public TourExecution StartExecution(TourExecution executionId);
-        public TourExecution CompleteExecution(long executionId);
-        public TourExecution AbandonExecution(long executionId);
         public bool KeyPointExists(long keyPointId);
 
+        TourExecution? GetByTourAndTourist(long touristId, long tourId);
     }
 }

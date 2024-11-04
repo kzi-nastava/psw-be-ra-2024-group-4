@@ -18,5 +18,8 @@ namespace Explorer.Tours.API.Public.Execution
         Result<TourExecutionDto> AbandonTourExecution(long id);
 
         public Result<TourExecutionDto> CompleteKeyPoint(long executionId, long keyPointId);
+
+        Result<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId);
+
     }
 }
