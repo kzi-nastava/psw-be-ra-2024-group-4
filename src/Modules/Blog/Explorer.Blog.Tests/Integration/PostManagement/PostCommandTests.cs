@@ -134,6 +134,52 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
             var storedCourse = dbContext.Posts.FirstOrDefault(i => i.Id == -3);
             storedCourse.ShouldBeNull();
         }
+        [Theory]
+        [InlineData(1, -1, 1, 200)]//znaci doda se rating u post sa id -1 od usera 1
+        [InlineData(5, -1, -1, 200)]//znaci doda se rating u post sa id -1 od usera 2
+        public void Add_rating_from_post(long userId, int postId, int value, int expectedResponseCode)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateRatingController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var result = (ObjectResult)controller.AddRating(postId, userId, value).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.Posts.FirstOrDefault(t => t.Id == postId);
+            var rating = storedEntity.Ratings.FirstOrDefault(t => t.UserId == userId);
+            rating.ShouldNotBeNull();
+
+        }
+        [Theory]
+        [InlineData(2, -1, 200)]//brise se rating iz posta sa id -1 od kroisnika 2
+        [InlineData(1, -1, 200)]//brise se rating iz posta sa id -1 od korisnika 1
+        public void Delete_rating_from_post(long userId, int postId, int expectedResponseCode)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateRatingController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var result = controller.DeleteRating(postId, userId);
+
+            // Assert - Response
+            result.Result.ShouldNotBeNull();
+            result.Result.ShouldBeOfType<OkObjectResult>();
+            var okResult = result.Result as OkObjectResult;
+            okResult.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.Posts.FirstOrDefault(t => t.Id == postId);
+            var rating = storedEntity.Ratings.FirstOrDefault(t => t.UserId == userId);
+            rating.ShouldBeNull();
+        }
+
 
         private static PostController CreateController(IServiceScope scope)
         {
@@ -146,6 +192,11 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
         private static CommentController CreateCommentController(IServiceScope scope)
         {
             return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(),scope.ServiceProvider.GetRequiredService<IPostService>())
+            { ControllerContext = BuildContext("-1") };
+        }
+        private static RatingController CreateRatingController(IServiceScope scope)
+        {
+            return new RatingController(scope.ServiceProvider.GetRequiredService<IPostService>())
             { ControllerContext = BuildContext("-1") };
         }
     }
