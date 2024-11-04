@@ -5,6 +5,7 @@ using Explorer.Blog.API.Public;
 using Explorer.Blog.Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 
@@ -134,6 +135,152 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
             var storedCourse = dbContext.Posts.FirstOrDefault(i => i.Id == -3);
             storedCourse.ShouldBeNull();
         }
+
+        [Fact]
+        public void Add_comment_to_post_success()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var commentController = CreateCommentController(scope); 
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var postId = -1;
+            var newComment = new CommentDto
+            {
+                Text = "Ovo je novi test komentar.",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                UserId = -21, 
+                PostId = postId,
+                Username = "Testic"
+            };
+
+            // Act
+            var actionResult = commentController.AddCommentToPost(postId, newComment).Result as OkObjectResult;
+
+            // Assert - Response
+            actionResult.ShouldNotBeNull();
+            actionResult.StatusCode.ShouldBe(200);
+
+            // Assert - Database
+            var storedPost = dbContext.Posts
+                .Include(p => p.Comments)
+                .FirstOrDefault(p => p.Id == postId);
+            storedPost.ShouldNotBeNull();
+
+            var storedComment = storedPost.Comments.FirstOrDefault(c => c.Text == newComment.Text);
+            storedComment.ShouldNotBeNull();
+            storedComment.Text.ShouldBe(newComment.Text);
+            storedComment.UserId.ShouldBe(newComment.UserId);
+            storedComment.Username.ShouldBe(newComment.Username);
+        }
+
+        [Fact]
+        public void Update_comment_success()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateCommentController(scope); 
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var commentId = -1; 
+            var updatedComment = new CommentDto
+            {
+                Id = commentId,
+                Text = "Ovo je ažuriran komentar.",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                UserId = -21,  
+                PostId = -1, 
+                Username = "TesticUpdated"
+            };
+
+            // Act
+            var result = (ObjectResult)controller.Update(updatedComment).Result;
+
+            // Assert - Response
+            var updatedCommentResponse = result.Value as CommentDto;
+            result.ShouldNotBeNull();
+            updatedCommentResponse.ShouldNotBeNull(); 
+            updatedCommentResponse.Id.ShouldBe(updatedComment.Id);
+            updatedCommentResponse.Text.ShouldBe(updatedComment.Text);
+
+            // Assert - Database
+            var storedComment = dbContext.Comments.FirstOrDefault(c => c.Text == "Ovo je ažuriran komentar.");
+            storedComment.ShouldNotBeNull();
+            var oldEntity = dbContext.Comments.FirstOrDefault(i => i.Text == "This is the first comment.");
+            oldEntity.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Update_comment_fails_invalid_commentId()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateCommentController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var invalidCommentId = -999; 
+            var updatedComment = new CommentDto
+            {
+                Id = invalidCommentId,
+                Text = "Ovo je ažuriran komentar.",
+                UpdatedAt = DateTime.UtcNow,
+                UserId = -21,
+                PostId = -1,
+                Username = "TesticUpdated"
+            };
+
+            // Act
+            var result = controller.Update(updatedComment).Result;
+
+            // Assert - Response
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            objectResult.ShouldNotBeNull();
+            objectResult.StatusCode.ShouldBe(404);
+        }
+
+        [Fact]
+        public void Delete_comment_success()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateCommentController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var commentId = -1; 
+
+            // Act
+            var result = (OkResult)controller.Delete(commentId);
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(200);
+
+            // Assert - Database
+            var deletedComment = dbContext.Comments.FirstOrDefault(c => c.Id == commentId);
+            deletedComment.ShouldBeNull(); 
+        }
+
+        [Fact]
+        public void Delete_comment_fails_invalid_commentId()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateCommentController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+
+            var invalidCommentId = -999; 
+
+            // Act
+            var result = controller.Delete(invalidCommentId);
+
+            // Assert - Response
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            objectResult.ShouldNotBeNull();
+            objectResult.StatusCode.ShouldBe(404);
+        }
+
 
         private static PostController CreateController(IServiceScope scope)
         {

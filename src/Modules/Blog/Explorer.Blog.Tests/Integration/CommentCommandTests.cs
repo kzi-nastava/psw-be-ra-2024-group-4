@@ -23,7 +23,7 @@ namespace Explorer.Blog.Tests.Integration
 
         public CommentCommandTests(BlogTestFactory factory) : base(factory) { }
 
-        [Fact]
+       /* [Fact]
         public void CreatesComment()
         {
             // Arrange
@@ -155,6 +155,6 @@ namespace Explorer.Blog.Tests.Integration
             {
                 ControllerContext = BuildContext("-1")
             };
-        }
+        }*/
     }
 }
