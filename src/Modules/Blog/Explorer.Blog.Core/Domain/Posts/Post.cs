@@ -19,11 +19,12 @@ namespace Explorer.Blog.Core.Domain.Posts
         public string ImageUrl { get; private set; }
         public BlogStatus Status { get; private set; }
         public long UserId { get; private set; }
+        public int RatingSum {  get; private set; }
         public List<Comment> Comments { get; private set; }
         public List<Rating> Ratings { get; private set; }
 
 
-        public Post(string title, string description, DateTime createdAt, string imageUrl, BlogStatus status, long userId)
+        public Post(string title, string description, DateTime createdAt, string imageUrl, BlogStatus status, long userId,int ratingSum)
         {
             Title = title;
             Description = description;
@@ -31,6 +32,7 @@ namespace Explorer.Blog.Core.Domain.Posts
             ImageUrl = imageUrl;
             Status = status;
             UserId = userId;
+            RatingSum = ratingSum;
             Comments = new List<Comment>();
             Ratings= new List<Rating>();
             Validate();
@@ -43,7 +45,21 @@ namespace Explorer.Blog.Core.Domain.Posts
             if (!Enum.IsDefined(typeof(BlogStatus), Status)) throw new ArgumentException("Invalid Status");
             if (UserId == 0) throw new ArgumentException("Invalid UserId");
         }
-
+        public void AddRating(int value, long userId)
+        {
+            Rating? ratingCheck= Ratings.FirstOrDefault(r => r.UserId == userId);
+            if (ratingCheck != null) throw new ArgumentException("Rating from this user already exists");
+            else Ratings.Add(new Rating(userId, value, DateTime.Now));
+        }
+        public void DeleteRating(long userId)
+        {
+            Rating? rating= Ratings.FirstOrDefault(rating => rating.UserId == userId);
+            if (rating != null) Ratings.Remove(rating);
+        }
+        public void TotalRating()
+        {
+            RatingSum = Ratings.Sum(v => v.Value);
+        }
         public void AddComment(Comment comment)
         {
             if (Comments.Any(c => c.Id == comment.Id))
@@ -53,24 +69,13 @@ namespace Explorer.Blog.Core.Domain.Posts
 
         public void DeleteComment(long commentId)
         {
-            var comment = Comments.FirstOrDefault(c => c.Id == commentId);
-            if (comment == null)
-                throw new KeyNotFoundException("Comment not found.");
+            var comment = Comments.FirstOrDefault(c => c.Id == commentId) ?? throw new KeyNotFoundException("Comment not found.");
             Comments.Remove(comment);
-        }
-      
-        public List<Comment> GetAll()
-        {
-            return Comments.ToList();
         }
 
         public void UpdateComment(Comment updatedComment)
         {
-            var comment = Comments.FirstOrDefault(c => c.Id == updatedComment.Id);
-            if (comment == null)
-            {
-                throw new KeyNotFoundException("Comment not found in the post.");
-            }
+            var comment = Comments.FirstOrDefault(c => c.Id == updatedComment.Id) ?? throw new KeyNotFoundException("Comment not found in the post.");
             comment.Update(updatedComment.UserId,updatedComment.Text, updatedComment.Username, updatedComment.UpdatedAt, updatedComment.Username);
         }
 
@@ -79,7 +84,9 @@ namespace Explorer.Blog.Core.Domain.Posts
     {
         Draft,
         Published,
-        Closed
+        Closed,
+        Active,
+        Famous
     }
 
    

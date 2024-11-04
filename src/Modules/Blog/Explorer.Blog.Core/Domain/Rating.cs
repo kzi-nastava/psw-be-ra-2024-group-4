@@ -10,12 +10,12 @@ namespace Explorer.Blog.Core.Domain
 {
     public class Rating : ValueObject
     {
-        public int UserId { get; private set; }
+        public long UserId { get; private set; }
         public int Value {  get; private set; }
         public DateTime CreatedAt { get; private set; }
         
         [JsonConstructor]
-        public Rating(int userId,int value,DateTime createdAt)
+        public Rating(long userId,int value,DateTime createdAt)
         {
             UserId = userId;
             Value = value;

@@ -4,10 +4,10 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Tourist.Comments
+namespace Explorer.API.Controllers.Tourist.BlogFeedback
 {
     [Authorize(Policy = "touristPolicy")]
-    [Route("api/comments/comment")]
+    [Route("api/blogfeedback/comment")]
     public class CommentController : BaseApiController
     {
         private readonly ICommentService _commentService;
@@ -25,12 +25,7 @@ namespace Explorer.API.Controllers.Tourist.Comments
             var result = _commentService.GetPaged(id,page, pageSize);
             return CreateResponse(result);
         }
-        [HttpGet("posts")]
-        public ActionResult<PagedResult<PostDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
-        {
-            var result = _postService.GetPaged(page, pageSize);
-            return CreateResponse(result);
-        }
+
         [HttpPost]
         public ActionResult<CommentDto> Create([FromBody] CommentDto comment)
         {
@@ -53,7 +48,7 @@ namespace Explorer.API.Controllers.Tourist.Comments
         }
 
         [HttpPost("{postId}")]
-        public IActionResult AddCommentToPost(long postId, [FromBody] CommentDto commentDto)
+        public ActionResult<PostDto> AddCommentToPost(long postId, [FromBody] CommentDto commentDto)
         {
             var result = _postService.AddComment(postId, commentDto);
             if (result.IsFailed)
@@ -62,26 +57,19 @@ namespace Explorer.API.Controllers.Tourist.Comments
         }
 
         [HttpDelete("{postId}/{commentId}")]
-        public IActionResult DeleteCommentFromPost(long postId, long commentId)
+        public ActionResult<PostDto> DeleteCommentFromPost(long postId, long commentId)
         {
             var result = _postService.DeleteCommentFromPost(postId, commentId);
             if (result.IsFailed)
                 return BadRequest(result.Errors);
             return CreateResponse(result);
         }
-        [HttpPut("{postId}/{commentId}")]
-        public IActionResult UpdateCommentInPost(long postId, long commentId, [FromBody] CommentDto updatedCommentDto)
+        [HttpPut("{postId}")]
+        public ActionResult<PostDto> UpdateCommentInPost(long postId, [FromBody] CommentDto updatedCommentDto)
         {
             var result = _postService.UpdateCommentInPost(postId, updatedCommentDto);
             if (result.IsFailed)
                 return BadRequest(result.Errors);
-            return Ok();
-        }
-
-        [HttpGet("{postId}")]
-        public ActionResult<PagedResult<CommentDto>> GetCommentsForPost(int postId, [FromQuery] int page, [FromQuery] int pageSize)
-        {
-            var result = _postService.GetCommentsForPost(postId, page, pageSize);
             return CreateResponse(result);
         }
     }

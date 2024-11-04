@@ -8,7 +8,7 @@ namespace Explorer.Blog.API.Dtos
 {
     public class RatingDto
     {
-        public int UserId {  get; set; }
+        public long UserId {  get; set; }
         public int Value { get; set; }
         public DateTime CreatedAt { get; set; }
     }

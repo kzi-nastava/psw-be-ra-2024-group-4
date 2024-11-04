@@ -20,13 +20,13 @@ namespace Explorer.Blog.Core.Domain;
 
          public Comment(string text, DateTime createdAt, DateTime updatedAt, long userId, long postId, string username)
          {
-        Text = text;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        UserId = userId;
-        PostId = postId;
-        Username = username;
-        Validate();
+            Text = text;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            UserId = userId;
+            PostId = postId;
+            Username = username;
+            Validate();
          }
     private void Validate() 
       {
@@ -54,7 +54,6 @@ namespace Explorer.Blog.Core.Domain;
         UpdatedAt = newUpdatedAt;
         Username=username;
     }
-
 
 }
 

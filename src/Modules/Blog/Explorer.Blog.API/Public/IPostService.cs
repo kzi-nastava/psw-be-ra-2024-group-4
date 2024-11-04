@@ -16,11 +16,12 @@ namespace Explorer.Blog.API.Public
         Result<PostDto> Create(PostDto post);
         Result<PostDto> Update(PostDto post);
         Result Delete(int id);
-        Result AddComment(long postId, CommentDto commentDto);
-        Result DeleteCommentFromPost(long postId, long commentId);
-    
-        Result<PagedResult<CommentDto>> GetCommentsForPost(int postId, int page, int pageSize);
+        Result<PostDto> AddComment(long postId, CommentDto commentDto);
+        Result<PostDto> DeleteCommentFromPost(long postId, long commentId);
         Result<PostDto> Get(int id);
-        Result UpdateCommentInPost(long postId, CommentDto updatedCommentDto);
+        Result<PostDto> UpdateCommentInPost(long postId, CommentDto updatedCommentDto);
+
+        Result<PostDto> AddRating(long postId,long userId,int value);
+        Result<PostDto> DeleteRating(long postId, long userId);
     }
 }
