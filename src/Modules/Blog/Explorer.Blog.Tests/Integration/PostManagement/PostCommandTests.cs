@@ -138,7 +138,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
         [Theory]
         [InlineData(1, -1, 1, 200)]//znaci doda se rating u post sa id -1 od usera 1
         [InlineData(5, -1, -1, 200)]//znaci doda se rating u post sa id -1 od usera 2
-        public void Add_rating_from_post(long userId, int postId, int value, int expectedResponseCode)
+        public void Add_rating_to_post(long userId, int postId, int value, int expectedResponseCode)
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();

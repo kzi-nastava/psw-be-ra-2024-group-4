@@ -96,6 +96,7 @@ namespace Explorer.Blog.Core.UseCases
                 if (post == null) return Result.Fail("Post sa datim ID-jem nije pronađen.");
                 var comment = mapper.Map<Comment>(commentDto);
                 post.AddComment(comment);
+                post.UpdateStatus();
                 var result=repository.Update(post);
                 return MapToDto(result);
             }
@@ -111,6 +112,7 @@ namespace Explorer.Blog.Core.UseCases
             {
                 var post = repository.Get(postId);
                 post.DeleteComment(commentId);
+                post.UpdateStatus();
                 var result=repository.Update(post);
                 return MapToDto(result);
             }
@@ -146,6 +148,7 @@ namespace Explorer.Blog.Core.UseCases
                 if (post == null) return Result.Fail("Post with this id: "+  postId + "does not exist.");
                 post.AddRating(value,userId);
                 post.TotalRating();
+                post.UpdateStatus();
                 var result = repository.Update(post);
                 return MapToDto(result); //vraca postdto sad sa novim rating-om dodatim
             }
@@ -163,6 +166,7 @@ namespace Explorer.Blog.Core.UseCases
                 if(post==null) return Result.Fail("Post with this id: " + postId + "does not exist.");
                 post.DeleteRating(userId);
                 post.TotalRating();
+                post.UpdateStatus();
                 var result= repository.Update(post);
                 return MapToDto(result);
             }

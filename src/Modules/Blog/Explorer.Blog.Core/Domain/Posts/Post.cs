@@ -79,6 +79,14 @@ namespace Explorer.Blog.Core.Domain.Posts
             comment.Update(updatedComment.UserId,updatedComment.Text, updatedComment.Username, updatedComment.UpdatedAt, updatedComment.Username);
         }
 
+        public void UpdateStatus()
+        {
+            var commentCount= Comments.Count;
+            if (RatingSum < -10) { Status = BlogStatus.Closed; }
+            else if(RatingSum > 100 && commentCount>10) { Status = BlogStatus.Active; }
+            else if(RatingSum >500 && commentCount>30) { Status = BlogStatus.Famous; }
+        }
+
     }
     public enum BlogStatus
     {
