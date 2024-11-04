@@ -1,8 +1,8 @@
 ﻿using Explorer.API.Controllers.Administrator.Administration;
-using Explorer.API.Controllers.Author;
+using Explorer.API.Controllers.Author.TourAuthoring;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.API.Public.TourAuthoring;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,14 +14,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration
+namespace Explorer.Tours.Tests.Integration.TourAuthoring
 {
     [Collection("Sequential")]
     public class TourQueryTests : BaseToursIntegrationTest
     {
         public TourQueryTests(ToursTestFactory factory) : base(factory) { }
 
-        [Fact]  
+        [Fact]
 
         public void GetByUserId()
         {
