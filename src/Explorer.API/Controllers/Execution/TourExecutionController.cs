@@ -29,7 +29,7 @@ namespace Explorer.API.Controllers.Execution
         }
 
 
-        [HttpPost("/complete/{executionId:long}")]
+        [HttpPost("complete/{executionId:long}")]
         public ActionResult<TourExecutionDto> CompleteTourExecution(int executionId)
         {
             var result = _executionService.CompleteTourExecution(executionId);
@@ -41,7 +41,7 @@ namespace Explorer.API.Controllers.Execution
             return CreateResponse(result);
         }
 
-        [HttpPost("/abandon/{executionId:long}")]
+        [HttpPost("abandon/{executionId:long}")]
         public ActionResult<TourExecutionDto> AbandonTourExecution(int executionId)
         {
             var result = _executionService.AbandonTourExecution(executionId);
