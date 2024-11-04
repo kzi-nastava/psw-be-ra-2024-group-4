@@ -20,6 +20,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
     {
 
         ITourRepository _tourRepository { get; set; }
+        
         IMapper _mapper { get; set; }
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
         {
@@ -49,11 +50,16 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Status = (TourStatus)t.Status,
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
-                    KeyPointIds = t.KeyPointIds,
+                    KeyPoints = t.KeyPoints.Select(kp => new KeyPointDto
+                    {
+                        Id = kp.Id,
+                        Name = kp.Name,
+                        Longitude = kp.Longitude,
+                        Latitude = kp.Latitude,
+                        Image = kp.Image,
+                   
 
-
-
-
+                    }).ToList()
                 }).ToList();
 
                 return Result.Ok(tourDtos);
@@ -94,31 +100,6 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             {
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
-        }
-        public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
-        {
-
-
-            if (tour == null)
-            {
-                return Result.Fail("No tour found.");
-
-            }
-
-
-            if (!tour.KeyPointIds.Contains(keyPointId))
-            {
-                tour.KeyPointIds.Add(keyPointId);
-                Update(tour);
-                return Result.Ok(tour);
-            }
-
-            return Result.Fail("Keypoint already exists in this tour.");
-
-
-
-
-
         }
 
         public Result Archive(long id)
@@ -165,6 +146,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
         {
             return Delete(id); 
         }
+
 
 
 

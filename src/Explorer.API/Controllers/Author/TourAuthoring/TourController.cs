@@ -54,14 +54,6 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
-        [HttpPut("keypointaddition/{keypointid:int}")]
-        public ActionResult<TourDto> AddKeyPoint([FromBody] TourDto tour, int keypointid)
-        {
-            var result = _tourService.AddKeyPoint(tour, keypointid);
-
-            return CreateResponse(result);
-        }
-
         [HttpPut("archive/{tourId:int}")]
         public ActionResult<TourDto> Archive(long tourId)
         {
