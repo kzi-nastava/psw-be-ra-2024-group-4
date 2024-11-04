@@ -142,8 +142,61 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result Publish(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Publish();
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
 
+        public Result AddDuration(string transportation, double duration, long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.AddDuration(transportation, duration);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
 
-
+        public Result DeteteAllDurations(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.DeleteAllDurations();
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
     }
 }
