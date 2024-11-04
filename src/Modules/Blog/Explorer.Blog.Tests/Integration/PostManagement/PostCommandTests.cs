@@ -1,4 +1,5 @@
 ﻿using Explorer.API.Controllers.Author.PostManagement;
+using Explorer.API.Controllers.Tourist.BlogFeedback;
 using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Infrastructure.Database;
@@ -28,7 +29,8 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = "https://example.com/images/budget-travel.jpg",
                 Status = BlogStatus.Draft,
-                UserId =3
+                UserId = 3,
+                RatingSum = 0
             };
 
             // Act
@@ -42,6 +44,7 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
             result.CreatedAt.ShouldNotBe(default);
             result.Status.ShouldBe(newEntity.Status);
             result.UserId.ShouldBe(newEntity.UserId);
+            result.RatingSum.ShouldBe(newEntity.RatingSum);
 
 
             // Assert - Database
@@ -84,7 +87,12 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
                 CreatedAt = DateTime.UtcNow,
                 ImageUrl = "https://example.com/images/budget-travel.jpg",
                 Status = BlogStatus.Draft,
-                UserId = 5
+                UserId = 5,
+                RatingSum = 0,
+                Ratings=new List<RatingDto>() 
+                {
+                    new RatingDto { CreatedAt=DateTime.UtcNow,UserId=1,Value=1 }
+                }
             };
 
             // Act
@@ -98,7 +106,8 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
             result.CreatedAt.ShouldNotBe(default);
             result.Status.ShouldBe(updatedEntity.Status);
             result.UserId.ShouldBe(updatedEntity.UserId);
-
+            result.Ratings.ShouldNotBeNull();
+            result.Ratings.Count.ShouldBe(updatedEntity.Ratings.Count);
             // Assert - Database
             var storedEntity = dbContext.Posts.FirstOrDefault(i => i.Title == "Exploring the Hills");
             storedEntity.ShouldNotBeNull();
@@ -129,10 +138,15 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
         private static PostController CreateController(IServiceScope scope)
         {
             return new PostController(scope.ServiceProvider.GetRequiredService<IPostService>(), scope.ServiceProvider.GetRequiredService<ICommentService>(),scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
-
             {
                 ControllerContext = BuildContext("-1")
             };
+        }
+
+        private static CommentController CreateCommentController(IServiceScope scope)
+        {
+            return new CommentController(scope.ServiceProvider.GetRequiredService<ICommentService>(),scope.ServiceProvider.GetRequiredService<IPostService>())
+            { ControllerContext = BuildContext("-1") };
         }
     }
 }

@@ -11,10 +11,11 @@ namespace Explorer.Blog.API.Dtos
         public string ImageUrl { get; set; }
         public long UserId { get; set; }
         public BlogStatus Status { get; set; }
-        public int TotalRating {  get; set; }
+        public int RatingSum {  get; set; }
         public string ImageBase64 {  get; set; }
         public List<CommentDto> Comments { get; set; }
         public List<RatingDto> Ratings { get; set; }
+
     }
 
     public enum BlogStatus
