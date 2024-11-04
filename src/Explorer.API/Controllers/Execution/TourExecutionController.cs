@@ -3,6 +3,8 @@ using Explorer.Tours.API.Dtos.TourExecutionDtos;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.TourExecutions;
+using Explorer.Tours.Core.UseCases.Execution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +22,7 @@ namespace Explorer.API.Controllers.Execution
         }
 
         [HttpPost]
-        public ActionResult<TourDto> Create([FromBody] TourExecutionDto tour)
+        public ActionResult<TourExecutionDto> Create([FromBody] TourExecutionDto tour)
         {
             var result = _executionService.Create(tour);
             return CreateResponse(result);
@@ -28,7 +30,7 @@ namespace Explorer.API.Controllers.Execution
 
 
         [HttpPost("/complete/{executionId:long}")]
-        public ActionResult CompleteTourExecution(int executionId)
+        public ActionResult<TourExecutionDto> CompleteTourExecution(int executionId)
         {
             var result = _executionService.CompleteTourExecution(executionId);
             if (result == null)
@@ -40,7 +42,7 @@ namespace Explorer.API.Controllers.Execution
         }
 
         [HttpPost("/abandon/{executionId:long}")]
-        public ActionResult<TourDto> AbandonTourExecution(int executionId)
+        public ActionResult<TourExecutionDto> AbandonTourExecution(int executionId)
         {
             var result = _executionService.AbandonTourExecution(executionId);
             if (result == null)
@@ -50,5 +52,18 @@ namespace Explorer.API.Controllers.Execution
 
             return CreateResponse(result);
         }
+
+        [HttpGet("by_tour_and_tourist/{touristId:long}/{tourId:long}")]
+        public ActionResult<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId)
+        {
+            var result = _executionService.GetByTourAndTouristId(touristId, tourId);
+            if (result == null)
+            {
+                return NotFound("Tour execution not found for the specified tourist and tour.");
+            }
+            return CreateResponse(result);
+        }
+
+
     }
 }
