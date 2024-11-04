@@ -70,8 +70,18 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return null;
         }
 
-        
+        public Result<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId)
+        {
+            var ex = tourExecutionRepository.GetByTourAndTourist(touristId, tourId);
+            if (ex != null)
+            {
+                return Result.Ok(MapToDto(ex)); ;
+            }
+            return null;
 
-        
+
+        }
+
+
     }
 }

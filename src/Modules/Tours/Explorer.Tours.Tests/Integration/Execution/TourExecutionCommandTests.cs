@@ -70,7 +70,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
             if (shouldComplete)
             {
                 // Act
-                var result = ((ObjectResult)controller.CompleteTourExecution(executionId))?.Value as TourExecutionDto;
+                var result = ((ObjectResult)controller.CompleteTourExecution(executionId).Result)?.Value as TourExecutionDto;
 
                 // Assert - Response
                 result.ShouldNotBeNull();
