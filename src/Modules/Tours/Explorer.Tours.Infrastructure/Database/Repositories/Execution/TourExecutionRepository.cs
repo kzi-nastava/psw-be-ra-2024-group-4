@@ -68,44 +68,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             return null;
             
         }
-
-        public TourExecution StartExecution(TourExecution execution)
-        {
-            Create(execution);
-            if (execution != null)
-            {
-                execution.StartTourExecution();
-                Update(execution);
-                return execution;
-            }
-            return null;
-
-        }
-
-        public TourExecution CompleteExecution(long executionId)
-        {
-            var execution = Get(executionId);
-            if (execution != null)
-            {
-                execution.CompleteTourExecution();
-                Update(execution);
-                return execution;
-            }
-            return null;
-
-        }
-
-        public TourExecution AbandonExecution(long executionId)
-        {
-            var execution = Get(executionId);
-            if (execution != null)
-            {
-                execution.AbandonTourExecution();
-                Update(execution);
-                return execution;
-            }
-            return null;
-
-        }
+        
     }
 }

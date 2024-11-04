@@ -24,7 +24,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public DateTime PublishedTime { get; private set; }
 
-        public DateTime ArchiveTime { get; private set; }
+        public DateTime? ArchiveTime { get; private set; }
 
         public List<long> EquipmentIds { get; private set; }
 
@@ -51,6 +51,36 @@ namespace Explorer.Tours.Core.Domain.Tours
             EquipmentIds = new List<long>();
             KeyPointIds = new List<long>();
 
+        }
+
+        public void Archive(long authorId)
+        {
+            if (Status != TourStatus.Published) throw new ArgumentException("Tour must be published in order to be archived");
+            IsAuthor(authorId);
+
+            ArchiveTime = DateTime.UtcNow;
+            Status = TourStatus.Archived;
+        }
+
+        private void IsAuthor(long userId)
+        {
+            if (UserId != userId) throw new UnauthorizedAccessException("User is not the author of the tour");
+        }
+
+        public bool Reactivate(long authorId)
+        {
+            if (Status != TourStatus.Archived)
+            {
+                throw new ArgumentException("Tour must be archived in order to be reactivated");
+            }
+
+            IsAuthor(authorId);
+
+            Status = TourStatus.Published;
+
+            ArchiveTime = null;
+
+            return true;
         }
 
 

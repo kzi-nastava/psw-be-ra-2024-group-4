@@ -16,6 +16,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         void RemoveEquipmentFromTour(long tourId, long equipmentId);
 
         Tour GetSpecificTourByUser(long id, long userId);
-
+        public Tour GetById(long id);
+        public void Save();
     }
 }

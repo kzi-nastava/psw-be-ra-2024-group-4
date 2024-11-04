@@ -121,9 +121,52 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
         }
 
-        /*    public Result<List<TourDto>> getByChosenDestination(double longitude, double latitude)
+        public Result Archive(long id)
+        {
+            try
             {
-                var tours=_tourRepository.get
-            }*/
+                var tour = _tourRepository.GetById(id);
+                tour.Archive(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+
+
+        }
+
+        public Result Reactivate(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Reactivate(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+        public Result DeleteTour(int id)
+        {
+            return Delete(id); 
+        }
+
+
+
     }
 }

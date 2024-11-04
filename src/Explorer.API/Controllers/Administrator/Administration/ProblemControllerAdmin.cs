@@ -26,5 +26,20 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+
+        [HttpPut("close/{id:int}")]
+        public ActionResult<ProblemDTO> UpdateActiveStatus(int id, [FromBody] bool isActive)
+        {
+            var result = _problemService.UpdateActiveStatus(id, isActive);
+            return CreateResponse(result);
+        }
+
+        [HttpDelete("admin/{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            var result = _problemService.Delete(id);
+            return CreateResponse(result);
+        }
+
     }  
 }

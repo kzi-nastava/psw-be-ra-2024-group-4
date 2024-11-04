@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
 {
@@ -60,5 +61,21 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
 
             return CreateResponse(result);
         }
+
+        [HttpPut("archive/{tourId:int}")]
+        public ActionResult<TourDto> Archive(long tourId)
+        {
+            var result = _tourService.Archive(tourId);
+            return CreateResponse(result);
+        }
+
+
+        [HttpPut("reactivate/{tourId:int}")]
+        public ActionResult<TourDto> Reactivate(long tourId)
+        {
+            var result = _tourService.Reactivate(tourId);
+            return CreateResponse(result);
+        }
+
     }
 }

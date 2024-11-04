@@ -50,6 +50,7 @@ public static class ToursStartup
         services.AddScoped<ITourReviewService, TourReviewService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
         services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
+        services.AddScoped<ITourOverviewService, TourOverviewService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -63,6 +64,7 @@ public static class ToursStartup
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
         services.AddScoped<ITourExecutionRepository, TourExecutionRepository>();
+        services.AddScoped<ITourOverviewRepository, TourOverviewRepository>();
      
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
    
