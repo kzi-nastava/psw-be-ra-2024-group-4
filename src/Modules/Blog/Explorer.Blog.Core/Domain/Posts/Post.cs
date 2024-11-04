@@ -63,7 +63,16 @@ namespace Explorer.Blog.Core.Domain.Posts
         {
             return Comments.ToList();
         }
-   
+
+        public void UpdateComment(Comment updatedComment)
+        {
+            var comment = Comments.FirstOrDefault(c => c.Id == updatedComment.Id);
+            if (comment == null)
+            {
+                throw new KeyNotFoundException("Comment not found in the post.");
+            }
+            comment.Update(updatedComment.UserId,updatedComment.Text, updatedComment.Username, updatedComment.UpdatedAt, updatedComment.Username);
+        }
 
     }
     public enum BlogStatus

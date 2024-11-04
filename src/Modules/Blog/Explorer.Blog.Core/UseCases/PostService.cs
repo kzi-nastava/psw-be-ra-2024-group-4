@@ -140,21 +140,19 @@ namespace Explorer.Blog.Core.UseCases
                 {
                     return Result.Fail("Post sa datim ID-jem nije pronađen.");
                 }
-
-                var comment = post.Comments.FirstOrDefault(c => c.Id == updatedCommentDto.Id);
-                if (comment == null)
-                {
-                    return Result.Fail("Komentar sa datim ID-jem nije pronađen u postu.");
-                }
-
-                mapper.Map(updatedCommentDto, comment);
+                var comment = mapper.Map<Comment>(updatedCommentDto);
+                post.UpdateComment(comment);
                 repository.Update(post);
 
                 return Result.Ok();
             }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail("Komentar sa datim ID-jem nije pronadjen ");
+            }
             catch (Exception e)
             {
-                return Result.Fail("Došlo je do greške: " + e.Message);
+                return Result.Fail("Doslo je do greske: " + e.Message);
             }
         }
 
