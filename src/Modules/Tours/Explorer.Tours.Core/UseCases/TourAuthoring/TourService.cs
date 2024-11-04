@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.Tours;
@@ -14,24 +14,23 @@ using System.Threading.Tasks;
 using TourStatus = Explorer.Tours.API.Dtos.TourStatus;
 using TourTags = Explorer.Tours.API.Dtos.TourTags;
 
-namespace Explorer.Tours.Core.UseCases
+namespace Explorer.Tours.Core.UseCases.TourAuthoring
 {
     public class TourService : CrudService<TourDto, Tour>, ITourService
     {
-        //ova klasa ce biti podlozna promenama.
-        //Za sada sam ovako uradila, ali kad potvrdim sa asistenom i kolegama mozda promenim.
-        //Posto koleginica zavisi od toga kad cu ja zavrsiti ja cu predati sada.
 
         ITourRepository _tourRepository { get; set; }
+        
         IMapper _mapper { get; set; }
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) {
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
+        {
             _tourRepository = tourRepository;
             _mapper = mapper;
         }
 
         public Result<List<TourDto>> GetByUserId(long userId)
         {
-            
+
             {
                 var tours = _tourRepository.GetToursByUserId(userId);
 
@@ -51,11 +50,16 @@ namespace Explorer.Tours.Core.UseCases
                     Status = (TourStatus)t.Status,
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
-                    KeyPointIds = t.KeyPointIds,
+                    KeyPoints = t.KeyPoints.Select(kp => new KeyPointDto
+                    {
+                        Id = kp.Id,
+                        Name = kp.Name,
+                        Longitude = kp.Longitude,
+                        Latitude = kp.Latitude,
+                        Image = kp.Image,
+                   
 
-
-
-
+                    }).ToList()
                 }).ToList();
 
                 return Result.Ok(tourDtos);
@@ -97,30 +101,49 @@ namespace Explorer.Tours.Core.UseCases
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
         }
-        public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
+
+        public Result Archive(long id)
         {
-         
-
-            if(tour == null)
+            try
             {
-                return Result.Fail("No tour found.");
-
+                var tour = _tourRepository.GetById(id);
+                tour.Archive(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
             }
-
-
-            if (!tour.KeyPointIds.Contains(keyPointId))
+            catch (ArgumentException e)
             {
-                tour.KeyPointIds.Add(keyPointId);
-                Update(tour);
-                return Result.Ok(tour);
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
-
-            return Result.Fail("Keypoint already exists in this tour.");
-            
-          
-
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
 
 
         }
+
+        public Result Reactivate(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Reactivate(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+
+
+
     }
 }
