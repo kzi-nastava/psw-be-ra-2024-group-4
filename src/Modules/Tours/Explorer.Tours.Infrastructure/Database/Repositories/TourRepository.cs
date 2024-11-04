@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
@@ -98,6 +99,21 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
+        public PagedResult<Tour> GetPublished(int page, int pageSize)
+        {
+            var query = _dbContext.Tour
+                .Include(t => t.KeyPoints)
+                .Where(t => t.Status == TourStatus.Published)
+                .Skip((page - 1) * pageSize);
 
+            if (pageSize > 0)
+            {
+                query = query.Take(pageSize);
+            }
+
+            var ret = query.ToList();
+
+            return new PagedResult<Tour>(ret, ret.Count());
+        }
     }
 }
