@@ -69,5 +69,27 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpPut("publish/{tourId:int}")]
+        public ActionResult<TourDto> Publish(long tourId)
+        {
+            var result = _tourService.Publish(tourId);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("add-duration/{tourId:int}")]
+        public ActionResult<TourDto> AddDuration(long tourId, [FromQuery] string transportation, [FromQuery] double duration)
+        {
+            var result = _tourService.AddDuration(transportation, duration, tourId);
+            return CreateResponse(result);
+        }
+
+        [HttpDelete("delete-all-durations/{tourId:int}")]
+        public ActionResult<TourDto> DeleteAllDurations(long tourId)
+        {
+            var result = _tourService.DeteteAllDurations(tourId);
+            return CreateResponse(result);
+        }
+
+
     }
 }
