@@ -45,6 +45,8 @@ public class ToursContext : DbContext
           .HasMany(t => t.KeyPoints)
           .WithOne()
           .HasForeignKey(kp => kp.TourId);
+
+        ConfigureTour(modelBuilder);
     }
     private static void ConfigureTourExecution(ModelBuilder modelBuilder)
     {
