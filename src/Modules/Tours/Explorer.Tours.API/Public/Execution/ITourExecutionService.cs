@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Public.Execution
         Result<TourExecutionDto> CompleteTourExecution(long id);
 
         Result<TourExecutionDto> AbandonTourExecution(long id);
+        Result<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId);
     }
 }

@@ -19,10 +19,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution
         public void Delete(long id);
 
         public TourExecution CompleteKeyPoint(long executionId, long keyPointId);
-
-        
-
-
-
+        TourExecution? GetByTourAndTourist(long touristId, long tourId);
     }
 }

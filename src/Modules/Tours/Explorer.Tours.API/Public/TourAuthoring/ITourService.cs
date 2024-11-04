@@ -1,4 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using FluentResults;
 using System;
@@ -21,8 +21,10 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         Result<TourDto> AddKeyPoint(TourDto tour, long keypointId);
 
         Result UpdateDistance(long id, double distance);
+
         Result Archive(long id);
         Result Reactivate(long id);
+
 
     }
 }

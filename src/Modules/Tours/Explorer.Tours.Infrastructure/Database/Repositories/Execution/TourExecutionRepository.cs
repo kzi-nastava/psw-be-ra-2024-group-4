@@ -68,6 +68,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             return null;
             
         }
-        
+
+        public TourExecution? GetByTourAndTourist(long touristId, long tourId)
+        {
+            return _dbContext.TourExecution
+        .FirstOrDefault(t => t.TouristId == touristId && t.TourId == tourId);
+        }
+
+
     }
 }
