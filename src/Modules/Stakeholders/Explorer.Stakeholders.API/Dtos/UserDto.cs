@@ -14,6 +14,11 @@ namespace Explorer.Stakeholders.API.Dtos
       //  public UserRole Role { get; private set; }
         public bool IsActive { get; set; }
 
+        public UserDto(string username)
+        {
+            Username = username;
+        }
+
     }
    /* public enum UserRole
     {

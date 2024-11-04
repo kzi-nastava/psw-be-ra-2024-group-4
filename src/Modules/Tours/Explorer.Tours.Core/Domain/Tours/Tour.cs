@@ -22,6 +22,10 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public double LengthInKm { get; private set; }
 
+        public DateTime PublishedTime { get; private set; }
+
+        public DateTime ArchiveTime { get; private set; }
+
         public List<long> EquipmentIds { get; private set; }
 
         public List<long> KeyPointIds { get; private set; }
@@ -42,6 +46,8 @@ namespace Explorer.Tours.Core.Domain.Tours
             Status = TourStatus.Draft;
             Price = 0;
             LengthInKm = 0;
+            PublishedTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
+            ArchiveTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             EquipmentIds = new List<long>();
             KeyPointIds = new List<long>();
 

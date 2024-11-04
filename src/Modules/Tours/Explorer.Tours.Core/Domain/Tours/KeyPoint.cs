@@ -12,6 +12,7 @@ public class KeyPoint : Entity
 
     public long UserId { get; private set; }
 
+
     public long TourId { get; private set; }
     public KeyPoint(string name, double longitude, double latitude, string description, string image, long userId, long tourId)
     {
@@ -23,6 +24,7 @@ public class KeyPoint : Entity
         Image = image;
         UserId = userId;
         TourId = tourId;
+
     }
 
     public void Validate(string name, double longitude, double latitude, string description, string image, long userId)

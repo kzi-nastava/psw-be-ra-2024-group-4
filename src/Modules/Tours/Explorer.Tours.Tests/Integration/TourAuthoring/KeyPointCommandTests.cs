@@ -35,7 +35,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Latitude = 2,
             Description = "Test",
             Image = "Test",
-            UserId = 2
+            UserId = 2,
+            TourId = -1,
         };
 
         // Act
@@ -73,7 +74,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Latitude = 2,
             Description = "Test",
             Image = "Test",
-            UserId = 2
+            UserId = 2, 
+            TourId = -1
         };
 
         // Act
