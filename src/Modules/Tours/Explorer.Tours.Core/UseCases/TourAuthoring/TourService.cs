@@ -143,6 +143,27 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result<TourDto> Get(int id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+
+                if (tour == null)
+                {
+                    return Result.Fail<TourDto>("Tour not found.");
+                }
+
+                var tourDto = _mapper.Map<TourDto>(tour);
+
+                return Result.Ok(tourDto);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<TourDto>(e.Message);
+            }
+        }
+
 
 
 

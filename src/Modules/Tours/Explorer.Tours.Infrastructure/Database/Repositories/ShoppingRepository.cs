@@ -81,7 +81,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                         Id = token.Id,
                         UserId = token.UserId,
                         TourId = token.TourId,
-                        PurchaseDate = token.PurchaseDate,
                         CartId = token.CartId
 
                     }).ToList(),

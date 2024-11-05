@@ -32,7 +32,6 @@ public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId,
-                PurchaseDate = token.PurchaseDate
        
             }).ToList();
 
@@ -57,8 +56,7 @@ public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
                 Id = token.Id,
                 UserId = token.UserId,
                 CartId = token.CartId,
-                TourId = token.TourId,
-                PurchaseDate = token.PurchaseDate
+                TourId = token.TourId
        
             }).ToList();
 

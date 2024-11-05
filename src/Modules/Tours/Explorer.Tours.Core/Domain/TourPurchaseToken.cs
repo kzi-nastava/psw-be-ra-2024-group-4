@@ -17,7 +17,7 @@ namespace Explorer.Tours.Core.Domain
         public long TourId { get; private set; }
 
        // public long OrderId { get; private set; }
-        public DateTime PurchaseDate { get; }
+        //public DateTime PurchaseDate { get; }
 
         public TourPurchaseToken() { }
         public TourPurchaseToken(long cartId, long userId, long tourId)
@@ -25,7 +25,7 @@ namespace Explorer.Tours.Core.Domain
             CartId = cartId;
             UserId = userId;
             TourId = tourId;
-            PurchaseDate = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
+            //PurchaseDate = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             //  OrderId = orderId;
         }
 
