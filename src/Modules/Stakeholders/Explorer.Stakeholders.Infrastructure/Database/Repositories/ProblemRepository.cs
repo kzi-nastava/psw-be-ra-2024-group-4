@@ -50,5 +50,12 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             }
             return problem;
         }
+
+        public void Update(Problem problem)
+        {
+          
+            _db.Entry(problem).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _db.SaveChanges();
+        }
     }
 }

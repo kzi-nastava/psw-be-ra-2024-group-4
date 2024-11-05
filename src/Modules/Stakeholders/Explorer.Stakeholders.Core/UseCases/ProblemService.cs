@@ -55,10 +55,20 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             //kako mapirati 
             //var problem = _problemRepository.PostComment(new ProblemComment(commentDto.ProblemId, commentDto.UserId, commentDto.Text, commentDto.TimeSent));
-             var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+            // var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
            
             //ovde se menja za repo-izmenili kod dajane
-            if (problem == null)
+            //if (problem == null)
+            // var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+            //problemrepo.getbyid
+            var problem = _problemRepository.GetById(commentDto.ProblemId);
+
+            // problem.PostComment()
+            problem.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+           //problemrepo.Update(problem)
+           _problemRepository.Update(problem);
+
+            if(problem == null)
             {
                 return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");
             }
@@ -74,5 +84,55 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
             return MapToDto(problem);
         }
+
+        public Result<ProblemDTO> UpdateActiveStatus(long id, bool isActive)
+        {/*
+            var problem = _problemRepository.GetById(id);
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+            problem.IsActive = isActive;
+
+            var updateResult = Update(MapToDto(problem));
+
+            if (updateResult.IsFailed)
+            {
+                return Result.Fail<ProblemDTO>("Failed to update problem.");
+            }
+
+            return Result.Ok(updateResult.Value);*/
+            var problem = _problemRepository.GetById(id);
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+
+            // Ažuriraj status
+            problem.IsActive = isActive;
+
+            // Praćenje i update kroz kontekst
+            _problemRepository.Update(problem);
+
+            return Result.Ok(MapToDto(problem));
+        }
+
+        public Result<ProblemDTO> GetById(long id)
+        {
+            var problem = _problemRepository.GetById(id);
+
+            if (problem == null)
+            {
+                return Result.Fail<ProblemDTO>("Problem not found.");
+            }
+
+            return MapToDto(problem);  
+        }
+
+        public Result DeleteProblem(int id)
+        {
+            return Delete(id);
+        }
+
     }
 }

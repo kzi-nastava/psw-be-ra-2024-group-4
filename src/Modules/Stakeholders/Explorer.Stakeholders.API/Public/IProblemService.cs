@@ -18,5 +18,8 @@ namespace Explorer.Stakeholders.API.Public
         Result<List<ProblemDTO>> GetByTouristId(long id);
         Result<List<ProblemDTO>> GetByTourId(long id);
         Result<ProblemDTO> PostComment(ProblemCommentDto commentDto);
+        Result<ProblemDTO> UpdateActiveStatus(long id, bool isActive);
+        Result<ProblemDTO> GetById(long id);
+        Result DeleteProblem(int id);
     }
 }

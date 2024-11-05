@@ -13,5 +13,6 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         List<Problem> GetByUserId(long id);
         List<Problem> GetByTourId(long id);
         Problem PostComment(ProblemComment problemComment);
+        void Update(Problem problem);
     }
 }

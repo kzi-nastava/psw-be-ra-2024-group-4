@@ -21,9 +21,10 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
         public string Description { get; set; }
         public int Priority { get; set; }
         public DateTime Time { get; set; }
+        public bool IsActive { get; set; }
         public List<ProblemComment>? Comments { get; protected set; }
 
-        public Problem(long userId, long tourId, string category, string description, int priority, DateTime time)
+        public Problem(long userId, long tourId, string category, string description, int priority, DateTime time, bool isActive)
         {
 
             UserId = userId;
@@ -34,6 +35,7 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
             Time = time;
             Validate();
             Comments = new List<ProblemComment>();
+            IsActive = isActive;
         }
 
         public void Validate()

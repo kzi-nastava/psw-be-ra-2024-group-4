@@ -1,5 +1,6 @@
 ﻿using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,27 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
     public class TourRepository : ITourRepository
     {
         private readonly ToursContext _dbContext;
+        private readonly DbSet<Tour> _dbSet;
 
         public TourRepository(ToursContext dbContext)
         {
             _dbContext = dbContext;
+            _dbSet = dbContext.Set<Tour>();
+        }
+
+        public Tour GetById(long id)
+        {
+             var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+             if (tour == null)
+             { 
+                 throw new ArgumentException("Tour not found.");
+             }
+             return tour;
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
         }
 
         public List<Tour> GetToursByUserId(long userId)
@@ -42,10 +60,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return equipmentList;
         }
-        public Tour GetById(long tourId)
-        {
-            return _dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
-        }
+        //public Tour GetById(long tourId)
+        //{
+           // return _dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+        //}
 
 
 
@@ -84,5 +102,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
 
         }
+
+
     }
 }

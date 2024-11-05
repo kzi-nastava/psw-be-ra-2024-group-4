@@ -47,6 +47,14 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
+        [HttpPut("updateStatus/{id:int}")]
+        public ActionResult<ProblemDTO> UpdateActiveStatus(int id, [FromBody] bool isActive)
+        {
+            var result = _problemService.UpdateActiveStatus(id, isActive);
+            return CreateResponse(result);
+        }
+
+
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
@@ -57,6 +65,13 @@ namespace Explorer.API.Controllers.Tourist
         public ActionResult<ProblemDTO> PostComment([FromBody] ProblemCommentDto commentDto)
         {
             var result = _problemService.PostComment(commentDto);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("find/{id:long}")]
+        public ActionResult<ProblemDTO> GetById(long id)
+        {
+            var result = _problemService.GetById(id);
             return CreateResponse(result);
         }
     }
