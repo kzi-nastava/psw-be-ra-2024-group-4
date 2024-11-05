@@ -17,19 +17,14 @@ namespace Explorer.Tours.Core.UseCases.TourReviewing
             _tourReviewRepository = tourReviewRepository;
         }
 
-        public Result<List<TourReviewDto>> GetByTouristId(long touristId)
+        public Result<PagedResult<TourReviewDto>> GetByTouristId(long touristId)
         {
             var reviews = _tourReviewRepository.GetByTouristId(touristId);
-            if (reviews.Count == 0)
-                return Result.Fail<List<TourReviewDto>>("No found Reviews");
             return MapToDto(reviews);
         }
-        public Result<List<TourReviewDto>> GetByTourId(long TourId)
+        public Result<PagedResult<TourReviewDto>> GetByTourId(long TourId)
         {
             var reviews = _tourReviewRepository.GetByTourId(TourId);
-            if (reviews.Count == 0)
-                return Result.Fail<List<TourReviewDto>>("No found Reviews");
-
             return MapToDto(reviews);
         }
     }
