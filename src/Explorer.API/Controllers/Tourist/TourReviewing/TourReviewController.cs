@@ -26,17 +26,17 @@ namespace Explorer.API.Controllers.Tourist.TourReviewing
             return CreateResponse(result);
         }
 
-        [HttpGet("byTourist/{userId:long}")]
-        public ActionResult<PagedResult<TourReviewDto>> GetAllFromTour([FromQuery] int page, [FromQuery] int pageSize)
+        [HttpGet("byTour/{tourId:long}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetByTourId(long tourId)
         {
-            var result = _tourReviewService.GetPaged(page, pageSize);
+            var result = _tourReviewService.GetByTourId(tourId);
             return CreateResponse(result);
         }
 
-        [HttpGet("byTourist/{userId:long}")]
-        public ActionResult<PagedResult<TourReviewDto>> GetAllFromTourist([FromQuery] int page, [FromQuery] int pageSize)
+        [HttpGet("byTourist/{touristId:long}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetAllFromTourist(long touristId)
         {
-            var result = _tourReviewService.GetPaged(page, pageSize);
+            var result = _tourReviewService.GetByTouristId(touristId);
             return CreateResponse(result);
         }
 
