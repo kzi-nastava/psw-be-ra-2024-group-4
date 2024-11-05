@@ -28,7 +28,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
         public Result<PagedResult<TourReviewDto>> GetAllByTourId(int page, int pageSize, long tourId)
         {
-            var result = _tourReviewRepository.GetByTourId(tourId, page, pageSize);
+            var result = _tourReviewRepository.GetByTourId(tourId);
             var ret = result.ToResult();
 
             if (ret.IsFailed)
