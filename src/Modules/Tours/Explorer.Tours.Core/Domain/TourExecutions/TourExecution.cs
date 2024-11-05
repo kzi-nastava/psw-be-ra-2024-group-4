@@ -56,6 +56,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LastActivity = DateTime.UtcNow;
         }
 
+        public void UpdateLastActivity()
+        {
+            LastActivity = DateTime.UtcNow;
+        }
+
+
         public CompletedKeyPoint CompleteKeyPoint(long keyPointId)
         {
             ValidateTourExecutionActive();

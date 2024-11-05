@@ -7,6 +7,7 @@ using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution;
 using Explorer.Tours.Core.Domain.TourExecutions;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -97,6 +98,21 @@ namespace Explorer.Tours.Core.UseCases.Execution
             }
         }
 
+        public void UpdateLastActivity(long executionId)
+        {
+            var execution = tourExecutionRepository.Get(executionId);
+            if (execution != null)
+            {
+                execution.UpdateLastActivity();
+                tourExecutionRepository.Update(execution);
+            }
+            else
+            {
+                throw new Exception("Execution not found.");
+            }
+        }
+
+
         public Result<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId)
         {
             var ex = tourExecutionRepository.GetByTourAndTourist(touristId, tourId);
@@ -107,6 +123,31 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return null;
 
 
+        }
+
+        public ICollection<KeyPointDto> GetKeyPointsForTour(long tourId)
+        {
+            var keyPoints = tourExecutionRepository.GetKeyPointsByTourId(tourId);
+
+            var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
+            {
+                Id = kp.Id,
+                Name = kp.Name,
+                Latitude = kp.Latitude,
+                Longitude = kp.Longitude
+            }).ToList();
+
+            return keyPointDtos;
+        }
+
+        public Result<TourExecutionDto> GetActiveTourByTouristId(long touristId)
+        {
+            var execution = tourExecutionRepository.GetActiveTourByTourist(touristId);
+            if (execution != null)
+            {
+                return Result.Ok(MapToDto(execution));
+            }
+            return Result.Fail<TourExecutionDto>($"No active tour found for tourist with ID {touristId}.");
         }
 
 

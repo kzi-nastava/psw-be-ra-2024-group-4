@@ -68,6 +68,22 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             return _dbContext.KeyPoints.Any(kp => kp.Id == keyPointId);
         }
 
+        public ICollection<KeyPoint> GetKeyPointsByTourId(long tourId)
+        {
+            var tour = _dbContext.Tour
+                .Include(t => t.KeyPoints) 
+                .FirstOrDefault(t => t.Id == tourId);
+
+            return tour?.KeyPoints.ToList() ?? new List<KeyPoint>(); 
+        }
+
+        public TourExecution? GetActiveTourByTourist(long touristId)
+        {
+            return _dbContext.TourExecution
+                .FirstOrDefault(te => te.TouristId == touristId && te.Status == TourExecutionStatus.Active);
+        }
+
+
 
     }
 }

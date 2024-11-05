@@ -5,13 +5,13 @@ using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.UseCases.Execution;
+using Explorer.Tours.Core.UseCases.TourAuthoring;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Execution
 {
     [Authorize(Policy = "touristPolicy")]
-    [Route("api/tour/execution")]
     [Route("api/tourist/execution")]
 
     public class TourExecutionController : BaseApiController
@@ -55,7 +55,7 @@ namespace Explorer.API.Controllers.Execution
             return CreateResponse(result);
         }
 
-        [HttpPut("tour/completeKeyPoint/{executionId:long}/{keyPointId:long}")]
+        [HttpPut("completeKeyPoint/{executionId:long}/{keyPointId:long}")]
         public ActionResult<TourExecutionDto> CompleteKeyPoint(long executionId, long keyPointId)
         {
             try
@@ -76,6 +76,23 @@ namespace Explorer.API.Controllers.Execution
             }
         }
 
+        [HttpPut("updateLastActivity/{executionId:long}")]
+        public IActionResult UpdateLastActivity(long executionId)
+        {
+            try
+            {
+                _executionService.UpdateLastActivity(executionId);
+
+                return Ok(new { message = "Last activity updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the last activity.", details = ex.Message });
+            }
+        }
+
+
+
 
         [HttpGet("by_tour_and_tourist/{touristId:long}/{tourId:long}")]
         public ActionResult<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId)
@@ -84,6 +101,24 @@ namespace Explorer.API.Controllers.Execution
             if (result == null)
             {
                 return NotFound("Tour execution not found for the specified tourist and tour.");
+            }
+            return CreateResponse(result);
+        }
+
+        [HttpGet("{tourId}/keypoints")]
+        public IActionResult GetKeyPoints(long tourId)
+        {
+            var keyPoints = _executionService.GetKeyPointsForTour(tourId);
+            return Ok(keyPoints);
+        }
+
+        [HttpGet("active/{touristId:long}")]
+        public ActionResult<TourExecutionDto> GetActiveTourByTouristId(long touristId)
+        {
+            var result = _executionService.GetActiveTourByTouristId(touristId);
+            if (result.IsFailed)
+            {
+                return NotFound(result.Errors.First().Message);
             }
             return CreateResponse(result);
         }
