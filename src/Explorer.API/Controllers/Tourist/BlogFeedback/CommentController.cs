@@ -69,7 +69,7 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
                 return BadRequest(result.Errors);
             return CreateResponse(result);
         }
-        [HttpPut("{postId}/{commentId}")]
+        [HttpPut("{postId}")]
         public ActionResult<PostDto> UpdateCommentInPost(long postId,[FromBody] CommentDto updatedCommentDto)
         {
             var result = _postService.UpdateCommentInPost(postId, updatedCommentDto);
