@@ -12,4 +12,5 @@ public class AccountRegistrationDto
     public string ProfilePicture { get; set; }
     public string Biography { get; set; }
     public string Motto { get; set; }
+    public decimal Wallet {  get; set; }
 }

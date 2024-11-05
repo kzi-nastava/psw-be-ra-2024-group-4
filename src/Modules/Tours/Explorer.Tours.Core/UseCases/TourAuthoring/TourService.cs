@@ -57,6 +57,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Longitude = kp.Longitude,
                         Latitude = kp.Latitude,
                         Image = kp.Image,
+                        TourId = kp.TourId
                    
 
                     }).ToList()
@@ -139,6 +140,27 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             catch (UnauthorizedAccessException e)
             {
                 return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+        public Result<TourDto> Get(int id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+
+                if (tour == null)
+                {
+                    return Result.Fail<TourDto>("Tour not found.");
+                }
+
+                var tourDto = _mapper.Map<TourDto>(tour);
+
+                return Result.Ok(tourDto);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail<TourDto>(e.Message);
             }
         }
 
