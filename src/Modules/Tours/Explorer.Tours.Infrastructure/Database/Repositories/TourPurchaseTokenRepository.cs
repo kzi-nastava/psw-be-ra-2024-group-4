@@ -32,8 +32,8 @@ public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId,
-                PurchaseDate = token.PurchaseDate,
-                OrderId = token.OrderId
+                PurchaseDate = token.PurchaseDate
+       
             }).ToList();
 
             var result = purchaseTokenDtos.Where(token => token.CartId == cartId).ToList();
@@ -58,8 +58,8 @@ public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId,
-                PurchaseDate = token.PurchaseDate,
-                OrderId = token.OrderId
+                PurchaseDate = token.PurchaseDate
+       
             }).ToList();
 
             var result = purchaseTokenDtos.Where(token => token.UserId == userid).ToList();
