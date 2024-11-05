@@ -82,8 +82,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                         UserId = token.UserId,
                         TourId = token.TourId,
                         PurchaseDate = token.PurchaseDate,
-                        CartId = token.CartId,
-                        OrderId = token.OrderId
+                        CartId = token.CartId
 
                     }).ToList(),
                    TotalPrice = cart.Items.Sum(item => item.Price)
