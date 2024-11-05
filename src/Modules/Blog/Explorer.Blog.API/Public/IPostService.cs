@@ -20,8 +20,9 @@ namespace Explorer.Blog.API.Public
         Result<PostDto> DeleteCommentFromPost(long postId, long commentId);
         Result<PostDto> Get(int id);
         Result<PostDto> UpdateCommentInPost(long postId, CommentDto updatedCommentDto);
-
+        Result<PostDto> GetById(long id);
         Result<PostDto> AddRating(long postId,long userId,int value);
         Result<PostDto> DeleteRating(long postId, long userId);
+
     }
 }
