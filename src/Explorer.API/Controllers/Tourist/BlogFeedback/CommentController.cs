@@ -25,7 +25,12 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
             var result = _commentService.GetPaged(id,page, pageSize);
             return CreateResponse(result);
         }
-
+        [HttpGet("posts")]
+        public ActionResult<PagedResult<PostDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _postService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
         [HttpPost]
         public ActionResult<CommentDto> Create([FromBody] CommentDto comment)
         {
@@ -65,11 +70,18 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
             return CreateResponse(result);
         }
         [HttpPut("{postId}")]
-        public ActionResult<PostDto> UpdateCommentInPost(long postId, [FromBody] CommentDto updatedCommentDto)
+        public ActionResult<PostDto> UpdateCommentInPost(long postId,[FromBody] CommentDto updatedCommentDto)
         {
             var result = _postService.UpdateCommentInPost(postId, updatedCommentDto);
             if (result.IsFailed)
                 return BadRequest(result.Errors);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("post/{id:long}")]
+        public ActionResult<PostDto> GetPostById(long id)
+        {
+            var result = _postService.GetById(id);
             return CreateResponse(result);
         }
     }

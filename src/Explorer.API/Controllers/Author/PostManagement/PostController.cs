@@ -96,7 +96,7 @@ namespace Explorer.API.Controllers.Author.PostManagement
             var result = _postService.Delete(id);
             return CreateResponse(result);
         }
+  
 
-       
     }
 }

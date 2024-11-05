@@ -175,6 +175,14 @@ namespace Explorer.Blog.Core.UseCases
                 return Result.Fail(e.Message);
             }
         }
+
+        public Result<PostDto> GetById(long id)
+        {
+                var post = repository.Get(id);
+                if (post == null) return Result.Fail(FailureCode.NotFound).WithError("Post sa zadatim ID-jem nije pronađen.");
+                return MapToDto(post);
+           
+        }
     }
 }
 
