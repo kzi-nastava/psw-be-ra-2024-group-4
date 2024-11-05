@@ -96,7 +96,12 @@ namespace Explorer.API.Controllers.Author.PostManagement
             var result = _postService.Delete(id);
             return CreateResponse(result);
         }
-  
 
+        [HttpGet("{id:int}")]
+        public ActionResult<PostDto> GetPostById(int id)
+        {
+            var result = _postService.Get(id);
+            return CreateResponse(result);
+        }
     }
 }

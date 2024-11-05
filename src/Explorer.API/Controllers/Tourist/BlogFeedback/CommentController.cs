@@ -78,10 +78,10 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
             return CreateResponse(result);
         }
 
-        [HttpGet("post/{id:long}")]
-        public ActionResult<PostDto> GetPostById(long id)
+        [HttpGet("post/{id:int}")]
+        public ActionResult<PostDto> GetPostById(int id)
         {
-            var result = _postService.GetById(id);
+            var result = _postService.Get(id);
             return CreateResponse(result);
         }
     }
