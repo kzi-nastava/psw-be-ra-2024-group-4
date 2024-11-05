@@ -21,7 +21,6 @@ public class ToursContext : DbContext
     public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
 
     public DbSet<TourExecution> TourExecution { get; set; }
-
     public DbSet<PositionSimulator> Positions { get; set; }
 
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
@@ -43,6 +42,8 @@ public class ToursContext : DbContext
           .HasMany(t => t.KeyPoints)
           .WithOne()
           .HasForeignKey(kp => kp.TourId);
+
+        ConfigureTour(modelBuilder);
     }
     private static void ConfigureTourExecution(ModelBuilder modelBuilder)
     {
@@ -57,7 +58,6 @@ public class ToursContext : DbContext
             .HasForeignKey(s => s.LocationId);
 
     }
-
     private static void ConfigureTour(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Tour>()

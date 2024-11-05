@@ -56,6 +56,13 @@ public static class ToursStartup
         services.AddScoped<ITourExecutionService, TourExecutionService>();
         services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
         services.AddScoped<ITourOverviewService, TourOverviewService>();
+        services.AddScoped<IShoppingCartService, ShoppingService>();
+        services.AddScoped<IOrderItemService, OrderItemService>();
+        services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+        services.AddScoped<ITourExecutionService, TourExecutionService>();
+        services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
+        services.AddScoped<ITourOverviewService, TourOverviewService>();
+
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -71,6 +78,11 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, ToursContext>));
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
+        services.AddScoped<IShoppingCartRepository, ShoppingRepository>();
+        services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+        services.AddScoped<ITourPurchaseTokenRepository, TourPurchaseTokenRepository>();
+        services.AddScoped<ITourExecutionRepository, TourExecutionRepository>();
+        services.AddScoped<ITourReviewRepository, TourReviewRepository>();
         services.AddScoped<IShoppingCartRepository, ShoppingRepository>();
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<ITourPurchaseTokenRepository, TourPurchaseTokenRepository>();

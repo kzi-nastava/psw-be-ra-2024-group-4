@@ -65,6 +65,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Tags = tags,
                     TourDifficulty = tour.Difficulty,
                     TourName = tour.Name,
+                    Price = Convert.ToDecimal(tour.Price),
                     FirstKeyPoint = _mapper.Map<KeyPointDto>(tour.KeyPoints.First()),
                     Reviews = new List<TourReviewDto>()
                 };
