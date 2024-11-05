@@ -26,6 +26,20 @@ namespace Explorer.API.Controllers.Tourist.TourReviewing
             return CreateResponse(result);
         }
 
+        [HttpGet("byTourist/{userId:long}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetAllFromTour([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourReviewService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("byTourist/{userId:long}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetAllFromTourist([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourReviewService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
+
         [HttpPost]
         public ActionResult<TourReviewDto> Create([FromBody] TourReviewDto tourReview)
         {
