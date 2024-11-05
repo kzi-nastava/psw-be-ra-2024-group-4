@@ -2,6 +2,7 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -71,7 +72,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
         }
         private static TouristController CreateController(IServiceScope scope)
         {
-            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>())
+            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>(),
+                scope.ServiceProvider.GetRequiredService<ITourService>())
             {
                 ControllerContext = BuildContext("-1")
             };

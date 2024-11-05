@@ -48,8 +48,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
             var ret = publishedTours.ToResult();
 
-            if (ret.IsFailed || ret.Errors != null 
-                || ret.Value.Results.Any(x => x.KeyPointIds.Count() == 0 || x.KeyPoints.Count() == 0))
+            if (ret.IsFailed || ret.Value.Results.Any(x => x.KeyPoints.Count() == 0))
             {
                 return Result.Fail(ret.Errors);
             }
