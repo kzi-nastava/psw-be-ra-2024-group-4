@@ -14,7 +14,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public bool IsRead { get;  set; }
         public long UserId { get;  set; }
         public NotificationType NotificationsType { get; set; }
-        public long? ResourceId { get;  set; }
+        public long ResourceId { get;  set; }
 
 
 

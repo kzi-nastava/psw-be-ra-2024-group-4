@@ -55,8 +55,10 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             //kako mapirati 
             //var problem = _problemRepository.PostComment(new ProblemComment(commentDto.ProblemId, commentDto.UserId, commentDto.Text, commentDto.TimeSent));
-            var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
-            if(problem == null)
+             var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+           
+            //ovde se menja za repo-izmenili kod dajane
+            if (problem == null)
             {
                 return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");
             }
