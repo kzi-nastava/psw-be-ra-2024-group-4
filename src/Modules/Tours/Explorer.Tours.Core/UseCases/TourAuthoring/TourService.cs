@@ -20,6 +20,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
     {
 
         ITourRepository _tourRepository { get; set; }
+        
         IMapper _mapper { get; set; }
         public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
         {
@@ -49,11 +50,16 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Status = (TourStatus)t.Status,
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
-                    KeyPointIds = t.KeyPointIds,
+                    KeyPoints = t.KeyPoints.Select(kp => new KeyPointDto
+                    {
+                        Id = kp.Id,
+                        Name = kp.Name,
+                        Longitude = kp.Longitude,
+                        Latitude = kp.Latitude,
+                        Image = kp.Image,
+                   
 
-
-
-
+                    }).ToList()
                 }).ToList();
 
                 return Result.Ok(tourDtos);
@@ -95,30 +101,49 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
         }
-        public Result<TourDto> AddKeyPoint(TourDto tour, long keyPointId)
+
+        public Result Archive(long id)
         {
-
-
-            if (tour == null)
+            try
             {
-                return Result.Fail("No tour found.");
-
+                var tour = _tourRepository.GetById(id);
+                tour.Archive(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
             }
-
-
-            if (!tour.KeyPointIds.Contains(keyPointId))
+            catch (ArgumentException e)
             {
-                tour.KeyPointIds.Add(keyPointId);
-                Update(tour);
-                return Result.Ok(tour);
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
-
-            return Result.Fail("Keypoint already exists in this tour.");
-
-
-
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
 
 
         }
+
+        public Result Reactivate(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Reactivate(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+
+
+
     }
 }

@@ -21,7 +21,6 @@ namespace Explorer.Tours.API.Dtos
         public DateTime PublishedTime { get; set; }
         public DateTime ArchiveTime { get; set; }
         public List<long> EquipmentIds { get; set; }
-        public List<long> KeyPointIds { get; set; }
         public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
 
         public TourDto() { }
@@ -46,7 +45,7 @@ namespace Explorer.Tours.API.Dtos
             EquipmentIds = equipmentIds;
             PublishedTime = publishedTime;
             ArchiveTime = archivedTime;
-            KeyPointIds = keyPointIds;
+
 
         }
     }

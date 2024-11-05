@@ -14,15 +14,33 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
     public class TourRepository : ITourRepository
     {
         private readonly ToursContext _dbContext;
+        private readonly DbSet<Tour> _dbSet;
 
         public TourRepository(ToursContext dbContext)
         {
             _dbContext = dbContext;
+            _dbSet = dbContext.Set<Tour>();
+        }
+
+        public Tour GetById(long id)
+        {
+             var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+             if (tour == null)
+             { 
+                 throw new ArgumentException("Tour not found.");
+             }
+             return tour;
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
         }
 
         public List<Tour> GetToursByUserId(long userId)
         {
-            return _dbContext.Tour
+         
+            return _dbContext.Tour.Include(t => t.KeyPoints)
                          .Where(t => t.UserId == userId)
                          .ToList();
         }
@@ -81,6 +99,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.Tour.SingleOrDefault(t => t.Id == tourId && t.UserId == userId);
 
         }
+
 
         public PagedResult<Tour> GetPublished(int page, int pageSize)
         {
