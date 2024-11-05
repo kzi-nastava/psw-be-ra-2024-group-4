@@ -57,6 +57,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Longitude = kp.Longitude,
                         Latitude = kp.Latitude,
                         Image = kp.Image,
+                        TourId = kp.TourId
                    
 
                     }).ToList()
