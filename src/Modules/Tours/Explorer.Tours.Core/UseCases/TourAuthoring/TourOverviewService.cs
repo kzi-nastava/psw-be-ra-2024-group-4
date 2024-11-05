@@ -48,7 +48,8 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
             var ret = publishedTours.ToResult();
 
-            if (ret.IsFailed)
+            if (ret.IsFailed || ret.Errors != null 
+                || ret.Value.Results.Any(x => x.KeyPointIds.Count() == 0 || x.KeyPoints.Count() == 0))
             {
                 return Result.Fail(ret.Errors);
             }
@@ -75,6 +76,28 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             var pagedResult = new PagedResult<TourOverviewDto>(pagedItems, pagedItems.Count());
 
             return Result.Ok(pagedResult);
+        }
+
+        public Result<TourOverviewDto> GetAverageRating(long tourId)
+        {
+            var result = _tourReviewRepository.GetByTourId(tourId, 0, 0);
+            var ret = result.ToResult();
+
+            if(ret.Errors != null)
+            {
+                return Result.Fail(ret.Errors);
+            }
+
+            var averageRating = 0;
+            foreach (var r in ret.Value.Results)
+            {
+                averageRating += r.Rating;
+            }
+
+            var totalCount = ret.Value.Results.Count();
+            averageRating = totalCount <= 0 ? averageRating : averageRating/totalCount;
+
+            return Result.Ok(new TourOverviewDto { AverageRating = averageRating });
         }
     }
 }

@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Dtos
         public List<string> Tags { get; set; }
         public KeyPointDto FirstKeyPoint { get; set; }
         public List<TourReviewDto> Reviews { get; set; }
+        public float AverageRating { get; set; }
     }
 }
