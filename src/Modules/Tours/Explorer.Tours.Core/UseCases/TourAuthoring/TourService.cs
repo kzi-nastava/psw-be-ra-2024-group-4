@@ -50,6 +50,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Status = (TourStatus)t.Status,
                     Price = t.Price,
                     EquipmentIds = t.EquipmentIds,
+                    LengthInKm = t.LengthInKm,
                     KeyPoints = t.KeyPoints.Select(kp => new KeyPointDto
                     {
                         Id = kp.Id,
@@ -57,6 +58,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Longitude = kp.Longitude,
                         Latitude = kp.Latitude,
                         Image = kp.Image,
+                        TourId = kp.TourId
                    
 
                     }).ToList()
