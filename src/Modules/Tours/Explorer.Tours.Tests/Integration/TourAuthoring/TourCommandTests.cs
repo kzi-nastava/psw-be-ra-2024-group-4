@@ -41,8 +41,8 @@ namespace Explorer.Tours.Tests
                 Status = TourStatus.Draft,
                 Price = 100.00,
                 UserId = 1,
-                EquipmentIds = new List<long>(),
-                KeyPointIds = new List<long>()
+                EquipmentIds = new List<long>()
+             
             };
 
             // Act
