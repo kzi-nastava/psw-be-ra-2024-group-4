@@ -100,7 +100,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-
         public PagedResult<Tour> GetPublished(int page, int pageSize)
         {
             var query = _dbContext.Tour
