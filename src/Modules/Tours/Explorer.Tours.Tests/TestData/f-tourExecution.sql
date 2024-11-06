@@ -16,3 +16,9 @@ VALUES
     (-3, -2, -23, -1, '2024-10-14 23:53:24.948+02', 0, 
         '[]');
 
+INSERT INTO tours."TourExecution"(
+    "Id", "TourId", "TouristId", "LocationId", "LastActivity", "Status", "CompletedKeys")
+VALUES 
+    (-5, -2, -23, -1, '2024-10-14 23:53:24.948+02', 0, 
+        '[]');
+
