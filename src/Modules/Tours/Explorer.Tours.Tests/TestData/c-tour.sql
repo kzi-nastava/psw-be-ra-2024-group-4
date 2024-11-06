@@ -54,4 +54,22 @@ VALUES (
     ARRAY[-3, -1]::integer[],  
     ARRAY[]::integer[]   
 );
+INSERT INTO tours."Tour" (
+    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds", "KeyPointIds"
+)
+VALUES (
+    -5,  
+    'Safari Challenge',
+    'PERFECT SAFARI TOUR',
+    'Hard',
+    ARRAY[2, 3, 5]::integer[], 
+    2,
+    100.0,  
+    2, 
+    15.0,  
+    '2024-10-14 23:53:24.948+02',  
+    '2024-10-14 23:53:24.948+02',  
+    ARRAY[-3, -1]::integer[],  
+    ARRAY[]::integer[]   
+);
 
