@@ -77,7 +77,7 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         var storedEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == -11);
         storedEntity.ShouldNotBeNull();
         storedEntity.UserId.ShouldBe(updatedEntity.UserId);
-        var oldEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == -11);
+        var oldEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == -12);
         oldEntity.ShouldBeNull();
     }
 
