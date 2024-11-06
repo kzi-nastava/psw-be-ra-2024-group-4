@@ -36,5 +36,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return _dbContext.KeyPoints.ToList();
         }
+
     }
 }

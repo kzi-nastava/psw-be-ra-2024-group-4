@@ -149,7 +149,5 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
         }
 
 
-
-
     }
 }

@@ -51,7 +51,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         return _keyPointRepository.GetMaxId(userId);
     }
 
-    Result<List<KeyPointDto>> IKeyPointService.GetByCoordinated(long v1, long v2, int v3)
+    Result<List<KeyPointDto>> IKeyPointService.GetByCoordinated(long latitude, long longitude, int distance)
     {
         var res = new List<KeyPoint>();
         var centralCoordinate = new Coordinate(11.9, 18.9);
@@ -65,11 +65,11 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
             new Coordinate(kp.Latitude, kp.Longitude),
             4,
             DistanceUnit.Kilometers);
-            if (dist < 16)
+            if (dist < distance)
                 res.Add(kp);
         }
 
-        var r = res.Select(kp => new KeyPointDto
+        var keyPointDtos = res.Select(kp => new KeyPointDto
         {
             Id = kp.Id,
             Name = kp.Name,
@@ -79,10 +79,8 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
             Image = kp.Image,
             UserId = kp.UserId
 
-
-
         }).ToList();
 
-        return r;
+        return Result.Ok(keyPointDtos);
     }
 }
