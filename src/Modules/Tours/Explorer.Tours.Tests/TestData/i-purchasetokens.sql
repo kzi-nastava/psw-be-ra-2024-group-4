@@ -8,4 +8,4 @@ INSERT INTO tours."PurchaseTokens"(
 
 INSERT INTO tours."PurchaseTokens"(
 	"Id", "CartId", "UserId", "TourId")
-	VALUES (-3, -2, -12, -3);
+	VALUES (-3, -2, -13, -3);
