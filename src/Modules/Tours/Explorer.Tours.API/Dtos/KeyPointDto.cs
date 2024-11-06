@@ -13,6 +13,7 @@ public class KeyPointDto : Entity
 
     public long TourId { get; set; }
     public string ImageBase64 { get; set; }
+    public Status PublicStatus { get; set; }
     public KeyPointDto() { }
 
    
