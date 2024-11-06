@@ -23,8 +23,9 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
         public DateTime Time { get; set; }
         public bool IsActive { get; set; }
         public List<ProblemComment>? Comments { get; protected set; }
+        public long Deadline { get; set; }
 
-        public Problem(long userId, long tourId, string category, string description, int priority, DateTime time, bool isActive)
+        public Problem(long userId, long tourId, string category, string description, int priority, DateTime time, bool isActive, long deadline)
         {
 
             UserId = userId;
@@ -36,6 +37,7 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
             Validate();
             Comments = new List<ProblemComment>();
             IsActive = isActive;
+            Deadline = deadline;
         }
 
         public void Validate()
@@ -45,6 +47,7 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
             if (Priority == 0) throw new ArgumentException("Invalid Priority");
             if (string.IsNullOrWhiteSpace(Category)) throw new ArgumentException("Invalid Category");
             if (string.IsNullOrWhiteSpace(Description)) throw new ArgumentException("Invalid Description");
+            if (Deadline < 0) throw new ArgumentException("Invalid Deadline");
         }
 
         public void PostComment(ProblemComment comment)
