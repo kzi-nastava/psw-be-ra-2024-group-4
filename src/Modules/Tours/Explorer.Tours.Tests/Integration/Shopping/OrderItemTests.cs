@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration
+namespace Explorer.Tours.Tests.Integration.Shopping
 {
     [Collection("Sequential")]
     public class OrderItemTests : BaseToursIntegrationTest
@@ -57,7 +57,7 @@ namespace Explorer.Tours.Tests.Integration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var expectedItemId = -1; 
+            var expectedItemId = -1;
 
             // Act
             var result = ((ObjectResult)controller.Get(expectedItemId).Result)?.Value as OrderItemDto;
@@ -66,9 +66,9 @@ namespace Explorer.Tours.Tests.Integration
             result.ShouldNotBeNull();
             result.Id.ShouldBe(expectedItemId);
             result.TourId.ShouldBe(1);
-            result.Price.ShouldBe(100.00m); 
+            result.Price.ShouldBe(100.00m);
         }
-   
+
         [Fact]
         public void DeleteOrderItem_DeletesItem_WhenExists()
         {
@@ -112,19 +112,19 @@ namespace Explorer.Tours.Tests.Integration
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var cartId = -1; 
+            var cartId = -1;
 
             // Act
             var result = ((ObjectResult)controller.GetAll(cartId).Result)?.Value as List<OrderItemDto>;
 
             // Assert
-            result.ShouldNotBeNull();  
-            result.Count.ShouldBeGreaterThan(0); 
+            result.ShouldNotBeNull();
+            result.Count.ShouldBeGreaterThan(0);
 
             var firstItem = result.FirstOrDefault();
-            firstItem.ShouldNotBeNull(); 
-            firstItem.TourId.ShouldBeGreaterThan(0); 
-            firstItem.Price.ShouldBeGreaterThan(0);  
+            firstItem.ShouldNotBeNull();
+            firstItem.TourId.ShouldBeGreaterThan(0);
+            firstItem.Price.ShouldBeGreaterThan(0);
         }
 
         private static OrderItemController CreateController(IServiceScope scope)

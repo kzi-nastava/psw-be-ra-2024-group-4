@@ -1,11 +1,11 @@
 INSERT INTO tours."ShoppingCarts"(
 	"Id", "UserId")
-	VALUES (-1, 1);
+	VALUES (-1, -12);
 
 INSERT INTO tours."ShoppingCarts"(
 	"Id", "UserId")
-	VALUES (-2, 2);
+	VALUES (-2, -13);
 
 INSERT INTO tours."ShoppingCarts"(
 	"Id", "UserId")
-	VALUES (-3, 3);
+	VALUES (-3, -21);

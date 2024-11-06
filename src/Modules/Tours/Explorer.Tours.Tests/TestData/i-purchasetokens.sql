@@ -1,11 +1,11 @@
 INSERT INTO tours."PurchaseTokens"(
 	"Id", "CartId", "UserId", "TourId")
-	VALUES (-1, -1, 1, -1);
+	VALUES (-1, -1, -12, -1);
 
 INSERT INTO tours."PurchaseTokens"(
 	"Id", "CartId", "UserId", "TourId")
-	VALUES (-2, -1, 1, -2);
+	VALUES (-2, -1, -12, -2);
 
 INSERT INTO tours."PurchaseTokens"(
 	"Id", "CartId", "UserId", "TourId")
-	VALUES (-3, -2, 1, -3);
+	VALUES (-3, -2, -12, -3);

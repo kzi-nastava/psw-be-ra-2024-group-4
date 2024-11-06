@@ -31,7 +31,9 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var newEntity = new ShoppingCartDto
         {
-            UserId = 4
+            UserId = -23,
+            Items = new List<OrderItemDto>(),
+            PurchaseTokens = new List<TourPurchaseTokenDto>()
         };
 
         // Act
@@ -57,7 +59,10 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         var updatedEntity = new ShoppingCartDto
         {
             Id = -1,
-            UserId = 5
+            UserId = -11,
+            Items = new List<OrderItemDto>(),
+            PurchaseTokens = new List<TourPurchaseTokenDto>()
+
         };
 
         // Act
@@ -69,10 +74,10 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         result.UserId.ShouldBe(updatedEntity.UserId);
 
         // Assert - Database
-        var storedEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == 5);
+        var storedEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == -11);
         storedEntity.ShouldNotBeNull();
         storedEntity.UserId.ShouldBe(updatedEntity.UserId);
-        var oldEntity = dbContext.KeyPoints.FirstOrDefault(i => i.UserId == 1);
+        var oldEntity = dbContext.ShoppingCarts.FirstOrDefault(i => i.UserId == -11);
         oldEntity.ShouldBeNull();
     }
 
