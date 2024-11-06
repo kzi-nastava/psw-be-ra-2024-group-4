@@ -10,6 +10,7 @@ using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,16 +21,16 @@ namespace Explorer.Stakeholders.Core.UseCases
         public IProblemRepository _problemRepository { get; set; }
         public INotificationRepository _notificationRepository;
         public IUserRepository _userRepository;
-        public ITourRepository _tourRepository;
+       // public ITourRepository _tourRepository;
         private readonly IMapper _mapper;
 
-        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository, INotificationRepository notificationRepository,IUserRepository userRepository,ITourRepository tourRepository) : base(repository, mapper)
+        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository, INotificationRepository notificationRepository,IUserRepository userRepository) : base(repository, mapper)
         {
             _problemRepository = problemRepository;
             _mapper = mapper;
             _notificationRepository = notificationRepository;
             _userRepository = userRepository;
-            _tourRepository=tourRepository;
+          //  _tourRepository=tourRepository;
         }
 
         public Result<List<ProblemDTO>> GetByTouristId(long id)
@@ -73,15 +74,14 @@ namespace Explorer.Stakeholders.Core.UseCases
                 return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");
             }
             var isAuthor = _userRepository.IsAuthor(commentDto.UserId);
-            var tour = _tourRepository.GetById(problem.TourId);
+           // var tour = _tourRepository.GetById(problem.TourId);
             if(isAuthor)
             {
                 _notificationRepository.Create(problem.UserId, commentDto.ProblemId); 
             }
-            else
-            {
-                _notificationRepository.Create(tour.UserId, commentDto.ProblemId); 
-            }
+            
+              //  _notificationRepository.Create(tour.UserId, commentDto.ProblemId); 
+           
             return MapToDto(problem);
         }
 
@@ -93,10 +93,10 @@ namespace Explorer.Stakeholders.Core.UseCases
                   return Result.Fail<ProblemDTO>("Problem not found.");
             }
 
-            // Ažuriraj status
+           
             problem.IsActive = isActive;
 
-            // Praćenje i update kroz kontekst
+            
             _problemRepository.Update(problem);
 
             return Result.Ok(MapToDto(problem));

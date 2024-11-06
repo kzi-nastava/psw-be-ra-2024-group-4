@@ -31,7 +31,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
 
             // Ručno kreiramo problem sa ID-jem -9
-            var existingProblem = new Problem(22, 1, "Technical", "Issue with the app", 1, DateTime.UtcNow, true)
+            var existingProblem = new Problem(22, 1, "Technical", "Issue with the app", 1, DateTime.UtcNow, true,0)
             {
                 Id = -9 // Ručno postavljamo ID
             };
@@ -47,7 +47,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
                 Description = "Issue with the app",
                 Priority = 1,
                 Time = DateTime.UtcNow,
-                IsActive = false
+                IsActive = false,
+                Deadline = 2
             };
 
             // Act
