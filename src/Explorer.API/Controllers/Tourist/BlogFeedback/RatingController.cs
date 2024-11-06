@@ -25,10 +25,10 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
             return CreateResponse(result);
         }
 
-        [HttpDelete]
-        public ActionResult<PostDto> DeleteRating(long postId,long userId) 
+        [HttpPut("{postId:int}")]
+        public ActionResult<PostDto> UpdateRating(long postId,[FromBody] RatingDto ratingDto) 
         {
-            var result = _postService.DeleteRating(postId, userId);
+            var result = _postService.UpdateRating(postId,ratingDto.UserId,ratingDto.Value);
             return CreateResponse(result);
         }
     }

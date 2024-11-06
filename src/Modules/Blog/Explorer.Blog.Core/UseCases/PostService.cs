@@ -150,27 +150,32 @@ namespace Explorer.Blog.Core.UseCases
                 post.TotalRating();
                 post.UpdateStatus();
                 var result = repository.Update(post);
-                return MapToDto(result); //vraca postdto sad sa novim rating-om dodatim
+                return MapToDto(result); 
             }
             catch(Exception e)
             {
                 return Result.Fail(e.Message);
             }
         }
-
-        public Result<PostDto> DeleteRating(long postId, long userId)
+        public Result<PostDto> UpdateRating(long postId, long userId, int newValue)
         {
             try
             {
                 var post = repository.Get(postId);
-                if(post==null) return Result.Fail("Post with this id: " + postId + "does not exist.");
-                post.DeleteRating(userId);
+                var existingRating = post.Ratings.FirstOrDefault(r => r.UserId == userId);
+                if (existingRating != null) post.DeleteRating(userId);
+                post.AddRating(newValue, userId);
                 post.TotalRating();
                 post.UpdateStatus();
-                var result= repository.Update(post);
+                var result = repository.Update(post);
                 return MapToDto(result);
+
             }
-            catch( Exception e) 
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (Exception e)
             {
                 return Result.Fail(e.Message);
             }

@@ -82,9 +82,9 @@ namespace Explorer.Blog.Core.Domain.Posts
         public void UpdateStatus()
         {
             var commentCount= Comments.Count;
-            if (RatingSum < -10) { Status = BlogStatus.Closed; }
-            else if(RatingSum > 100 && commentCount>10) { Status = BlogStatus.Active; }
-            else if(RatingSum >500 && commentCount>30) { Status = BlogStatus.Famous; }
+            if (RatingSum < -5) { Status = BlogStatus.Closed; }
+            else if(RatingSum > 5 && commentCount>10) { Status = BlogStatus.Active; } //treba 100 i 10
+            else if(RatingSum >7 && commentCount>15) { Status = BlogStatus.Famous; } //treba 500 i 30
         }
 
     }

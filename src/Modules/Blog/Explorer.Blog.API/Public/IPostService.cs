@@ -21,7 +21,7 @@ namespace Explorer.Blog.API.Public
         Result<PostDto> Get(int id);
         Result<PostDto> UpdateCommentInPost(long postId, CommentDto updatedCommentDto);
         Result<PostDto> AddRating(long postId,long userId,int value);
-        Result<PostDto> DeleteRating(long postId, long userId);
+        Result<PostDto> UpdateRating(long postId, long userId,int newValue);
 
     }
 }
