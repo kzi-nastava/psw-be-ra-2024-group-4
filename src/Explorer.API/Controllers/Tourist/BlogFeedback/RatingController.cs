@@ -9,7 +9,7 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
 {
     [Authorize(Policy = "touristPolicy")]
     [Route("api/blogfeedback/rating")]
-    public class RatingController: BaseApiController
+    public class RatingController : BaseApiController
     {
         private readonly IPostService _postService;
 
@@ -18,10 +18,10 @@ namespace Explorer.API.Controllers.Tourist.BlogFeedback
             _postService = postService;
         }
 
-        [HttpPost]
-        public ActionResult<PostDto> AddRating(long postId,long userId,int value)
+        [HttpPost("{id:int}")]
+        public ActionResult<PostDto> AddRating(int id, [FromBody] RatingDto ratingDto)
         {
-            var result=_postService.AddRating(postId,userId,value);
+            var result=_postService.AddRating(id,ratingDto.UserId,ratingDto.Value);
             return CreateResponse(result);
         }
 
