@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using Shouldly;
 
 namespace Explorer.Blog.Tests.Integration.PostManagement
@@ -162,16 +163,22 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
 
         }
         [Theory]
-        [InlineData(2, -1, 200)]//brise se rating iz posta sa id -1 od kroisnika 2
-        [InlineData(1, -1, 200)]//brise se rating iz posta sa id -1 od korisnika 1
-        public void Delete_rating_from_post(long userId, int postId, int expectedResponseCode)
+        [InlineData(2, -1, 1, 200)] // ažurira se rating za post sa ID -1 od korisnika 2 sa vrednošću 1
+        [InlineData(1, -1, -1, 200)] // ažurira se rating za post sa ID -1 od korisnika 1 sa vrednošću -1
+        public void Update_rating_from_post(long userId, int postId, int value, int expectedResponseCode)
         {
-            // Arrange
+
             using var scope = Factory.Services.CreateScope();
             var controller = CreateRatingController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
+            var ratingDto = new RatingDto
+            {
+                UserId = userId,
+                Value = value
+            };
 
-            var result = controller.DeleteRating(postId, userId);
+            // Act
+            var result = controller.UpdateRating(postId, ratingDto);
 
             // Assert - Response
             result.Result.ShouldNotBeNull();
@@ -181,9 +188,12 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
 
             // Assert - Database
             var storedEntity = dbContext.Posts.FirstOrDefault(t => t.Id == postId);
+            storedEntity.ShouldNotBeNull();
             var rating = storedEntity.Ratings.FirstOrDefault(t => t.UserId == userId);
-            rating.ShouldBeNull();
+            rating.ShouldNotBeNull(); 
+            rating.Value.ShouldBe(value);
         }
+
 
 
         [Fact]
