@@ -57,7 +57,7 @@ namespace Explorer.Tours.Tests.Integration.Shopping
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            int expectedItemId = -1;
+            int expectedItemId = -2;
 
             // Act
             var result = ((ObjectResult)controller.Get(expectedItemId).Result)?.Value as OrderItemDto;
@@ -65,8 +65,8 @@ namespace Explorer.Tours.Tests.Integration.Shopping
             // Assert
             result.ShouldNotBeNull();
             result.Id.ShouldBe(expectedItemId);
-            result.TourId.ShouldBe(-12);
-            result.Price.ShouldBe(150.00m);
+            result.TourId.ShouldBe(2);
+            result.Price.ShouldBe(200.00m);
         }
 
         [Fact]
