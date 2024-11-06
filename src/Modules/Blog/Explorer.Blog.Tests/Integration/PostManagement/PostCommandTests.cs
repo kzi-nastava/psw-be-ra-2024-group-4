@@ -144,8 +144,12 @@ namespace Explorer.Blog.Tests.Integration.PostManagement
             using var scope = Factory.Services.CreateScope();
             var controller = CreateRatingController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<BlogContext>();
-
-            var result = (ObjectResult)controller.AddRating(postId, userId, value).Result;
+            var ratingDto = new RatingDto
+            {
+                UserId = userId,
+                Value = value
+            };
+            var result = (ObjectResult)controller.AddRating(postId, ratingDto).Result;
 
             // Assert - Response
             result.ShouldNotBeNull();
