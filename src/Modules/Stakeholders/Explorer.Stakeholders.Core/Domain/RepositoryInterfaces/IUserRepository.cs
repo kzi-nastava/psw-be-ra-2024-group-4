@@ -7,4 +7,6 @@ public interface IUserRepository
     User Create(User user);
     long GetPersonId(long userId);
     List<User> GetActiveUsers();
+    User? GetById(long userId);
+    bool IsAuthor(long userId);
 }

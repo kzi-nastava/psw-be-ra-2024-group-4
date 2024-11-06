@@ -37,6 +37,8 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         {
             return _db.Problem.Where(t => t.TourId == id).ToList();
         }
+
+        
         public Problem PostComment(ProblemComment comment)
         {
             var problem = GetById(comment.ProblemId);

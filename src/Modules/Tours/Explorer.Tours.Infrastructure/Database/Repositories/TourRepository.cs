@@ -60,6 +60,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return equipmentList;
         }
+        //public Tour GetById(long tourId)
+        //{
+           // return _dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+        //}
+
 
 
         public void AddEquipmentToTour(long tourId, long equipmentId)

@@ -19,6 +19,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public bool IsActive { get; set; }
        
         public List<ProblemCommentDto> Comments { get; set; }
+        public long Deadline { get; set; }
     }
 
 }

@@ -24,7 +24,6 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution;
 using Explorer.Tours.Core.UseCases.Execution;
 using Explorer.Tours.Infrastructure.Database.Repositories.Execution;
 
-using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.TourExecutions;
 
 namespace Explorer.Tours.Infrastructure;

@@ -40,7 +40,8 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Description="Slika nije ucitana",
                 Priority=5,
                 Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime(),
-                IsActive=true
+                IsActive=true,
+                Deadline=2
             };
 
             // Act
