@@ -1,6 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 
-namespace Explorer.Stakeholders.Core.Domain.ProfileMessaging
+namespace Explorer.Stakeholders.Core.Domain.ProfileMessages
 {
     public class ProfileMessage : Entity
     {
@@ -8,12 +8,14 @@ namespace Explorer.Stakeholders.Core.Domain.ProfileMessaging
         public long UserId { get; set; }
         public string Message { get; set; }
         public MessageType Type { get; set; }
-        //public Resource Attachment { get; set; } 
-
+        public Resource Resource { get; set; } 
+        public long ClubId { get; set; }
 
         public ProfileMessage()
         {
 
         }
+
+
     }
 }
