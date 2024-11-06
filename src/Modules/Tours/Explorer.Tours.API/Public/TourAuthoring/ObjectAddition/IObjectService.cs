@@ -15,5 +15,6 @@ public interface IObjectService
     Result<ObjectDTO> Create(ObjectDTO objectDTO);
     Result<ObjectDTO> Update(ObjectDTO objectDTO);
     Result Delete(int id);
+    Result<List<ObjectDTO>> GetRequestedPublic();
 }
 

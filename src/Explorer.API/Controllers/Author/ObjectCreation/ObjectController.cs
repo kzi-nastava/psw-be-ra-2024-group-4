@@ -46,6 +46,11 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
             return CreateResponse(result);
         }
 
+        [HttpGet]
+        public ActionResult GetRequestedPublic()
+        {
+            return CreateResponse(_objectService.GetRequestedPublic());
+        }
     }
 }
 

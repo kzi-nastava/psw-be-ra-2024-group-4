@@ -50,4 +50,25 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         return _keyPointRepository.GetMaxId(userId);
     }
 
+    public Result<List<KeyPointDto>> GetRequestedPublic()
+    {
+        var keyPoints = _keyPointRepository.GetAll().FindAll(kp => kp.PublicStatus == Domain.Tours.Status.REQUESTED_PUBLIC);
+
+        var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
+        {
+            Id = kp.Id,
+            Name = kp.Name,
+            Longitude = kp.Longitude,
+            Latitude = kp.Latitude,
+            Description = kp.Description,
+            Image = kp.Image,
+            UserId = kp.UserId,
+            PublicStatus = (API.Dtos.Status)kp.PublicStatus
+
+
+
+        }).ToList();
+
+        return Result.Ok(keyPointDtos);
+    }
 }
