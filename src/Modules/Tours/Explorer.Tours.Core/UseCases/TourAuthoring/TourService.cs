@@ -59,7 +59,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Image = kp.Image,                  
 
                     }
-                    // BITNO  dodati daurations ovde, prvo pretvoriti listu TourDuration u DTO pa ovde
+                    // BITNO  dodati durations ovde, prvo pretvoriti listu TourDuration u DTO pa ovde
                     ).ToList()
                 }).ToList();
 
