@@ -24,5 +24,11 @@ namespace Explorer.API.Controllers.Author
             var result = _problemService.PostComment(commentDto);
             return CreateResponse(result);
         }
+        [HttpGet("find/{id:long}")]
+        public ActionResult<ProblemDTO> GetById(long id)
+        {
+            var result = _problemService.GetById(id);
+            return CreateResponse(result);
+        }
     }
 }

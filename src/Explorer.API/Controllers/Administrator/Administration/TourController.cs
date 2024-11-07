@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Public.TourAuthoring;
+﻿using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,12 @@ namespace Explorer.API.Controllers.Administrator.Administration
             {
                 return BadRequest(result.Errors);
             }
+        }
+        [HttpGet("getById/{id:long}")]
+        public ActionResult<TourDto> GetById(long id)
+        {
+            var result = _tourService.GetById(id);
+            return CreateResponse(result);
         }
     }
 }
