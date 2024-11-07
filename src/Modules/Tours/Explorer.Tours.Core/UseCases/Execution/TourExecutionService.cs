@@ -134,7 +134,8 @@ namespace Explorer.Tours.Core.UseCases.Execution
                 Id = kp.Id,
                 Name = kp.Name,
                 Latitude = kp.Latitude,
-                Longitude = kp.Longitude
+                Longitude = kp.Longitude,
+                Description = kp.Description
             }).ToList();
 
             return keyPointDtos;
