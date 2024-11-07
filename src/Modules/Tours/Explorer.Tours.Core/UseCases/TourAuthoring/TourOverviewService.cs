@@ -77,5 +77,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
 
             return Result.Ok(pagedResult);
         }
+
+        
     }
 }

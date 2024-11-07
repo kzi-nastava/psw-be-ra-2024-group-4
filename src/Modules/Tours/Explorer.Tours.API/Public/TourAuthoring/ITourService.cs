@@ -21,7 +21,6 @@ namespace Explorer.Tours.API.Public.TourAuthoring
 
         Result Archive(long id);
         Result Reactivate(long id);
-
-
+        Result<TourDto> GetWithKeyPoints(int tourId);
     }
 }
