@@ -22,7 +22,6 @@ namespace Explorer.Stakeholders.Core.Domain
 
         public Notification(string description, DateTime creationTime, bool isRead, long userId, NotificationType notificationsType, long? resourceId)
         {
-            Validate();
             Description = description;
             CreationTime = creationTime;
             //CreationTime=DateTime.UtcNow-da se psotavlja u trenutku kreiranja ali mislim da to moze i posle
@@ -31,6 +30,7 @@ namespace Explorer.Stakeholders.Core.Domain
             UserId = userId;
             NotificationsType = notificationsType;
             ResourceId = resourceId;
+            Validate();
         }
 
         private void Validate()

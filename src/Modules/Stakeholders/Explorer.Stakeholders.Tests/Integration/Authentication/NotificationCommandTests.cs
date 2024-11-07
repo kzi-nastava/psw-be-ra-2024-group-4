@@ -113,13 +113,13 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             var controller = CreateController(scope);
             var updatedEntity = new NotificationDto
             {
-                Id = -158000,
+                Id = 158000,
                 Description = "E imas novi problem",
                 CreationTime = DateTime.Now.ToUniversalTime(),
                 IsRead = false,
-                UserId = -11,
+                UserId = 11,
                 NotificationsType = NotificationDto.NotificationType.PROBLEM,
-                ResourceId = -3
+                ResourceId = 3
             };
 
             // Act
