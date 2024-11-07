@@ -34,7 +34,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Description = kp.Description,
                 Image = kp.Image,
                 UserId = kp.UserId,
-                PublicStatus = (API.Dtos.Status)kp.PublicStatus,
+                PublicStatus = (API.Dtos.PublicStatus)kp.PublicStatus,
                 TourId = kp.TourId,
 
 
@@ -53,7 +53,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
 
     public Result<List<KeyPointDto>> GetRequestedPublic()
     {
-        var keyPoints = _keyPointRepository.GetAll().FindAll(kp => kp.PublicStatus == Domain.Tours.Status.REQUESTED_PUBLIC);
+        var keyPoints = _keyPointRepository.GetAll().FindAll(kp => kp.PublicStatus == Domain.Tours.PublicStatus.REQUESTED_PUBLIC);
 
         var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
         {
@@ -64,7 +64,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
             Description = kp.Description,
             Image = kp.Image,
             UserId = kp.UserId,
-            PublicStatus = (API.Dtos.Status)kp.PublicStatus
+            PublicStatus = (API.Dtos.PublicStatus)kp.PublicStatus
 
 
 

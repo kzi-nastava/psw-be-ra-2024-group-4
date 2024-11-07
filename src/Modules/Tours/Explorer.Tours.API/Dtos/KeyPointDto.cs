@@ -13,10 +13,15 @@ public class KeyPointDto : Entity
 
     public long TourId { get; set; }
     public string ImageBase64 { get; set; }
-    public Status PublicStatus { get; set; }
+    public PublicStatus PublicStatus { get; set; }
     public KeyPointDto() { }
 
-   
 
 
+}
+public enum PublicStatus
+{
+    PRIVATE = 0,
+    REQUESTED_PUBLIC = 1,
+    PUBLIC = 2
 }

@@ -29,7 +29,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring.ObjectAddition
                 Longitude = obj.Longitude,
                 Latitude = obj.Latitude,
                 UserId = obj.UserId,
-                PublicStatus = (Status)obj.PublicStatus,
+                PublicStatus = (PublicStatus)obj.PublicStatus,
             }).ToList();
 
             return Result.Ok(objectDtos);

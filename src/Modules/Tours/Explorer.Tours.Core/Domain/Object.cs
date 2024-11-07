@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Explorer.BuildingBlocks.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Core.Domain
 {
@@ -20,9 +15,9 @@ namespace Explorer.Tours.Core.Domain
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }
         public long UserId { get; private set; }
-        public Status PublicStatus {  get; private set; }
+        public PublicStatus PublicStatus {  get; private set; }
 
-        public Object(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, Status publicStatus)
+        public Object(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, PublicStatus publicStatus)
         {
             Validate(id, name, description, image, category, longitude, latitude, userId, publicStatus);
             Id = id;
@@ -36,7 +31,7 @@ namespace Explorer.Tours.Core.Domain
             PublicStatus = publicStatus;
         }
 
-        public void Validate(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, Status publicStatus)
+        public void Validate(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, PublicStatus publicStatus)
         {
           
 
