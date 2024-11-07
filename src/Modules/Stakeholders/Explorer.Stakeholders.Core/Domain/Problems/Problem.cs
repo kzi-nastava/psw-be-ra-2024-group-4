@@ -21,7 +21,7 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
         public string Description { get; set; }
         public int Priority { get; set; }
         public DateTime Time { get; set; }
-        public List<ProblemComment>? Comments { get; protected set; }
+        public List<ProblemComment>? Comments { get; set; }
 
         public Problem(long userId, long tourId, string category, string description, int priority, DateTime time)
         {
@@ -47,6 +47,7 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
 
         public void PostComment(ProblemComment comment)
         {
+            Comments ??= new List<ProblemComment>();
             Comments.Add(comment);
         }
     }
