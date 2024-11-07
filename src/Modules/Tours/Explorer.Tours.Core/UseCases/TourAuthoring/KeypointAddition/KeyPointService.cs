@@ -35,6 +35,7 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Image = kp.Image,
                 UserId = kp.UserId,
                 PublicStatus = (API.Dtos.Status)kp.PublicStatus
+                TourId = kp.TourId
 
 
 
