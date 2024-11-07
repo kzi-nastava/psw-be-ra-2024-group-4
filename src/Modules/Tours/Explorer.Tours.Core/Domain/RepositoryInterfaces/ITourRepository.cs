@@ -18,6 +18,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         public Tour GetById(long id);
         public void Save();
         PagedResult<Tour> GetPublished(int page, int pageSize);
+        PagedResult<Tour> GetByKeyPoints(List<KeyPoint> keyPoints, int page, int pageSize);
 
     }
 }

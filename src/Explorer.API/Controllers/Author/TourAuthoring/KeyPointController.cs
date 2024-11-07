@@ -91,12 +91,12 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return Ok(nextId);
         }
 
-        [HttpGet]
-        public ActionResult<KeyPointDto> GetAll()
-        {
-            var result = _keyPointService.GetByCoordinated(12, 12, 1);
-            return CreateResponse(result);
-        }
+        /*     [HttpGet]
+             public ActionResult<KeyPointDto> GetAll()
+             {
+                 var result = _keyPointService.GetByCoordinated(12, 12, 1);
+                 return CreateResponse(result);
+             }*/
 
 
     }

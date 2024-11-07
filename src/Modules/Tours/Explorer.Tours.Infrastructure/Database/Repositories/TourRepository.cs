@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -114,6 +115,24 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
 
             var ret = query.ToList();
+
+            return new PagedResult<Tour>(ret, ret.Count());
+        }
+
+        public PagedResult<Tour> GetByKeyPoints(List<KeyPoint> keyPoints, int page, int pageSize)
+        {
+            var keyPointIdsToMatch = keyPoints.Select(kp => kp.Id).ToHashSet();
+         
+            var res=_dbContext.Tour.Include(t => t.KeyPoints)
+                .Where(tour => tour.KeyPoints.Any(kp => keyPointIdsToMatch.Contains(kp.Id)))
+                .Skip((page - 1) * pageSize);
+
+            if (pageSize > 0)
+            {
+                res = res.Take(pageSize);
+            }
+
+            var ret = res.ToList();
 
             return new PagedResult<Tour>(ret, ret.Count());
         }

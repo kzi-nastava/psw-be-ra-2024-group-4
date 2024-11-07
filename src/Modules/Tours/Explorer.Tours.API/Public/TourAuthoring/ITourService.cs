@@ -21,8 +21,8 @@ namespace Explorer.Tours.API.Public.TourAuthoring
 
         Result Archive(long id);
         Result Reactivate(long id);
-        Result DeleteTour(int id);
 
+        Result DeleteTour(int id);
 
     }
 }
