@@ -17,8 +17,9 @@ namespace Explorer.Modules.Core.Domain
         public DateTime? DateTour { get; private set; }
         public DateTime? DateComment { get; private set; }
         public List<string>? Images { get; private set; }
+        public double PercentagePassed { get; private set; }
 
-        public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images)
+        public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images, double percentagePassed)
         {
             IdTour = idTour != 0 ? idTour : throw new ArgumentException("Invalid idTour");
             IdTourist = idTourist != 0 ? idTourist : throw new ArgumentException("Invalid idTourist");
@@ -27,6 +28,7 @@ namespace Explorer.Modules.Core.Domain
             DateTour = dateTour != null ? dateTour : throw new ArgumentNullException("Invalid Date");
             DateComment = dateComment != null ? dateComment : throw new ArgumentNullException("Invalid Date");
             Images = images ?? new List<string>(); //if images is null, new List<string>()
+            PercentagePassed = percentagePassed;
         }
 
         public TourReview() 

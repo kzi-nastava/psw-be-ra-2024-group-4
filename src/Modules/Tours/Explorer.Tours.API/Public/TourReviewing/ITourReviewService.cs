@@ -17,5 +17,6 @@ namespace Explorer.Tours.API.Public.TourReviewing
         Result Delete(int id);
         Result<PagedResult<TourReviewDto>> GetByTouristId(long id);
         Result<PagedResult<TourReviewDto>> GetByTourId(long id);
+        Result<TourReviewDto> GetByTourAndTourist(long tourId, long touristId);
     }
 }

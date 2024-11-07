@@ -27,5 +27,11 @@ namespace Explorer.Tours.Core.UseCases.TourReviewing
             var reviews = _tourReviewRepository.GetByTourId(TourId);
             return MapToDto(reviews);
         }
+
+        public Result<TourReviewDto> GetByTourAndTourist(long tourId, long touristId)
+        {
+            var review = _tourReviewRepository.GetByTourAndTourist(tourId, touristId);
+            return MapToDto(review);
+        }
     }
 }

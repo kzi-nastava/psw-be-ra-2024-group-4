@@ -28,5 +28,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             var pagedResult = new PagedResult<TourReview>(reviews, reviews.Count);
             return pagedResult;
         }
+
+        public TourReview GetByTourAndTourist(long tourId, long touristId)
+        {
+            var review = _context.TourReview.FirstOrDefault(tr => tr.IdTour == tourId && tr.IdTourist == touristId);
+            return review;
+        }
     }
 }
