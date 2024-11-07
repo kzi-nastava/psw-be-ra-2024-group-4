@@ -117,7 +117,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return new PagedResult<Tour>(ret, ret.Count());
         }
 
-        public object GetWithKeyPoints(int tourId)
+        public Tour GetWithKeyPoints(int tourId)
         {
             var tour = _dbSet.Include(t => t.KeyPoints).FirstOrDefault(t => t.Id == tourId);
             if (tour == null)
