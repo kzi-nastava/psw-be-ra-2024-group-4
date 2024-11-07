@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.ProfileMessages;
@@ -27,14 +28,30 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return profileMessage;
         }
 
-        public PagedResult<ProfileMessage> GetByClubId(long clubId)
+        public ProfileMessage GetByClubId(long clubId)
         {
-            throw new NotImplementedException();
+            return _dbContext.ProfileMessages.Where(t => t.ClubId == clubId)
+                .Include(t => t.Resource)
+                .FirstOrDefault();
         }
-
-        public PagedResult<ProfileMessage> GetByUserId(long userId)
+        public ProfileMessage GetByUserId(long userId)
         {
-            throw new NotImplementedException();
+            return _dbContext.ProfileMessages.Where(t => t.UserId == userId)
+                .Include(t => t.Resource)
+                .FirstOrDefault();
+        }
+        public ProfileMessage Update(ProfileMessage aggregateRoot)
+        {
+            _dbContext.Entry(aggregateRoot).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+            return aggregateRoot;
+        }
+        public void Delete(ProfileMessage aggregateRoot)
+        {
+            _dbContext.Entry(aggregateRoot.Resource).State = EntityState.Deleted;
+            _dbContext.Entry(aggregateRoot).State = EntityState.Deleted;
+            _dbContext.Remove(aggregateRoot);
+            _dbContext.SaveChanges();
         }
     }
 }

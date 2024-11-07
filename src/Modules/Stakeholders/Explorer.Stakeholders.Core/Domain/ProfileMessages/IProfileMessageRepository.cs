@@ -11,7 +11,10 @@ namespace Explorer.Stakeholders.Core.Domain.ProfileMessages
 {
     public interface IProfileMessageRepository
     {
-        PagedResult<ProfileMessage> GetByUserId(long userId);
-        PagedResult<ProfileMessage> GetByClubId(long clubId);
+        public ProfileMessage Create(ProfileMessage profileMessage);
+        ProfileMessage GetByUserId(long userId);
+        ProfileMessage GetByClubId(long clubId);
+        public ProfileMessage Update(ProfileMessage aggregateRoot);
+        public void Delete(ProfileMessage aggregateRoot);
     }
 }

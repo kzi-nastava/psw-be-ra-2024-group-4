@@ -11,9 +11,13 @@ namespace Explorer.Stakeholders.Core.Domain.ProfileMessages
         public Resource Resource { get; set; } 
         public long ClubId { get; set; }
 
-        public ProfileMessage()
+        public ProfileMessage(long userId, string message, MessageType type, Resource resource, long clubId)
         {
-
+            UserId = userId;
+            Message = message.Length > 0 && message.Length <= 280 ? message : throw new ArgumentException("Invalid Message");
+            Type = type;
+            Resource = resource;
+            ClubId = clubId;
         }
 
 
