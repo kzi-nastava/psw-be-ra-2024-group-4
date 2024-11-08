@@ -2,6 +2,7 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.ProfileMessages;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Mappers;
 using Explorer.Stakeholders.Core.UseCases;
@@ -34,6 +35,7 @@ public static class StakeholdersStartup
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
         services.AddScoped<IClubJoinRequestService, ClubJoinRequestService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IProfileMessageService, ProfileMessageService>();
     }
 
 
@@ -52,6 +54,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<ClubJoinRequest>), typeof(CrudDatabaseRepository<ClubJoinRequest, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<User>), typeof(CrudDatabaseRepository<User, StakeholdersContext>));
+        services.AddScoped<IProfileMessageRepository, ProfileMessageDatabaseRepository>();
 
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),
