@@ -19,7 +19,5 @@ namespace Explorer.Stakeholders.Core.Domain.ProfileMessages
             Resource = resource;
             ClubId = clubId;
         }
-
-
     }
 }

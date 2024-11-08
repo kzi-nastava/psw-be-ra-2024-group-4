@@ -2,6 +2,8 @@ using AutoMapper;
 using Explorer.Stakeholders.API.Dtos;
 
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.ProfileMessages;
+using System.Linq;
 
 namespace Explorer.Stakeholders.Core.Mappers;
 
@@ -24,5 +26,8 @@ public class StakeholderProfile : Profile
             .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.Parse<UserRole>(src.Role)))
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive)).ReverseMap();
+
+        CreateMap<ProfileMessageDto, ProfileMessage>().IncludeAllDerived()
+            .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resources.Select(r => new Resource((Resource.ResourceType)Enum.Parse(typeof(Resource.ResourceType), r.Type.ToString()), r.EntityId))));
     }
 }

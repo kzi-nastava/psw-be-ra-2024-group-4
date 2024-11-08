@@ -1,8 +1,10 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Modules.Core.Domain;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.ProfileMessages;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
     {
         private readonly StakeholdersContext _dbContext;
 
-        ProfileMessageDatabaseRepository(StakeholdersContext dbContext) 
+        public ProfileMessageDatabaseRepository(StakeholdersContext dbContext) 
         {
             _dbContext = dbContext;
         }
@@ -28,17 +30,21 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return profileMessage;
         }
 
-        public ProfileMessage GetByClubId(long clubId)
+        public PagedResult<ProfileMessage> GetByClubId(long clubId)
         {
-            return _dbContext.ProfileMessages.Where(t => t.ClubId == clubId)
+            var messages = _dbContext.ProfileMessages.Where(t => t.ClubId == clubId)
                 .Include(t => t.Resource)
-                .FirstOrDefault();
+                .ToList();
+            var pagedResult = new PagedResult<ProfileMessage>(messages, messages.Count);
+            return pagedResult;
         }
-        public ProfileMessage GetByUserId(long userId)
+        public PagedResult<ProfileMessage> GetByUserId(long userId)
         {
-            return _dbContext.ProfileMessages.Where(t => t.UserId == userId)
+            var messages = _dbContext.ProfileMessages.Where(t => t.UserId == userId)
                 .Include(t => t.Resource)
-                .FirstOrDefault();
+                .ToList();
+            var pagedResult = new PagedResult<ProfileMessage>(messages, messages.Count);
+            return pagedResult;
         }
         public ProfileMessage Update(ProfileMessage aggregateRoot)
         {
