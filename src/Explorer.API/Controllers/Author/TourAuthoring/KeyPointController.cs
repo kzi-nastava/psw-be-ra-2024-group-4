@@ -89,6 +89,10 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return Ok(nextId);
         }
 
-
+        [HttpGet]
+        public ActionResult GetRequestedPublic()
+        {
+            return CreateResponse(_keyPointService.GetRequestedPublic());
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         List<KeyPoint> GetKeyPointsByUserId(long userId);
         int GetMaxId(long userId);
+        List<KeyPoint> GetAll();
     }
 }

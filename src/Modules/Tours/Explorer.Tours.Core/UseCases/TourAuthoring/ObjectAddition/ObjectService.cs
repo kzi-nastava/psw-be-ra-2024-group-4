@@ -2,18 +2,38 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring.ObjectAddition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases.TourAuthoring.ObjectAddition
 {
     public class ObjectService : CrudService<ObjectDTO, Explorer.Tours.Core.Domain.Object>, IObjectService
     {
-        public ObjectService(ICrudRepository<Domain.Object> crudRepository, IMapper mapper) : base(crudRepository, mapper)
+        private IObjectRepository _objectRepository;
+        public ObjectService(ICrudRepository<Domain.Object> crudRepository, IMapper mapper, IObjectRepository objectRepository) : base(crudRepository, mapper)
         {
+            _objectRepository = objectRepository;
         }
+
+        public Result<List<ObjectDTO>> GetRequestedPublic()
+        {
+            var objects = _objectRepository.GetAll();
+
+            var objectDtos = objects.Select(obj => new ObjectDTO
+            {
+                Id = obj.Id,
+                Name = obj.Name,
+                Description = obj.Description,
+                Image = obj.Image,
+                Category = (ObjectCategory)obj.Category,
+                Longitude = obj.Longitude,
+                Latitude = obj.Latitude,
+                UserId = obj.UserId,
+                PublicStatus = (PublicStatus)obj.PublicStatus,
+            }).ToList();
+
+            return Result.Ok(objectDtos);
+        }
+
     }
 }
