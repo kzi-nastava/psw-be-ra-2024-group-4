@@ -33,7 +33,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         public PagedResult<ProfileMessage> GetByClubId(long clubId)
         {
             var messages = _dbContext.ProfileMessages.Where(t => t.ClubId == clubId)
-                .Include(t => t.Resource)
                 .ToList();
             var pagedResult = new PagedResult<ProfileMessage>(messages, messages.Count);
             return pagedResult;
@@ -41,7 +40,6 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         public PagedResult<ProfileMessage> GetByUserId(long userId)
         {
             var messages = _dbContext.ProfileMessages.Where(t => t.UserId == userId)
-                .Include(t => t.Resource)
                 .ToList();
             var pagedResult = new PagedResult<ProfileMessage>(messages, messages.Count);
             return pagedResult;
@@ -52,12 +50,14 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return aggregateRoot;
         }
-        public void Delete(ProfileMessage aggregateRoot)
+        public bool Delete(long aggregateRootId)
         {
-            _dbContext.Entry(aggregateRoot.Resource).State = EntityState.Deleted;
+            ProfileMessage aggregateRoot = _dbContext.ProfileMessages.Find(aggregateRootId);
+            if (aggregateRoot == null) return false;
             _dbContext.Entry(aggregateRoot).State = EntityState.Deleted;
             _dbContext.Remove(aggregateRoot);
             _dbContext.SaveChanges();
+            return true;
         }
     }
 }

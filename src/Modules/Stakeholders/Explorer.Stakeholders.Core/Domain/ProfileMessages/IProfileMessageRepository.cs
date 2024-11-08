@@ -15,6 +15,6 @@ namespace Explorer.Stakeholders.Core.Domain.ProfileMessages
         PagedResult<ProfileMessage> GetByUserId(long userId);
         PagedResult<ProfileMessage> GetByClubId(long clubId);
         public ProfileMessage Update(ProfileMessage aggregateRoot);
-        public void Delete(ProfileMessage aggregateRoot);
+        public bool Delete(long aggregateRootId);
     }
 }

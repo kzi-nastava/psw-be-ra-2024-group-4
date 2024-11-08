@@ -15,6 +15,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<PagedResult<ProfileMessageDto>> GetByUserId(long userId);
         Result<PagedResult<ProfileMessageDto>> GetByClubId(long clubId);
         Result<ProfileMessageDto> Update(ProfileMessageDto aggregateRoot);
-        Result Delete(ProfileMessageDto aggregateRoot);
+        Result Delete(long aggregateRoot);
     }
 }

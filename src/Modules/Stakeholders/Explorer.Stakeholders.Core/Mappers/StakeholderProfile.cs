@@ -27,7 +27,26 @@ public class StakeholderProfile : Profile
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.Parse<UserRole>(src.Role)))
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive)).ReverseMap();
 
-        CreateMap<ProfileMessageDto, ProfileMessage>().IncludeAllDerived()
-            .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resources.Select(r => new Resource((Resource.ResourceType)Enum.Parse(typeof(Resource.ResourceType), r.Type.ToString()), r.EntityId))));
+        CreateMap<ProfileMessageDto, ProfileMessage>()
+            .ForMember(dest => dest.Resource, opt => opt.MapFrom(src =>
+                new Resource(
+                    (Resource.ResourceType)Enum.Parse(typeof(Resource.ResourceType), src.Resource.Type.ToString()),
+                    src.Resource.EntityId
+                )
+            ));
+        CreateMap<ProfileMessage, ProfileMessageDto>()
+            .ForMember(dest => dest.Resource, opt => opt.MapFrom(src =>
+                new Resource(
+                    src.Resource.Type,
+                    src.Resource.EntityId
+                )
+            ));
+
+        CreateMap<Resource, ResourceDto>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type)) 
+            .ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.EntityId));
+        CreateMap<ResourceDto, Resource>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type)) 
+            .ForMember(dest => dest.EntityId, opt => opt.MapFrom(src => src.EntityId));
     }
 }
