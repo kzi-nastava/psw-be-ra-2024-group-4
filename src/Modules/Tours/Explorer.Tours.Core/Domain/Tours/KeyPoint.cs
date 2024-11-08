@@ -9,13 +9,13 @@ public class KeyPoint : Entity
     public double Latitude { get; private set; }
     public string Description { get; private set; }
     public string Image { get; private set; }
-    public Status PublicStatus { get; private set; }
+    public PublicStatus PublicStatus { get; private set; }
 
     public long UserId { get; private set; }
 
 
     public long TourId { get; private set; }
-    public KeyPoint(string name, double longitude, double latitude, string description, string image, long userId, long tourId, Status publicStatus)
+    public KeyPoint(string name, double longitude, double latitude, string description, string image, long userId, long tourId, PublicStatus publicStatus)
     {
         Validate(name, longitude, latitude, description, image, userId,publicStatus);
         Name = name;
@@ -28,7 +28,7 @@ public class KeyPoint : Entity
         PublicStatus = publicStatus;
     }
 
-    public void Validate(string name, double longitude, double latitude, string description, string image, long userId, Status publicStatus)
+    public void Validate(string name, double longitude, double latitude, string description, string image, long userId, PublicStatus publicStatus)
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
         if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Invalid Description.");
@@ -39,7 +39,7 @@ public class KeyPoint : Entity
         if (publicStatus < 0) throw new ArgumentException("Invalid status");
     }
 }
-public enum Status {
+public enum PublicStatus {
     PRIVATE = 0,
     REQUESTED_PUBLIC = 1,
     PUBLIC = 2

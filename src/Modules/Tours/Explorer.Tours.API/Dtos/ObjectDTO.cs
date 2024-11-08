@@ -10,7 +10,7 @@ public class ObjectDTO
     public double Longitude { get; set; }
     public double Latitude { get; set; }
     public long UserId { get; set; }
-    public Status PublicStatus { get; set; }
+    public PublicStatus PublicStatus { get; set; }
 
     public ObjectDTO() { }
 
