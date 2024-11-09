@@ -1,7 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Tours.API.Dtos;
-public class KeyPointDto : Entity
+public class KeyPointDto
 {
     public long Id { get; set; }
     public string Name { get; set; }

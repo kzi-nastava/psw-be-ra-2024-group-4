@@ -17,7 +17,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring.ObjectAddition
 
         public Result<List<ObjectDTO>> GetRequestedPublic()
         {
-            var objects = _objectRepository.GetAll();
+            var objects = _objectRepository.GetAll().FindAll(obj => obj.PublicStatus == Domain.Tours.PublicStatus.REQUESTED_PUBLIC);
 
             var objectDtos = objects.Select(obj => new ObjectDTO
             {
