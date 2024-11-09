@@ -35,7 +35,8 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Latitude = kp.Latitude,
                 Description = kp.Description,
                 Image = kp.Image,
-                UserId = kp.UserId
+                UserId = kp.UserId,
+                TourId = kp.TourId
 
 
 

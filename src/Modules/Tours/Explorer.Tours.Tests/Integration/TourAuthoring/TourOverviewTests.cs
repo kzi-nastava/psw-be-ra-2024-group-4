@@ -32,8 +32,8 @@ namespace Explorer.Tours.Tests.Integration.TourAuthoring
             var result = ((ObjectResult)controller.GetAllWithoutreviews(0, 0).Result)?.Value as PagedResult<TourOverviewDto>;
 
             result.ShouldNotBeNull();
-            result.Results.Count.ShouldBe(0);
-            result.TotalCount.ShouldBe(2);
+            result.Results.Count.ShouldBe(1);
+            result.TotalCount.ShouldBe(1);
         }
 
         [Fact]

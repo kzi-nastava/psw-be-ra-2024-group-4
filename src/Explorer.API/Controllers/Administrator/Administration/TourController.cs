@@ -17,17 +17,17 @@ namespace Explorer.API.Controllers.Administrator.Administration
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteTour(int id)
+        public ActionResult DeleteTour(int id)
         {
             var result = _tourService.DeleteTour(id);
 
             if (result.IsSuccess)
             {
-                return NoContent(); // Vraća 204 status kod ako je brisanje uspešno
+                return NoContent();
             }
             else
             {
-                return BadRequest(result.Errors); // Vraća 400 status kod ako ima grešaka
+                return BadRequest(result.Errors);
             }
         }
     }

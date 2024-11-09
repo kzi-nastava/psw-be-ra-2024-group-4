@@ -10,9 +10,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace Explorer.API.Controllers.Author.PostManagement
 {
     [Authorize(Policy = "authorPolicy")]
-
-    //[Authorize(Policy = "authorPolicy")]
-
     [Route("api/postmanagement/post")]
     public class PostController : BaseApiController
     {
@@ -97,6 +94,13 @@ namespace Explorer.API.Controllers.Author.PostManagement
         public ActionResult Delete(int id)
         {
             var result = _postService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<PostDto> GetPostById(int id)
+        {
+            var result = _postService.Get(id);
             return CreateResponse(result);
         }
     }

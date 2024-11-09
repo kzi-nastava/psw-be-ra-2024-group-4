@@ -36,6 +36,19 @@ public class UserDatabaseRepository : IUserRepository
         return person.Id;
     }
 
+    public User? GetById(long userId)
+    {
+        var user = _dbContext.Users.FirstOrDefault(i => i.Id == userId);
+        return user;
+    }
+
+    public bool IsAuthor(long userId)
+    {
+        var user= _dbContext.Users.FirstOrDefault(i => i.Id == userId);
+        if(user.Role==UserRole.Author) return true;
+        return false; 
+    }
+
     public List<User> GetActiveUsers()
     {
         return _dbContext.Users

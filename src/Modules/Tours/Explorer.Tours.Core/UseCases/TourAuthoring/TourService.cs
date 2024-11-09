@@ -20,9 +20,9 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
     {
 
         ITourRepository _tourRepository { get; set; }
-        
+
         IMapper _mapper { get; set; }
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper) 
+        public TourService(ICrudRepository<Tour> repository, IMapper mapper, ITourRepository tourRepository) : base(repository, mapper)
         {
             _tourRepository = tourRepository;
             _mapper = mapper;
@@ -59,7 +59,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Latitude = kp.Latitude,
                         Image = kp.Image,
                         TourId = kp.TourId
-                   
+
 
                     }).ToList()
                 }).ToList();
@@ -144,11 +144,30 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
-        public Result<TourDto> Get(int id)
+        public Result UpdateDistance(long id, double distance)
         {
             try
             {
                 var tour = _tourRepository.GetById(id);
+                tour.UpdateLength(distance);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
+
+        public Result<TourDto> GetWithKeyPoints(int tourId)
+        {
+            try
+            {
+                var tour = _tourRepository.GetWithKeyPoints(tourId);
 
                 if (tour == null)
                 {
@@ -170,24 +189,33 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return Delete(id);
         }
 
+        public Result GetById(long id)
+        {
+            var tour = _tourRepository.GetById(id);
+            return Result.Ok();
+        }
 
-        public Result UpdateDistance(long id, double distance)
+        public Result<TourDto> Get(int id)
         {
             try
             {
                 var tour = _tourRepository.GetById(id);
-                tour.UpdateLength(distance);
-                _tourRepository.Save();
-                return Result.Ok();
+
+                if (tour == null)
+                {
+                    return Result.Fail<TourDto>("Tour not found.");
+                }
+
+                var tourDto = _mapper.Map<TourDto>(tour);
+
+                return Result.Ok(tourDto);
             }
-            catch (ArgumentException e)
+            catch (Exception e)
             {
-                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+                return Result.Fail<TourDto>(e.Message);
             }
         }
+
+
     }
 }

@@ -2,12 +2,15 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Problems;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,10 +19,18 @@ namespace Explorer.Stakeholders.Core.UseCases
     public class ProblemService: CrudService<ProblemDTO, Problem>, IProblemService
     {
         public IProblemRepository _problemRepository { get; set; }
+        public INotificationRepository _notificationRepository;
+        public IUserRepository _userRepository;
+       // public ITourRepository _tourRepository;
         private readonly IMapper _mapper;
-        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository) : base(repository, mapper) {
+
+        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository, INotificationRepository notificationRepository,IUserRepository userRepository) : base(repository, mapper)
+        {
             _problemRepository = problemRepository;
             _mapper = mapper;
+            _notificationRepository = notificationRepository;
+            _userRepository = userRepository;
+          //  _tourRepository=tourRepository;
         }
 
         public Result<List<ProblemDTO>> GetByTouristId(long id)
@@ -46,6 +57,10 @@ namespace Explorer.Stakeholders.Core.UseCases
             //kako mapirati 
             //var problem = _problemRepository.PostComment(new ProblemComment(commentDto.ProblemId, commentDto.UserId, commentDto.Text, commentDto.TimeSent));
             // var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
+           
+            //ovde se menja za repo-izmenili kod dajane
+            //if (problem == null)
+            // var problem = _problemRepository.PostComment(_mapper.Map<ProblemCommentDto, ProblemComment>(commentDto));
             //problemrepo.getbyid
             var problem = _problemRepository.GetById(commentDto.ProblemId);
 
@@ -58,37 +73,30 @@ namespace Explorer.Stakeholders.Core.UseCases
             {
                 return Result.Fail(FailureCode.NotFound).WithError($"Problem with ID {commentDto.ProblemId} not found.");
             }
-           // return Result.Ok();
+            var isAuthor = _userRepository.IsAuthor(commentDto.UserId);
+           // var tour = _tourRepository.GetById(problem.TourId);
+            if(isAuthor)
+            {
+                _notificationRepository.Create(problem.UserId, commentDto.ProblemId); 
+            }
+            
+              //  _notificationRepository.Create(tour.UserId, commentDto.ProblemId); 
+           
             return MapToDto(problem);
         }
 
         public Result<ProblemDTO> UpdateActiveStatus(long id, bool isActive)
-        {/*
+        {
             var problem = _problemRepository.GetById(id);
             if (problem == null)
             {
-                return Result.Fail<ProblemDTO>("Problem not found.");
+                  return Result.Fail<ProblemDTO>("Problem not found.");
             }
+
+           
             problem.IsActive = isActive;
 
-            var updateResult = Update(MapToDto(problem));
-
-            if (updateResult.IsFailed)
-            {
-                return Result.Fail<ProblemDTO>("Failed to update problem.");
-            }
-
-            return Result.Ok(updateResult.Value);*/
-            var problem = _problemRepository.GetById(id);
-            if (problem == null)
-            {
-                return Result.Fail<ProblemDTO>("Problem not found.");
-            }
-
-            // Ažuriraj status
-            problem.IsActive = isActive;
-
-            // Praćenje i update kroz kontekst
+            
             _problemRepository.Update(problem);
 
             return Result.Ok(MapToDto(problem));
