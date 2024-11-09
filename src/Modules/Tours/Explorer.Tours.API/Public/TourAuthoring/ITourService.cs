@@ -19,6 +19,8 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         Result RemoveEquipmentFromTour(long tourId, long equipmentId);
         Result<TourDto> Get(int id);
 
+
+        Result UpdateDistance(long id, double distance);
         Result Archive(long id);
         Result Reactivate(long id);
         Result<TourDto> GetWithKeyPoints(int tourId);
