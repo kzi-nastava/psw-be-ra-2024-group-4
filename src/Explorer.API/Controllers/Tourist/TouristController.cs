@@ -1,5 +1,6 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Explorer.API.Controllers.Tourist
     public class TouristController :BaseApiController
     {
         private readonly IPersonService _personService;
+        private readonly ITourService _tourService;
 
-        public TouristController(IPersonService personService)
+        public TouristController(IPersonService personService, ITourService tourService)
         {
             _personService = personService;
+            _tourService = tourService;
         }
 
         [HttpGet("{id:int}")]
@@ -28,6 +31,13 @@ namespace Explorer.API.Controllers.Tourist
         public ActionResult Update([FromBody]PersonDto personDto)
         {
             var result = _personService.Update(personDto);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("tour/{tourId:int}")]
+        public ActionResult GetTour(int tourId)
+        {
+            var result = _tourService.GetWithKeyPoints(tourId);
             return CreateResponse(result);
         }
     }

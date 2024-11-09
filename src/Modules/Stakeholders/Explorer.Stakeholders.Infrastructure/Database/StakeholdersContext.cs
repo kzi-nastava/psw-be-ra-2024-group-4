@@ -1,4 +1,5 @@
 ﻿using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Problems;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
@@ -14,7 +15,7 @@ public class StakeholdersContext : DbContext
     public DbSet<Club> Clubs { get; set; }
     public DbSet<ClubInvitation> ClubInvitations { get; set; }
     public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
-
+    public DbSet <Notification> Notification { get; set; }
 
     public StakeholdersContext(DbContextOptions<StakeholdersContext> options) : base(options) {}
 
@@ -27,6 +28,9 @@ public class StakeholdersContext : DbContext
 
         ConfigureStakeholder(modelBuilder);
         ConfigureAppReview(modelBuilder);
+        ConfigureProblems(modelBuilder);
+
+
     }
 
     private static void ConfigureStakeholder(ModelBuilder modelBuilder)
@@ -44,4 +48,12 @@ public class StakeholdersContext : DbContext
             .WithOne() 
             .HasForeignKey<AppReview>(ar => ar.UserId); 
     }
+
+    private static void ConfigureProblems(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Problem>()
+            .Property(problem => problem.Comments).HasColumnType("jsonb");
+    }
+
+
 }

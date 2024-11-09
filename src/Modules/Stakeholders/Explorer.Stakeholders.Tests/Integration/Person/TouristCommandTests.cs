@@ -2,6 +2,7 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
+using Explorer.Tours.API.Public.TourAuthoring;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -36,6 +37,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
             result.Biography.ShouldBe("KaoJa");
             result.Motto.ShouldBe("Samo Jako Bro"); 
             result.Equipment.ShouldBe((new[] { 1, 2 }).ToArray());
+            result.Wallet.ShouldBe(1000);
         }
 
         [Fact]
@@ -56,6 +58,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
                 Biography = "KaoJa",
                 Motto = "Preko mora i okeana",
                 Equipment = new() { 1,2 ,3},
+                Wallet = 1000
             };
             var actionResult = controller.Update(updatedEntity);
             var objectResult = actionResult as ObjectResult;
@@ -69,7 +72,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
         }
         private static TouristController CreateController(IServiceScope scope)
         {
-            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>())
+            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
             {
                 ControllerContext = BuildContext("-1")
             };
