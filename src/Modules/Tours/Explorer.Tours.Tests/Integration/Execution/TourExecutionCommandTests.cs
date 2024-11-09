@@ -70,7 +70,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
             if (shouldComplete)
             {
                 // Act
-                var result = ((ObjectResult)controller.CompleteTourExecution(executionId))?.Value as TourExecutionDto;
+                var result = ((ObjectResult)controller.CompleteTourExecution(executionId).Result)?.Value as TourExecutionDto;
 
                 // Assert - Response
                 result.ShouldNotBeNull();
@@ -116,6 +116,27 @@ namespace Explorer.Tours.Tests.Integration.Execution
                 var exception = Assert.Throws<ArgumentException>(() => controller.AbandonTourExecution(executionId));
                 exception.Message.ShouldBe("Invalid end status.");
             }
+        }
+
+        [Theory]
+        [InlineData(-5, -1, 200)]
+        public void CompleteKeyPoint(int executionId, int keyPointId, int expectedResponseCode)
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            var result = (ObjectResult)controller.CompleteKeyPoint(executionId, keyPointId).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.TourExecution.FirstOrDefault(t => t.Id == executionId);
+            var rating = storedEntity.CompletedKeys.FirstOrDefault(t => t.KeyPointId == keyPointId);
+            rating.ShouldNotBeNull();
         }
 
 

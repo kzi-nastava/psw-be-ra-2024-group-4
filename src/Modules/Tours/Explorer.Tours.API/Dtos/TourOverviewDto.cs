@@ -13,6 +13,8 @@ namespace Explorer.Tours.API.Dtos
         public string TourName { get; set; }
         public string TourDescription { get; set; }
         public string TourDifficulty { get; set; }
+
+        public decimal Price { get; set; }
         public List<string> Tags { get; set; }
         public KeyPointDto FirstKeyPoint { get; set; }
         public List<TourReviewDto> Reviews { get; set; }

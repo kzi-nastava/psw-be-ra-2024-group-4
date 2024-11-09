@@ -28,8 +28,6 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public List<long> EquipmentIds { get; private set; }
 
-        public List<long> KeyPointIds { get; private set; }
-
         public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
         
 
@@ -51,7 +49,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             PublishedTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             ArchiveTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             EquipmentIds = new List<long>();
-            KeyPointIds = new List<long>();
+           
 
         }
 
@@ -83,6 +81,11 @@ namespace Explorer.Tours.Core.Domain.Tours
             ArchiveTime = null;
 
             return true;
+        }
+
+        public void UpdateLength(double length)
+        {
+            LengthInKm = length;
         }
 
 
