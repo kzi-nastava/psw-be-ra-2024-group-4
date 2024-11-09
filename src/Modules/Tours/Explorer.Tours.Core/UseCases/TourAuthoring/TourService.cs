@@ -206,19 +206,9 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             {
                 return Result.Fail<TourDto>(e.Message);
 
-                tour.UpdateLength(distance);
-                _tourRepository.Save();
-                return Result.Ok();
+               
             }
-            catch (ArgumentException e)
-            {
-                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
-
-            }
+           
         }
     }
 }
