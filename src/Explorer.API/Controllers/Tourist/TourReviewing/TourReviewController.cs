@@ -27,9 +27,9 @@ namespace Explorer.API.Controllers.Tourist.TourReviewing
         }
 
         [HttpGet("byTour/{tourId:long}")]
-        public ActionResult<PagedResult<TourReviewDto>> GetByTourId(long tourId)
+        public ActionResult<PagedResult<TourReviewDto>> GetByTourId(long tourId, int page, int pageSize)
         {
-            var result = _tourReviewService.GetByTourId(tourId);
+            var result = _tourReviewService.GetByTourId(tourId, page, pageSize);
             return CreateResponse(result);
         }
 

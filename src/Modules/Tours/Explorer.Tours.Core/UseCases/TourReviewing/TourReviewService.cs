@@ -22,9 +22,9 @@ namespace Explorer.Tours.Core.UseCases.TourReviewing
             var reviews = _tourReviewRepository.GetByTouristId(touristId);
             return MapToDto(reviews);
         }
-        public Result<PagedResult<TourReviewDto>> GetByTourId(long TourId)
+        public Result<PagedResult<TourReviewDto>> GetByTourId(long TourId, int page, int pageSize)
         {
-            var reviews = _tourReviewRepository.GetByTourId(TourId);
+            var reviews = _tourReviewRepository.GetByTourId(TourId,page,pageSize);
             return MapToDto(reviews);
         }
     }

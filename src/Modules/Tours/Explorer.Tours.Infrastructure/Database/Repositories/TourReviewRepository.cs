@@ -42,5 +42,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return new PagedResult<TourReview>(reviews, reviews.Count());
         }
+        public PagedResult<TourReview> GetByTouristId(long touristId) {
+
+            var reviews = _dbContext.TourReview.Where(tr => tr.IdTourist == touristId).ToList();
+            var pagedResult = new PagedResult<TourReview>(reviews, reviews.Count);
+            return pagedResult;
+        }
     }
 }
