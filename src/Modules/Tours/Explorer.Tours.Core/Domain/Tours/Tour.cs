@@ -81,6 +81,11 @@ namespace Explorer.Tours.Core.Domain.Tours
             return true;
         }
 
+        public void UpdateLength(double length)
+        {
+            LengthInKm = length;
+        }
+
 
     }
 
