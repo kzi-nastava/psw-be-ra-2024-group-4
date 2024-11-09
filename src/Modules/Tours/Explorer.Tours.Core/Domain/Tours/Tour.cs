@@ -29,6 +29,8 @@ namespace Explorer.Tours.Core.Domain.Tours
         public List<long> EquipmentIds { get; private set; }
 
         public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
+        
+
         public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
@@ -81,6 +83,10 @@ namespace Explorer.Tours.Core.Domain.Tours
             return true;
         }
 
+        public void UpdateLength(double length)
+        {
+            LengthInKm = length;
+        }
 
 
     }

@@ -39,7 +39,9 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Category = "ucitavanje",
                 Description="Slika nije ucitana",
                 Priority=5,
-                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime()
+                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime(),
+                IsActive=true,
+                Deadline=2
             };
 
             // Act

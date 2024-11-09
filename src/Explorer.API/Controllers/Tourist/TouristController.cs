@@ -37,7 +37,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpGet("tour/{tourId:int}")]
         public ActionResult GetTour(int tourId)
         {
-            var result = _tourService.Get(tourId);
+            var result = _tourService.GetWithKeyPoints(tourId);
             return CreateResponse(result);
         }
     }

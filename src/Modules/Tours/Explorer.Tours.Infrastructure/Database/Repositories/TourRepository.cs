@@ -62,6 +62,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return equipmentList;
         }
+        //public Tour GetById(long tourId)
+        //{
+           // return _dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+        //}
+
 
 
         public void AddEquipmentToTour(long tourId, long equipmentId)
@@ -100,7 +105,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         }
 
-
         public PagedResult<Tour> GetPublished(int page, int pageSize)
         {
             var query = _dbContext.Tour
@@ -116,6 +120,16 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             var ret = query.ToList();
 
             return new PagedResult<Tour>(ret, ret.Count());
+        }
+
+        public Tour GetWithKeyPoints(int tourId)
+        {
+            var tour = _dbSet.Include(t => t.KeyPoints).FirstOrDefault(t => t.Id == tourId);
+            if (tour == null)
+            {
+                throw new ArgumentException("Tour not found.");
+            }
+            return tour;
         }
     }
 }

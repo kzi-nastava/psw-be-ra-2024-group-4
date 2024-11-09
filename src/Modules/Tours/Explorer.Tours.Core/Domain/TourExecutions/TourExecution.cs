@@ -38,18 +38,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Status = TourExecutionStatus.Active;
         }
 
-        public CompletedKeyPoint CompleteKeyPoint(long keyPointId)
-        {
-            if (Status != TourExecutionStatus.Active)
-                throw new InvalidOperationException("Tour is not active");
-
-            var completedKeyPoint = new CompletedKeyPoint(keyPointId, DateTime.UtcNow);
-
-            CompletedKeys.Add(completedKeyPoint);
-
-            return completedKeyPoint;
-        }
-
         public void CompleteTourExecution()
         {
             if (Status != TourExecutionStatus.Active)
@@ -66,6 +54,33 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 
             Status = TourExecutionStatus.Abandoned;
             LastActivity = DateTime.UtcNow;
+        }
+
+        public void UpdateLastActivity()
+        {
+            LastActivity = DateTime.UtcNow;
+        }
+
+
+        public CompletedKeyPoint CompleteKeyPoint(long keyPointId)
+        {
+            ValidateTourExecutionActive();
+            ValidateKeyPointNotCompleted(keyPointId);
+
+            var completedKeyPoint = new CompletedKeyPoint(keyPointId, DateTime.UtcNow);
+            CompletedKeys.Add(completedKeyPoint);
+            LastActivity = DateTime.UtcNow;
+            return completedKeyPoint;
+        }
+
+        private void ValidateTourExecutionActive()
+        {
+            if (Status != TourExecutionStatus.Active) throw new ArgumentException("Tour is not active.");
+        }
+
+        private void ValidateKeyPointNotCompleted(long keyPointId)
+        {
+            if (CompletedKeys.Any(ckp => ckp.KeyPointId == keyPointId)) throw new ArgumentException($"Key point with ID {keyPointId} is already completed.");
         }
     }
 

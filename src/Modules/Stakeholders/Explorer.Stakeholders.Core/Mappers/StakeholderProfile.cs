@@ -2,6 +2,7 @@ using AutoMapper;
 using Explorer.Stakeholders.API.Dtos;
 
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Problems;
 
 namespace Explorer.Stakeholders.Core.Mappers;
 
@@ -16,7 +17,8 @@ public class StakeholderProfile : Profile
         CreateMap<ClubInvitationDto, ClubInvitation>().ReverseMap();
         CreateMap<ClubJoinRequestDto, ClubJoinRequest>().ReverseMap();
         CreateMap<UserDto, User>().ReverseMap();
-
+        CreateMap<ProblemCommentDto,  ProblemComment>().ReverseMap();
+        CreateMap<NotificationDto, Notification>().ReverseMap();
 
         CreateMap<AccountDto, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
