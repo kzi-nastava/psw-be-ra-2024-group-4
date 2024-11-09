@@ -30,6 +30,7 @@ namespace Explorer.Stakeholders.Core.Domain
             UserId = userId;
             NotificationsType = notificationsType;
             ResourceId = resourceId;
+            Validate();
         }
 
         private void Validate()

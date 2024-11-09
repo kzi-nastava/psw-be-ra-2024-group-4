@@ -166,10 +166,10 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return Delete(id); 
         }
 
-        public Result GetById(long id)
+        public Result<TourDto> GetById(long id)
         {
            var tour = _tourRepository.GetById(id);
-           return Result.Ok();
+           return MapToDto(tour);
         }
 
     }

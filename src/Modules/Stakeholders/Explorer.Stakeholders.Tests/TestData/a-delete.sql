@@ -1,3 +1,4 @@
+DELETE FROM stakeholders."Notification";
 DELETE FROM stakeholders."Problem";
 DELETE FROM stakeholders."ClubJoinRequests";
 DELETE FROM stakeholders."ClubInvitations";

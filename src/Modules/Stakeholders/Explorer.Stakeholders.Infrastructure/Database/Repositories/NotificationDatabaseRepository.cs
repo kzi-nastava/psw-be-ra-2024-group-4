@@ -20,22 +20,22 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext = dbContext;
         }
 
-        public Notification Create(long userId,long resourceId)
+       /* public Notification Create(long userId,long resourceId)
         {
-            var notification = new Notification
-            (
-               //description: $"New comment added to problem #{resourceId}", 
-                description: $"New comment added to problem",
-                creationTime: DateTime.UtcNow,
-                isRead: false,
-                userId: userId, 
-                notificationsType: Notification.NotificationType.PROBLEM,
-                resourceId: resourceId
-             );
+            //var notification = new Notification
+            //(
+               //description: $"New comment added to problem #{resourceId}", -ne
+                //description: $"New comment added to problem",
+               // creationTime: DateTime.UtcNow,
+                //isRead: false,
+                //userId: userId, 
+                //notificationsType: Notification.NotificationType.PROBLEM,
+                //resourceId: resourceId
+             //);
             _dbContext.Notification.Add(notification);
             _dbContext.SaveChanges();
             return notification;
-        }
+        }*/
 
         public List<Notification> GetAllByUser(long userId)
         {
