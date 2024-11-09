@@ -47,7 +47,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
         public void Delete(long id)
         {
             var execution = _dbSet
-                .Include(t => t.CompletedKeys) 
+                .Include(t => t.CompletedKeys)
                 .FirstOrDefault(t => t.Id == id);
 
             if (execution != null)
@@ -57,17 +57,33 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             }
         }
 
-        public TourExecution CompleteKeyPoint(long executionId, long keyPointId)
+        public TourExecution? GetByTourAndTourist(long touristId, long tourId)
         {
-            var execution = Get(executionId);
-            if(execution != null)
-            {
-                var completedKeyPoint = execution.CompleteKeyPoint(keyPointId);
-                Update(execution);
-            }
-            return null;
-            
+            return _dbContext.TourExecution
+        .FirstOrDefault(t => t.TouristId == touristId && t.TourId == tourId);
         }
-        
+
+        public bool KeyPointExists(long keyPointId)
+        {
+            return _dbContext.KeyPoints.Any(kp => kp.Id == keyPointId);
+        }
+
+        public ICollection<KeyPoint> GetKeyPointsByTourId(long tourId)
+        {
+            var tour = _dbContext.Tour
+                .Include(t => t.KeyPoints) 
+                .FirstOrDefault(t => t.Id == tourId);
+
+            return tour?.KeyPoints.ToList() ?? new List<KeyPoint>(); 
+        }
+
+        public TourExecution? GetActiveTourByTourist(long touristId)
+        {
+            return _dbContext.TourExecution
+                .FirstOrDefault(te => te.TouristId == touristId && te.Status == TourExecutionStatus.Active);
+        }
+
+
+
     }
 }

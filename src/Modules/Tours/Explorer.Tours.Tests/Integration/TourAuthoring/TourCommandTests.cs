@@ -42,8 +42,8 @@ namespace Explorer.Tours.Tests
                 Status = TourStatus.Draft,
                 Price = 100.00,
                 UserId = 1,
-                EquipmentIds = new List<long>(),
-                KeyPointIds = new List<long>()
+                EquipmentIds = new List<long>()
+             
             };
 
             // Act
@@ -332,6 +332,36 @@ namespace Explorer.Tours.Tests
             storedEntity.ShouldNotBeNull();
             storedEntity.Status.ToString().ShouldBe(expectedStatus.ToString());
         }
+
+
+        [Fact]
+        public void Update_Distance_succeeds()
+        {
+            // Arrange - Input data
+            var tourId = -2;
+            var expectedResponseCode = 200;
+            var expectedLength = 200;
+            var authorId = 2;
+
+            // Arrange - Controller and dbContext
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            // Act
+            var result = (OkResult)controller.UpdateDistance(tourId, expectedLength).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+            storedEntity.ShouldNotBeNull();
+            storedEntity.LengthInKm.ToString().ShouldBe(expectedLength.ToString());
+        }
+
+        
 
 
         private static TourController CreateController(IServiceScope scope)

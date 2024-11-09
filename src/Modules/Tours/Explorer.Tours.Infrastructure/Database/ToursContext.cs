@@ -14,12 +14,15 @@ public class ToursContext : DbContext
 
     public DbSet<KeyPoint> KeyPoints { get; set; }
     public DbSet<Tour> Tour { get; set; }
-
-    public DbSet<TourExecution> TourExecution { get; set; }
-
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Explorer.Tours.Core.Domain.Object> Objects { get; set; }
 
+    public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
+
+    public DbSet<TourExecution> TourExecution { get; set; }
     public DbSet<PositionSimulator> Positions { get; set; }
+
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +42,8 @@ public class ToursContext : DbContext
           .HasMany(t => t.KeyPoints)
           .WithOne()
           .HasForeignKey(kp => kp.TourId);
+
+        ConfigureTour(modelBuilder);
     }
     private static void ConfigureTourExecution(ModelBuilder modelBuilder)
     {
@@ -53,8 +58,23 @@ public class ToursContext : DbContext
             .HasForeignKey(s => s.LocationId);
 
     }
+    private static void ConfigureTour(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Tour>()
+           .HasMany(t => t.KeyPoints)
+           .WithOne()
+           .HasForeignKey(kp => kp.TourId);
+        modelBuilder.Entity<ShoppingCart>()
+            .HasMany(sc => sc.Items)
+            .WithOne()
+            .HasForeignKey(sc => sc.CartId);
 
-   
+        modelBuilder.Entity<ShoppingCart>()
+            .HasMany(sc => sc.PurchaseTokens)
+            .WithOne()
+            .HasForeignKey(sc => sc.CartId);
 
+      
+    }
 
 }
