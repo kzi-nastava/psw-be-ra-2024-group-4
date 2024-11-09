@@ -39,7 +39,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
-        [HttpGet("search/{longitude:long};{latitude:long};{distance:int}")]
+        [HttpGet("search/{longitude:double};{latitude:double};{distance:int}")]
         public ActionResult<PagedResult<TourOverviewDto>> GetByCoordinated(double latitude, double longitude, int distance, [FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _tourOverviewService.GetByCoordinated(latitude, longitude, distance, page, pageSize);
