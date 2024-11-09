@@ -10,6 +10,9 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Explorer.Blog.Core.Domain.Posts;
+using Explorer.Blog.Core.Domain.RepositoryInterfaces;
+using Explorer.Blog.Infrastructure.Database.Repositories;
 
 namespace Explorer.Blog.Infrastructure;
 
@@ -28,7 +31,6 @@ public static class BlogStartup
     {
 
        services.AddScoped<ICommentService, CommentService>();
-
         services.AddScoped<IPostService, PostService>();
 
     }
@@ -38,7 +40,7 @@ public static class BlogStartup
 
         services.AddScoped(typeof(ICrudRepository<Comment>), typeof(CrudDatabaseRepository<Comment, BlogContext>));
 
-        services.AddScoped(typeof(ICrudRepository<Post>), typeof(CrudDatabaseRepository<Post, BlogContext>));
+        services.AddScoped<IPostRepository, PostDatabaseRepository>();
       
         services.AddDbContext<BlogContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("blog"),

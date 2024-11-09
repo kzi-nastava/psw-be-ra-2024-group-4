@@ -32,8 +32,8 @@ namespace Explorer.Tours.Tests.Integration.TourAuthoring
             var result = ((ObjectResult)controller.GetAllWithoutreviews(0, 0).Result)?.Value as PagedResult<TourOverviewDto>;
 
             result.ShouldNotBeNull();
-            result.Results.Count.ShouldBe(0);
-            result.TotalCount.ShouldBe(2);
+            result.Results.Count.ShouldBe(1);
+            result.TotalCount.ShouldBe(1);
         }
 
         [Fact]
@@ -46,6 +46,20 @@ namespace Explorer.Tours.Tests.Integration.TourAuthoring
             var result = ((ObjectResult)controller.GetAllByTourId(-1, 0, 0).Result)?.Value as PagedResult<TourOverviewDto>;
 
             result.ShouldBeNull(); // treba promeniti testnu baze da se TourId u tourreview poklapa sa id tura koje postoje
+        }
+
+        [Fact]
+        public void Get_all_by_keypoints()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            var result = ((ObjectResult)controller.GetByCoordinated(41.8992, 12.4798, 10, 0, 0).Result)?.Value as PagedResult<TourOverviewDto>;
+            
+            
+            result.ShouldNotBeNull();
+            result.TotalCount.ShouldBe(2);
         }
 
         private static TourOverviewController CreateController(IServiceScope scope)

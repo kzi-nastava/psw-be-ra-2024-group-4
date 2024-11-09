@@ -9,6 +9,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface IKeyPointRepository
     {
+        List<KeyPoint> GetAll();
         List<KeyPoint> GetKeyPointsByUserId(long userId);
         int GetMaxId(long userId);
         List<KeyPoint> GetAll();

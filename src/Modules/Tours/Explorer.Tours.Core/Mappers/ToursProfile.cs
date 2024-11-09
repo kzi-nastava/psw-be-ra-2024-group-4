@@ -18,6 +18,9 @@ public class ToursProfile : Profile
         CreateMap<TourDto, Tour>().ReverseMap();
         CreateMap<ObjectDTO, Explorer.Tours.Core.Domain.Object>().ReverseMap();
         CreateMap<TourReviewDto, TourReview>().ReverseMap();
+        CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+        CreateMap<ShoppingCartDto, ShoppingCart>().ReverseMap();
+        CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
         CreateMap<CompletedKeyPointDto, CompletedKeyPoint>().ReverseMap();
         CreateMap<PositionSimulatorDto, PositionSimulator>().ReverseMap();
         CreateMap<TourExecutionDto, TourExecution>().ReverseMap();
@@ -25,5 +28,6 @@ public class ToursProfile : Profile
             .ForMember(dest => dest.CompletedKeys, opt => 
             opt.MapFrom(src => src.CompletedKeys.Select((completedKey) => 
             new CompletedKeyPoint(completedKey.KeyPointId, completedKey.CompletedTime))));
+
     }
 }
