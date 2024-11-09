@@ -36,10 +36,11 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Id=-5,
                 UserId=-1,
                 TourId=3,
-                Category="ucitavanje",
+                Category = "ucitavanje",
                 Description="Slika nije ucitana",
                 Priority=5,
-                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime()
+                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime(),
+                IsActive=true
             };
 
             // Act
@@ -86,7 +87,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             long userId = 2;
 
             // Act
-            var result = ((ObjectResult)controller.GetByUserId(userId).Result)?.Value as List<ProblemDTO>;
+            var result = ((ObjectResult)controller.GetByTouristId(userId).Result)?.Value as List<ProblemDTO>;
 
             // Assert - Database
             result.ShouldNotBeNull();
@@ -114,9 +115,9 @@ namespace Explorer.Stakeholders.Tests.Integration
         }
 
 
-        private static ProblemController CreateController(IServiceScope scope)
+        private static ProblemControllerTourist CreateController(IServiceScope scope)
         {
-            return new ProblemController(scope.ServiceProvider.GetRequiredService<IProblemService>());
+            return new ProblemControllerTourist(scope.ServiceProvider.GetRequiredService<IProblemService>());
         }
 
 

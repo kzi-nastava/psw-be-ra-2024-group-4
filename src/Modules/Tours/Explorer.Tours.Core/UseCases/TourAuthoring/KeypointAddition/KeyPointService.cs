@@ -2,9 +2,11 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
-using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using Geolocation;
+using System.Drawing;
 
 namespace Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 

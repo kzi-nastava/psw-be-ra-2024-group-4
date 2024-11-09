@@ -15,5 +15,5 @@ public interface IKeyPointService
     Result<KeyPointDto> Get(int id);
 
     int GetMaxId(long userId);
-
+    //Result<List<KeyPointDto>> GetByCoordinated(long v1, long v2, int v3);
 }

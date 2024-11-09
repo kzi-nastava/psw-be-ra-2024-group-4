@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,25 +10,21 @@ namespace Explorer.Tours.API.Dtos
     public class TourDto
     {
         public long Id { get; set; }    
-
         public string Name { get; set; }
         public string? Description { get; set; }
-
         public string? Difficulty { get; set; }
-
         public List<TourTags> Tags { get;  set; }
         public TourStatus Status { get; set; }
         public double Price { get;  set; }
         public long UserId { get;  set; }
-
+        public double LengthInKm { get; set; }
+        public DateTime PublishedTime { get; set; }
+        public DateTime ArchiveTime { get; set; }
         public List<long> EquipmentIds { get; set; }
-
-        public List<long> KeyPointIds { get; set; }
+        public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
 
         public TourDto() { }
-
-
-        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, List<long> equipmentIds, List<long> keyPointIds)
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, DateTime publishedTime, DateTime archivedTime ,List<long> equipmentIds, List<long> keyPointIds)
 
         {
             Id = id;
@@ -44,8 +41,11 @@ namespace Explorer.Tours.API.Dtos
 
             Status = status;
             Price = price;
+            LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
-            KeyPointIds = keyPointIds;
+            PublishedTime = publishedTime;
+            ArchiveTime = archivedTime;
+
 
         }
     }
@@ -53,7 +53,8 @@ namespace Explorer.Tours.API.Dtos
     public enum TourStatus
     {
         Draft,
-        Published
+        Published,
+        Archived
     }
 
     public enum TourTags

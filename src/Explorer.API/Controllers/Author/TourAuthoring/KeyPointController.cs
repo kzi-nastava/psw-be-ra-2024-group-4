@@ -2,8 +2,10 @@
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +90,13 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var nextId = _keyPointService.GetMaxId(userid) + 1;
             return Ok(nextId);
         }
+
+        /*     [HttpGet]
+             public ActionResult<KeyPointDto> GetAll()
+             {
+                 var result = _keyPointService.GetByCoordinated(12, 12, 1);
+                 return CreateResponse(result);
+             }*/
 
 
     }
