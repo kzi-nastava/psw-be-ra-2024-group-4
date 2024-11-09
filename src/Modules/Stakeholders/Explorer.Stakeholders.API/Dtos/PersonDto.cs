@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Motto { get; set; }
         public List<int> Equipment { get; set; }
         public string ImageBase64 { get; set; }
+        public decimal Wallet {  get; set; }
     }
 }
