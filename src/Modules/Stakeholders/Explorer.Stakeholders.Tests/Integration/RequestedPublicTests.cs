@@ -23,7 +23,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.GetRequestedPublicObject().Result)?.Value as List<ObjectDTO>;
             
             result.ShouldNotBeNull();
-            //result[0].Id.ShouldBe(-3);
+            result[0].Id.ShouldBe(-3);
             result[0].Name.ShouldBe("WC Kalemegdan");
         }
 
@@ -36,7 +36,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.GetRequestedPublicKeyPoint().Result)?.Value as List<KeyPointDto>;
 
             result.ShouldNotBeNull();
-            //result[0].Id.ShouldBe(-3);
+            result[0].Id.ShouldBe(-3);
             result[0].Name.ShouldBe("Sistine Chapel, Vatican City");
         }
 
