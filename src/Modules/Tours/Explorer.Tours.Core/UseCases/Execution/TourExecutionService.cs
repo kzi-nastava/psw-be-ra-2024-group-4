@@ -7,6 +7,7 @@ using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution;
 using Explorer.Tours.Core.Domain.TourExecutions;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -30,14 +31,15 @@ namespace Explorer.Tours.Core.UseCases.Execution
         public Result<TourExecutionDto> Create(TourExecutionDto execution)
         {
             var ex = tourExecutionRepository.Create(MapToDomain(execution));
-            if (ex != null) {
+            if (ex != null)
+            {
                 ex.StartTourExecution();
                 var result = tourExecutionRepository.Update(ex);
                 if (result != null)
                 {
                     return Result.Ok(MapToDto(result));
                 }
-                    
+
 
             }
             return null;
@@ -47,15 +49,16 @@ namespace Explorer.Tours.Core.UseCases.Execution
         public Result<TourExecutionDto> CompleteTourExecution(long id)
         {
             var ex = tourExecutionRepository.Get(id);
-            if (ex != null) {
+            if (ex != null)
+            {
                 ex.CompleteTourExecution();
                 var result = tourExecutionRepository.Update(ex);
                 return Result.Ok(MapToDto(result));
             }
             return null;
-            
 
-            
+
+
         }
 
         public Result<TourExecutionDto> AbandonTourExecution(long id)
@@ -70,8 +73,84 @@ namespace Explorer.Tours.Core.UseCases.Execution
             return null;
         }
 
-        
+        public Result<TourExecutionDto> CompleteKeyPoint(long executionId, long keyPointId)
+        {
+            var execution = tourExecutionRepository.Get(executionId);
+            if (execution == null)
+            {
+                return Result.Fail<TourExecutionDto>($"Tour execution with ID {executionId} not found.");
+            }
 
-        
+            if (!tourExecutionRepository.KeyPointExists(keyPointId))
+            {
+                return Result.Fail<TourExecutionDto>($"Key point with ID {keyPointId} does not exist.");
+            }
+
+            try
+            {
+                execution.CompleteKeyPoint(keyPointId);
+                tourExecutionRepository.Update(execution);
+                return Result.Ok(MapToDto(execution));
+            }
+            catch (ArgumentException ex)
+            {
+                return Result.Fail<TourExecutionDto>(ex.Message);
+            }
+        }
+
+        public void UpdateLastActivity(long executionId)
+        {
+            var execution = tourExecutionRepository.Get(executionId);
+            if (execution != null)
+            {
+                execution.UpdateLastActivity();
+                tourExecutionRepository.Update(execution);
+            }
+            else
+            {
+                throw new Exception("Execution not found.");
+            }
+        }
+
+
+        public Result<TourExecutionDto> GetByTourAndTouristId(long touristId, long tourId)
+        {
+            var ex = tourExecutionRepository.GetByTourAndTourist(touristId, tourId);
+            if (ex != null)
+            {
+                return Result.Ok(MapToDto(ex)); ;
+            }
+            return null;
+
+
+        }
+
+        public ICollection<KeyPointDto> GetKeyPointsForTour(long tourId)
+        {
+            var keyPoints = tourExecutionRepository.GetKeyPointsByTourId(tourId);
+
+            var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
+            {
+                Id = kp.Id,
+                Name = kp.Name,
+                Latitude = kp.Latitude,
+                Longitude = kp.Longitude,
+                Description = kp.Description
+            }).ToList();
+
+            return keyPointDtos;
+        }
+
+        public Result<TourExecutionDto> GetActiveTourByTouristId(long touristId)
+        {
+            var execution = tourExecutionRepository.GetActiveTourByTourist(touristId);
+            if (execution != null)
+            {
+                return Result.Ok(MapToDto(execution));
+            }
+            return Result.Fail<TourExecutionDto>($"No active tour found for tourist with ID {touristId}.");
+        }
+
+
     }
 }

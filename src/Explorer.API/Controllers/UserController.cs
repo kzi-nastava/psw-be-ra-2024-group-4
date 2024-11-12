@@ -6,6 +6,7 @@ using Explorer.Stakeholders.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Explorer.Stakeholders.Core.UseCases;
+using FluentResults;
 
 namespace Explorer.API.Controllers
 {
@@ -16,6 +17,13 @@ namespace Explorer.API.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<UserDto> GetUsername(long id)
+        {
+            var username = _userService.GetUsername(id);
+            return CreateResponse(username);
         }
     }
 }

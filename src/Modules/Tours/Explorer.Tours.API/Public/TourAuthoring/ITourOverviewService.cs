@@ -13,5 +13,7 @@ namespace Explorer.Tours.API.Public.TourAuthoring
     {
         Result<PagedResult<TourOverviewDto>> GetAllWithoutReviews(int page, int pageSize);
         Result<PagedResult<TourReviewDto>> GetAllByTourId(int page, int pageSize, long tourId);
+        Result<TourOverviewDto> GetAverageRating(long tourId);
+        Result<PagedResult<TourOverviewDto>> GetByCoordinated(double latitude, double longitude, int distance, int page, int pageSize);
     }
 }

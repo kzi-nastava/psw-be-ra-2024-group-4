@@ -54,14 +54,6 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
-        [HttpPut("keypointaddition/{keypointid:int}")]
-        public ActionResult<TourDto> AddKeyPoint([FromBody] TourDto tour, int keypointid)
-        {
-            var result = _tourService.AddKeyPoint(tour, keypointid);
-
-            return CreateResponse(result);
-        }
-
         [HttpPut("archive/{tourId:int}")]
         public ActionResult<TourDto> Archive(long tourId)
         {
@@ -77,10 +69,23 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpPut("updateDistance/{tourId:int}")]
+        public ActionResult<TourDto> UpdateDistance(long tourId, [FromBody] double distance)
+        {
+            var result = _tourService.UpdateDistance(tourId, distance);
+            return CreateResponse(result);
+        }
+
         [HttpGet("getById/{id:long}")]
         public ActionResult<TourDto> GetById(long id)
         {
             var result = _tourService.GetById(id);
+            return CreateResponse(result);
+        }
+        [HttpGet("getByTourId/{id:long}")]
+        public ActionResult<TourDto> GetTourById(long id)
+        {
+            var result = _tourService.GetTourById(id);
             return CreateResponse(result);
         }
 

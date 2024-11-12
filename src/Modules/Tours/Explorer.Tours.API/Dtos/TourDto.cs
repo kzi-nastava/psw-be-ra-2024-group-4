@@ -10,30 +10,20 @@ namespace Explorer.Tours.API.Dtos
     public class TourDto
     {
         public long Id { get; set; }    
-
         public string Name { get; set; }
         public string? Description { get; set; }
-
         public string? Difficulty { get; set; }
-
         public List<TourTags> Tags { get;  set; }
         public TourStatus Status { get; set; }
         public double Price { get;  set; }
         public long UserId { get;  set; }
-
         public double LengthInKm { get; set; }
-
         public DateTime PublishedTime { get; set; }
-
         public DateTime ArchiveTime { get; set; }
-
         public List<long> EquipmentIds { get; set; }
-
-        public List<long> KeyPointIds { get; set; }
         public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
+
         public TourDto() { }
-
-
         public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, DateTime publishedTime, DateTime archivedTime ,List<long> equipmentIds, List<long> keyPointIds)
 
         {
@@ -55,7 +45,7 @@ namespace Explorer.Tours.API.Dtos
             EquipmentIds = equipmentIds;
             PublishedTime = publishedTime;
             ArchiveTime = archivedTime;
-            KeyPointIds = keyPointIds;
+
 
         }
     }

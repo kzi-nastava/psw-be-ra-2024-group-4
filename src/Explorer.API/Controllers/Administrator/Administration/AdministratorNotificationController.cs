@@ -8,7 +8,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
 {
     [Authorize(Policy = "administratorPolicy")]
     [Route("api/administrator/notification")]
-    public class AdministratorNotificationController: BaseApiController
+    public class AdministratorNotificationController : BaseApiController
     {
         private readonly INotificationService _notificationService;
 

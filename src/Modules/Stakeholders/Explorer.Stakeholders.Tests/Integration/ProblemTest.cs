@@ -1,5 +1,4 @@
-﻿using Explorer.API.Controllers;
-using Explorer.API.Controllers.Tourist;
+﻿using Explorer.API.Controllers.Tourist;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
@@ -33,15 +32,15 @@ namespace Explorer.Stakeholders.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new ProblemDTO
             {
-                Id=-5,
-                UserId=-1,
-                TourId=3,
+                Id = -5,
+                UserId = -1,
+                TourId = 3,
                 Category = "ucitavanje",
-                Description="Slika nije ucitana",
-                Priority=5,
+                Description = "Slika nije ucitana",
+                Priority = 5,
                 Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime(),
-                IsActive=true,
-                Deadline=2
+                IsActive = true,
+                Deadline = 2
             };
 
             // Act
@@ -122,7 +121,6 @@ namespace Explorer.Stakeholders.Tests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
-
             var newEntity = new ProblemCommentDto
             {
                 ProblemId = -4,
@@ -130,12 +128,10 @@ namespace Explorer.Stakeholders.Tests.Integration
                 Text = "tekst komentara",
                 TimeSent = DateTime.UtcNow
             };
-
             //Act
             var result = ((ObjectResult)controller.PostComment(newEntity).Result)?.Value as ProblemDTO;
             result.ShouldNotBeNull();
             result.Id.ShouldBe(newEntity.ProblemId);
-
         }
 
 

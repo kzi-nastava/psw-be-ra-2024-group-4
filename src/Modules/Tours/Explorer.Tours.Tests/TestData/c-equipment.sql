@@ -7,9 +7,3 @@ VALUES (-2, 'Štapovi za šetanje', 'Štapovi umanjuju umor nogu, pospešuju akt
 INSERT INTO tours."Equipment"(
     "Id", "Name", "Description")
 VALUES (-3, 'Obična baterijska lampa', 'Baterijska lampa od 200 do 400 lumena.');
-INSERT INTO tours."TourPreferences"(
-    "Id", "TouristId", "WeightPreference", "WalkingRating", "BikeRating", "CarRating", "BoatRating", "Tags")
-VALUES (1, 1, 2, 2, 2, 2, 2, '{{"creativity"}}');
-INSERT INTO tours."TourPreferences"(
-    "Id", "TouristId", "WeightPreference", "WalkingRating", "BikeRating", "CarRating", "BoatRating", "Tags")
-VALUES (2, 2, 3, 3, 3, 2, 2, '{{"scary"}}');

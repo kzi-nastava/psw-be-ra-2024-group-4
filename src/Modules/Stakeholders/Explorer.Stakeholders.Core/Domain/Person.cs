@@ -6,13 +6,14 @@ namespace Explorer.Stakeholders.Core.Domain;
 public class Person : Entity
 {
     public long UserId { get; init; }
-    public string Name { get; init; }
-    public string Surname { get; init; }
+    public string Name { get; private set; }
+    public string Surname { get; private set; }
     public string Email { get; init; }
     public string? ImageUrl {  get; private set; }
     public string? Biography { get; private set; }
     public string? Motto { get; private set; }
     public List<int>? Equipment {  get; private set; }
+    public decimal? Wallet { get; private set; }
 
     public Person(long userId, string name, string surname, string email)
     {
@@ -21,8 +22,9 @@ public class Person : Entity
         Surname = surname;
         Email = email;
         Validate();
+        
     }
-    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string motto)
+    public Person(long userId, string name, string surname, string email, string imageUrl, string biography, string motto, decimal wallet)
     {
         UserId = userId;
         Name = name;
@@ -31,6 +33,7 @@ public class Person : Entity
         ImageUrl = imageUrl;
         Biography = biography;
         Motto = motto;
+        Wallet = wallet;
         Validate();
     }
     

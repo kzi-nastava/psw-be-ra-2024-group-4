@@ -18,10 +18,14 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         Result AddEquipmentToTour(long tourId, long equipmentId);
         Result RemoveEquipmentFromTour(long tourId, long equipmentId);
         Result<TourDto> Get(int id);
-        Result<TourDto> AddKeyPoint(TourDto tour, long keypointId);
+        public Result GetById(long id);
+        Result UpdateDistance(long id, double distance);
         Result Archive(long id);
         Result Reactivate(long id);
+
         Result DeleteTour(int id);
-        Result<TourDto> GetById(long id);
+        Result<TourDto> GetWithKeyPoints(int tourId);
+        Result<TourDto> GetTourById(long id);
+
     }
 }
