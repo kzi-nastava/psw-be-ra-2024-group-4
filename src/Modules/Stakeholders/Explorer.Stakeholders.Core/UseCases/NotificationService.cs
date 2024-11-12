@@ -36,7 +36,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             return MapToDto(paged);
 
         }
-        public Result<PagedResult<NotificationDto>> GetAllByUser(long userId,int page, int pageSize)
+        public Result<PagedResult<NotificationDto>> GetAllByUser(long userId, int page, int pageSize)
         {
             //var allNotifications = _notificationRepository.GetAllByUser(userId,page,pageSize);
             //var notificationDtos = _mapper.Map<PagedResult<NotificationDto>>(allNotifications);
@@ -45,6 +45,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             var paged = new PagedResult<Notification>(allResults, allResults.Count());
             return MapToDto(paged);
         }
+
 
 
     }

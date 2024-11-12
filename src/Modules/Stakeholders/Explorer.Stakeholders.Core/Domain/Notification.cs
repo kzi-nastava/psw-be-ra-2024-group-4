@@ -7,7 +7,7 @@ using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Stakeholders.Core.Domain
 {
-    public class Notification:Entity
+    public class Notification : Entity
     {
 
         public string Description { get; private set; }
@@ -30,6 +30,7 @@ namespace Explorer.Stakeholders.Core.Domain
             UserId = userId;
             NotificationsType = notificationsType;
             ResourceId = resourceId;
+            Validate();
         }
 
         private void Validate()
@@ -41,7 +42,7 @@ namespace Explorer.Stakeholders.Core.Domain
 
             if (CreationTime > DateTime.UtcNow) throw new ArgumentException("Invalid CreationTime");
         }
-        
+
 
         public void MarkAsRead()
         {
@@ -60,9 +61,7 @@ namespace Explorer.Stakeholders.Core.Domain
         {
             PROBLEM,
             MESSAGE,
-            OTHER,
-            KEYPOINT_PUBLIC_REQUEST,
-            OBJECT_PUBLIC_REQUEST
+            OTHER
         }
     }
 }
