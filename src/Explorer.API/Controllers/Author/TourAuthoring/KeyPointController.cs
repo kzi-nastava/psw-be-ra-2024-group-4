@@ -90,14 +90,11 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var nextId = _keyPointService.GetMaxId(userid) + 1;
             return Ok(nextId);
         }
-
         /*     [HttpGet]
              public ActionResult<KeyPointDto> GetAll()
              {
                  var result = _keyPointService.GetByCoordinated(12, 12, 1);
                  return CreateResponse(result);
              }*/
-
-
     }
 }

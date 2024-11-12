@@ -7,9 +7,9 @@ namespace Explorer.Stakeholders.API.Dtos
     {
         public int Id { get; set; }
         public long UserId { get; set; }
-        public string Name { get; init; }
-        public string Surname { get; init; }
-        public string Email { get; init; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
         public string ImageUrl { get; set; }
         public string Biography { get; set; }
         public string Motto { get; set; }

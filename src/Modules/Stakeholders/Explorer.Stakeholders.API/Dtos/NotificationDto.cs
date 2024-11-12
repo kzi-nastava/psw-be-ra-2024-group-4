@@ -22,7 +22,9 @@ namespace Explorer.Stakeholders.API.Dtos
         {
             PROBLEM,
             MESSAGE,
-            OTHER
+            OTHER,
+            KEYPOINT_PUBLIC_REQUEST,
+            OBJECT_PUBLIC_REQUEST
         }
     }
 }
