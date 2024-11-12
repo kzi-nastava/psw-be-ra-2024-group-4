@@ -82,6 +82,12 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var result = _tourService.GetById(id);
             return CreateResponse(result);
         }
+        [HttpGet("getByTourId/{id:long}")]
+        public ActionResult<TourDto> GetTourById(long id)
+        {
+            var result = _tourService.GetTourById(id);
+            return CreateResponse(result);
+        }
 
     }
 }

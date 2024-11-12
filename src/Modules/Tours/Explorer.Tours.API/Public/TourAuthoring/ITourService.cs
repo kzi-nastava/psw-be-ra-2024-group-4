@@ -25,6 +25,7 @@ namespace Explorer.Tours.API.Public.TourAuthoring
 
         Result DeleteTour(int id);
         Result<TourDto> GetWithKeyPoints(int tourId);
+        Result<TourDto> GetTourById(long id);
 
     }
 }

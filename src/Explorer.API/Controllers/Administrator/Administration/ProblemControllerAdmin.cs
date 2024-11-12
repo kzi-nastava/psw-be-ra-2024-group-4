@@ -40,6 +40,12 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _problemService.Delete(id);
             return CreateResponse(result);
         }
+        [HttpPut("updateProblem/{id:int}")]
+        public ActionResult<ProblemDTO> Update([FromBody] ProblemDTO problem)
+        {
+            var result = _problemService.Update(problem);
+            return CreateResponse(result);
+        }
 
     }  
 }

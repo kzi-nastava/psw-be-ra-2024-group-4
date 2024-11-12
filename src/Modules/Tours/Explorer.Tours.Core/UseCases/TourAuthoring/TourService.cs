@@ -215,6 +215,11 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                 return Result.Fail<TourDto>(e.Message);
             }
         }
+        public Result<TourDto> GetTourById(long id)
+        {
+            var tour = _tourRepository.GetById(id);
+            return MapToDto(tour);
+        }
 
 
     }
