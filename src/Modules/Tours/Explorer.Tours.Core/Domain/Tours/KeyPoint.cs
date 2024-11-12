@@ -35,7 +35,6 @@ public class KeyPoint : Entity
         if (string.IsNullOrWhiteSpace(image)) throw new ArgumentException("Invalid Image.");
         if (longitude <= 0) throw new ArgumentException("Invalid longitude.");
         if (latitude <= 0) throw new ArgumentException("Invalid latitude.");
-        if (userId <= 0) throw new ArgumentException("Invalid user.");
         if (publicStatus < 0) throw new ArgumentException("Invalid status");
     }
 }

@@ -53,9 +53,6 @@ namespace Explorer.Tours.Core.Domain
             if (!Enum.IsDefined(typeof(ObjectCategory), category))
                 throw new ArgumentException("Invalid Category.");
 
-            if (userId <= 0)
-                throw new ArgumentException("Invalid user.");
-
             if (publicStatus < 0) 
                 throw new ArgumentException("Invalid status");
         }

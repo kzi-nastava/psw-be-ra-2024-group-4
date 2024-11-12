@@ -81,7 +81,7 @@ namespace Explorer.Stakeholders.Tests.Integration
 
             var updatedKeyPoint = new KeyPointDto
             {
-                Id = -3,
+                Id = -4,
                 Name = "Sistine Chapel, Vatican City",
                 Longitude = 11,
                 Latitude = 11,
@@ -96,7 +96,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.UpdateKeyPoint(updatedKeyPoint).Result)?.Value as KeyPointDto;
 
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-3);
+            result.Id.ShouldBe(-4);
             result.PublicStatus.ShouldBe((PublicStatus)2);
 
             var storedObject = dbContext.KeyPoints.FirstOrDefault(o => o.Name == updatedKeyPoint.Name);
