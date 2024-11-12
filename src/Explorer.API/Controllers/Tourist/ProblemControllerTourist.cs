@@ -74,5 +74,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _problemService.GetById(id);
             return CreateResponse(result);
         }
+
     }
 }

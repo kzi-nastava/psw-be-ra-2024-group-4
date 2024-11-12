@@ -9,12 +9,12 @@ namespace Explorer.Stakeholders.API.Dtos
     public class NotificationDto
     {
         public long Id { get; set; }
-        public string Description { get;  set; }
-        public DateTime CreationTime { get;  set; }
-        public bool IsRead { get;  set; }
-        public long UserId { get;  set; }
+        public string Description { get; set; }
+        public DateTime CreationTime { get; set; }
+        public bool IsRead { get; set; }
+        public long UserId { get; set; }
         public NotificationType NotificationsType { get; set; }
-        public long ResourceId { get;  set; }
+        public long ResourceId { get; set; }
 
 
 
@@ -22,9 +22,7 @@ namespace Explorer.Stakeholders.API.Dtos
         {
             PROBLEM,
             MESSAGE,
-            OTHER,
-            KEYPOINT_PUBLIC_REQUEST,
-            OBJECT_PUBLIC_REQUEST
+            OTHER
         }
     }
 }
