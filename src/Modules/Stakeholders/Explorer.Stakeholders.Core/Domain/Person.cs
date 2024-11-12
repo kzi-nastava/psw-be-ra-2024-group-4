@@ -6,8 +6,8 @@ namespace Explorer.Stakeholders.Core.Domain;
 public class Person : Entity
 {
     public long UserId { get; init; }
-    public string Name { get; init; }
-    public string Surname { get; init; }
+    public string Name { get; private set; }
+    public string Surname { get; private set; }
     public string Email { get; init; }
     public string? ImageUrl {  get; private set; }
     public string? Biography { get; private set; }
