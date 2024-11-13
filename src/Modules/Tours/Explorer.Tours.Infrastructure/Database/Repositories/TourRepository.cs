@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -24,12 +25,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public Tour GetById(long id)
         {
-             var tour = _dbSet.FirstOrDefault(t => t.Id == id);
-             if (tour == null)
-             { 
-                 throw new ArgumentException("Tour not found.");
-             }
-             return tour;
+            var tour = _dbSet.FirstOrDefault(t => t.Id == id);
+            if (tour == null)
+            {
+                throw new ArgumentException("Tour not found.");
+            }
+            return tour;
         }
 
         public void Save()
@@ -39,34 +40,29 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public List<Tour> GetToursByUserId(long userId)
         {
-         
+
             return _dbContext.Tour.Include(t => t.KeyPoints)
                          .Where(t => t.UserId == userId)
                          .ToList();
         }
 
 
-        public List<Equipment> GetEquipment(long tourId) 
+        public List<Equipment> GetEquipment(long tourId)
         {
             var tour = _dbContext.Tour
-                .FirstOrDefault(t => t.Id == tourId); 
+                .FirstOrDefault(t => t.Id == tourId);
 
             if (tour == null)
             {
-                return new List<Equipment>(); 
+                return new List<Equipment>();
             }
 
             var equipmentList = _dbContext.Equipment
-                .Where(e => tour.EquipmentIds.Contains(e.Id)) 
+                .Where(e => tour.EquipmentIds.Contains(e.Id))
                 .ToList();
 
             return equipmentList;
         }
-        //public Tour GetById(long tourId)
-        //{
-           // return _dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
-        //}
-
 
 
         public void AddEquipmentToTour(long tourId, long equipmentId)
@@ -118,6 +114,24 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
 
             var ret = query.ToList();
+
+            return new PagedResult<Tour>(ret, ret.Count());
+        }
+
+        public PagedResult<Tour> GetByKeyPoints(List<KeyPoint> keyPoints, int page, int pageSize)
+        {
+            var keyPointIdsToMatch = keyPoints.Select(kp => kp.Id).ToHashSet();
+
+            var res = _dbContext.Tour.Include(t => t.KeyPoints)
+                .Where(tour => tour.KeyPoints.Any(kp => keyPointIdsToMatch.Contains(kp.Id)))
+                .Skip((page - 1) * pageSize);
+
+            if (pageSize > 0)
+            {
+                res = res.Take(pageSize);
+            }
+
+            var ret = res.ToList();
 
             return new PagedResult<Tour>(ret, ret.Count());
         }

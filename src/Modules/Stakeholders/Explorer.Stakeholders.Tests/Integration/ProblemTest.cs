@@ -1,5 +1,4 @@
-﻿using Explorer.API.Controllers;
-using Explorer.API.Controllers.Tourist;
+﻿using Explorer.API.Controllers.Tourist;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
@@ -113,6 +112,26 @@ namespace Explorer.Stakeholders.Tests.Integration
             result.Count.ShouldBe(2);
             result[0].Id.ShouldBe(-2);
             result[1].Id.ShouldBe(-3);
+        }
+
+        [Fact]
+        public void AddProblemComment()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var newEntity = new ProblemCommentDto
+            {
+                ProblemId = -4,
+                UserId = -3,
+                Text = "tekst komentara",
+                TimeSent = DateTime.UtcNow
+            };
+            //Act
+            var result = ((ObjectResult)controller.PostComment(newEntity).Result)?.Value as ProblemDTO;
+            result.ShouldNotBeNull();
+            result.Id.ShouldBe(newEntity.ProblemId);
         }
 
 

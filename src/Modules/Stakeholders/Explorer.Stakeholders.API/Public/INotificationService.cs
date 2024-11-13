@@ -15,7 +15,7 @@ namespace Explorer.Stakeholders.API.Public
         Result<NotificationDto> Update(NotificationDto dto);
         Result<PagedResult<NotificationDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
-        Result<PagedResult<NotificationDto>> GetUnreadByUser(long userId,int page,int pageSize);
-        Result<PagedResult<NotificationDto>> GetAllByUser(long userId,int page,int pageSize);
+        Result<PagedResult<NotificationDto>> GetUnreadByUser(long userId, int page, int pageSize);
+        Result<PagedResult<NotificationDto>> GetAllByUser(long userId, int page, int pageSize);
     }
 }

@@ -7,7 +7,7 @@ using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Stakeholders.Core.Domain
 {
-    public class Notification:Entity
+    public class Notification : Entity
     {
 
         public string Description { get; private set; }
@@ -42,7 +42,7 @@ namespace Explorer.Stakeholders.Core.Domain
 
             if (CreationTime > DateTime.UtcNow) throw new ArgumentException("Invalid CreationTime");
         }
-        
+
 
         public void MarkAsRead()
         {

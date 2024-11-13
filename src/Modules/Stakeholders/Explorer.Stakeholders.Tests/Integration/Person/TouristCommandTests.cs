@@ -72,7 +72,8 @@ namespace Explorer.Stakeholders.Tests.Integration.Tourist
         }
         private static TouristController CreateController(IServiceScope scope)
         {
-            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<ITourService>())
+            return new TouristController(scope.ServiceProvider.GetRequiredService<IPersonService>(),
+                scope.ServiceProvider.GetRequiredService<ITourService>())
             {
                 ControllerContext = BuildContext("-1")
             };
