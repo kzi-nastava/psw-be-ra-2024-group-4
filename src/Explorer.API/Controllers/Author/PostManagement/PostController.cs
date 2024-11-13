@@ -3,9 +3,11 @@ using Explorer.Blog.API.Public;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Security.Cryptography;
 
 namespace Explorer.API.Controllers.Author.PostManagement
 {
@@ -16,11 +18,13 @@ namespace Explorer.API.Controllers.Author.PostManagement
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public PostController(IPostService postService,ICommentService commentService,IWebHostEnvironment webHostEnvironment)
+        private readonly IImageService _imageService;
+        public PostController(IPostService postService,ICommentService commentService,IWebHostEnvironment webHostEnvironment, IImageService imageService)
         {
             _postService = postService;
             _commentService = commentService;
             _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
         [HttpGet("comments")]
         public ActionResult<PagedResult<CommentDto>> GetAll([FromQuery] int id, [FromQuery] int page, [FromQuery] int pageSize)
@@ -40,17 +44,10 @@ namespace Explorer.API.Controllers.Author.PostManagement
             if (!string.IsNullOrEmpty(postDto.ImageBase64))
             {
                 var imageData = Convert.FromBase64String(postDto.ImageBase64.Split(',')[1]);
-                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "blogs");
 
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
 
-                var filePath = Path.Combine(folderPath, fileName);
-                System.IO.File.WriteAllBytes(filePath, imageData);
-                postDto.ImageUrl = $"images/blogs/{fileName}";
+                postDto.ImageUrl = _imageService.SaveImage(folderPath, imageData, "blogs");
             }
             var result=_postService.Create(postDto);
             return CreateResponse(result);  
@@ -60,31 +57,20 @@ namespace Explorer.API.Controllers.Author.PostManagement
         {
             if (!string.IsNullOrEmpty(postDto.ImageBase64))
             {
-                // Konvertovanje slike iz base64 formata
-                var imageData = Convert.FromBase64String(postDto.ImageBase64.Split(',')[1]);
-                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
-                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "blogs");
-
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                var filePath = Path.Combine(folderPath, fileName);
-
                 // Brisanje stare slike ako postoji
                 if (!string.IsNullOrEmpty(postDto.ImageUrl))
                 {
                     var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, postDto.ImageUrl);
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
+                    _imageService.DeleteOldImage(oldImagePath);
                 }
 
-                // Čuvanje nove slike
-                System.IO.File.WriteAllBytes(filePath, imageData);
-                postDto.ImageUrl = $"images/blogs/{fileName}";
+
+                // Konvertovanje slike iz base64 formata
+                var imageData = Convert.FromBase64String(postDto.ImageBase64.Split(',')[1]);
+
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "blogs");
+
+                postDto.ImageUrl = _imageService.SaveImage(folderPath, imageData, "blogs");
             }
                 var result = _postService.Update(postDto);
                  return CreateResponse(result);

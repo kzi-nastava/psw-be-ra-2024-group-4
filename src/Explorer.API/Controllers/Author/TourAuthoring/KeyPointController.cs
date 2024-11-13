@@ -1,5 +1,6 @@
 ﻿using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
@@ -52,6 +53,25 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         [HttpPut("{id:int}")]
         public ActionResult<KeyPointDto> Update([FromBody] KeyPointDto keyPoint)
         {
+            if (!string.IsNullOrEmpty(keyPoint.ImageBase64))
+            {
+
+                // Brisanje stare slike ako postoji
+                if (!string.IsNullOrEmpty(keyPoint.Image))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, keyPoint.Image);
+                    _imageService.DeleteOldImage(oldImagePath);
+                }
+
+
+                // Konvertovanje slike iz base64 formata
+                var imageData = Convert.FromBase64String(keyPoint.ImageBase64.Split(',')[1]);
+
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "keypoints");
+
+                keyPoint.Image = _imageService.SaveImage(folderPath, imageData, "keypoints");
+            }
+
             var result = _keyPointService.Update(keyPoint);
             return CreateResponse(result);
         }
