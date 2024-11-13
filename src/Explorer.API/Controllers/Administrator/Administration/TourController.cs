@@ -31,6 +31,12 @@ namespace Explorer.API.Controllers.Administrator.Administration
                 return BadRequest(result.Errors);
             }
         }
+        [HttpGet("getById/{id:long}")]
+        public ActionResult<TourDto> GetById(long id)
+        {
+            var result = _tourService.GetById(id);
+            return CreateResponse(result);
+        }
         [HttpGet("getByTourId/{id:long}")]
         public ActionResult<TourDto> GetTourById(long id)
         {
