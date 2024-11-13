@@ -1,4 +1,5 @@
 ﻿using Explorer.API.Controllers.Administrator.Administration;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
@@ -20,12 +21,13 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
     {
         private readonly IKeyPointService _keyPointService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-
-        public KeyPointController(IKeyPointService keyPointService, IWebHostEnvironment webHostEnvironment)
+        public KeyPointController(IKeyPointService keyPointService, IWebHostEnvironment webHostEnvironment, IImageService imageService)
         {
             _keyPointService = keyPointService;
             _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
 
         }
 
@@ -35,17 +37,10 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             if (!string.IsNullOrEmpty(keyPoint.ImageBase64))
             {
                 var imageData = Convert.FromBase64String(keyPoint.ImageBase64.Split(',')[1]);
-                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "keypoints");
 
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                var filePath = Path.Combine(folderPath, fileName);
-                System.IO.File.WriteAllBytes(filePath, imageData);
-                keyPoint.Image = $"images/keypoints/{fileName}";
+               
+                keyPoint.Image = _imageService.SaveImage(folderPath, imageData);
             }
 
             var result = _keyPointService.Create(keyPoint);
