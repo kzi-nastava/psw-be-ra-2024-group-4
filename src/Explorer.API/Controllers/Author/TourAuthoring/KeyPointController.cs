@@ -40,7 +40,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "keypoints");
 
                
-                keyPoint.Image = _imageService.SaveImage(folderPath, imageData);
+                keyPoint.Image = _imageService.SaveImage(folderPath, imageData, "keypoints");
             }
 
             var result = _keyPointService.Create(keyPoint);

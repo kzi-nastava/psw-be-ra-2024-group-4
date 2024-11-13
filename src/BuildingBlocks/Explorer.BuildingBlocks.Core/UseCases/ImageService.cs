@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Explorer.BuildingBlocks.Core.UseCases;
 
-public abstract class ImageService: IImageService
+public class ImageService: IImageService
 {
     public ImageService() { }
 
-    public string SaveImage(string folderPath, byte[] imageData)
+    public string SaveImage(string folderPath, byte[] imageData, string folderName)
     {
         var fileName = Guid.NewGuid() + ".png";
 
@@ -23,9 +23,19 @@ public abstract class ImageService: IImageService
         var filePath = Path.Combine(folderPath, fileName);
 
         System.IO.File.WriteAllBytes(filePath, imageData);
-        return $"images/keypoints/{fileName}";
+        return $"images/{folderName}/{fileName}";
 
 
+
+    }
+
+    public void DeleteOldImage(string oldImagePath)
+    {
+        if (System.IO.File.Exists(oldImagePath))
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
 
     }
 }
