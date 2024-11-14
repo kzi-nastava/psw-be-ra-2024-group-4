@@ -1,4 +1,5 @@
 ﻿
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos; 
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
@@ -89,7 +90,7 @@ public class PersonTests : BaseStakeholdersIntegrationTest
 
     private static Explorer.API.Controllers.Tourist.PersonController CreateController(IServiceScope scope)
     {
-        return new Explorer.API.Controllers.Tourist.PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+        return new Explorer.API.Controllers.Tourist.PersonController(scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
         {
             ControllerContext = BuildContext("-1")
         };

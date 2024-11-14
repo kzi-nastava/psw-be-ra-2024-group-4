@@ -37,6 +37,7 @@ public static class StakeholdersStartup
        services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IImageService, ImageService>();
     }
 
 

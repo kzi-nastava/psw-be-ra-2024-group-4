@@ -1,5 +1,6 @@
 ﻿using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.API.Controllers.Tourist;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
@@ -136,7 +137,7 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
 
     private static ClubController CreateController(IServiceScope scope)
     {
-        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+        return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
         {
             ControllerContext = BuildContext("-1")
         };

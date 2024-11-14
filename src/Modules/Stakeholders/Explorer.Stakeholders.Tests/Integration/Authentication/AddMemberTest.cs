@@ -1,4 +1,5 @@
 ﻿using Explorer.API.Controllers.Tourist;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Infrastructure.Database;
@@ -47,7 +48,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
 
         private static ClubController CreateController(IServiceScope scope)
         {
-            return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+            return new ClubController(scope.ServiceProvider.GetRequiredService<IClubService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
             {
                 ControllerContext = BuildContext("-1")
             };
