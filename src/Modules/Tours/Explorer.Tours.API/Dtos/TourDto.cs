@@ -29,7 +29,7 @@ namespace Explorer.Tours.API.Dtos
 
         public List<long> EquipmentIds { get; set; }
         public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
-        public List<TourDurationDTO> Durations { get; set; }
+        public List<TourDurationDTO> Durations { get; set; } = new List<TourDurationDTO>();
         public TourDto() { }
 
 

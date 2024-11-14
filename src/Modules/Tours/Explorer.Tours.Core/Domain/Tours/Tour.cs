@@ -27,7 +27,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? ArchiveTime { get; private set; }
 
         public List<long> EquipmentIds { get; private set; }
-        public List<TourDuration> Durations { get; private set; }
+        public List<TourDuration> Durations { get; private set; } = new List<TourDuration>();
         public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
         public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
         {
@@ -111,8 +111,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public void AddDuration(string transportation, double timeDuration)
         {
-            TransportationType transportation1 = (TransportationType)ToTransportationType(transportation);
-            TourDuration duration = new TourDuration(transportation1, timeDuration);
+            TourDuration duration = new TourDuration(transportation, timeDuration);
             Durations.Add(duration);
         }
 
@@ -122,15 +121,6 @@ namespace Explorer.Tours.Core.Domain.Tours
             Durations = new List<TourDuration>();
         }
 
-        public static TransportationType? ToTransportationType(string value)
-        {
-            if (Enum.TryParse(typeof(TransportationType), value, true, out var result))
-            {
-                return (TransportationType)result;
-            }
-
-            return null; 
-        }
     }
 
     public enum TourStatus
