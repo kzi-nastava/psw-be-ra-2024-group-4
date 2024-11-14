@@ -47,6 +47,13 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+        [HttpPost("admin/postComment")]
+        public ActionResult<ProblemDTO> PostComment([FromBody] ProblemCommentDto commentDto)
+        {
+            var result = _problemService.PostComment(commentDto);
+            return CreateResponse(result);
+        }
+
 
     }
 }

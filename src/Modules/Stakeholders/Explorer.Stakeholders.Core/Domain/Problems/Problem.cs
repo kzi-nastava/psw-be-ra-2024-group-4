@@ -22,7 +22,8 @@ namespace Explorer.Stakeholders.Core.Domain.Problems
         public int Priority { get; set; }
         public DateTime Time { get; set; }
         public bool IsActive { get; set; }
-        public List<ProblemComment>? Comments { get; set; }
+        public List<ProblemComment>? Comments { get;  set; }
+
         public long Deadline { get; set; }
 
         public Problem(long userId, long tourId, string category, string description, int priority, DateTime time, bool isActive, long deadline)
