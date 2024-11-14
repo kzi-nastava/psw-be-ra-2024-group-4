@@ -62,6 +62,8 @@ public static class ToursStartup
         services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
         services.AddScoped<ITourOverviewService, TourOverviewService>();
 
+        services.AddScoped<IImageService, ImageService>();
+
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
