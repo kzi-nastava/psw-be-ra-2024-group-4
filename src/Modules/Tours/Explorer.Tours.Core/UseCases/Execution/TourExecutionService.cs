@@ -3,34 +3,37 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Dtos.TourExecutionDtos;
 using Explorer.Tours.API.Public.Execution;
-using Explorer.Tours.API.Public.TourAuthoring;
-using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution;
 using Explorer.Tours.Core.Domain.TourExecutions;
-using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.UseCases.Execution
 {
     public class TourExecutionService : BaseService<TourExecutionDto, TourExecution>, ITourExecutionService
     {
         private readonly ITourExecutionRepository tourExecutionRepository;
+        private readonly ITourPurchaseTokenRepository tourPurchaseTokenRepository;
         IMapper _mapper { get; set; }
 
-        public TourExecutionService(ITourExecutionRepository tourExecutionRepository, IMapper mapper) : base(mapper)
+        public TourExecutionService(ITourExecutionRepository tourExecutionRepository, IMapper mapper,
+            ITourPurchaseTokenRepository tourPurchaseTokenRepository) : base(mapper)
         {
             this.tourExecutionRepository = tourExecutionRepository;
+            this.tourPurchaseTokenRepository = tourPurchaseTokenRepository;
             _mapper = mapper;
         }
 
         public Result<TourExecutionDto> Create(TourExecutionDto execution)
         {
             var ex = tourExecutionRepository.Create(MapToDomain(execution));
+            var boughtTour = tourPurchaseTokenRepository.GetByUser(execution.TouristId)
+                .Value.Find(t => t.Id == execution.TourId);
+            if (boughtTour == null)
+            {
+                return Result.Fail("Tour first has to be bought");
+            }
+
             if (ex != null)
             {
                 ex.StartTourExecution();
@@ -56,14 +59,12 @@ namespace Explorer.Tours.Core.UseCases.Execution
                 return Result.Ok(MapToDto(result));
             }
             return null;
-
-
-
         }
 
         public Result<TourExecutionDto> AbandonTourExecution(long id)
         {
             var ex = tourExecutionRepository.Get(id);
+
             if (ex != null)
             {
                 ex.AbandonTourExecution();
