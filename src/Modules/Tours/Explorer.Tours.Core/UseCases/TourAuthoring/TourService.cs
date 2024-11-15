@@ -58,9 +58,16 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                         Longitude = kp.Longitude,
                         Latitude = kp.Latitude,
                         Image = kp.Image,
-                        TourId = kp.TourId
+                        TourId = kp.TourId              
 
-
+                    }
+                    
+                    ).ToList(),
+                    Durations = t.Durations.Select(d => new TourDurationDTO
+                    {
+                        Transportation = d.Transportation,
+                        Duration = d.Duration
+                        
                     }).ToList()
                 }).ToList();
 
@@ -144,6 +151,24 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result Publish(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Publish();
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
         public Result UpdateDistance(long id, double distance)
         {
             try
@@ -163,6 +188,24 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result AddDuration(string transportation, double duration, long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.AddDuration(transportation, duration);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
         public Result<TourDto> GetWithKeyPoints(int tourId)
         {
             try
@@ -222,5 +265,23 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
         }
 
 
+        public Result DeteteAllDurations(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.DeleteAllDurations();
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+        }
     }
 }

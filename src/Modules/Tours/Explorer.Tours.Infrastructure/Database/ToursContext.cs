@@ -3,6 +3,8 @@ using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Text.Json;
 
 namespace Explorer.Tours.Infrastructure.Database;
 
@@ -29,14 +31,28 @@ public class ToursContext : DbContext
     {
         modelBuilder.HasDefaultSchema("tours");
 
-
-        modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeys).HasColumnType("jsonb"); //value object cuva kao json
+        // Configure TourExecution as JSON
+        modelBuilder.Entity<TourExecution>().Property(item => item.CompletedKeys).HasColumnType("jsonb");
         ConfigureTourExecution(modelBuilder);
 
+        // Add a ValueComparer for the Durations property to fix the warning
+        modelBuilder.Entity<Tour>()
+            .Property(t => t.Durations)
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+                v => JsonSerializer.Deserialize<List<TourDuration>>(v, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+            )
+            .HasColumnType("jsonb")
+            .Metadata.SetValueComparer(
+                new ValueComparer<List<TourDuration>>(
+                    (c1, c2) => c1.SequenceEqual(c2),   // Comparison logic
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Hash code computation
+                    c => c.ToList()) // Clone logic for tracking changes
+            );
 
         modelBuilder.Entity<PositionSimulator>()
-          .HasIndex(ps => ps.TouristId)
-          .IsUnique();
+            .HasIndex(ps => ps.TouristId)
+            .IsUnique();
 
         modelBuilder.Entity<Tour>()
           .HasMany(t => t.KeyPoints)
@@ -45,6 +61,10 @@ public class ToursContext : DbContext
 
         ConfigureTour(modelBuilder);
     }
+
+
+
+
     private static void ConfigureTourExecution(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TourExecution>()

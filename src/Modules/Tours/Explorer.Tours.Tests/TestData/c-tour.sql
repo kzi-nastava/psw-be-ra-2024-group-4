@@ -1,5 +1,5 @@
 INSERT INTO tours."Tour" (
-    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds"
+    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds", "Durations"
 )
 VALUES (
     -1,
@@ -13,11 +13,12 @@ VALUES (
     5.0,  
     '2024-10-14 23:53:24.948+02', 
     '2024-10-14 23:53:24.948+02',  
-    ARRAY[]::integer[] 
+    ARRAY[]::integer[], 
+    '[{{"Transportation": "Bus", "Duration": 120}}, {{"Transportation": "Walking", "Duration": 60}}]'
 );
 
 INSERT INTO tours."Tour" (
-    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds"
+    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds", "Durations"
 )
 VALUES (
     -2,
@@ -31,11 +32,12 @@ VALUES (
     10.0,  
     '2024-10-14 23:53:24.948+02',  
     '2024-10-14 23:53:24.948+02',  
-    ARRAY[-3, -1]::integer[]  
+    ARRAY[-3, -1]::integer[],  
+    '[{{"Transportation": "Cable Car", "Duration": 45}}, {{"Transportation": "Hiking", "Duration": 180}}]'
 );
 
 INSERT INTO tours."Tour" (
-    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds"
+    "Id", "Name", "Description", "Difficulty", "Tags", "Status", "Price", "UserId", "LengthInKm", "PublishedTime", "ArchiveTime", "EquipmentIds", "Durations"
 )
 VALUES (
     -4,  
@@ -66,6 +68,6 @@ VALUES (
     15.0,  
     '2024-10-14 23:53:24.948+02',  
     '2024-10-14 23:53:24.948+02',  
-    ARRAY[-3, -1]::integer[]
+    ARRAY[-3, -1]::integer[],  
+    '[{{"Transportation": "Climbing", "Duration": 240}}, {{"Transportation": "Hiking", "Duration": 300}}]'
 );
-

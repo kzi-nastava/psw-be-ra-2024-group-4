@@ -22,9 +22,11 @@ namespace Explorer.Tours.API.Dtos
         public DateTime ArchiveTime { get; set; }
         public List<long> EquipmentIds { get; set; }
         public ICollection<KeyPointDto> KeyPoints { get; set; } = new List<KeyPointDto>();
-
+        public List<TourDurationDTO> Durations { get; set; } = new List<TourDurationDTO>();
         public TourDto() { }
-        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, DateTime publishedTime, DateTime archivedTime ,List<long> equipmentIds, List<long> keyPointIds)
+
+
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double lengthInKm, DateTime publishedTime, DateTime archivedTime ,List<long> equipmentIds, List<long> keyPointIds, List<TourDurationDTO> tourDurations)
 
         {
             Id = id;
@@ -45,8 +47,7 @@ namespace Explorer.Tours.API.Dtos
             EquipmentIds = equipmentIds;
             PublishedTime = publishedTime;
             ArchiveTime = archivedTime;
-
-
+            Durations = tourDurations;
         }
     }
 

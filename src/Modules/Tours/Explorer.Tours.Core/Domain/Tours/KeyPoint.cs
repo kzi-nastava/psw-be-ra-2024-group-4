@@ -15,7 +15,9 @@ public class KeyPoint : Entity
 
 
     public long TourId { get; private set; }
-    public KeyPoint(string name, double longitude, double latitude, string description, string image, long userId, long tourId, PublicStatus publicStatus)
+
+    public KeyPoint() { }
+    public KeyPoint(string name, double longitude, double latitude, string description, string image, long userId, long tourId)
     {
         Validate(name, longitude, latitude, description, image, userId,publicStatus);
         Name = name;
