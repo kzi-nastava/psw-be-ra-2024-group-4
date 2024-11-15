@@ -26,6 +26,13 @@ namespace Explorer.API.Controllers.Tourist.TourReviewing
             return CreateResponse(result);
         }
 
+        [HttpGet("by_tourist_and_tour/{userId:long}/{tourId:long}")]
+        public ActionResult<PagedResult<TourReviewDto>> GetByTouristAndTour(long userId, long tourId)
+        {
+            var result = _tourReviewService.Get(userId, tourId);
+            return CreateResponse(result);
+        }
+
         [HttpPost]
         public ActionResult<TourReviewDto> Create([FromBody] TourReviewDto tourReview)
         {
