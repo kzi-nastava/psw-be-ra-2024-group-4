@@ -85,7 +85,7 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             var result = _tourReviewRepository.GetByTourId(tourId, 0, 0);
             var ret = result.ToResult();
 
-            if(ret.Errors != null)
+            if(ret.Errors == null)
             {
                 return Result.Fail(ret.Errors);
             }
