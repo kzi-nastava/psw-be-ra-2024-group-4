@@ -1,10 +1,5 @@
-﻿using Explorer.Tours.Core.Domain;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -31,6 +26,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return _dbContext.KeyPoints.Max(kp => (int?)kp.Id) ?? 0;
         }
 
-
+        public List<KeyPoint> GetAll()
+        {
+            return _dbContext.KeyPoints.ToList();
+        }
     }
 }

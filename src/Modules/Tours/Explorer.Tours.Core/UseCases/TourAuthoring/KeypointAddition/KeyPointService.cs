@@ -2,9 +2,11 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
-using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using Geolocation;
+using System.Drawing;
 
 namespace Explorer.Tours.Core.UseCases.TourAuthoring.KeypointAddition;
 
@@ -33,7 +35,9 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
                 Latitude = kp.Latitude,
                 Description = kp.Description,
                 Image = kp.Image,
-                UserId = kp.UserId
+                UserId = kp.UserId,
+                PublicStatus = (API.Dtos.PublicStatus)kp.PublicStatus,
+                TourId = kp.TourId,
 
 
 
@@ -49,4 +53,26 @@ public class KeyPointService : CrudService<KeyPointDto, KeyPoint>, IKeyPointServ
         return _keyPointRepository.GetMaxId(userId);
     }
 
+    public Result<List<KeyPointDto>> GetRequestedPublic()
+    {
+        var keyPoints = _keyPointRepository.GetAll().FindAll(kp => kp.PublicStatus == Domain.Tours.PublicStatus.REQUESTED_PUBLIC);
+
+        var keyPointDtos = keyPoints.Select(kp => new KeyPointDto
+        {
+            Id = kp.Id,
+            Name = kp.Name,
+            Longitude = kp.Longitude,
+            Latitude = kp.Latitude,
+            Description = kp.Description,
+            Image = kp.Image,
+            UserId = kp.UserId,
+            TourId = kp.TourId,
+            PublicStatus = (API.Dtos.PublicStatus)kp.PublicStatus
+
+
+
+        }).ToList();
+
+        return Result.Ok(keyPointDtos);
+    }
 }

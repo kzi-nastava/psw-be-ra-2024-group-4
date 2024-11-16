@@ -1,5 +1,4 @@
-﻿using Explorer.API.Controllers;
-using Explorer.API.Controllers.Tourist;
+﻿using Explorer.API.Controllers.Tourist;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
@@ -33,13 +32,15 @@ namespace Explorer.Stakeholders.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new ProblemDTO
             {
-                Id=-5,
-                UserId=-1,
-                TourId=3,
-                Category="ucitavanje",
-                Description="Slika nije ucitana",
-                Priority=5,
-                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime()
+                Id = -5,
+                UserId = -1,
+                TourId = 3,
+                Category = "ucitavanje",
+                Description = "Slika nije ucitana",
+                Priority = 5,
+                Time = DateTime.Parse("2024-10-16T14:00:00Z").ToUniversalTime(),
+                IsActive = true,
+                Deadline = 2
             };
 
             // Act
@@ -86,7 +87,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             long userId = 2;
 
             // Act
-            var result = ((ObjectResult)controller.GetByUserId(userId).Result)?.Value as List<ProblemDTO>;
+            var result = ((ObjectResult)controller.GetByTouristId(userId).Result)?.Value as List<ProblemDTO>;
 
             // Assert - Database
             result.ShouldNotBeNull();
@@ -113,10 +114,30 @@ namespace Explorer.Stakeholders.Tests.Integration
             result[1].Id.ShouldBe(-3);
         }
 
-
-        private static ProblemController CreateController(IServiceScope scope)
+        [Fact]
+        public void AddProblemComment()
         {
-            return new ProblemController(scope.ServiceProvider.GetRequiredService<IProblemService>());
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
+            var newEntity = new ProblemCommentDto
+            {
+                ProblemId = -4,
+                UserId = -3,
+                Text = "tekst komentara",
+                TimeSent = DateTime.UtcNow
+            };
+            //Act
+            var result = ((ObjectResult)controller.PostComment(newEntity).Result)?.Value as ProblemDTO;
+            result.ShouldNotBeNull();
+            result.Id.ShouldBe(newEntity.ProblemId);
+        }
+
+
+        private static ProblemControllerTourist CreateController(IServiceScope scope)
+        {
+            return new ProblemControllerTourist(scope.ServiceProvider.GetRequiredService<IProblemService>());
         }
 
 

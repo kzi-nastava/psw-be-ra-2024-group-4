@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Explorer.BuildingBlocks.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Core.Domain
 {
@@ -20,10 +15,11 @@ namespace Explorer.Tours.Core.Domain
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }
         public long UserId { get; private set; }
+        public PublicStatus PublicStatus {  get; private set; }
 
-        public Object(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
+        public Object(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, PublicStatus publicStatus)
         {
-            Validate(id, name, description, image, category, longitude, latitude, userId);
+            Validate(id, name, description, image, category, longitude, latitude, userId, publicStatus);
             Id = id;
             Name = name;
             Description = description;
@@ -32,9 +28,10 @@ namespace Explorer.Tours.Core.Domain
             Longitude = longitude;
             Latitude = latitude;
             UserId = userId;
+            PublicStatus = publicStatus;
         }
 
-        public void Validate(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId)
+        public void Validate(long id, string name, string description, string image, ObjectCategory category, double longitude, double latitude, long userId, PublicStatus publicStatus)
         {
           
 
@@ -56,9 +53,10 @@ namespace Explorer.Tours.Core.Domain
             if (!Enum.IsDefined(typeof(ObjectCategory), category))
                 throw new ArgumentException("Invalid Category.");
 
-            if (userId <= 0)
-                throw new ArgumentException("Invalid user.");
+            if (publicStatus < 0) 
+                throw new ArgumentException("Invalid status");
         }
 
     }
+
 }

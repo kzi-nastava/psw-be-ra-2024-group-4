@@ -1,9 +1,13 @@
 ﻿using Explorer.API.Controllers.Administrator.Administration;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +22,13 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
     {
         private readonly IKeyPointService _keyPointService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-
-        public KeyPointController(IKeyPointService keyPointService, IWebHostEnvironment webHostEnvironment)
+        public KeyPointController(IKeyPointService keyPointService, IWebHostEnvironment webHostEnvironment, IImageService imageService)
         {
             _keyPointService = keyPointService;
             _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
 
         }
 
@@ -33,17 +38,10 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             if (!string.IsNullOrEmpty(keyPoint.ImageBase64))
             {
                 var imageData = Convert.FromBase64String(keyPoint.ImageBase64.Split(',')[1]);
-                var fileName = Guid.NewGuid() + ".png"; // ili format prema potrebi
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "keypoints");
 
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                var filePath = Path.Combine(folderPath, fileName);
-                System.IO.File.WriteAllBytes(filePath, imageData);
-                keyPoint.Image = $"images/keypoints/{fileName}";
+               
+                keyPoint.Image = _imageService.SaveImage(folderPath, imageData, "keypoints");
             }
 
             var result = _keyPointService.Create(keyPoint);
@@ -55,6 +53,25 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         [HttpPut("{id:int}")]
         public ActionResult<KeyPointDto> Update([FromBody] KeyPointDto keyPoint)
         {
+            if (!string.IsNullOrEmpty(keyPoint.ImageBase64))
+            {
+
+                // Brisanje stare slike ako postoji
+                if (!string.IsNullOrEmpty(keyPoint.Image))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, keyPoint.Image);
+                    _imageService.DeleteOldImage(oldImagePath);
+                }
+
+
+                // Konvertovanje slike iz base64 formata
+                var imageData = Convert.FromBase64String(keyPoint.ImageBase64.Split(',')[1]);
+
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "keypoints");
+
+                keyPoint.Image = _imageService.SaveImage(folderPath, imageData, "keypoints");
+            }
+
             var result = _keyPointService.Update(keyPoint);
             return CreateResponse(result);
         }
@@ -88,7 +105,11 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var nextId = _keyPointService.GetMaxId(userid) + 1;
             return Ok(nextId);
         }
-
-
+        /*     [HttpGet]
+             public ActionResult<KeyPointDto> GetAll()
+             {
+                 var result = _keyPointService.GetByCoordinated(12, 12, 1);
+                 return CreateResponse(result);
+             }*/
     }
 }

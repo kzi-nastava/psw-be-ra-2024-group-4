@@ -1,5 +1,6 @@
 using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.API.Controllers.Author.TourAuthoring;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
@@ -35,7 +36,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Latitude = 2,
             Description = "Test",
             Image = "Test",
-            UserId = 2
+            UserId = 2,
+            TourId = -1,
         };
 
         // Act
@@ -73,7 +75,8 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
             Latitude = 2,
             Description = "Test",
             Image = "Test",
-            UserId = 2
+            UserId = 2, 
+            TourId = -1
         };
 
         // Act
@@ -121,7 +124,7 @@ public class KeyPointCommandTests : BaseToursIntegrationTest
 
     private static KeyPointController CreateController(IServiceScope scope)
     {
-        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
         {
             ControllerContext = BuildContext("-1")
         };
