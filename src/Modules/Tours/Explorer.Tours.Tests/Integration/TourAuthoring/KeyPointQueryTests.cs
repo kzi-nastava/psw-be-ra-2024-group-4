@@ -40,7 +40,7 @@ public class KeyPointQueryTests : BaseToursIntegrationTest
 
     private static KeyPointController CreateController(IServiceScope scope)
     {
-        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+        return new KeyPointController(scope.ServiceProvider.GetRequiredService<IKeyPointService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
         {
             ControllerContext = BuildContext("-1")
         };

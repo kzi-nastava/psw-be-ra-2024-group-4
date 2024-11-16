@@ -31,7 +31,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public  ICollection<KeyPoint> KeyPoints { get; private set; } = new List<KeyPoint>();
         
 
-        public Tour(string name, string? description, string? difficulty, List<TourTags> tags, long userId)
+        public Tour(string name, string? description, string? difficulty, double price,  List<TourTags> tags, long userId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
@@ -44,7 +44,7 @@ namespace Explorer.Tours.Core.Domain.Tours
                 throw new ArgumentException("Invalid UserId. UserId must be a positive number.");
             UserId = userId;
             Status = TourStatus.Draft;
-            Price = 0;
+            Price = price;
             LengthInKm = 0;
             PublishedTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
             ArchiveTime = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc);
