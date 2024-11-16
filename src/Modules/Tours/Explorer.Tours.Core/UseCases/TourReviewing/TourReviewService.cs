@@ -31,6 +31,7 @@ namespace Explorer.Tours.Core.UseCases.TourReviewing
                 DateTour = tourReview.DateTour,
                 DateComment = tourReview.DateComment,
                 Images = tourReview.Images,
+                PercentageCompleted = tourReview.PercentageCompleted,
 
 
             };
