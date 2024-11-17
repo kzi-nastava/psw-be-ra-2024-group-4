@@ -1,9 +1,9 @@
 ﻿using Explorer.API.Controllers.Author.TourAuthoring;
 using Explorer.API.Controllers.Tourist.TourShopping;
-using Explorer.Tours.API.Dtos;
+using Explorer.Payments.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
-using Explorer.Tours.API.Public.TourShopping;
-using Explorer.Tours.Infrastructure.Database;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,14 +13,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.Payments.Tests;
 
-
-namespace Explorer.Tours.Tests.Integration.Shopping;
+namespace Explorer.Payments.Tests.Integration.Shopping;
 [Collection("Sequential")]
 
-public class ShoppingCartCommandTests : BaseToursIntegrationTest
+public class ShoppingCartCommandTests : BasePaymentsIntegrationTest
 {
-    public ShoppingCartCommandTests(ToursTestFactory factory) : base(factory) { }
+    public ShoppingCartCommandTests(PaymentsTestFactory factory) : base(factory) { }
 
     [Fact]
     public void Creates()
@@ -28,7 +28,7 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         // Arrange
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
-        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
         var newEntity = new ShoppingCartDto
         {
             UserId = -23,
@@ -55,7 +55,7 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         // Arrange
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
-        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
         var updatedEntity = new ShoppingCartDto
         {
             Id = -1,
@@ -87,7 +87,7 @@ public class ShoppingCartCommandTests : BaseToursIntegrationTest
         // Arrange
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
-        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
 
         // Act
         var result = (OkResult)controller.Delete(-3);

@@ -1,41 +1,43 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+﻿using AutoMapper;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Core.Domain;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using FluentResults;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Infrastructure.Database.Repositories;
+namespace Explorer.Payments.Core.UseCases;
 
-public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
+public class TourPurchaseTokenService : CrudService<TourPurchaseTokenDto, TourPurchaseToken>, ITourPurchaseTokenService
 {
-    private readonly ToursContext _dbContext;
-    private readonly DbSet<TourPurchaseTokenDto> _dbSet;
-    public TourPurchaseTokenRepository(ToursContext dbContext)
+    ITourPurchaseTokenRepository _purchaseTokenRepository {  get; set; }
+
+    public TourPurchaseTokenService(ICrudRepository<TourPurchaseToken> repository, IMapper mapper, ITourPurchaseTokenRepository purchaseTokenRepository) : base(repository, mapper)
     {
-        _dbContext = dbContext;
-        _dbSet = _dbContext.Set<TourPurchaseTokenDto>();
+        _purchaseTokenRepository = purchaseTokenRepository;
     }
 
     public Result<List<TourPurchaseTokenDto>> GetAll(long cartId)
     {
         try
         {
-            var purchaseTokens = _dbContext.PurchaseTokens.ToList();
+            var purchaseTokens = _purchaseTokenRepository.GetAll(cartId);
 
-            var purchaseTokenDtos = purchaseTokens.Select(token => new TourPurchaseTokenDto
+            var result = purchaseTokens.Select(token => new TourPurchaseTokenDto
             {
                 Id = token.Id,
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId,
-       
+
             }).ToList();
 
-            var result = purchaseTokenDtos.Where(token => token.CartId == cartId).ToList();
+         
 
             return Result.Ok(result);
         }
@@ -49,18 +51,17 @@ public class TourPurchaseTokenRepository : ITourPurchaseTokenRepository
     {
         try
         {
-            var purchaseTokens = _dbContext.PurchaseTokens.ToList();
+            var purchaseTokens = _purchaseTokenRepository.GetByUser(userid);
 
-            var purchaseTokenDtos = purchaseTokens.Select(token => new TourPurchaseTokenDto
+            var result = purchaseTokens.Select(token => new TourPurchaseTokenDto
             {
                 Id = token.Id,
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId
-       
+
             }).ToList();
 
-            var result = purchaseTokenDtos.Where(token => token.UserId == userid).ToList();
 
             return Result.Ok(result);
         }

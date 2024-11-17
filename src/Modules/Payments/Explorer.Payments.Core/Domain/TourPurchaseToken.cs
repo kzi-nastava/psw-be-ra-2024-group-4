@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Core.Domain
+namespace Explorer.Payments.Core.Domain
 {
     public class TourPurchaseToken : Entity
     {

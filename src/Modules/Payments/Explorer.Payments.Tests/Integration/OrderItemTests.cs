@@ -1,7 +1,8 @@
 ﻿using Explorer.API.Controllers.Tourist.TourShopping;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourShopping;
-using Explorer.Tours.Infrastructure.Database;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Infrastructure.Database;
+using Explorer.Payments.Infrastructure.Database.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,12 +13,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.Shopping
+
+namespace Explorer.Payments.Tests.Integration.Shopping
 {
     [Collection("Sequential")]
-    public class OrderItemTests : BaseToursIntegrationTest
+    public class OrderItemTests : BasePaymentsIntegrationTest
     {
-        public OrderItemTests(ToursTestFactory factory) : base(factory) { }
+        public OrderItemTests(PaymentsTestFactory factory) : base(factory) { }
 
         [Fact]
         public void CreatesOrderItem()
@@ -25,7 +27,7 @@ namespace Explorer.Tours.Tests.Integration.Shopping
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
-            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
             var newItem = new OrderItemDto
             {
                 TourName = "Tour A",
@@ -85,7 +87,7 @@ namespace Explorer.Tours.Tests.Integration.Shopping
             result.StatusCode.ShouldBe(200);
 
             // Assert - Database
-            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
             var storedItem = dbContext.OrderItems.FirstOrDefault(i => i.Id == itemIdToDelete);
             storedItem.ShouldBeNull();
         }

@@ -1,6 +1,6 @@
 ﻿using Explorer.API.Controllers.Tourist.TourShopping;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourShopping;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -10,14 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.Shopping;
+namespace Explorer.Payments.Tests.Integration.Shopping;
 
 
 [Collection("Sequential")]
 
-public class TourPurchaseTokenQueryTests : BaseToursIntegrationTest
+public class TourPurchaseTokenQueryTests : BasePaymentsIntegrationTest
 {
-    public TourPurchaseTokenQueryTests(ToursTestFactory factory) : base(factory) { }
+    public TourPurchaseTokenQueryTests(PaymentsTestFactory factory) : base(factory) { }
 
     [Fact]
     public void Retrieves_all_from_cart()

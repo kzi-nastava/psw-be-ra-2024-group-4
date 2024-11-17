@@ -1,6 +1,7 @@
 ﻿using Explorer.API.Controllers.Tourist.TourShopping;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourShopping;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,12 +12,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Tests.Integration.Shopping;
+namespace Explorer.Payments.Tests.Integration.Shopping;
 
 [Collection("Sequential")]
-public class TourPurchaseTokenCommandTests : BaseToursIntegrationTest
+public class TourPurchaseTokenCommandTests : BasePaymentsIntegrationTest
 {
-    public TourPurchaseTokenCommandTests(ToursTestFactory factory) : base(factory) { }
+    public TourPurchaseTokenCommandTests(PaymentsTestFactory factory) : base(factory) { }
 
     [Fact]
     public void Creates()
@@ -24,7 +25,7 @@ public class TourPurchaseTokenCommandTests : BaseToursIntegrationTest
         // Arrange
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
-        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
         var newEntity = new TourPurchaseTokenDto
         {
             CartId = -1,
@@ -53,7 +54,7 @@ public class TourPurchaseTokenCommandTests : BaseToursIntegrationTest
         // Arrange
         using var scope = Factory.Services.CreateScope();
         var controller = CreateController(scope);
-        var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
 
         // Act
         var result = (OkResult)controller.Delete(-3);
