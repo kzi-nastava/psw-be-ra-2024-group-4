@@ -27,7 +27,7 @@ public class ShoppingCartQueryTests : BasePaymentsIntegrationTest
         var controller = CreateController(scope);
 
         // Act
-        var result = ((ObjectResult)controller.GetAll(-12).Result)?.Value as List<ShoppingCartDto>;
+        var result = ((ObjectResult)controller.GetAll(-13).Result)?.Value as List<ShoppingCartDto>;
 
         //Assert
         result.ShouldNotBeNull();

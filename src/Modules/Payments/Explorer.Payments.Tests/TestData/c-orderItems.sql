@@ -1,4 +1,4 @@
-INSERT INTO tours."OrderItems"(
+INSERT INTO payments."OrderItems"(
     "Id", "TourName", "Price", "TourId", "CartId")
 VALUES 
     (-1, 'Tour A', 150.00, 1, -1),
