@@ -1,6 +1,6 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourShopping;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+﻿using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
