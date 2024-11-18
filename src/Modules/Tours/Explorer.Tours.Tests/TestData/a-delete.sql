@@ -1,6 +1,3 @@
-DELETE FROM tours."PurchaseTokens";
-DELETE FROM tours."OrderItems";
-DELETE FROM tours."ShoppingCarts";
 DELETE FROM tours."TourExecution";
 DELETE FROM tours."TourReview";
 DELETE FROM tours."KeyPoints";
