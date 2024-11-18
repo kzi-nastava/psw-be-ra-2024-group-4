@@ -10,7 +10,8 @@ public class AccountRegistrationDto
     public string Name { get; set; }
     public string Surname { get; set; }
     public string ProfilePicture { get; set; }
-    public string Biography { get; set; }
-    public string Motto { get; set; }
+    public string? Biography { get; set; }
+    public string? Motto { get; set; }
     public decimal Wallet {  get; set; }
+    public string ImageBase64 { get; set; }
 }
