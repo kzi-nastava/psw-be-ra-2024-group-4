@@ -96,4 +96,6 @@ public class DatabaseInitializer
 
         await dbContext.Database.ExecuteSqlRawAsync(sql);
     }
+
+  
 }
