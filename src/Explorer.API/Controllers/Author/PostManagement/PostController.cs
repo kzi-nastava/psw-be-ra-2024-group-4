@@ -89,5 +89,12 @@ namespace Explorer.API.Controllers.Author.PostManagement
             var result = _postService.Get(id);
             return CreateResponse(result);
         }
+
+        [HttpPut("publish/{id:int}")]
+        public ActionResult<PostDto> PublishPost(int id)
+        {
+            var result = _postService.PublishPost(id);
+            return CreateResponse(result);
+        }
     }
 }
