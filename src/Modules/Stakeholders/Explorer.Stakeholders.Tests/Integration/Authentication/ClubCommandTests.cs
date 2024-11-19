@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubTagsEnum = Explorer.Stakeholders.Core.Domain.Club.ClubTags;
+
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 [Collection("Sequential")]
@@ -37,7 +39,9 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
             Description = "A community for thrill-seekers and explorers to share travel stories, plan group adventures, and discover new, off-the-beaten-path destinations around the world.",
             Image = "newImage",
             UserId = 12,
-            UserIds = new List<long>()
+            UserIds = new List<long>(),
+            Tags = new List<ClubDto.ClubTags> { ClubDto.ClubTags.Adventure, ClubDto.ClubTags.Wildlife }
+
         };
         // Act
         var result = ((ObjectResult)controller.Create(newEntity).Result)?.Value as ClubDto;
@@ -46,6 +50,7 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
         result.ShouldNotBeNull();
         result.Id.ShouldNotBe(0);
         result.Name.ShouldBe(newEntity.Name);
+        result.Tags.ShouldBe(newEntity.Tags); 
 
         // Assert - Database
         var storedEntity = dbContext.Clubs.FirstOrDefault(i => i.Name == newEntity.Name);
@@ -65,7 +70,9 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
             Description = "Test",
             Image= "Test",
             UserId=2,
-            UserIds = new List<long>()
+            UserIds = new List<long>(),
+            Tags = new List<ClubDto.ClubTags>() // Prazna lista tagova
+
         };
 
         // Act
@@ -90,7 +97,9 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
             Description = "Join a community of passionate travelers eager to share their experiences, find travel companions, and discover hidden gems across the globe.",
             Image="littleImage",
             UserId=22,
-            UserIds = new List<long>()
+            UserIds = new List<long>(),
+            Tags = new List<ClubDto.ClubTags> { ClubDto.ClubTags.Culture, ClubDto.ClubTags.Photography }
+
 
         };
 
@@ -103,6 +112,8 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
         result.Name.ShouldBe(updatedEntity.Name);
         result.Description.ShouldBe(updatedEntity.Description);
         result.Image.ShouldBe(updatedEntity.Image);
+        result.Tags.ShouldBe(updatedEntity.Tags); // Provera tagova
+
 
         // Assert - Database
         var storedEntity = dbContext.Clubs.FirstOrDefault(i => i.Name == "Wanderlust Explorers");
@@ -124,7 +135,8 @@ public class ClubCommandTests:BaseStakeholdersIntegrationTest
             Description = "TestDescription",
             Image= "TestImage",
             UserId= 22,
-            UserIds = new List<long>()
+            UserIds = new List<long>(),
+            Tags = new List<ClubDto.ClubTags> { ClubDto.ClubTags.Adventure }
         };
 
         // Act
