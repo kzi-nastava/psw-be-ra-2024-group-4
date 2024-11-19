@@ -24,6 +24,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             var dbContext = scope.ServiceProvider.GetRequiredService<StakeholdersContext>();
             var newEntity = new NotificationDto
             {
+                Id = -5,
                 Description = "New notification nesto",
                 CreationTime = DateTime.Now.ToUniversalTime(),
                 IsRead = false,

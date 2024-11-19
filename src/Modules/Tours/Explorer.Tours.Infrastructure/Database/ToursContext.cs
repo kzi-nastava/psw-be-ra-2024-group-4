@@ -14,11 +14,10 @@ public class ToursContext : DbContext
 
     public DbSet<KeyPoint> KeyPoints { get; set; }
     public DbSet<Tour> Tour { get; set; }
-    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
+   
     public DbSet<Explorer.Tours.Core.Domain.Object> Objects { get; set; }
 
-    public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
+  
 
     public DbSet<TourExecution> TourExecution { get; set; }
     public DbSet<PositionSimulator> Positions { get; set; }
@@ -64,15 +63,7 @@ public class ToursContext : DbContext
            .HasMany(t => t.KeyPoints)
            .WithOne()
            .HasForeignKey(kp => kp.TourId);
-        modelBuilder.Entity<ShoppingCart>()
-            .HasMany(sc => sc.Items)
-            .WithOne()
-            .HasForeignKey(sc => sc.CartId);
-
-        modelBuilder.Entity<ShoppingCart>()
-            .HasMany(sc => sc.PurchaseTokens)
-            .WithOne()
-            .HasForeignKey(sc => sc.CartId);
+       
 
       
     }
