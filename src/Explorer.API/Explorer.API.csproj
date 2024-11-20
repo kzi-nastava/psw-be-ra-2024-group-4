@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\clubs\" />
     <Folder Include="wwwroot\images\blogs\" />
-    <Folder Include="NewFolder\" />
     <Folder Include="Controllers\Folder\" />
     <Folder Include="wwwroot\images\person\" />
     <Folder Include="wwwroot\images\NewFolder\" />

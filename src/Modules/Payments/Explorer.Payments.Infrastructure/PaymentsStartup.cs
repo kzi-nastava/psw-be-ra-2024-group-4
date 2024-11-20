@@ -29,6 +29,7 @@ namespace Explorer.Payments.Infrastructure
             services.AddScoped<IShoppingCartService, ShoppingService>();
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+            services.AddScoped<IChatbotService, ChatbotService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)

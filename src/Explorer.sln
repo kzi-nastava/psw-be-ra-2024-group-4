@@ -49,13 +49,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Blog.Tests", "Modu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{8E0F8C1F-A01D-41AB-ACFA-E3689B9B08A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Payments.API", "Modules\Payments\Explorer.Payments.API\Explorer.Payments.API.csproj", "{473B7A22-AD2C-479F-9D51-1859DD1C8984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.API", "Modules\Payments\Explorer.Payments.API\Explorer.Payments.API.csproj", "{473B7A22-AD2C-479F-9D51-1859DD1C8984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Payments.Core", "Modules\Payments\Explorer.Payments.Core\Explorer.Payments.Core.csproj", "{F8B46FCB-9054-4EF6-9F1D-83B9EE3FE191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.Core", "Modules\Payments\Explorer.Payments.Core\Explorer.Payments.Core.csproj", "{F8B46FCB-9054-4EF6-9F1D-83B9EE3FE191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Payments.Infrastructure", "Modules\Payments\Explorer.Payments.Infrastructure\Explorer.Payments.Infrastructure.csproj", "{2BD26F3E-353C-4D39-89FE-AD62E5530776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.Infrastructure", "Modules\Payments\Explorer.Payments.Infrastructure\Explorer.Payments.Infrastructure.csproj", "{2BD26F3E-353C-4D39-89FE-AD62E5530776}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Payments.Tests", "Modules\Payments\Explorer.Payments.Tests\Explorer.Payments.Tests.csproj", "{BB8DD2B2-93D2-46DA-ABD0-144E64A1BD4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.Tests", "Modules\Payments\Explorer.Payments.Tests\Explorer.Payments.Tests.csproj", "{BB8DD2B2-93D2-46DA-ABD0-144E64A1BD4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
