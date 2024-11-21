@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Explorer.Tours.API\Explorer.Tours.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\TourShopping\" />
+  </ItemGroup>
+
 </Project>
