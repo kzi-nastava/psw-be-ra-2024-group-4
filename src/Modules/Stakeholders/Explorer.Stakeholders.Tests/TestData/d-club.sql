@@ -3,6 +3,7 @@ INSERT INTO stakeholders."Clubs"(
 VALUES 
 (-1, 'Mountaineering Society of Vojvodina', 'A group for everyone who wants to try new activities', 'image', -1,ARRAY[21, 23]::integer[],ARRAY[2, 3, 5]::integer[]);
 
+
 INSERT INTO stakeholders."Clubs"(
     "Id", "Name", "Description", "Image", "UserId", "UserIds","Tags")
 VALUES 

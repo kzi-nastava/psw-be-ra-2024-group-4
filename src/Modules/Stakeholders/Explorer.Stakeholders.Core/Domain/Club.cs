@@ -55,5 +55,6 @@ namespace Explorer.Stakeholders.Core.Domain
             Guided,
             SelfGuided
         }
+
     }
 }
