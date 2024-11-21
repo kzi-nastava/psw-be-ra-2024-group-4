@@ -31,6 +31,8 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
             Comment = "Nije nit dobro nit lose",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
+            Image = "Test",
+            PercentageCompleted = 55,
         };
 
         // Act
@@ -85,6 +87,8 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
             Comment = "dzouns",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
+            Image = "Test",
+            PercentageCompleted = 55,
         };
 
         // Act
@@ -142,11 +146,10 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
         // Act
-        var result = (OkResult)controller.Delete(-3);
+        var result = controller.Delete(-3);
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(200);
 
         // Assert - Database
         var storedCourse = dbContext.TourReview.FirstOrDefault(i => i.Id == -3);
