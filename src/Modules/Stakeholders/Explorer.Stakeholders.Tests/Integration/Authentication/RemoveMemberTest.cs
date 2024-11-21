@@ -14,7 +14,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
             public void RemoveMember_RemovesUserId_FromList()
             {
                 // Arrange - Kreiramo klub sa 3 člana
-                var club = new Club("Planinarski klub", "Opis kluba", null, 1);
+                var club = new Club("Planinarski klub", "Opis kluba", null, 1, new List<Club.ClubTags> { Club.ClubTags.Adventure, Club.ClubTags.Wildlife });
                 club.UserIds.AddRange(new List<long> { 101, 102, 103 });  // Dodavanje 3 userId-a
 
                 var initialCount = club.UserIds.Count;  // Pamti se početni broj članova
@@ -28,6 +28,7 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
                 club.UserIds.ShouldNotContain(userIdToRemove);  // Id ne bi trebao da postoji u listi
             }
         
+
 
     }
 }
