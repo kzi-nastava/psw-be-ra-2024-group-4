@@ -88,17 +88,17 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             var tourId = -1;
-            var equipmentId = -3;
+            var equipmentIds = new List<long> { -3, -4 };
 
             // Act
-            var result = (OkResult)controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = (OkResult)controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             // Assert-Database
-            var equipmentIds = dbContext.Tour
+            var equipmentIdss = dbContext.Tour
             .Where(t => t.Id == tourId)
             .ToList() 
             .SelectMany(t => t.EquipmentIds) 
@@ -122,10 +122,10 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             var tourId = -999; 
-            var equipmentId = -3; 
+            var equipmentIds = new List<long> { -3, -4}; 
 
             // Act
-            var result = controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
             var objectResult = result.ShouldBeOfType<ObjectResult>();
@@ -140,11 +140,11 @@ namespace Explorer.Tours.Tests
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
-            var tourId = -1; 
-            var equipmentId = -999; 
+            var tourId = -1;
+            var equipmentIds = new List<long> { -333, -444 };
 
             // Act
-            var result = controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
             var objectResult = result.ShouldBeOfType<ObjectResult>();

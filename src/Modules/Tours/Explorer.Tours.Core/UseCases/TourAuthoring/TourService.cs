@@ -79,11 +79,11 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return new PagedResult<EquipmentDto>(items, result.TotalCount);
         }
 
-        public Result AddEquipmentToTour(long tourId, long equipmentId)
+        public Result AddEquipmentToTour(long tourId, List<long> equipmentIds)
         {
             try
             {
-                _tourRepository.AddEquipmentToTour(tourId, equipmentId);
+                _tourRepository.AddEquipmentToTour(tourId, equipmentIds);
                 return Result.Ok();
             }
             catch (Exception e)
