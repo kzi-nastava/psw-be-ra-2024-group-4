@@ -115,7 +115,33 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
         }
 
+        public Result<List<UserDto>> GetUsersOutClub(int clubId)
+        {
+            try
+            {
+                var club = _clubRepository.GetById(clubId);
+                if (club == null)
+                {
+                    return Result.Fail(FailureCode.NotFound)
+                                 .WithError($"Club with ID {clubId} not found.");
+                }
 
+                var activeUsers = _userRepository.GetActiveUsers();
+
+                var eligibleUsers = activeUsers
+                    .Where(user => !club.UserIds.Contains(user.Id) && user.Id != club.UserId)
+                    .Where(user => IsUserInvitedToClub((int)(user.Id), clubId))
+                    .Select(user => _mapper.Map<UserDto>(user))
+                    .ToList();
+
+                return Result.Ok(eligibleUsers);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail("An error occurred while retrieving eligible users.")
+                             .WithError(e.Message);
+            }
+        }
 
         public Result<List<UserDto>> GetEligibleUsersForClub(int clubId)
         {
