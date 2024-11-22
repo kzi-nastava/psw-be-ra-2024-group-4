@@ -1,6 +1,6 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourShopping;
-using Explorer.Tours.Core.UseCases.TourShopping;
+﻿using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Core.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
