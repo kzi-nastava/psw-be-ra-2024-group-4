@@ -86,7 +86,10 @@ namespace Explorer.Blog.Core.Domain.Posts
             else if (RatingSum > 5 && commentCount > 10 && Status != BlogStatus.Active) { Status = BlogStatus.Active; } //treba 100 i 10
             else if(RatingSum >7 && commentCount>15) { Status = BlogStatus.Famous; } //treba 500 i 30
         }
-
+        public void Publish()
+        {
+            Status = BlogStatus.Published;
+        }
     }
     public enum BlogStatus
     {

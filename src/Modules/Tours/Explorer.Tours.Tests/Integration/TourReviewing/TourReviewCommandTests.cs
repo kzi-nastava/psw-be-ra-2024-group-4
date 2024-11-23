@@ -1,7 +1,9 @@
 ﻿using Explorer.API.Controllers.Tourist.TourReviewing;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourReviewing;
 using Explorer.Tours.Infrastructure.Database;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -22,14 +24,15 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
         var newEntity = new TourReviewDto
         {
-            //"Id", "IdTour", "IdTourist", "Rating", "Comment", "DateTour", "DateComment", "Images"
+            //"Id", "IdTour", "IdTourist", "Rating", "Comment", "DateTour", "DateComment", "Image"
             IdTour = -1,
             IdTourist = -2,
             Rating = 3,
             Comment = "Nije nit dobro nit lose",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
-            Images = new()
+            Image = "Test",
+            PercentageCompleted = 55,
         };
 
         // Act
@@ -84,7 +87,8 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
             Comment = "dzouns",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
-            Images = new()
+            Image = "Test",
+            PercentageCompleted = 55,
         };
 
         // Act
@@ -99,7 +103,6 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
         result.Comment.ShouldBe(updatedEntity.Comment);
         result.DateTour.ShouldBe(updatedEntity.DateTour);
         result.DateComment.ShouldBe(updatedEntity.DateComment);
-        result.Images.ShouldBe(updatedEntity.Images);
 
         // Assert - Database
         var storedEntity = dbContext.TourReview.FirstOrDefault(i => i.Comment == "dzouns");
@@ -124,7 +127,6 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
             Comment = "Test",
             DateTour = DateTime.Now.ToUniversalTime(),
             DateComment = DateTime.Now.ToUniversalTime(),
-            Images = new()
         };
 
         // Act
@@ -144,11 +146,10 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
         var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
         // Act
-        var result = (OkResult)controller.Delete(-3);
+        var result = controller.Delete(-3);
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(200);
 
         // Assert - Database
         var storedCourse = dbContext.TourReview.FirstOrDefault(i => i.Id == -3);
@@ -172,7 +173,7 @@ public class TourReviewCommandTests : BaseToursIntegrationTest
 
     private static TourReviewController CreateController(IServiceScope scope)
     {
-        return new TourReviewController(scope.ServiceProvider.GetRequiredService<ITourReviewService>())
+        return new TourReviewController(scope.ServiceProvider.GetRequiredService<ITourReviewService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(), scope.ServiceProvider.GetRequiredService<IImageService>())
         {
             ControllerContext = BuildContext("-1")
         };

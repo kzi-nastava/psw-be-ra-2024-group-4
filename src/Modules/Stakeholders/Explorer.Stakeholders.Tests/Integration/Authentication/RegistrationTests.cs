@@ -7,6 +7,8 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 
@@ -61,6 +63,10 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
 
     private static AuthenticationController CreateController(IServiceScope scope)
     {
-        return new AuthenticationController(scope.ServiceProvider.GetRequiredService<IAuthenticationService>());
+        var authenticationService = scope.ServiceProvider.GetRequiredService<IAuthenticationService>();
+        var imageService = scope.ServiceProvider.GetRequiredService<IImageService>();
+        var webHostEnvironment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+
+        return new AuthenticationController(authenticationService, imageService, webHostEnvironment);
     }
 }

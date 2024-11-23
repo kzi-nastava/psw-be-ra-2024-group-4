@@ -15,14 +15,16 @@ namespace Explorer.Tours.API.Dtos
         public int Rating { get; set; }
         public DateTime? DateTour { get; set; }
         public DateTime? DateComment { get; set; }
-        public List<string>? Images { get; set; }
+        public string Image { get; set; }
+        public string ImageBase64 { get; set; }
+
+        public double PercentageCompleted {  get; set; }
 
         public TourReviewDto()
         {
-            Images = new List<string>();
         }
 
-        public TourReviewDto(long id, long idTour, long idTourist, int rating, string comment, DateTime dateTour, DateTime dateComment, List<string> images)
+        public TourReviewDto(long id, long idTour, long idTourist, int rating, string comment, DateTime dateTour, DateTime dateComment, string image, double percentageCompleted, string imageBase64)
         {
             Id = id;
             IdTour = idTour;
@@ -31,7 +33,9 @@ namespace Explorer.Tours.API.Dtos
             Comment = comment;
             DateTour = dateTour;
             DateComment = dateComment;
-            Images = images ?? new List<string>();
+            Image = image;
+            ImageBase64 = imageBase64;
+            PercentageCompleted = percentageCompleted;
         }
     }
 }

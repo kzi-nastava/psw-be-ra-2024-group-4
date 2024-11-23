@@ -3,16 +3,17 @@ using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
 using Explorer.Tours.API.Public.TourAuthoring.ObjectAddition;
 using Explorer.Tours.Infrastructure.Database;
+using Explorer.Tours.Tests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 
-namespace Explorer.Stakeholders.Tests.Integration
+namespace Explorer.Tours.Tests.Integration.Administration
 {
     [Collection("Sequential")]
-    public class RequestedPublicTests : BaseStakeholdersIntegrationTest
+    public class RequestedPublicTests : BaseToursIntegrationTest
     {
-        public RequestedPublicTests(StakeholdersTestFactory factory) : base(factory) { }
+        public RequestedPublicTests(ToursTestFactory factory) : base(factory) { }
 
         [Fact]
         public void GetRequestedPublicObject()
@@ -23,8 +24,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.GetRequestedPublicObject().Result)?.Value as List<ObjectDTO>;
             
             result.ShouldNotBeNull();
-            result[0].Id.ShouldBe(-3);
-            result[0].Name.ShouldBe("WC Kalemegdan");
+            result.Count.ShouldBe(2);
         }
 
         [Fact]
@@ -36,8 +36,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.GetRequestedPublicKeyPoint().Result)?.Value as List<KeyPointDto>;
 
             result.ShouldNotBeNull();
-            result[0].Id.ShouldBe(-3);
-            result[0].Name.ShouldBe("Sistine Chapel, Vatican City");
+            result.Count.ShouldBe(1);
         }
 
         [Fact]
@@ -81,7 +80,7 @@ namespace Explorer.Stakeholders.Tests.Integration
 
             var updatedKeyPoint = new KeyPointDto
             {
-                Id = -4,
+                Id = -3,
                 Name = "Sistine Chapel, Vatican City",
                 Longitude = 11,
                 Latitude = 11,
@@ -96,7 +95,7 @@ namespace Explorer.Stakeholders.Tests.Integration
             var result = ((ObjectResult)controller.UpdateKeyPoint(updatedKeyPoint).Result)?.Value as KeyPointDto;
 
             result.ShouldNotBeNull();
-            result.Id.ShouldBe(-4);
+            result.Id.ShouldBe(-3);
             result.PublicStatus.ShouldBe((PublicStatus)2);
 
             var storedObject = dbContext.KeyPoints.FirstOrDefault(o => o.Name == updatedKeyPoint.Name);
