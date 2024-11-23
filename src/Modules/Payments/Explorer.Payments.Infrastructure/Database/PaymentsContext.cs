@@ -19,6 +19,9 @@ namespace Explorer.Payments.Infrastructure.Database
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Sales> Sales { get; set; }
 
+        public DbSet<Bundle> Bundles { get; set; }
+
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
         public PaymentsContext(DbContextOptions<PaymentsContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

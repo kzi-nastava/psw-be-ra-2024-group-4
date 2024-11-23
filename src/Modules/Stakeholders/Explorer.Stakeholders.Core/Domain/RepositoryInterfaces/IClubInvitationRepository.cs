@@ -11,6 +11,7 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         ClubInvitation Create(ClubInvitation clubInvitation);
         int GetMaxId();
         List<ClubInvitation> GetInvitationsByClubId(long clubId);
-
+       
+       
     }
 }

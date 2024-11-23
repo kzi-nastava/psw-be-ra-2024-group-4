@@ -34,6 +34,8 @@ public class TourPurchaseTokenService : CrudService<TourPurchaseTokenDto, TourPu
                 UserId = token.UserId,
                 CartId = token.CartId,
                 TourId = token.TourId,
+                Price = token.Price,
+                PurchaseDate = token.PurchaseDate
 
             }).ToList();
 
@@ -58,7 +60,9 @@ public class TourPurchaseTokenService : CrudService<TourPurchaseTokenDto, TourPu
                 Id = token.Id,
                 UserId = token.UserId,
                 CartId = token.CartId,
-                TourId = token.TourId
+                TourId = token.TourId,
+                Price = token.Price,
+                PurchaseDate = token.PurchaseDate
 
             }).ToList();
 

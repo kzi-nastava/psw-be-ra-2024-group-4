@@ -104,6 +104,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubService.GetEligibleUsersForClub(clubId);
             return CreateResponse(result);
         }
+        [HttpGet("{clubId:int}/out-club-users")]
+        public ActionResult<List<UserDto>> GetUsersOutClub(int clubId)
+        {
+            var result = _clubService.GetUsersOutClub(clubId);
+            return CreateResponse(result);
+        }
         [HttpGet("{id:long}")]
         public ActionResult<ClubDto> GetById(long id)
         {
