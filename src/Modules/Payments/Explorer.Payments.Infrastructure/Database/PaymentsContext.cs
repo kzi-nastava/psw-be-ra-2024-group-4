@@ -17,6 +17,8 @@ namespace Explorer.Payments.Infrastructure.Database
         public DbSet<TourPurchaseToken> PurchaseTokens { get; set; }
 
         public DbSet<Bundle> Bundles { get; set; }
+
+        public DbSet<PaymentRecord> PaymentRecords { get; set; }
         public PaymentsContext(DbContextOptions<PaymentsContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -30,6 +30,7 @@ namespace Explorer.Payments.Infrastructure
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
             services.AddScoped<IBundleService, BundleService>();
+            services.AddScoped<IPaymentRecordService, PaymentRecordService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
@@ -38,11 +39,13 @@ namespace Explorer.Payments.Infrastructure
             services.AddScoped(typeof(ICrudRepository<OrderItem>), typeof(CrudDatabaseRepository<OrderItem, PaymentsContext>));
             services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, PaymentsContext>));
             services.AddScoped(typeof(ICrudRepository<Bundle>), typeof(CrudDatabaseRepository<Bundle, PaymentsContext>));
+            services.AddScoped(typeof(ICrudRepository<PaymentRecord>), typeof(CrudDatabaseRepository<PaymentRecord, PaymentsContext>));
 
             services.AddScoped<IShoppingCartRepository, ShoppingRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<ITourPurchaseTokenRepository, TourPurchaseTokenRepository>();
             services.AddScoped<IBundleRepository, BundleRepository>();
+            services.AddScoped<IPaymentRecordRepository, PaymentRecordRepository>();
 
             services.AddDbContext<PaymentsContext>(opt =>
            opt.UseNpgsql(DbConnectionStringBuilder.Build("payments"),
