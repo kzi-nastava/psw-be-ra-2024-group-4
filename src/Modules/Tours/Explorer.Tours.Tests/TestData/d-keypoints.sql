@@ -1,6 +1,6 @@
 INSERT INTO tours."KeyPoints"(
 	"Id", "Name", "Longitude", "Latitude", "Description", "Image", "UserId", "TourId", "PublicStatus")
-	VALUES (-1, 'Colosseum, Rome', 12.4922, 41.8902, 'It is located just a few hundred meters away from the city center, at the northernmost point of Rome historic center.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPd_FbzQUocKtjn8O2DFiQIrVQcZQgP5BU1MWzaDSMrw&s', 2, -1, 0);
+	VALUES (-1, 'Colosseum, Rome', 12.4922, 41.8902, 'It is located just a few hundred meters away from the city center, at the northernmost point of Rome historic center.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPd_FbzQUocKtjn8O2DFiQIrVQcZQgP5BU1MWzaDSMrw&s', 2, -1, 1);
 
 INSERT INTO tours."KeyPoints"(
 	"Id", "Name", "Longitude", "Latitude", "Description", "Image", "UserId", "TourId", "PublicStatus")

@@ -23,5 +23,6 @@ namespace Explorer.Blog.API.Public
         Result<PostDto> AddRating(long postId,long userId,int value);
         Result<PostDto> UpdateRating(long postId, long userId,int newValue);
 
+        Result<PostDto> PublishPost(long postId);
     }
 }

@@ -180,6 +180,25 @@ namespace Explorer.Blog.Core.UseCases
                 return Result.Fail(e.Message);
             }
         }
+
+        public Result<PostDto> PublishPost(long postId)
+        {
+            try
+            {
+                var post = repository.Get(postId);
+                post.Publish();
+                var result = repository.Update(post);
+                return MapToDto(result);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return Result.Fail(FailureCode.NotFound).WithError(e.Message);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(e.Message);
+            }
+        }
     }
 }
 
