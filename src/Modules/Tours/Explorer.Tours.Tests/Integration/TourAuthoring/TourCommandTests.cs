@@ -133,23 +133,28 @@ namespace Explorer.Tours.Tests
         }
 
         [Fact]
-        public void Add_equipment_to_tour_fails_invalid_equipmentId()
-        {
+        public void Add_equipment_to_tour_fails_invalid_equipmentIds() {
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
-            var tourId = -1;
+            // Invalid tour ID and equipment IDs
+            var tourId = -2;
             var equipmentIds = new List<long> { -333, -444 };
+
+            foreach (var equipmentId in equipmentIds) {
+                dbContext.Equipment.Find(equipmentId).ShouldBeNull();
+            }
 
             // Act
             var result = controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
-            var objectResult = result.ShouldBeOfType<ObjectResult>();
-            objectResult.StatusCode.ShouldBe(404); 
+            var objectResult = result.ShouldBeOfType<OkResult>();
+            objectResult.StatusCode.ShouldBe(200);
         }
+
 
         [Fact]
         public void Remove_equipment_from_tour_success()

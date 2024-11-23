@@ -63,23 +63,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return equipmentList;
         }
-
-
-        //public void AddEquipmentToTour(long tourId, long equipmentId)
-        //{
-        //    var tour = _dbContext.Tour
-        //                        .Single(t => t.Id == tourId);
-        //    var equipment = _dbContext.Equipment
-        //                             .Single(e => e.Id == equipmentId);
-
-        //    if (tour.EquipmentIds.Contains(equipment.Id))
-        //    {
-        //        throw new InvalidOperationException("This equipment is already added to the tour.");
-        //    }
-        //    tour.EquipmentIds.Add(equipment.Id);
-
-        //    _dbContext.SaveChanges();
-        //}
         public void AddEquipmentToTour(long tourId, List<long> equipmentIds) {
             var tour = _dbContext.Tour
                                  .Single(t => t.Id == tourId);
