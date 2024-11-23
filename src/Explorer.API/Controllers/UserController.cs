@@ -25,6 +25,19 @@ namespace Explorer.API.Controllers
             var username = _userService.GetUsername(id);
             return CreateResponse(username);
         }
+        [HttpGet("{userId}/person-id")]
+        public ActionResult<long> GetPersonId(long userId)
+        {
+            try
+            {
+                var personId = _userService.GetPersonId(userId);
+                return Ok(personId);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message }); 
+            }
+        }
     }
 }
 
