@@ -20,16 +20,10 @@ namespace Explorer.Encounter.API.Dtos
             public int XP { get; set; }
             public EncounterStatus Status { get; set; } 
             public EncounterType Type { get; set; } 
-            public object Data { get; set; } // ovde se mogu smestati vrednosti za Encounetr Types, sve ih prima
-            /*
-                Ako se ne mozete snaci sa Data, koristite ovo:
-
+            public object Data { get; set; }
             public SocialDataDto? SocialData { get; set; }
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }
-             */
-
-
         }
     }
 
