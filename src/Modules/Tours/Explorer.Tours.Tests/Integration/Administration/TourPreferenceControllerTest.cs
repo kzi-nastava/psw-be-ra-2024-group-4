@@ -1,11 +1,13 @@
 ﻿using Explorer.API.Controllers.Tourist;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.Core.Domain;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xunit;
+
 
 namespace Explorer.Tours.Tests.Integration.Tourist {
     [Collection("Sequential")]
@@ -57,7 +59,7 @@ namespace Explorer.Tours.Tests.Integration.Tourist {
                 BikeRating = 4,
                 CarRating = 3,
                 BoatRating = 2,
-                Tags = new List<string> { "culture", "art" }
+                Tags = new List<TourPreferenceDto.UserTags> { TourPreferenceDto.UserTags.Cycling, TourPreferenceDto.UserTags.Culture }
             };
 
             // Act
@@ -82,7 +84,7 @@ namespace Explorer.Tours.Tests.Integration.Tourist {
                 BikeRating = 2,
                 CarRating = 2,
                 BoatRating = 2,
-                Tags = new List<string> { "nature", "adventure" }
+                Tags = new List<TourPreferenceDto.UserTags> { TourPreferenceDto.UserTags.Cycling, TourPreferenceDto.UserTags.Culture }
             };
 
             // Act
@@ -105,7 +107,7 @@ namespace Explorer.Tours.Tests.Integration.Tourist {
                 BikeRating = 3,
                 CarRating = 2,
                 BoatRating = 1,
-                Tags = new List<string> { "culture", "history" }
+                Tags = new List<TourPreferenceDto.UserTags> { TourPreferenceDto.UserTags.Cycling, TourPreferenceDto.UserTags.Culture }
             };
 
             // Act

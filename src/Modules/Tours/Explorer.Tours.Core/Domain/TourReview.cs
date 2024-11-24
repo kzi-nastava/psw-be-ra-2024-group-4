@@ -16,9 +16,10 @@ namespace Explorer.Modules.Core.Domain
         public string? Comment { get; private set; }
         public DateTime? DateTour { get; private set; }
         public DateTime? DateComment { get; private set; }
-        public List<string>? Images { get; private set; }
+        public string Image { get; private set; }
+        public double PercentageCompleted { get; private set; }
 
-        public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, List<string> images)
+        public TourReview(long idTour, long idTourist, int rating, string comment, DateTime? dateTour, DateTime? dateComment, string image, double percentageCompleted)
         {
             IdTour = idTour != 0 ? idTour : throw new ArgumentException("Invalid idTour");
             IdTourist = idTourist != 0 ? idTourist : throw new ArgumentException("Invalid idTourist");
@@ -26,7 +27,8 @@ namespace Explorer.Modules.Core.Domain
             Comment = string.IsNullOrWhiteSpace(comment) ? "" : comment;
             DateTour = dateTour != null ? dateTour : throw new ArgumentNullException("Invalid Date");
             DateComment = dateComment != null ? dateComment : throw new ArgumentNullException("Invalid Date");
-            Images = images ?? new List<string>(); //if images is null, new List<string>()
+            Image = image;
+            PercentageCompleted = percentageCompleted;
         }
 
         public TourReview() 

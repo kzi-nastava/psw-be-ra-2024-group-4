@@ -1,6 +1,4 @@
 DELETE FROM stakeholders."Notification";
-DELETE FROM tours."KeyPoints";
-DELETE FROM tours."Objects";
 DELETE FROM stakeholders."Problem";
 DELETE FROM stakeholders."ClubJoinRequests";
 DELETE FROM stakeholders."ClubInvitations";
