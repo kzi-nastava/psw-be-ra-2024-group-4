@@ -26,5 +26,13 @@ namespace Explorer.API.Controllers.Encounter
         {
             return _encounterService.GetInRadius(radius, lat, lon);
         }
+
+        [HttpPost("{id:long}/complete")]
+        public ActionResult<EncounterDto> Complete(long id)
+        {
+            long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            var result = _encounterService.CompleteEncounter(userId, id);
+            return CreateResponse(result);
+        }
     }
 }

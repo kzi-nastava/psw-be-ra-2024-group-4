@@ -11,10 +11,14 @@ namespace Explorer.Encounter.Core.UseCases
     public class EncounterService : CrudService<EncounterDto, Domain.Encounter>, IEncounterService
     {
         private ICrudRepository<Domain.Encounter> _encounterRepository;
+        private readonly IEncounterRepository _customEncounterRepository;
+        private readonly IMapper _mapper;
         public EncounterService(ICrudRepository<Domain.Encounter> crudRepository, IMapper mapper, 
             IEncounterRepository encounterRepository) : base(crudRepository, mapper)
         {
             _encounterRepository = crudRepository;
+            _customEncounterRepository = encounterRepository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public Result<EncounterDto> CreateEncounter(EncounterDto encounterDto)
@@ -85,6 +89,24 @@ namespace Explorer.Encounter.Core.UseCases
 
             return Result.Ok(new PagedResult<EncounterDto>(ret, filteredEncounters.Count()));
         }
+
+        public Result<EncounterDto> CompleteEncounter(long userId, long encounterId)
+        {
+            try
+            {
+                var encounter = _customEncounterRepository.GetById(encounterId);
+                encounter.CompleteEncounter(userId);
+                _encounterRepository.Update(encounter);
+                var responseDto = _mapper.Map<EncounterDto>(encounter);
+
+                return responseDto;
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail(FailureCode.InvalidArgument);
+            }
+        }
+
 
 
     }

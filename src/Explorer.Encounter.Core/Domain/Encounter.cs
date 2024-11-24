@@ -23,6 +23,7 @@ namespace Explorer.Encounter.Core.Domain
         public SocialData? SocialDetails { get; private set; }
         public HiddenLocationData? HiddenLocationDetails { get; private set; }
         public MiscData? MiscDetails { get; private set; }
+        public List<EncounterInstance> Instances { get; } = new List<EncounterInstance>();
 
         public Encounter() { }
 
@@ -36,12 +37,50 @@ namespace Explorer.Encounter.Core.Domain
             Status = status;
             Type = type;
         }
+
+        public void CompleteEncounter(long userId)
+        {
+            if (Status != EncounterStatus.Active)
+            {
+                throw new InvalidOperationException("Cannot complete encounter because it is not active.");
+            }
+
+            var instance = Instances.FirstOrDefault(x => x.UserId == userId);
+            if (instance == null)
+            {
+                throw new ArgumentException("Invalid user id.");
+            }
+
+            if (SocialDetails != null)
+            {
+                SocialDetails.ValidateCompletion(Instances, userId);
+            }
+
+            instance.Complete();
+        }
+
     }
 
     public class SocialData // npr potrebno je da je 5 ljudi na slicnoj razdaljini
     {
         public int RequiredParticipants { get; private set; }
         public double Radius { get; private set; }
+
+        public void ValidateCompletion(List<EncounterInstance> instances, long userId)
+        {
+            var encounterInstance = instances.FirstOrDefault(x => x.UserId == userId);
+            if (encounterInstance == null)
+            {
+                throw new ArgumentException("Invalid user id.");
+            }
+
+            var activatedInstances = instances.Count(i => i.Status == EncounterInstanceStatus.Active);
+
+            if (activatedInstances < RequiredParticipants)
+            {
+                throw new ArgumentException("Not enough users that activated the social encounter.");
+            }
+        }
     }
 
     public class HiddenLocationData // okaci sliku  sa neke lokacije
