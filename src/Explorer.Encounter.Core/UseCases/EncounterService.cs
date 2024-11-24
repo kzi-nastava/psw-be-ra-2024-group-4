@@ -52,22 +52,30 @@ namespace Explorer.Encounter.Core.UseCases
         {
             const double EarthRadiusKm = 6371.0;
 
-            double CalculateSquaredDistance(double lat1, double lon1, double lat2, double lon2)
+            double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
             {
-                double dLat = lat2 - lat1;
-                double dLon = lon2 - lon1;
+                double dLat = Math.PI / 180 * (lat2 - lat1);
+                double dLon = Math.PI / 180 * (lon2 - lon1);
 
-                return (dLat * dLat) + (dLon * dLon);
+                double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                           Math.Cos(Math.PI / 180 * lat1) * Math.Cos(Math.PI / 180 * lat2) *
+                           Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+                double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+                return EarthRadiusKm * c; 
             }
 
             var encounters = _encounterRepository.GetPaged(0, 0).Results;
 
             var filteredEncounters = encounters.FindAll(encounter =>
             {
-                double squaredDistance = CalculateSquaredDistance(lat, lon, encounter.Latitude, encounter.Longitude);
+                double distance = CalculateDistance(lat, lon, encounter.Latitude, encounter.Longitude);
 
-                return squaredDistance <= (radius * radius / (EarthRadiusKm * EarthRadiusKm));
+                Console.WriteLine($"Encounter {encounter.Title}: Udaljenost = {distance} km");
+                return distance <= radius;
             });
+
+            Console.WriteLine($"Ukupno filtriranih susreta: {filteredEncounters.Count}");
 
             List<EncounterDto> ret = new List<EncounterDto>();
             foreach (var item in filteredEncounters)
@@ -77,6 +85,7 @@ namespace Explorer.Encounter.Core.UseCases
 
             return Result.Ok(new PagedResult<EncounterDto>(ret, filteredEncounters.Count()));
         }
+
 
     }
 }
