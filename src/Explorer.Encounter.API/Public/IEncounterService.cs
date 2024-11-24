@@ -13,6 +13,6 @@ namespace Explorer.Encounter.API.Public
     {
         Result<EncounterDto> CreateEncounter(EncounterDto encounterDto);
         Result<PagedResult<EncounterDto>> Get(int page, int pageSize);
-        Result<PagedResult<EncounterDto>> GetInRadius(int radius, double lat, double lon);
+        Result<PagedResult<EncounterDto>> GetInRadius(double radius, double lat, double lon);
     }
 }
