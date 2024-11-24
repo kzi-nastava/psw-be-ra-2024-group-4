@@ -1,9 +1,12 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Modules.Core.Domain;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +20,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public TourReviewRepository(ToursContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public TourReview Get(long userId, long tourId)
+        {
+            return _dbContext.TourReview.FirstOrDefault(tr => tr.IdTour == tourId && tr.IdTourist == userId);
         }
 
         public PagedResult<TourReview> GetByTourId(long tourId, int page, int pageSize)

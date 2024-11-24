@@ -15,6 +15,7 @@ namespace Explorer.Stakeholders.API.Dtos
         public ClubStatus Status { get; set; }
     }
 
+
     public enum ClubStatus
     {
         PROCESSING,

@@ -75,10 +75,6 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
             var isAuthor = _userRepository.IsAuthor(commentDto.UserId);
            // var tour = _tourRepository.GetById(problem.TourId);
-            //if(isAuthor)
-           // {
-               // _notificationRepository.Create(problem.UserId, commentDto.ProblemId); 
-            //}
            /* if(isAuthor)
             {
                 _notificationRepository.Create(problem.UserId, commentDto.ProblemId); 
