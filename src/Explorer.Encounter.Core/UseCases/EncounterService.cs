@@ -48,7 +48,7 @@ namespace Explorer.Encounter.Core.UseCases
             }
         }
 
-        public Result<PagedResult<EncounterDto>> GetInRadius(int radius, double lat, double lon)
+        public Result<PagedResult<EncounterDto>> GetInRadius(double radius, double lat, double lon)
         {
             const double EarthRadiusKm = 6371.0;
 
