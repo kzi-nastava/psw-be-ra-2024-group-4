@@ -17,7 +17,14 @@ namespace Explorer.API.Controllers.Encounter
         [HttpPost("create")]
         public Result<EncounterDto> Create([FromBody] EncounterDto encounter)
         {
-            return null;
+            return _encounterService.CreateEncounter(encounter);
+        }
+
+        [HttpGet("radius")]
+        public Result<BuildingBlocks.Core.UseCases.PagedResult<EncounterDto>> 
+            GetInRadius([FromQuery] double radius, [FromQuery] double lat, [FromQuery] double lon)
+        {
+            return _encounterService.GetInRadius(radius, lat, lon);
         }
     }
 }
