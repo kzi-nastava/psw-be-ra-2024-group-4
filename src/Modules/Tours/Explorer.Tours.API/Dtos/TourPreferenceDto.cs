@@ -14,6 +14,25 @@ namespace Explorer.Tours.API.Dtos {
         public int BikeRating { get; set; }
         public int CarRating { get; set; }
         public int BoatRating { get; set; }
-        public List<string> Tags { get; set; }
+        public List<UserTags> Tags { get; set; }
+
+        public enum UserTags
+        {
+            Cycling,
+            Culture,
+            Adventure,
+            FamilyFriendly,
+            Nature,
+            CityTour,
+            Historical,
+            Relaxation,
+            Wildlife,
+            NightTour,
+            Beach,
+            Mountains,
+            Photography,
+            Guided,
+            SelfGuided
+        }
     }
 }
