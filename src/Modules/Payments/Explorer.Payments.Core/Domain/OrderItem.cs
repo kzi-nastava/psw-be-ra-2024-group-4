@@ -13,6 +13,7 @@ namespace Explorer.Payments.Core.Domain
         public decimal Price { get; set; }
         public long TourId { get; set; }
         public long CartId { get; set; }
+      
         public OrderItem()
         {
 
@@ -24,6 +25,7 @@ namespace Explorer.Payments.Core.Domain
             Price = price;
             TourId = tourId;
             CartId = cartId;
+            
         }
 
         public void ApplyDiscount(double discountPercentage)

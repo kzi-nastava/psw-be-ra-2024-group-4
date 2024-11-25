@@ -72,8 +72,20 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
             }
             return Ok(result.Value); 
         }
-     
 
+        [HttpPut("applyCoupon/{cartId}")]
+        public ActionResult<ShoppingCartDto> ApplyCoupon(int cartId, [FromQuery] string promoCode)
+        {
+
+            var result = _shoppingCartService.ApplyCoupon(cartId, promoCode);
+
+            if (result.IsFailed)
+            {
+                return BadRequest(result.Errors.First().Message); 
+            }
+
+            return Ok(result.Value); 
+        }
 
     }
 }

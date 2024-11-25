@@ -45,6 +45,7 @@ namespace Explorer.Payments.Core.UseCases
                     Price = item.Price,
                     TourId = item.TourId,
                     CartId = item.CartId,
+                   
                 }).ToList(),
                 PurchaseTokens = cart.PurchaseTokens.Select(token => new TourPurchaseTokenDto
                 {
@@ -52,6 +53,7 @@ namespace Explorer.Payments.Core.UseCases
                     UserId = token.UserId,
                     TourId = token.TourId,
                     CartId = token.CartId
+                 
 
                 }).ToList(),
                 TotalPrice = cart.Items.Sum(item => item.Price)
@@ -83,9 +85,75 @@ namespace Explorer.Payments.Core.UseCases
             }
         }
 
-       
+        public Result<ShoppingCartDto> ApplyCoupon(int cartId, string promoCode)
+        {
+           
+            var couponResult = ValidateAndFetchCoupon(promoCode);
+            if (couponResult.IsFailed)
+                return Result.Fail<ShoppingCartDto>(couponResult.Errors.First().Message);
 
+            var coupon = couponResult.Value;
 
+        
+            var cart = _shoppingCartRepository.Get(cartId);
+            if (cart == null)
+                return Result.Fail<ShoppingCartDto>("Cart not found.");
+
+          
+            ApplyDiscount(cart, coupon);
+            var result = MapToDto(cart);
+            return Result.Ok(result);
+        }
+
+        private void ApplyDiscount(ShoppingCart cart, Coupon coupon)
+        {
+            if (coupon.TourId.HasValue)
+            {
+                ApplyDiscountToSpecificTour(cart, coupon);
+            }
+            else
+            {
+               ApplyDiscountToMostExpensiveItem(cart, coupon);
+            }
+        }
+
+        private void ApplyDiscountToSpecificTour(ShoppingCart cart, Coupon coupon)
+        {
+            var item = cart.Items.FirstOrDefault(i => i.TourId == coupon.TourId.Value);
+            if (item != null)
+            {
+                item.ApplyDiscount(coupon.DiscountPercentage);
+               
+            }
+
+        }
+
+        private void ApplyDiscountToMostExpensiveItem(ShoppingCart cart, Coupon coupon)
+        {
+            var mostExpensiveItem = cart.Items
+                .OrderByDescending(i => i.Price)
+                .FirstOrDefault();
+
+            if (mostExpensiveItem != null)
+            {
+                mostExpensiveItem.ApplyDiscount(coupon.DiscountPercentage);
+            }
+        }
+
+        private Result<Coupon> ValidateAndFetchCoupon(string promoCode)
+        {
+            if (string.IsNullOrWhiteSpace(promoCode))
+                return Result.Fail<Coupon>("Promo code cannot be empty.");
+
+            var coupon = _couponRepository.Get(promoCode); 
+            if (coupon == null)
+                return Result.Fail<Coupon>("Invalid coupon code.");
+
+            if (coupon.ExpirationDate.HasValue && coupon.ExpirationDate < DateTime.UtcNow)
+                return Result.Fail<Coupon>("Coupon has expired.");
+
+            return Result.Ok(coupon);
+        }
     }
 
 
