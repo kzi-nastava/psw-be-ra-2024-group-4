@@ -10,10 +10,12 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
     public class ShoppingCartController : BaseApiController
     {
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly ICouponService _couponService;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, ICouponService couponService)
         {
             _shoppingCartService = shoppingCartService;
+            _couponService = couponService;
         }
 
         [HttpPost]
@@ -59,6 +61,18 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
             var result = _shoppingCartService.Get(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("coupon/{promoCode}")]
+        public ActionResult<CouponDto> GetCouponByPromoCode(string promoCode)
+        {
+            var result = _couponService.Get(promoCode);
+            if (result.IsFailed) 
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok(result.Value); 
+        }
+     
 
 
     }

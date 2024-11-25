@@ -25,6 +25,20 @@ namespace Explorer.Payments.Core.Domain
             TourId = tourId;
             CartId = cartId;
         }
+
+        public void ApplyDiscount(double discountPercentage)
+        {
+            if (discountPercentage <= 0 || discountPercentage > 100)
+            {
+                throw new ArgumentException("Discount percentage must be greater than 0 and less than or equal to 100.");
+            }
+
+            Price -= Price * (decimal)(discountPercentage / 100);
+            if (Price < 0)
+            {
+                Price = 0;
+            }
+        }
     }
 
 }

@@ -20,7 +20,13 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
 
         public Coupon Get(string promoCode)
         {
-            throw new NotImplementedException(); //dodati
+            if (string.IsNullOrWhiteSpace(promoCode))
+            {
+                throw new ArgumentException("Promo code cannot be null or empty.");
+            }
+
+            // Koristi Entity Framework za dohvat kupona
+            return _dbContext.Coupons.FirstOrDefault(c => c.PromoCode == promoCode);
         }
 
         public PagedResult<Coupon> GetAll(int authorId, int page, int pageSize)

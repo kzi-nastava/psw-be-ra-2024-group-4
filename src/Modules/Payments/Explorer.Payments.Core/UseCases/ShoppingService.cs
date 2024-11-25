@@ -19,9 +19,13 @@ namespace Explorer.Payments.Core.UseCases
     public class ShoppingService : CrudService<ShoppingCartDto, ShoppingCart>, IShoppingCartService
     {
         IShoppingCartRepository _shoppingCartRepository { get; set; }
-        public ShoppingService(ICrudRepository<ShoppingCart> repository, IMapper mapper, IShoppingCartRepository shoppingCartRepository) : base(repository, mapper) 
+        ICouponRepository _couponRepository { get; set; }
+        
+        public ShoppingService(ICrudRepository<ShoppingCart> repository, IMapper mapper, IShoppingCartRepository shoppingCartRepository, ICouponRepository couponRepository) : base(repository, mapper) 
         {
             _shoppingCartRepository = shoppingCartRepository;
+            _couponRepository = couponRepository;
+          
         }
 
         public Result<List<ShoppingCartDto>> GetAll(long userId)
@@ -78,6 +82,12 @@ namespace Explorer.Payments.Core.UseCases
                 return Result.Fail<decimal>($"Greška prilikom računanja ukupne cene: {ex.Message}");
             }
         }
-      
+
+       
+
+
     }
+
+
 }
+

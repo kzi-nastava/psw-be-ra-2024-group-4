@@ -37,7 +37,19 @@ namespace Explorer.Payments.Core.UseCases
 
         public Result<CouponDto> Get(string promoCode)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(promoCode))
+            {
+                return Result.Fail("Promo code cannot be null or empty.");
+            }
+
+            var coupon = _couponRepository.Get(promoCode);
+            if (coupon == null)
+            {
+                return Result.Fail("Coupon with the provided promo code does not exist.");
+            }
+
+            // Mapiraj domen objekat u DTO
+            return MapToDto(coupon);
         }
 
         public Result<PagedResult<CouponDto>> GetAll(int authorId, int page, int pageSize)
