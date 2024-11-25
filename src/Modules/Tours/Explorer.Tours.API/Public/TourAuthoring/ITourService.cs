@@ -15,7 +15,7 @@ namespace Explorer.Tours.API.Public.TourAuthoring
 
         Result<List<TourDto>> GetByUserId(long userId);
         Result<PagedResult<EquipmentDto>> GetEquipment(long tourId);
-        Result AddEquipmentToTour(long tourId, long equipmentId);
+        Result AddEquipmentToTour(long tourId, List<long> equipmentIds);
         Result RemoveEquipmentFromTour(long tourId, long equipmentId);
         Result<TourDto> Get(int id);
         public Result GetById(long id);
