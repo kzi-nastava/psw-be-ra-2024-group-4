@@ -123,6 +123,13 @@ namespace Explorer.Encounter.Core.UseCases
         }
 
 
+        public Result<EncounterDto> GetByLatLong(double lat, double lon)
+        {
+            var encounter = _encounterRepository.GetPaged(0, 0).Results.Find(encounter => { return encounter.Latitude == lat && encounter.Longitude == lon; });
+            EncounterDto ret = MapToDto(encounter);
 
+            
+            return Result.Ok(ret);
+        }
     }
 }
