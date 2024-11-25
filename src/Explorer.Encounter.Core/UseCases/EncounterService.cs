@@ -90,6 +90,21 @@ namespace Explorer.Encounter.Core.UseCases
             return Result.Ok(new PagedResult<EncounterDto>(ret, filteredEncounters.Count()));
         }
 
+        public Result<EncounterDto> ActivateEncounter(long userId, long encounterId, double longitude, double latitude)
+        {
+            try
+            {
+                var encounter = _customEncounterRepository.GetById(encounterId);
+                encounter.ActivateEncounter(userId, longitude, latitude);
+                CrudRepository.Update(encounter);
+                return MapToDto(encounter);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(e.Message);
+            }
+        }
+
         public Result<EncounterDto> CompleteEncounter(long userId, long encounterId)
         {
             try
