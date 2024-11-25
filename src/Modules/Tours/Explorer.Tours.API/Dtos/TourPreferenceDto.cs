@@ -32,7 +32,8 @@ namespace Explorer.Tours.API.Dtos {
             Mountains,
             Photography,
             Guided,
-            SelfGuided
+            SelfGuided 
+
         }
     }
 }
