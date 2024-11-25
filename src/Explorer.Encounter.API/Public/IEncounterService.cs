@@ -14,5 +14,8 @@ namespace Explorer.Encounter.API.Public
         Result<EncounterDto> CreateEncounter(EncounterDto encounterDto);
         Result<PagedResult<EncounterDto>> Get(int page, int pageSize);
         Result<PagedResult<EncounterDto>> GetInRadius(double radius, double lat, double lon);
+        Result<EncounterDto> ActivateEncounter(long userId, long encounterId, double longitude, double latitude);
+        Result<EncounterDto> CompleteEncounter(long userId, long encounterId);
+        Result<EncounterDto> GetByLatLong(double latitude, double longitude);
     }
 }
