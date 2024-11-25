@@ -56,11 +56,16 @@ namespace Explorer.Stakeholders.Core.Domain
         {
             NotificationsType = NotificationType.MESSAGE;
         }
-
+   
+        public void PurchaseType()
+        {
+            NotificationsType = NotificationType.PURCHASE;
+        }
         public enum NotificationType
         {
             PROBLEM,
             MESSAGE,
+            PURCHASE,
             OTHER
         }
     }
