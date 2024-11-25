@@ -1,5 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using System.Net.Mail;
+using System.Net.Security;
+using System.Xml.Linq;
 
 namespace Explorer.Stakeholders.Core.Domain;
 
@@ -14,6 +16,8 @@ public class Person : Entity
     public string? Motto { get; private set; }
     public List<int>? Equipment {  get; private set; }
     public decimal? Wallet { get; private set; }
+    public int XP { get; private set; }
+    public int Level { get; private set; }
 
     public Person(long userId, string name, string surname, string email)
     {
@@ -21,6 +25,8 @@ public class Person : Entity
         Name = name;
         Surname = surname;
         Email = email;
+        XP = 0;
+        Level = 1;
         Validate();
         
     }
@@ -34,7 +40,25 @@ public class Person : Entity
         Biography = biography;
         Motto = motto;
         Wallet = wallet;
+        XP = 0;
+        Level = 1;
         Validate();
+    }
+
+    public void AddXP(int amount)
+    {
+        if (amount < 0) throw new ArgumentException("XP can not be negative!");
+        XP += amount;
+        CheckLevelUp();
+    }
+
+    public void CheckLevelUp()
+    {
+        const int xpPerLevel = 100;
+        while (XP >= xpPerLevel * Level)
+        {
+            Level++;
+        }
     }
     
     private void Validate()

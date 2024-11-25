@@ -16,7 +16,7 @@ namespace Explorer.API.Controllers.Encounter
             _encounterService = encounterService;
         }
 
-        [HttpPost("create")]
+        [HttpPost("/create")]
         public Result<EncounterDto> Create([FromBody] EncounterDto encounter)
         {
             return _encounterService.CreateEncounter(encounter);
