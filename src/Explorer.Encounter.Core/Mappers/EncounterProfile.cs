@@ -19,10 +19,13 @@ namespace Explorer.Encounter.Core.Mappers
                 .ForMember(dest => dest.MiscDetails, opt => opt.MapFrom(src => src.MiscData))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Instances, opt => opt.MapFrom(src => src.Instances)) 
                 .ReverseMap()
                 .ForMember(dest => dest.SocialData, opt => opt.MapFrom(src => src.SocialDetails))
                 .ForMember(dest => dest.HiddenLocationData, opt => opt.MapFrom(src => src.HiddenLocationDetails))
-                .ForMember(dest => dest.MiscData, opt => opt.MapFrom(src => src.MiscDetails));
+                .ForMember(dest => dest.MiscData, opt => opt.MapFrom(src => src.MiscDetails))
+                .ForMember(dest => dest.Instances, opt => opt.MapFrom(src => src.Instances));   
+
 
             // Nested data mappings
             CreateMap<Explorer.Encounter.API.Dtos.SocialDataDto, Explorer.Encounter.Core.Domain.SocialData>()
@@ -33,6 +36,10 @@ namespace Explorer.Encounter.Core.Mappers
 
             CreateMap<Explorer.Encounter.API.Dtos.MiscDataDto, Explorer.Encounter.Core.Domain.MiscData>()
                 .ReverseMap();
+
+            CreateMap<Explorer.Encounter.Core.Domain.EncounterInstance, Explorer.Encounter.API.Dtos.EncounterInstanceDto>()
+                .ReverseMap();
+
         }
     }
 }
