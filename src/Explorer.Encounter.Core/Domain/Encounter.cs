@@ -65,11 +65,26 @@ namespace Explorer.Encounter.Core.Domain
 
             if (SocialDetails != null)
             {
-                SocialDetails.ValidateCompletion(Instances, userId);
-            }
+                try
+                {
+                    SocialDetails.ValidateCompletion(Instances, userId);
 
-            instance.Complete();
+                    foreach (var activeInstance in Instances.Where(i => i.Status == EncounterInstanceStatus.Active))
+                    {
+                        activeInstance.Complete();
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new InvalidOperationException("Not enough participants to complete the encounter.", ex);
+                }
+            }
+            else
+            {
+                instance.Complete();
+            }
         }
+
 
         protected bool hasUserActivatedEncounter(long userId)
         {
