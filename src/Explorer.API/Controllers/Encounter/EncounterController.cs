@@ -1,4 +1,5 @@
-﻿using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Explorer.Encounter.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,16 @@ namespace Explorer.API.Controllers.Encounter
         }
 
         [HttpGet("radius")]
-        public Result<BuildingBlocks.Core.UseCases.PagedResult<EncounterDto>> 
+        public Result<PagedResult<EncounterDto>> 
             GetInRadius([FromQuery] double radius, [FromQuery] double lat, [FromQuery] double lon)
         {
             return _encounterService.GetInRadius(radius, lat, lon);
+        }
+
+        [HttpGet]
+        public Result<EncounterDto> GetByLatLong([FromQuery] double latitude, [FromQuery] double longitude)
+        {
+            return _encounterService.GetByLatLong(latitude, longitude);
         }
     }
 }
