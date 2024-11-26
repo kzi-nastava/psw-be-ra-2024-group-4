@@ -4,8 +4,6 @@ using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Explorer.Encounter.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
-using Explorer.Tours.Core.Domain.Tours;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Explorer.API.Controllers.Encounter
 {
@@ -15,7 +13,7 @@ namespace Explorer.API.Controllers.Encounter
         private readonly IEncounterService _encounterService;
         private readonly IImageService _imageService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public EncounterController(IEncounterService encounterService, ImageService imageService, IWebHostEnvironment webHostEnvironment) 
+        public EncounterController(IEncounterService encounterService, IImageService imageService, IWebHostEnvironment webHostEnvironment) 
         {
             _encounterService = encounterService;
             _imageService = imageService;
@@ -25,7 +23,7 @@ namespace Explorer.API.Controllers.Encounter
         [HttpPost("create")]
         public Result<EncounterDto> Create([FromBody] EncounterDto encounter)
         {
-            if (!string.IsNullOrEmpty(encounter.HiddenLocationData.ImageBase64))
+            if (!string.IsNullOrEmpty(encounter.HiddenLocationData?.ImageBase64))
             {
                 var imageData = Convert.FromBase64String(encounter.HiddenLocationData.ImageBase64.Split(',')[1]);
                 var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "encounters");

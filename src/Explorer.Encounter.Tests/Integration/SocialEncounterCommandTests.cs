@@ -10,6 +10,8 @@ using Shouldly;
 using System.Security.Claims;
 using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Microsoft.Extensions.Logging;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Explorer.Encounters.Tests.Integration.SocialEncounter;
 
@@ -141,7 +143,7 @@ public class SocialEncounterCommandTests : BaseEncountersIntegrationTest
 
     private static Explorer.API.Controllers.Encounter.EncounterController CreateEncounterController(IServiceScope scope)
     {
-        return new Explorer.API.Controllers.Encounter.EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>())
+        return new Explorer.API.Controllers.Encounter.EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>(), scope.ServiceProvider.GetRequiredService<IImageService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
         {
             ControllerContext = BuildContext("-1")
         };

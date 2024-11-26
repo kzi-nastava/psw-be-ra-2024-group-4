@@ -20,10 +20,10 @@ namespace Explorer.Encounter.Core.Domain
         public EncounterType Type { get; private set; }
 
         // Specifični podaci za različite tipove izazova
-        public SocialData? SocialDetails { get; private set; }
-        public HiddenLocationData? HiddenLocationDetails { get; private set; }
-        public MiscData? MiscDetails { get; private set; }
-        public List<EncounterInstance> Instances { get; } = new List<EncounterInstance>();
+        public SocialData? SocialData { get; private set; }
+        public HiddenLocationData? HiddenLocationData { get; private set; }
+        public MiscData? MiscData { get; private set; }
+        public List<EncounterInstance>? Instances { get; } = new List<EncounterInstance>();
 
         public Encounter() { }
 
@@ -63,11 +63,11 @@ namespace Explorer.Encounter.Core.Domain
                 throw new ArgumentException("Invalid user id.");
             }
 
-            if (SocialDetails != null)
+            if (SocialData != null)
             {
                 try
                 {
-                    SocialDetails.ValidateCompletion(Instances, userId);
+                    SocialData.ValidateCompletion(Instances, userId);
 
                     foreach (var activeInstance in Instances.Where(i => i.Status == EncounterInstanceStatus.Active))
                     {
@@ -100,13 +100,13 @@ namespace Explorer.Encounter.Core.Domain
                 throw new ArgumentException("Invalid Latitude");
 
             double radius;
-            if (SocialDetails != null)
+            if (SocialData != null)
             {
-                radius = SocialDetails.Radius;
+                radius = SocialData.Radius;
             }
-            else if (HiddenLocationDetails != null)
+            else if (HiddenLocationData != null)
             {
-                radius = HiddenLocationDetails.ActivationRadius;
+                radius = HiddenLocationData.ActivationRadius;
             }
             else
             {

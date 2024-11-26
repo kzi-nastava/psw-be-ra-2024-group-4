@@ -23,7 +23,7 @@ namespace Explorer.Encounter.API.Dtos
             public SocialDataDto? SocialData { get; set; }
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }
-            public List<EncounterInstanceDto> Instances { get; set; }
+            public List<EncounterInstanceDto>? Instances { get; set; }
         }
     }
 
