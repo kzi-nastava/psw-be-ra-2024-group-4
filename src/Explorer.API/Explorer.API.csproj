@@ -35,6 +35,7 @@
     <Folder Include="wwwroot\images\blogs\" />
     <Folder Include="NewFolder\" />
     <Folder Include="Controllers\Folder\" />
+    <Folder Include="wwwroot\images\encounters\" />
     <Folder Include="wwwroot\images\person\" />
     <Folder Include="wwwroot\images\NewFolder\" />
   </ItemGroup>

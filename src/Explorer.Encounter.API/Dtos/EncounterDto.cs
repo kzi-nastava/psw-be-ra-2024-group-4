@@ -20,7 +20,6 @@ namespace Explorer.Encounter.API.Dtos
             public int XP { get; set; }
             public EncounterStatus Status { get; set; } 
             public EncounterType Type { get; set; } 
-            public object Data { get; set; }
             public SocialDataDto? SocialData { get; set; }
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }
