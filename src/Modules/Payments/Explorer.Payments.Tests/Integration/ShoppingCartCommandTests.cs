@@ -102,9 +102,116 @@ public class ShoppingCartCommandTests : BasePaymentsIntegrationTest
     }
 
 
+    [Fact]
+    public void GetCouponByPromoCode_ReturnsCoupon()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var validPromoCode = "SAVE1057"; // Pretpostavka: validan promo kod postoji u bazi
+
+        // Act
+        var actionResult = controller.GetCouponByPromoCode(validPromoCode);
+        var okResult = actionResult.Result as OkObjectResult; // Proverava da li je rezultat OkObjectResult
+        var result = okResult?.Value as CouponDto;
+
+        // Assert
+        result.ShouldNotBeNull();
+        result.PromoCode.ShouldBe(validPromoCode);
+    }
+
+    [Fact]
+    public void GetCouponByPromoCode_ReturnsBadRequest_ForInvalidPromoCode()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var invalidPromoCode = "grgr"; // Promo kod koji ne postoji
+
+        // Act
+        var actionResult = controller.GetCouponByPromoCode(invalidPromoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult; // Proverava da li je rezultat tipa BadRequestObjectResult
+
+        // Assert
+        badRequestResult.ShouldNotBeNull(); // Osigurava da je rezultat tipa BadRequestObjectResult
+        badRequestResult.StatusCode.ShouldBe(400); // Proverava statusni kod
+
+        // Ekstraktuj greške iz rezultata
+        var errors = badRequestResult.Value as List<string>; // Pretpostavlja se da su greške lista stringova
+        errors.ShouldNotBeNull(); // Provera da greške nisu null
+        errors.First().ShouldBe("Coupon with the provided promo code does not exist."); // Provera prve greške
+    }
+
+
+
+    [Fact]
+    public void ApplyCoupon_AppliesCouponSuccessfully()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var cartId = -1; // Pretpostavka: postoji korpa sa ID-jem 1
+        var promoCode = "WINTER15"; // Pretpostavka: validan promo kod
+
+        // Act
+        var actionResult = controller.ApplyCoupon(cartId, promoCode);
+        var okResult = actionResult.Result as OkObjectResult; // Proveravamo da li je rezultat tipa OkObjectResult
+        var result = okResult?.Value as ShoppingCartDto;
+
+        // Assert
+        okResult.ShouldNotBeNull();
+        okResult.StatusCode.ShouldBe(200); // Proveravamo statusni kod
+        result.ShouldNotBeNull();
+        result.Id.ShouldBe(cartId);
+    }
+
+    [Fact]
+    public void ApplyCoupon_ReturnsBadRequest_ForInvalidCartId()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var invalidCartId = -999; // Korpa sa ovim ID-jem ne postoji
+        var promoCode = "WINTER15";
+
+        // Act
+        // Act
+        var actionResult = controller.ApplyCoupon(invalidCartId, promoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult; // Proveravamo da li je rezultat tipa BadRequestObjectResult
+        var errorMessage = badRequestResult?.Value as string; // Ekstraktujemo poruku greške
+
+        // Assert
+        badRequestResult.ShouldNotBeNull();
+        badRequestResult.StatusCode.ShouldBe(400); // Proveravamo statusni kod
+        errorMessage.ShouldBe("Cart not found.");
+    }
+
+    [Fact]
+    public void ApplyCoupon_ReturnsBadRequest_ForExpiredCoupon()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var cartId = -2; // Validan ID korpe
+        var expiredPromoCode = "SPRING20"; // Pretpostavka: promo kod je istekao
+
+        // Act
+        var actionResult = controller.ApplyCoupon(cartId, expiredPromoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult; // Proveravamo da li je rezultat tipa BadRequestObjectResult
+        var errorMessage = badRequestResult?.Value as string; // Ekstraktujemo poruku greške
+
+        // Assert
+        badRequestResult.ShouldNotBeNull();
+        badRequestResult.StatusCode.ShouldBe(400); // Proveravamo statusni kod
+        errorMessage.ShouldBe("Coupon has expired.");
+    }
+
+
     private static ShoppingCartController CreateController(IServiceScope scope)
     {
-        return new ShoppingCartController(scope.ServiceProvider.GetRequiredService<IShoppingCartService>(),scope.ServiceProvider.GetRequiredService<ICouponService>())
+        return new ShoppingCartController(
+            scope.ServiceProvider.GetRequiredService<IShoppingCartService>(),
+            scope.ServiceProvider.GetRequiredService<ICouponService>())
         {
             ControllerContext = BuildContext("-1")
         };

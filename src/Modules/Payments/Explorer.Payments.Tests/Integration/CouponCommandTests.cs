@@ -123,6 +123,8 @@ namespace Explorer.Payments.Tests.Integration
             var storedCourse = dbContext.Coupons.FirstOrDefault(i => i.Id == -3);
             storedCourse.ShouldBeNull();
         }
+
+
         private static CouponController CreateController(IServiceScope scope)
         {
             return new CouponController(scope.ServiceProvider.GetRequiredService<ICouponService>())

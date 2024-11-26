@@ -66,12 +66,14 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
         public ActionResult<CouponDto> GetCouponByPromoCode(string promoCode)
         {
             var result = _couponService.Get(promoCode);
-            if (result.IsFailed) 
+            if (result.IsFailed)
             {
-                return BadRequest(result.Errors);
+                var errorMessages = result.Errors.Select(e => e.Message).ToList();
+                return BadRequest(errorMessages); 
             }
-            return Ok(result.Value); 
+            return Ok(result.Value);
         }
+
 
         [HttpPut("applyCoupon/{cartId}")]
         public ActionResult<ShoppingCartDto> ApplyCoupon(int cartId, [FromQuery] string promoCode)
