@@ -2,6 +2,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Explorer.Encounter.API.Public;
+using Explorer.Stakeholders.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,11 @@ namespace Explorer.API.Controllers.Encounter
     public class EncounterController : BaseApiController
     {
         private readonly IEncounterService _encounterService;
-        public EncounterController(IEncounterService encounterService) 
+        private readonly IPersonService _personService;
+        public EncounterController(IEncounterService encounterService, IPersonService personService) 
         {
             _encounterService = encounterService;
+            _personService = personService;
         }
 
         [HttpPost("/create")]
@@ -43,6 +46,13 @@ namespace Explorer.API.Controllers.Encounter
             long userId = int.Parse(HttpContext.User.Claims
                 .First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
             var result = _encounterService.CompleteEncounter(userId, id);
+
+            if (!result.IsSuccess) return BadRequest("Encounter failed to complete!");
+
+            var xp = result.Value.XP;
+            var xpResult = _personService.AddXP(userId, xp);
+            if (!xpResult.IsSuccess) return NotFound("Person not found!");
+
             return CreateResponse(result);
         }
 
