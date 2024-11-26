@@ -33,7 +33,6 @@ namespace Explorer.Tours.API.Dtos {
             Photography,
             Guided,
             SelfGuided 
-
         }
     }
 }
