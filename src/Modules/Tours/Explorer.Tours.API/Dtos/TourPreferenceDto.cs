@@ -10,6 +10,7 @@ namespace Explorer.Tours.API.Dtos {
 
         public int? TouristId { get; set; }
         public int WeightPreference { get; set; }
+
         public int WalkingRating { get; set; }
         public int BikeRating { get; set; }
         public int CarRating { get; set; }
