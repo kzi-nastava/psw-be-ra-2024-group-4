@@ -1,8 +1,8 @@
 ﻿INSERT INTO encounter."Encounters"(
     "Id", "Title", "Description", "Longitude", "Latitude", "XP", "Status", "Type", 
-    "SocialDetails_RequiredParticipants", "SocialDetails_Radius", 
-    "HiddenLocationDetails_ImageUrl", "HiddenLocationDetails_ActivationRadius", 
-    "MiscDetails_ActionDescription", "Instances")
+    "SocialData_RequiredParticipants", "SocialData_Radius", 
+    "HiddenLocationData_ImageUrl", "HiddenLocationData_ActivationRadius", 
+    "MiscData_ActionDescription", "Instances")
 VALUES
     (-1, 'Mystic Forest Gathering', 
      'A mysterious gathering is taking place deep within the enchanted forest. Only the brave can join.', 
