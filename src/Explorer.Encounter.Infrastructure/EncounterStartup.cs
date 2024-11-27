@@ -32,6 +32,7 @@ namespace Explorer.Encounter.Infrastructure
         {
             // Registracija Core servisa (dodajte konkretne servise prema potrebi)
             services.AddScoped<IEncounterService, EncounterService>();
+            services.AddScoped<IImageService, ImageService>();
         }
 
         private static void SetupInfrastructure(IServiceCollection services)

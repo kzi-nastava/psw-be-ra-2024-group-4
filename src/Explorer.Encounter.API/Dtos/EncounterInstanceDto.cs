@@ -12,6 +12,6 @@ namespace Explorer.Encounter.API.Dtos
         public EncounterInstanceStatus Status { get; set; }
         public DateTime? CompletionTime { get; set; }
     }
-    public enum EncounterInstanceStatus { Active, Completed }
+    public enum EncounterInstanceStatus { Active = 0, Completed = 1}
 
 }
