@@ -30,7 +30,10 @@ public class TourPurchaseTokenCommandTests : BasePaymentsIntegrationTest
         {
             CartId = -1,
             UserId = 1,
-            TourId = -2
+            TourId = -2,
+            Price = 500.0m,
+            PurchaseDate = DateTime.UtcNow,
+
         };
 
         // Act
@@ -41,6 +44,8 @@ public class TourPurchaseTokenCommandTests : BasePaymentsIntegrationTest
         result.UserId.ShouldBe(newEntity.UserId);
         result.CartId.ShouldBe(newEntity.CartId);
         result.TourId.ShouldBe(newEntity.TourId);
+        result.Price.ShouldBe(newEntity.Price);
+        result.PurchaseDate.ShouldBe(newEntity.PurchaseDate);
 
         // Assert - Database
         var storedEntity = dbContext.PurchaseTokens.FirstOrDefault(i => i.UserId == newEntity.UserId);
