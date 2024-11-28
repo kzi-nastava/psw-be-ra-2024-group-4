@@ -20,6 +20,13 @@ namespace Explorer.API.Controllers.Encounter
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [HttpGet("getAllActive/{userId:long}")]
+        public ActionResult<PagedResult<EncounterDto>> GetAllActiveForUser(long userId)
+        {
+            var ret = _encounterService.GetActiveForUser(userId);
+            return CreateResponse(ret);
+        }
+
         [HttpPost("create")]
         public Result<EncounterDto> Create([FromBody] EncounterDto encounter)
         {

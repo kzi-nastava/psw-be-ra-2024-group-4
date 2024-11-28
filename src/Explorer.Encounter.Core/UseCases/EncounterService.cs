@@ -131,5 +131,14 @@ namespace Explorer.Encounter.Core.UseCases
             
             return Result.Ok(ret);
         }
+
+        public Result<PagedResult<EncounterDto>> GetActiveForUser(long userId)
+        {
+            var pagedResult = GetPaged(0, 0).Value.Results;
+            var allEncounters = pagedResult
+                .Where(encounter => encounter.Instances.Any(instance => instance.UserId == userId))
+                .ToList();
+            return Result.Ok(new PagedResult<EncounterDto>(allEncounters, allEncounters.Count()));
+        }
     }
 }
