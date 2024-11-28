@@ -24,6 +24,7 @@ namespace Explorer.Encounter.Core.Domain
         public HiddenLocationData? HiddenLocationData { get; private set; }
         public MiscData? MiscData { get; private set; }
         public List<EncounterInstance>? Instances { get; } = new List<EncounterInstance>();
+        public bool IsRequired {  get; private set; }
 
         public Encounter() { }
 

@@ -21,7 +21,7 @@ namespace Explorer.API.Controllers.Encounter
         }
 
         [HttpPost("create")]
-        public Result<EncounterDto> Create([FromBody] EncounterDto encounter)
+        public ActionResult<EncounterDto> Create([FromBody] EncounterDto encounter)
         {
             if (!string.IsNullOrEmpty(encounter.HiddenLocationData?.ImageBase64))
             {
@@ -32,12 +32,11 @@ namespace Explorer.API.Controllers.Encounter
                 encounter.HiddenLocationData.ImageUrl= _imageService.SaveImage(folderPath, imageData, "encounters");
             }
 
-            return _encounterService.CreateEncounter(encounter);
+            return CreateResponse(_encounterService.CreateEncounter(encounter));
         }
 
         [HttpGet("radius")]
-        public Result<PagedResult<EncounterDto>> 
-            GetInRadius([FromQuery] double radius, [FromQuery] double lat, [FromQuery] double lon)
+        public Result<PagedResult<EncounterDto>> GetInRadius([FromQuery] double radius, [FromQuery] double lat, [FromQuery] double lon)
         {
             return _encounterService.GetInRadius(radius, lat, lon);
         }
@@ -60,9 +59,9 @@ namespace Explorer.API.Controllers.Encounter
         }
 
         [HttpGet]
-        public Result<EncounterDto> GetByLatLong([FromQuery] double latitude, [FromQuery] double longitude)
+        public ActionResult<EncounterDto> GetByLatLong([FromQuery] double latitude, [FromQuery] double longitude)
         {
-            return _encounterService.GetByLatLong(latitude, longitude);
+            return CreateResponse(_encounterService.GetByLatLong(latitude, longitude));
         }
     }
 }
