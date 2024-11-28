@@ -14,16 +14,16 @@ namespace Explorer.Encounter.Core.Mappers
         {
             // Main mapping between EncounterDto and Encounter
             CreateMap<EncounterDto, Explorer.Encounter.Core.Domain.Encounter>()
-                .ForMember(dest => dest.SocialDetails, opt => opt.MapFrom(src => src.SocialData))
-                .ForMember(dest => dest.HiddenLocationDetails, opt => opt.MapFrom(src => src.HiddenLocationData))
-                .ForMember(dest => dest.MiscDetails, opt => opt.MapFrom(src => src.MiscData))
+                .ForMember(dest => dest.SocialData, opt => opt.MapFrom(src => src.SocialData))
+                .ForMember(dest => dest.HiddenLocationData, opt => opt.MapFrom(src => src.HiddenLocationData))
+                .ForMember(dest => dest.MiscData, opt => opt.MapFrom(src => src.MiscData))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Instances, opt => opt.MapFrom(src => src.Instances)) 
                 .ReverseMap()
-                .ForMember(dest => dest.SocialData, opt => opt.MapFrom(src => src.SocialDetails))
-                .ForMember(dest => dest.HiddenLocationData, opt => opt.MapFrom(src => src.HiddenLocationDetails))
-                .ForMember(dest => dest.MiscData, opt => opt.MapFrom(src => src.MiscDetails))
+                .ForMember(dest => dest.SocialData, opt => opt.MapFrom(src => src.SocialData))
+                .ForMember(dest => dest.HiddenLocationData, opt => opt.MapFrom(src => src.HiddenLocationData))
+                .ForMember(dest => dest.MiscData, opt => opt.MapFrom(src => src.MiscData))
                 .ForMember(dest => dest.Instances, opt => opt.MapFrom(src => src.Instances));   
 
 
