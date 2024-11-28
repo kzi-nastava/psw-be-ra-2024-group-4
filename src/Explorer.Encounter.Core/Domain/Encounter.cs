@@ -40,11 +40,12 @@ namespace Explorer.Encounter.Core.Domain
 
         public void ActivateEncounter(long userId, double userLongitude, double userLatitude)
         {
+            var instances = Instances;
             if (Status != EncounterStatus.Active)
                 throw new ArgumentException("Encounter is not yet published.");
             if (hasUserActivatedEncounter(userId))
                 throw new ArgumentException("User has already activated/completed this encounter.");
-            if (!isUserInRange(userLongitude, userLatitude))
+            if (!isUserInRange(userLongitude, userLatitude) && Type != EncounterType.Misc)
                 throw new ArgumentException("User is not close enough to the encounter.");
 
             Instances.Add(new EncounterInstance(userId));
@@ -56,7 +57,7 @@ namespace Explorer.Encounter.Core.Domain
             {
                 throw new InvalidOperationException("Cannot complete encounter because it is not active.");
             }
-
+            var instances = Instances; // obrisati
             var instance = Instances.FirstOrDefault(x => x.UserId == userId);
             if (instance == null)
             {
@@ -107,6 +108,10 @@ namespace Explorer.Encounter.Core.Domain
             else if (HiddenLocationData != null)
             {
                 radius = HiddenLocationData.ActivationRadius;
+            }
+            else if(MiscData != null)
+            {
+                return true;
             }
             else
             {
