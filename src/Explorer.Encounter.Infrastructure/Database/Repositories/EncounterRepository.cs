@@ -50,5 +50,10 @@ namespace Explorer.Encounter.Infrastructure.Database.Repositories
             return entity;
         }
 
+        public async Task<List<Core.Domain.Encounter>> GetPendingEncounters()
+        {
+            return _context.Encounters.Where(c => c.RequestStatus == Core.Domain.RequestStatus.Pending).ToList();
+        }
+
     }
 }

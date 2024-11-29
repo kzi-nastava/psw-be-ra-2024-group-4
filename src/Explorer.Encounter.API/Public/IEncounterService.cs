@@ -17,5 +17,8 @@ namespace Explorer.Encounter.API.Public
         Result<EncounterDto> ActivateEncounter(long userId, long encounterId, double longitude, double latitude);
         Result<EncounterDto> CompleteEncounter(long userId, long encounterId);
         Result<EncounterDto> GetByLatLong(double latitude, double longitude);
+        void ApproveEncounter(long id);
+        void RejectEncounter(long id);
+        Result<PagedResult<EncounterDto>> GetPendingRequest();
     }
 }

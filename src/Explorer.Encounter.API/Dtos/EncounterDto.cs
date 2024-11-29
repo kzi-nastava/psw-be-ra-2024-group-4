@@ -10,6 +10,7 @@ namespace Explorer.Encounter.API.Dtos
     {
         public enum EncounterStatus { Active, Draft, Archived }
         public enum EncounterType { Social, HiddenLocation, Misc }
+        public enum RequestStatus {Pending,Rejected,Public}
         public class EncounterDto
         {
             public long Id { get; set; } 
@@ -20,6 +21,7 @@ namespace Explorer.Encounter.API.Dtos
             public int XP { get; set; }
             public EncounterStatus Status { get; set; } 
             public EncounterType Type { get; set; } 
+            public RequestStatus RequestStatus { get; set; }
             public SocialDataDto? SocialData { get; set; }
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }

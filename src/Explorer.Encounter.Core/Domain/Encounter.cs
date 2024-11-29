@@ -9,6 +9,7 @@ namespace Explorer.Encounter.Core.Domain
 {
     public enum EncounterStatus { Active, Draft, Archived }
     public enum EncounterType { Social, HiddenLocation, Misc }
+    public enum RequestStatus {Pending,Rejected,Public}
     public class Encounter: Entity
     {
         public string Title { get; private set; }
@@ -18,6 +19,7 @@ namespace Explorer.Encounter.Core.Domain
         public int XP { get; private set; }
         public EncounterStatus Status { get; private set; }
         public EncounterType Type { get; private set; }
+        public RequestStatus RequestStatus { get; set; }
 
         // Specifični podaci za različite tipove izazova
         public SocialData? SocialData { get; private set; }
@@ -27,7 +29,7 @@ namespace Explorer.Encounter.Core.Domain
 
         public Encounter() { }
 
-        public Encounter(string title, string description, double longitude, double latitude, int xp, EncounterStatus status, EncounterType type)
+        public Encounter(string title, string description, double longitude, double latitude, int xp, EncounterStatus status, EncounterType type,RequestStatus publicStatus)
         {
             Title = title;
             Description = description;
@@ -36,6 +38,7 @@ namespace Explorer.Encounter.Core.Domain
             XP = xp;
             Status = status;
             Type = type;
+            RequestStatus = publicStatus;
         }
 
         public void ActivateEncounter(long userId, double userLongitude, double userLatitude)

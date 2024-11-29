@@ -13,6 +13,7 @@ namespace Explorer.Encounter.Core.Domain.RepositoryInterfaces
         Task UpdateAsync(Encounter encounter);
         Task<List<Encounter>> GetActiveChallengesAsync();
         public Encounter GetById(long id);
+        Task<List<Encounter>> GetPendingEncounters();
 
     }
 }

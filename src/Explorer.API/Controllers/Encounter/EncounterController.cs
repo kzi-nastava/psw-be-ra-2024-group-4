@@ -74,5 +74,38 @@ namespace Explorer.API.Controllers.Encounter
         {
             return _encounterService.GetByLatLong(latitude, longitude);
         }
+        [HttpPut("{id:long}/approve")]
+        public IActionResult ApproveEncounter(long id) {
+            try {
+                _encounterService.ApproveEncounter(id);
+                return Ok(new { Message = "Encounter approved successfully" });
+            }
+            catch (Exception e) {
+                return BadRequest(new { Error = e.Message });
+            }
+        }
+
+        [HttpPut("{id:long}/reject")]
+        public IActionResult RejectEncounter(long id) {
+            try {
+                _encounterService.RejectEncounter(id);
+                return Ok(new { Message = "Encounter rejected successfully" });
+            }
+            catch (Exception e) {
+                return BadRequest(new { Error = e.Message });
+            }
+        }
+
+        [HttpGet("/pending")]
+        public IActionResult GetPendingPaged() {
+            var result = _encounterService.GetPendingRequest();
+            if (result.IsSuccess) {
+                return Ok(result.Value); // Map to HTTP 200 response with the data.
+            }
+            else {
+                return BadRequest(new { Error = result.Errors }); // Map to HTTP 400 response with errors.
+            }
+        }
+
     }
 }

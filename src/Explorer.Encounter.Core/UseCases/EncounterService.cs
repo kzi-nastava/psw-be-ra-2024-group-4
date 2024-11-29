@@ -5,6 +5,7 @@ using Explorer.Encounter.Core.Domain.RepositoryInterfaces;
 using Explorer.Encounter.API.Public;
 using FluentResults;
 using System.Collections;
+using RequestStatus = Explorer.Encounter.Core.Domain.RequestStatus;
 
 namespace Explorer.Encounter.Core.UseCases
 {
@@ -49,6 +50,23 @@ namespace Explorer.Encounter.Core.UseCases
             catch (Exception ex)
             {
                 return Result.Fail(ex.Message);
+            }
+        }
+        public Result<PagedResult<EncounterDto>> GetPendingRequest() {
+            try
+            {
+                var ret = _customEncounterRepository.GetPendingEncounters();
+                List<EncounterDto> encounterList = new List<EncounterDto>();
+                foreach (var item in ret.Result)
+                {
+                    encounterList.Add(MapToDto(item));
+                }
+
+                return Result.Ok(new PagedResult<EncounterDto>(encounterList, encounterList.Count()));
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(e.Message);
             }
         }
 
@@ -122,6 +140,8 @@ namespace Explorer.Encounter.Core.UseCases
             }
         }
 
+        
+
 
         public Result<EncounterDto> GetByLatLong(double lat, double lon)
         {
@@ -130,6 +150,35 @@ namespace Explorer.Encounter.Core.UseCases
 
             
             return Result.Ok(ret);
+        }
+
+        public void ApproveEncounter(long id)
+        {
+            try
+            {
+                var encounter = _encounterRepository.Get(id);
+                encounter.RequestStatus = RequestStatus.Public;
+                _encounterRepository.Update(encounter);
+
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Failed to approve encounter");
+            }
+        }
+
+        public void RejectEncounter(long id)
+        {
+            try
+            {
+                var encounter = _encounterRepository.Get(id);
+                encounter.RequestStatus = RequestStatus.Rejected;
+                _encounterRepository.Update(encounter);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Failed to reject pending encounter");
+            }
         }
     }
 }
