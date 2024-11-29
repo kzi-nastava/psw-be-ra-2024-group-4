@@ -96,7 +96,7 @@ namespace Explorer.API.Controllers.Encounter
             }
         }
 
-        [HttpGet("/pending")]
+        [HttpGet("pending")]
         public IActionResult GetPendingPaged() {
             var result = _encounterService.GetPendingRequest();
             if (result.IsSuccess) {
