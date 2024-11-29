@@ -102,7 +102,11 @@ namespace Explorer.Encounter.Core.UseCases
             List<EncounterDto> ret = new List<EncounterDto>();
             foreach (var item in filteredEncounters)
             {
-                ret.Add(MapToDto(item));
+                if (item.RequestStatus == RequestStatus.Public)
+                {
+                    ret.Add(MapToDto(item));
+                }
+                
             }
 
             return Result.Ok(new PagedResult<EncounterDto>(ret, filteredEncounters.Count()));
