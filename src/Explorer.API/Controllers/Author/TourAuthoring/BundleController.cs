@@ -56,5 +56,12 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpGet("byauthor/{authorId:long}")]
+        public ActionResult<PagedResult<BundleDto>> GetByAuthorId(long authorId)
+        {
+            var result = _bundleService.GetByAuthorId(authorId);
+            return CreateResponse(result);
+        }
+
     }
 }
