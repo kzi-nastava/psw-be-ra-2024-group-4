@@ -3,7 +3,6 @@
     "SocialData_RequiredParticipants", "SocialData_Radius", 
     "HiddenLocationData_ImageUrl", "HiddenLocationData_ActivationRadius", 
     "MiscData_ActionDescription", "Instances", "IsRequired")
-VALUES
     (-1, 'Mystic Forest Gathering', 
      'A mysterious gathering is taking place deep within the enchanted forest. Only the brave can join.', 
      45.45, 45.45, 5, 0, 0, 
