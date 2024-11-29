@@ -11,6 +11,8 @@
         public string ImageUrl { get; set; } // URL slike lokacije
         public string ImageBase64 {  get; set; }
         public double ActivationRadius { get; set; } // Radijus za aktivaciju izazova
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
     
     public class MiscDataDto

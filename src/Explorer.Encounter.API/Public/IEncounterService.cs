@@ -20,5 +20,7 @@ namespace Explorer.Encounter.API.Public
         void ApproveEncounter(long id);
         void RejectEncounter(long id);
         Result<PagedResult<EncounterDto>> GetPendingRequest();
+        Result<PagedResult<EncounterDto>> GetActiveForUser(long userId);
+
     }
 }

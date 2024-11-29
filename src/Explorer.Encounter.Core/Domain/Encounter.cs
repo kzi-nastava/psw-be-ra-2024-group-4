@@ -163,6 +163,8 @@ namespace Explorer.Encounter.Core.Domain
     {
         public string ImageUrl { get; private set; }
         public double ActivationRadius { get; private set; }
+        public double Longitude { get; private set; }
+        public double Latitude { get; private set; }
     }
 
     public class MiscData
