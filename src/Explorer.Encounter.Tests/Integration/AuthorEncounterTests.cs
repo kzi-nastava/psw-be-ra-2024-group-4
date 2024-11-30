@@ -4,6 +4,7 @@ using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Explorer.Encounter.API.Public;
 using Explorer.Encounter.Infrastructure.Database;
 using Explorer.Encounters.Tests;
+using Explorer.Stakeholders.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -73,7 +74,8 @@ public class AuthorEncounterTests : BaseEncountersIntegrationTest
 
     private static EncounterController CreateEncounterController(IServiceScope scope)
     {
-        return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>(), scope.ServiceProvider.GetRequiredService<IImageService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>())
+        return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>(), scope.ServiceProvider.GetRequiredService<IImageService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(),
+                                       scope.ServiceProvider.GetRequiredService<IPersonService>())
         {
             ControllerContext = BuildContext("-1")
         };
