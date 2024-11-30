@@ -67,7 +67,7 @@ namespace Explorer.Encounter.Core.Domain
                 throw new ArgumentException("Invalid user id.");
             }
 
-            if (SocialData != null)
+            if (SocialData != null && Type == EncounterType.Social)
             {
                 try
                 {
