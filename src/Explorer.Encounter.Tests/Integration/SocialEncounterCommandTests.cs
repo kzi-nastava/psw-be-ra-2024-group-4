@@ -1,6 +1,4 @@
-﻿using Explorer.API.Controllers.Author;
-using Explorer.API.Controllers.Tourist;
-using Explorer.Encounter.API.Dtos;
+﻿using Explorer.Encounter.API.Dtos;
 using Explorer.Encounter.API.Public;
 using Explorer.Encounter.Infrastructure.Database;
 using Microsoft.AspNetCore.Http;
@@ -8,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using System.Security.Claims;
-using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
-using Microsoft.Extensions.Logging;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Hosting;

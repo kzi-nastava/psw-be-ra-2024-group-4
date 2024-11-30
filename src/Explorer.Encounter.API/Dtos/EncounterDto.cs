@@ -26,6 +26,7 @@ namespace Explorer.Encounter.API.Dtos
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }
             public List<EncounterInstanceDto>? Instances { get; set; }
+            public bool IsRequired {  get; set; }
         }
     }
 
