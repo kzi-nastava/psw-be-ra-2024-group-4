@@ -3,6 +3,7 @@
     "SocialData_RequiredParticipants", "SocialData_Radius", 
     "HiddenLocationData_ImageUrl", "HiddenLocationData_ActivationRadius", 
     "MiscData_ActionDescription", "Instances", "IsRequired")
+    VALUES
     (-1, 'Mystic Forest Gathering', 
      'A mysterious gathering is taking place deep within the enchanted forest. Only the brave can join.', 
      45.45, 45.45, 5, 0, 0, 
@@ -18,4 +19,4 @@
     (-3, 'NewEncounter', 
          'Encounter wonderful description', 
          10.0, 45.0, 5, 0, 0, 
-         5, 1500, NULL, NULL, NULL, '[]', 'True');
+         5, 1500, NULL, NULL, NULL, '[]', True);
