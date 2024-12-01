@@ -16,5 +16,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
         ShoppingCart Update(ShoppingCart aggregateRoot);
         void Delete(int id);
         ShoppingCart Get(int id);
+       
     }
 }

@@ -37,7 +37,7 @@ public class ShoppingCartQueryTests : BasePaymentsIntegrationTest
 
     private static ShoppingCartController CreateController(IServiceScope scope)
     {
-        return new ShoppingCartController(scope.ServiceProvider.GetRequiredService<IShoppingCartService>())
+        return new ShoppingCartController(scope.ServiceProvider.GetRequiredService<IShoppingCartService>(), scope.ServiceProvider.GetRequiredService<ICouponService>())
         {
             ControllerContext = BuildContext("-1")
         };
