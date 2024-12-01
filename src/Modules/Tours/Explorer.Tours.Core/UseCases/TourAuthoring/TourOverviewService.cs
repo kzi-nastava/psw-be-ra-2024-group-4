@@ -120,6 +120,40 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return Result.Ok(pagedResult);
         }
 
+        public Result<TourOverviewDto> GetById(int id)
+        {
+            var tour = _tourRepository.GetWithKeyPoints(id);
+
+            var ret = tour.ToResult();
+
+            if (ret.IsFailed)
+            {
+                return Result.Fail(ret.Errors);
+            }
+
+            
+            
+            var tags = tour.Tags.Select(t => t.ToString()).ToList();
+
+            var newTourOverview = new TourOverviewDto()
+            {
+                TourId = tour.Id,
+                TourDescription = tour.Description,
+                Tags = tags,
+                TourDifficulty = tour.Difficulty,
+                TourName = tour.Name,
+                Price = Convert.ToDecimal(tour.Price),
+                FirstKeyPoint = _mapper.Map<KeyPointDto>(tour.KeyPoints.First()),
+                Reviews = new List<TourReviewDto>()
+            };
+
+            
+            
+
+            
+            return Result.Ok(newTourOverview);
+        }
+
         public Result<TourOverviewDto> GetAverageRating(long tourId)
         {
             var result = _tourReviewRepository.GetByTourId(tourId, 0, 0);

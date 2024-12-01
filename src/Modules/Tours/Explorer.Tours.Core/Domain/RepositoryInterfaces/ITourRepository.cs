@@ -14,7 +14,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
     {
         List<Tour> GetToursByUserId(long userId);
         List<Equipment> GetEquipment(long tourId);
-        void AddEquipmentToTour(long tourId, long equipmentId);
+        void AddEquipmentToTour(long tourId, List<long> equipmentIds);
         void RemoveEquipmentFromTour(long tourId, long equipmentId);
         Tour GetSpecificTourByUser(long id, long userId);
         public Tour GetById(long id);

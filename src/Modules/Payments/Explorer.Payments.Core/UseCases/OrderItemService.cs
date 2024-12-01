@@ -47,7 +47,8 @@ namespace Explorer.Payments.Core.UseCases
                     TourName = item.TourName,
                     Price = item.Price,
                     TourId = item.TourId,
-                    CartId = item.CartId
+                    CartId = item.CartId,
+                    IsBundle = item.IsBundle,
                 }).ToList();
 
                 return Result.Ok(result);

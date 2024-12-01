@@ -13,6 +13,7 @@ namespace Explorer.Payments.API.Dtos
         public decimal Price { get; set; }       
         public long TourId { get; set; }      
         public long CartId { get; set; }
+        public bool IsBundle { get; set; }
 
     }
 }
