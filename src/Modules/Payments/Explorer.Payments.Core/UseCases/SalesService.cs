@@ -14,46 +14,60 @@ namespace Explorer.Payments.Core.UseCases
         public SalesService(ICrudRepository<Sales> crudRepository, IMapper mapper) : base(crudRepository, mapper)
         {
         }
-        public Result<List<TourDto>> GetDiscountedTours(List<TourDto> allTours)
+
+        public void ApplySaleToTours(SalesDto sale, List<TourDto> allTours)
         {
-            
-            var activeSales = CrudRepository.GetPaged(1, int.MaxValue) 
+            foreach (var tour in allTours.Where(t => sale.TourIds.Contains((int)t.Id)))
+            {
+                tour.DiscountPrice = Math.Round(tour.Price - (tour.Price * sale.DiscountPercentage / 100), 2);
+            }
+        }
+        public Result<List<TourOverviewDto>> GetDiscountedTours(List<TourOverviewDto> allTours)
+        {
+            // Dobavljanje svih aktivnih popusta
+            var activeSales = CrudRepository.GetPaged(1, int.MaxValue)
                 .Results
                 .Where(s => s.StartDate <= DateTime.Now && s.EndDate >= DateTime.Now)
                 .ToList();
 
-            var discountedTours = new List<TourDto>();
+            var discountedTours = new List<TourOverviewDto>();
 
+            // Iteracija kroz sve aktivne akcije
             foreach (var sale in activeSales)
             {
+                // Iteracija kroz sve ture u akciji
                 foreach (var tourId in sale.TourIds)
                 {
-                    var tour = allTours.FirstOrDefault(t => t.Id == tourId);
+                    var tour = allTours.FirstOrDefault(t => t.TourId == tourId);
+
+                    // Ako je tura pronađena, primeni popust
                     if (tour != null)
                     {
-                        var discountedTour = new TourDto(
-                           id: tour.Id,
-                           name: tour.Name,
-                           description: tour.Description,
-                           difficulty: tour.Difficulty,
-                           tags: tour.Tags,
-                           userId: tour.UserId,
-                           status: tour.Status,
-                           price: tour.Price,
-                           discountedPrice: tour.Price * (1 - sale.DiscountPercentage / 100),
-                           lengthInKm: tour.LengthInKm,
-                           publishedTime: tour.PublishedTime,
-                           archivedTime: tour.ArchiveTime,
-                           equipmentIds: tour.EquipmentIds,
-                           keyPointIds: tour.KeyPoints.Select(k => k.Id).ToList()
-                       );
+                        // Proračun snižene cene
+                        var discountedPrice =(tour.Price * (1 - (decimal)sale.DiscountPercentage / 100));
 
-                        discountedTours.Add(discountedTour);
+                        // Kreiranje novog DTO objekta sa popustom
+                        var discountedTour = new TourOverviewDto()
+                        {
+                            TourId = tour.TourId,
+                            TourName = tour.TourName,
+                            TourDescription = tour.TourDescription,
+                            TourDifficulty = tour.TourDifficulty,
+                            Tags = tour.Tags,
+                            Price = discountedPrice,  // Snižena cena
+                            OriginalPrice = tour.Price, // Originalna cena
+                            DiscountPercentage = (decimal)sale.DiscountPercentage, // Popust u procentima
+                            FirstKeyPoint = tour.FirstKeyPoint,  // Prvi ključni trenutak
+                            Reviews = tour.Reviews,  // Recenzije
+                            AverageRating = tour.AverageRating  // Prosečna ocena
+                        };
+
+                        discountedTours.Add(discountedTour);  // Dodaj turu sa popustom u listu
                     }
                 }
             }
 
-            return Result.Ok(discountedTours);
+            return Result.Ok(discountedTours);  // Vratite sve ture sa popustom
         }
 
 
@@ -69,6 +83,7 @@ namespace Explorer.Payments.Core.UseCases
 
             return Result.Ok(salesDtos);
         }
+
     }
 
 }

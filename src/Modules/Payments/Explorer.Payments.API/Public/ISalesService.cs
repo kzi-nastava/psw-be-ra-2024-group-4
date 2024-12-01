@@ -14,7 +14,7 @@ namespace Explorer.Payments.API.Public
         Result<SalesDto> Create(SalesDto salesDto);
         Result Delete(int salesId);
         Result<SalesDto> Update(SalesDto salesDto);
-        public Result<List<TourDto>> GetDiscountedTours(List<TourDto> allTours);
+        public Result<List<TourOverviewDto>> GetDiscountedTours(List<TourOverviewDto> allTours);
         Result<List<SalesDto>> GetAll(long userId);
 
 

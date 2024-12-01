@@ -1,4 +1,5 @@
-﻿using Explorer.Payments.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,6 +32,28 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
                   .Where(s => s.AuthorId == userId)
                   .ToList();
 
+        }
+
+        public PagedResult<Sales> GetPaged(int page, int pageSize)
+        {
+            if (page < 1) page = 1;
+
+            var totalSalesCount = _dbSet.Count();
+
+            var skip = (page - 1) * pageSize;
+
+            var sales = _dbSet
+                .Skip(skip)
+                .Take(pageSize)
+                .ToList();
+
+            return new PagedResult<Sales>(sales, totalSalesCount);
+        }
+        public List<Sales> GetAll()
+        {
+            
+            return _dbContext.Set<Sales>()
+                .ToList();
         }
     }
 }

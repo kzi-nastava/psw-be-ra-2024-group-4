@@ -16,7 +16,7 @@ namespace Explorer.Tours.API.Dtos
         public List<TourTags> Tags { get;  set; }
         public TourStatus Status { get; set; }
         public double Price { get;  set; }
-        public double DiscountedPrice { get; set; }
+        public double DiscountPrice { get; set; }
         public long UserId { get;  set; }
         public double LengthInKm { get; set; }
         public DateTime PublishedTime { get; set; }
@@ -67,7 +67,7 @@ namespace Explorer.Tours.API.Dtos
 
             Status = status;
             Price = price;
-            DiscountedPrice = discountedPrice;
+            DiscountPrice = discountedPrice;
             LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
             PublishedTime = publishedTime;
