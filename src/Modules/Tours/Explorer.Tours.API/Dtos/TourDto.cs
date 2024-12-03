@@ -16,6 +16,7 @@ namespace Explorer.Tours.API.Dtos
         public List<TourTags> Tags { get;  set; }
         public TourStatus Status { get; set; }
         public double Price { get;  set; }
+        public double DiscountPrice { get; set; }
         public long UserId { get;  set; }
         public double LengthInKm { get; set; }
         public DateTime PublishedTime { get; set; }
@@ -41,6 +42,32 @@ namespace Explorer.Tours.API.Dtos
 
             Status = status;
             Price = price;
+            LengthInKm = lengthInKm;
+            EquipmentIds = equipmentIds;
+            PublishedTime = publishedTime;
+            ArchiveTime = archivedTime;
+
+
+        }
+
+        public TourDto(long id, string name, string? description, string? difficulty, List<TourTags> tags, long userId, TourStatus status, double price, double discountedPrice,  double lengthInKm, DateTime publishedTime, DateTime archivedTime, List<long> equipmentIds, List<long> keyPointIds)
+
+        {
+            Id = id;
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
+            Name = name;
+            Description = description;
+            Difficulty = difficulty;
+            if (tags == null || tags.Count == 0)
+            { tags = new List<TourTags>(); }
+            Tags = tags;
+            if (userId <= 0)
+                throw new ArgumentException("Invalid UserId. UserId must be a positive number.");
+            UserId = userId;
+
+            Status = status;
+            Price = price;
+            DiscountPrice = discountedPrice;
             LengthInKm = lengthInKm;
             EquipmentIds = equipmentIds;
             PublishedTime = publishedTime;
