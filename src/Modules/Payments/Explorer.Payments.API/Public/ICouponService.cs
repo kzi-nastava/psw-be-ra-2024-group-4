@@ -18,6 +18,7 @@ namespace Explorer.Payments.API.Public
 
         Result<CouponDto> Get(string promoCode);
 
+
         Result<CouponDto> GetByTourId(int id);
     }
 }

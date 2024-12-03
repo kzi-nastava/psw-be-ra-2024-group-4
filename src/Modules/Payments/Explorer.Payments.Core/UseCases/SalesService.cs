@@ -7,6 +7,7 @@ using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.API.Dtos;
 using FluentResults;
 
+
 namespace Explorer.Payments.Core.UseCases
 {
     public class SalesService : CrudService<SalesDto, Sales>, ISalesService
@@ -14,6 +15,7 @@ namespace Explorer.Payments.Core.UseCases
         public SalesService(ICrudRepository<Sales> crudRepository, IMapper mapper) : base(crudRepository, mapper)
         {
         }
+
 
         public void ApplySaleToTours(SalesDto sale, List<TourDto> allTours)
         {

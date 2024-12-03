@@ -12,7 +12,7 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     {
         Coupon Get(string promoCode);
         PagedResult<Coupon> GetAll(int authorId,int page, int pageSize);  
-
         Coupon Get(int tourId);
+
     }
 }
