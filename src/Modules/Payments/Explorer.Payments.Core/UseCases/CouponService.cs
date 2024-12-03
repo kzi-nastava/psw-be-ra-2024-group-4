@@ -55,11 +55,13 @@ namespace Explorer.Payments.Core.UseCases
            return MapToDto(result);
         }
 
+
         public Result<CouponDto> GetByTourId(int id)
         {
            var result=_couponRepository.Get(id); 
            return MapToDto(result);
         }
+
     }
 
 

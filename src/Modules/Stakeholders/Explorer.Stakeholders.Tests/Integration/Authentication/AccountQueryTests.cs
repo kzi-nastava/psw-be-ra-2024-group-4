@@ -4,6 +4,7 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Administration;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -37,7 +38,10 @@ namespace Explorer.Stakeholders.Tests.Integration.Authentication
 
         private static AccountController CreateController(IServiceScope scope)
         {
-            return new AccountController(scope.ServiceProvider.GetRequiredService<IAccountService>());
+            return new AccountController
+                (scope.ServiceProvider.GetRequiredService<IAccountService>(),
+                scope.ServiceProvider.GetRequiredService<IPersonService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(),
+                scope.ServiceProvider.GetRequiredService<IImageService>());
         }
     }
 }
