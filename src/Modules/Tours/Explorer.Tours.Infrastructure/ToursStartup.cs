@@ -25,6 +25,10 @@ using Explorer.Tours.Core.UseCases.Execution;
 using Explorer.Tours.Infrastructure.Database.Repositories.Execution;
 
 using Explorer.Tours.Core.Domain.TourExecutions;
+using Explorer.Payments.API.Public;
+using Explorer.Payments.Core.UseCases;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
+using Explorer.Payments.Infrastructure.Database.Repositories;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -57,6 +61,7 @@ public static class ToursStartup
         services.AddScoped<ITourOverviewService, TourOverviewService>();
 
         services.AddScoped<IImageService, ImageService>();
+        services.AddScoped<ISalesService, SalesService>();
 
     }
 
@@ -84,5 +89,7 @@ public static class ToursStartup
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "tours")));
+
+        services.AddScoped<ISalesRepository, SalesRepository>();
     }
 }

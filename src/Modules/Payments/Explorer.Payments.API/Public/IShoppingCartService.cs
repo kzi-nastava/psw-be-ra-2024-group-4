@@ -16,4 +16,7 @@ public interface IShoppingCartService
     Result<List<ShoppingCartDto>> GetAll(long userId);
     Result<decimal> CalculateTotalPrice(long cartId);
     Result<ShoppingCartDto> Get(int cardId);
+    Result<ShoppingCartDto> ApplyCoupon(int cartId, string promoCode);
+
+
 }

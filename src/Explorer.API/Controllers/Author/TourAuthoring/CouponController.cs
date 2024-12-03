@@ -42,5 +42,11 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpGet("tour/{tourId:int}")]
+        public ActionResult<CouponDto> GetByTourId(int tourId)
+        {
+            var result = _couponService.GetByTourId(tourId);
+            return CreateResponse(result);
+        }
     }
 }

@@ -22,5 +22,29 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var result = _salesService.Create(salesDto);
             return CreateResponse(result);
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<SalesDto> Update(int id, [FromBody] SalesDto salesDto)
+        {
+            salesDto.Id = id;
+            var result = _salesService.Update(salesDto);
+            return CreateResponse(result);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _salesService.Delete(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet]
+        public ActionResult<List<SalesDto>> GetAll(int userId)
+        {
+
+            var result = _salesService.GetAll(userId);
+            return CreateResponse(result);
+        }
+
     }
 }

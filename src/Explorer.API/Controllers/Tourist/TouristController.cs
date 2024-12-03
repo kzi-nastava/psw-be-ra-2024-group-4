@@ -40,5 +40,17 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourService.GetWithKeyPoints(tourId);
             return CreateResponse(result);
         }
+        [HttpGet("getAuthor/{tourId:int}")]
+        public ActionResult<long> GetAuthorId(int tourId)
+        {
+            var result = _tourService.GetTourById(tourId);
+            if (result.IsFailed || result.Value == null)
+            {
+                return NotFound("Tour not found.");
+            }
+
+            // Pretpostavlja se da `UserId` predstavlja autora ture
+            return Ok(result.Value.UserId);
+        }
     }
 }
