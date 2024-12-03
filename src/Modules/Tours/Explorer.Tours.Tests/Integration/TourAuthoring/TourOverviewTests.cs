@@ -2,9 +2,11 @@
 using Explorer.API.Controllers.Author.TourAuthoring;
 using Explorer.API.Controllers.Tourist;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.API.Public.TourAuthoring.KeypointAddition;
+using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.UseCases.TourAuthoring;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +62,21 @@ namespace Explorer.Tours.Tests.Integration.TourAuthoring
             
             result.ShouldNotBeNull();
             result.TotalCount.ShouldBe(2);
+        }
+
+        [Fact]
+        public void Get_by_id()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            var result = ((ObjectResult)controller.GetById(-1).Result)?.Value as TourOverviewDto;
+
+
+            result.ShouldNotBeNull();
+            result.Tags.Count.ShouldBe(3);
+            
         }
 
         private static TourOverviewController CreateController(IServiceScope scope)
