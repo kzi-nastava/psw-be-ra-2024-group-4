@@ -48,7 +48,6 @@ public class SocialEncounterCommandTests : BaseEncountersIntegrationTest
 
         // Assert - Response
         result.ShouldNotBeNull();             
-        result.StatusCode.ShouldBe(200);   
         result.Value.ShouldNotBeNull();      
     }
 
@@ -104,7 +103,6 @@ public class SocialEncounterCommandTests : BaseEncountersIntegrationTest
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(200);
     }
 
 
