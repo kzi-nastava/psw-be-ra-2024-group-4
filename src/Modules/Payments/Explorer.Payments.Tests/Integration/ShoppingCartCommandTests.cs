@@ -102,9 +102,114 @@ public class ShoppingCartCommandTests : BasePaymentsIntegrationTest
     }
 
 
+    [Fact]
+    public void GetCouponByPromoCode_ReturnsCoupon()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var validPromoCode = "SAVE1057"; // Pretpostavka: validan promo kod postoji u bazi
+
+        // Act
+        var actionResult = controller.GetCouponByPromoCode(validPromoCode);
+        var okResult = actionResult.Result as OkObjectResult; // Proverava da li je rezultat OkObjectResult
+        var result = okResult?.Value as CouponDto;
+
+        // Assert
+        result.ShouldNotBeNull();
+        result.PromoCode.ShouldBe(validPromoCode);
+    }
+
+    [Fact]
+    public void GetCouponByPromoCode_ReturnsBadRequest_ForInvalidPromoCode()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var invalidPromoCode = "grgr"; 
+
+        // Act
+        var actionResult = controller.GetCouponByPromoCode(invalidPromoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult; 
+
+        // Assert
+        badRequestResult.ShouldNotBeNull();
+        badRequestResult.StatusCode.ShouldBe(400); 
+        var errors = badRequestResult.Value as List<string>;
+        errors.ShouldNotBeNull();
+        errors.First().ShouldBe("Coupon with the provided promo code does not exist.");
+    }
+
+
+
+    [Fact]
+    public void ApplyCoupon_AppliesCouponSuccessfully()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var cartId = -1; 
+        var promoCode = "WINTER15"; 
+
+        // Act
+        var actionResult = controller.ApplyCoupon(cartId, promoCode);
+        var okResult = actionResult.Result as OkObjectResult; 
+        var result = okResult?.Value as ShoppingCartDto;
+
+        // Assert
+        okResult.ShouldNotBeNull();
+        okResult.StatusCode.ShouldBe(200); 
+        result.ShouldNotBeNull();
+        result.Id.ShouldBe(cartId);
+    }
+
+    [Fact]
+    public void ApplyCoupon_ReturnsBadRequest_ForInvalidCartId()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var invalidCartId = -999; 
+        var promoCode = "WINTER15";
+
+        // Act
+        // Act
+        var actionResult = controller.ApplyCoupon(invalidCartId, promoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult;
+        var errorMessage = badRequestResult?.Value as string; 
+
+        // Assert
+        badRequestResult.ShouldNotBeNull();
+        badRequestResult.StatusCode.ShouldBe(400); 
+        errorMessage.ShouldBe("Cart not found.");
+    }
+
+    [Fact]
+    public void ApplyCoupon_ReturnsBadRequest_ForExpiredCoupon()
+    {
+        // Arrange
+        using var scope = Factory.Services.CreateScope();
+        var controller = CreateController(scope);
+        var cartId = -2;
+        var expiredPromoCode = "SPRING20"; 
+
+        // Act
+        var actionResult = controller.ApplyCoupon(cartId, expiredPromoCode);
+        var badRequestResult = actionResult.Result as BadRequestObjectResult; 
+        var errorMessage = badRequestResult?.Value as string; 
+
+        // Assert
+        badRequestResult.ShouldNotBeNull();
+        badRequestResult.StatusCode.ShouldBe(400); 
+        errorMessage.ShouldBe("Coupon has expired.");
+    }
+
+
     private static ShoppingCartController CreateController(IServiceScope scope)
     {
-        return new ShoppingCartController(scope.ServiceProvider.GetRequiredService<IShoppingCartService>())
+        return new ShoppingCartController(
+            scope.ServiceProvider.GetRequiredService<IShoppingCartService>(),
+            scope.ServiceProvider.GetRequiredService<ICouponService>())
         {
             ControllerContext = BuildContext("-1")
         };

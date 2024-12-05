@@ -17,5 +17,8 @@ namespace Explorer.Payments.API.Public
         Result<PagedResult<CouponDto>> GetAll(int authorId,int page,int pageSize);
 
         Result<CouponDto> Get(string promoCode);
+
+
+        Result<CouponDto> GetByTourId(int id);
     }
 }

@@ -39,10 +39,10 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
-        [HttpPost("{tourId:int}/equipment/{equipmentId:int}")]
-        public ActionResult AddEquipmentToTour(int tourId, int equipmentId)
+        [HttpPost("{tourId:int}/equipment")]
+        public ActionResult AddEquipmentToTour(int tourId,[FromBody] List<long> equipmentIds)
         {
-            var result = _tourService.AddEquipmentToTour(tourId, equipmentId);
+            var result = _tourService.AddEquipmentToTour(tourId, equipmentIds);
             return CreateResponse(result);
         }
 
