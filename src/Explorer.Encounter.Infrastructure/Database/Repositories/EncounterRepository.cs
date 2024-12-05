@@ -11,10 +11,12 @@ namespace Explorer.Encounter.Infrastructure.Database.Repositories
     public class EncounterRepository : IEncounterRepository
     {
         private readonly EncounterContext _context;
+        private readonly DbSet<Core.Domain.Encounter> _dbSet;
 
         public EncounterRepository(EncounterContext context)
         {
             _context = context;
+            _dbSet = context.Set<Core.Domain.Encounter>();
         }
 
         public async Task<Core.Domain.Encounter?> GetByIdAsync(Guid id)
@@ -40,5 +42,18 @@ namespace Explorer.Encounter.Infrastructure.Database.Repositories
                 .Where(c => c.Status == Core.Domain.EncounterStatus.Active)
                 .ToListAsync();
         }
+
+        public Core.Domain.Encounter GetById(long id)
+        {
+            var entity = _dbSet.First(x => x.Id == id);
+            if (entity == null) throw new KeyNotFoundException("Not found: " + id);
+            return entity;
+        }
+
+        public async Task<List<Core.Domain.Encounter>> GetPendingEncounters()
+        {
+            return _context.Encounters.Where(c => c.RequestStatus == Core.Domain.RequestStatus.Pending).ToList();
+        }
+
     }
 }
