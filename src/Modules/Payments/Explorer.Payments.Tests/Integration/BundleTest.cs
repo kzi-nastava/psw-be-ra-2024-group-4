@@ -28,7 +28,7 @@ namespace Explorer.Payments.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
             var newEntity = new BundleDto
             {
-                Id=-1,
+               // Id=-1,
                 Name = "Rimsko jezero",
                 Price = 1000,
                 TourIds = new List<long> { 1, 2 },
@@ -78,10 +78,10 @@ namespace Explorer.Payments.Tests.Integration
             result.Id.ShouldBe(updatedEntity.Id);
 
             // Assert - Database
-            var storedEntity = dbContext.Bundles.FirstOrDefault(i => i.Status == Core.Domain.Bundle.BundleStatus.PUBLISHED);
+            var storedEntity = dbContext.Bundles.FirstOrDefault(i => i.Name == "Rimsko jezero");//dbContext.Bundles.FirstOrDefault(i => i.Status == Core.Domain.Bundle.BundleStatus.PUBLISHED);
             storedEntity.ShouldNotBeNull();
             storedEntity.Name.ShouldBe(updatedEntity.Name);
-            var oldEntity = dbContext.Bundles.FirstOrDefault(i => i.Status == Core.Domain.Bundle.BundleStatus.DRAFT);
+            var oldEntity = dbContext.Bundles.FirstOrDefault(i => i.Name == "Divlji zapad");//dbContext.Bundles.FirstOrDefault(i => i.Status == Core.Domain.Bundle.BundleStatus.DRAFT);
             oldEntity.ShouldBeNull();
         }
 
@@ -94,14 +94,14 @@ namespace Explorer.Payments.Tests.Integration
             var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
 
             // Act
-            var result = (OkResult)controller.Delete(-1);
+            var result = (OkResult)controller.Delete(-2);
 
             // Assert - Response
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             // Assert - Database
-            var storedCourse = dbContext.ShoppingCarts.FirstOrDefault(i => i.Id == -1);
+            var storedCourse = dbContext.Bundles.FirstOrDefault(i => i.Id == -2);
             storedCourse.ShouldBeNull();
         }
 
