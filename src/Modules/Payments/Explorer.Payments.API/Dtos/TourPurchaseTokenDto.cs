@@ -13,7 +13,8 @@ namespace Explorer.Payments.API.Dtos
 
         public long CartId { get; set; }
         public long TourId { get; set; }
-       // public DateTime PurchaseDate { get; set; }
+        public decimal Price { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
       //  public long OrderId { get; set; }
     }

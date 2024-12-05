@@ -22,6 +22,7 @@ namespace Explorer.Stakeholders.API.Dtos
         {
             PROBLEM,
             MESSAGE,
+            PURCHASE,
             OTHER
         }
     }

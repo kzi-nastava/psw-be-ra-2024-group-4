@@ -88,17 +88,17 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             var tourId = -1;
-            var equipmentId = -3;
+            var equipmentIds = new List<long> { -3, -4 };
 
             // Act
-            var result = (OkResult)controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = (OkResult)controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
             result.ShouldNotBeNull();
             result.StatusCode.ShouldBe(200);
 
             // Assert-Database
-            var equipmentIds = dbContext.Tour
+            var equipmentIdss = dbContext.Tour
             .Where(t => t.Id == tourId)
             .ToList() 
             .SelectMany(t => t.EquipmentIds) 
@@ -122,10 +122,10 @@ namespace Explorer.Tours.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
             var tourId = -999; 
-            var equipmentId = -3; 
+            var equipmentIds = new List<long> { -3, -4}; 
 
             // Act
-            var result = controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
             var objectResult = result.ShouldBeOfType<ObjectResult>();
@@ -133,23 +133,28 @@ namespace Explorer.Tours.Tests
         }
 
         [Fact]
-        public void Add_equipment_to_tour_fails_invalid_equipmentId()
-        {
+        public void Add_equipment_to_tour_fails_invalid_equipmentIds() {
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
 
-            var tourId = -1; 
-            var equipmentId = -999; 
+            // Invalid tour ID and equipment IDs
+            var tourId = -2;
+            var equipmentIds = new List<long> { -333, -444 };
+
+            foreach (var equipmentId in equipmentIds) {
+                dbContext.Equipment.Find(equipmentId).ShouldBeNull();
+            }
 
             // Act
-            var result = controller.AddEquipmentToTour(tourId, equipmentId);
+            var result = controller.AddEquipmentToTour(tourId, equipmentIds);
 
             // Assert
-            var objectResult = result.ShouldBeOfType<ObjectResult>();
-            objectResult.StatusCode.ShouldBe(404); 
+            var objectResult = result.ShouldBeOfType<OkResult>();
+            objectResult.StatusCode.ShouldBe(200);
         }
+
 
         [Fact]
         public void Remove_equipment_from_tour_success()
