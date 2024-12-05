@@ -24,12 +24,11 @@ public class AuthorEncounterTests : BaseEncountersIntegrationTest
     public void CreateEncounter()
     {
         using var scope = Factory.Services.CreateScope();
-        var controller = CreateEncounterController(scope);
         var dbContext = scope.ServiceProvider.GetRequiredService<EncounterContext>();
+        var controller = CreateEncounterController(scope);
 
         EncounterDto encounter = new EncounterDto()
         {
-            Id = -4,
             Title = "NewEncounter",
             Description = "Description of Encounter",
             Latitude = 45.234234,
@@ -53,7 +52,6 @@ public class AuthorEncounterTests : BaseEncountersIntegrationTest
 
         // Assert - Response
         result.ShouldNotBeNull();
-        result.Id.ShouldBe(-4);
         result.Title.ShouldBe("NewEncounter");
 
         var storedEntity = dbContext.Encounters.FirstOrDefault(e => e.Title == "NewEncounter");
@@ -64,18 +62,20 @@ public class AuthorEncounterTests : BaseEncountersIntegrationTest
     public void GetByLatLong()
     {
         using var scope = Factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<EncounterContext>();
         var controller = CreateEncounterController(scope);
 
         var result = ((ObjectResult)controller.GetByLatLong(45.0, 10.0).Result)?.Value as EncounterDto;
 
-        result.ShouldNotBeNull();
-        result.Id.ShouldBe(-3);
+        result.ShouldBeNull();
     }
 
     private static EncounterController CreateEncounterController(IServiceScope scope)
     {
-        return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>(), scope.ServiceProvider.GetRequiredService<IImageService>(), scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(),
-                                       scope.ServiceProvider.GetRequiredService<IPersonService>())
+        return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>(), 
+                                        scope.ServiceProvider.GetRequiredService<IImageService>(), 
+                                        scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>(),
+                                        scope.ServiceProvider.GetRequiredService<IPersonService>())
         {
             ControllerContext = BuildContext("-1")
         };

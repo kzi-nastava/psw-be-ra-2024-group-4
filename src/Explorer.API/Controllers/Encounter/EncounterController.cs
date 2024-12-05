@@ -80,6 +80,7 @@ namespace Explorer.API.Controllers.Encounter
         {
             return CreateResponse(_encounterService.GetByLatLong(latitude, longitude));
         }
+
         [HttpPut("{id:long}/approve")]
         public IActionResult ApproveEncounter(long id) {
             try {

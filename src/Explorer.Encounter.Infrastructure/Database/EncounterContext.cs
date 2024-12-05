@@ -47,7 +47,7 @@ namespace Explorer.Encounter.Infrastructure.Database
                 });
             });
 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
         }
     }
 }
