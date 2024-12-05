@@ -29,20 +29,19 @@ public static class BlogStartup
     
     private static void SetupCore(IServiceCollection services)
     {
-
-       services.AddScoped<ICommentService, CommentService>();
+        services.AddScoped<ICommentService, CommentService>();
         services.AddScoped<IPostService, PostService>();
         services.AddScoped<IImageService, ImageService>();
-
+        services.AddScoped<IAdvertisementService, AdvertisementService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
 
         services.AddScoped(typeof(ICrudRepository<Comment>), typeof(CrudDatabaseRepository<Comment, BlogContext>));
-
         services.AddScoped<IPostRepository, PostDatabaseRepository>();
-      
+        services.AddScoped(typeof(ICrudRepository<Advertisement>), typeof(CrudDatabaseRepository<Advertisement, BlogContext>));
+
         services.AddDbContext<BlogContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("blog"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "blog")));

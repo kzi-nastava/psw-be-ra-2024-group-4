@@ -8,8 +8,8 @@ public class BlogContext : DbContext
 {
 
     public DbSet<Comment> Comments { get; set; }
-
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Advertisement> Advertisements { get; set; }
 
     public BlogContext(DbContextOptions<BlogContext> options) : base(options) {}
 

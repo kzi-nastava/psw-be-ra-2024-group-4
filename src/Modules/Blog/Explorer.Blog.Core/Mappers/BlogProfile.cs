@@ -16,6 +16,7 @@ public class BlogProfile : Profile
             .ForMember(dest => dest.Ratings, opt => opt.MapFrom(src => src.Ratings.Select(r => new Rating(r.UserId, r.Value, r.CreatedAt))))
             .ReverseMap()
             .ForMember(dest => dest.Ratings, opt => opt.MapFrom(src => src.Ratings.Select(r => new RatingDto { UserId = r.UserId, Value = r.Value, CreatedAt = r.CreatedAt })));
+        CreateMap<AdvertisementDto, Advertisement>();
     }
 
 }
