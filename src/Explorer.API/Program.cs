@@ -1,6 +1,8 @@
 using Explorer.API.Startup;
+using Explorer.API.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddControllers();
 builder.Services.ConfigureSwagger(builder.Configuration);
@@ -10,7 +12,18 @@ builder.Services.ConfigureAuth();
 
 builder.Services.RegisterModules();
 
+/* Zakomentarisati DatabaseInitializer i DatabaseInitializerService pri pokretanju testova */
+/* Druga opcija je pokrenuti samo jednom pred kontrolnu tacku bez komentarisanja, pa posle raditi normalno */
+
+/*builder.Services.AddTransient<DatabaseInitializer>();
+builder.Services.AddHostedService<DatabaseInitializerService>(); */
+
+ 
+
+
 var app = builder.Build();
+
+
 
 if (app.Environment.IsDevelopment())
 {
