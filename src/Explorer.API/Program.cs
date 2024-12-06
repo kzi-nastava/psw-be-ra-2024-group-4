@@ -12,11 +12,11 @@ builder.Services.ConfigureAuth();
 
 builder.Services.RegisterModules();
 
-/* Zakomentarisati DatabaseInitializer i DatabaseInitializerService pri pokretanju testova */
+ /*Zakomentarisati DatabaseInitializer i DatabaseInitializerService pri pokretanju testova */
 /* Druga opcija je pokrenuti samo jednom pred kontrolnu tacku bez komentarisanja, pa posle raditi normalno */
 
-/*builder.Services.AddTransient<DatabaseInitializer>();
-builder.Services.AddHostedService<DatabaseInitializerService>(); */
+builder.Services.AddTransient<DatabaseInitializer>();
+builder.Services.AddHostedService<DatabaseInitializerService>(); 
 
  
 

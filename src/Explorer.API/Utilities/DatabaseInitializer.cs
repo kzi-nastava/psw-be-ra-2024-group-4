@@ -1,4 +1,5 @@
 ﻿using Explorer.Blog.Infrastructure.Database;
+using Explorer.Encounter.Infrastructure.Database;
 using Explorer.Payments.Infrastructure.Database;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database;
@@ -23,6 +24,26 @@ public class DatabaseInitializer
 
         var scriptPath = Path.Combine(
          AppContext.BaseDirectory, "..", "..", "..", "Scripts", "Stakeholders", "stakeholders-data.sql");
+
+        // Normalize the path for different environments
+        scriptPath = Path.GetFullPath(scriptPath);
+
+        if (!File.Exists(scriptPath))
+        {
+            throw new FileNotFoundException($"SQL script not found at path: {scriptPath}");
+        }
+        var sql = await File.ReadAllTextAsync(scriptPath);
+
+        await dbContext.Database.ExecuteSqlRawAsync(sql);
+    }
+
+    public async Task EncountersDatabaseAsync(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<EncounterContext>();
+
+        var scriptPath = Path.Combine(
+         AppContext.BaseDirectory, "..", "..", "..", "Scripts", "Encounters", "encounters-data.sql");
 
         // Normalize the path for different environments
         scriptPath = Path.GetFullPath(scriptPath);

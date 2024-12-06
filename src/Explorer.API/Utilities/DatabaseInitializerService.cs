@@ -24,6 +24,7 @@
                     await initializer.ToursDatabaseAsync(services);
                     await initializer.BlogsDatabaseAsync(services);
                     await initializer.PaymentsDatabaseAsync(services);
+                    await initializer.EncountersDatabaseAsync(services);
                 }
                 catch (Exception ex)
                 {

@@ -1,44 +1,38 @@
 /****** PAYMENTS MODULE ******/
 
+DELETE FROM payments."PaymentRecords";
 DELETE FROM payments."PurchaseTokens";
 DELETE FROM payments."OrderItems";
 DELETE FROM payments."ShoppingCarts";
+DELETE FROM payments."Coupons";
+DELETE FROM payments."Bundles";
 
 /* ShoppingCarts */
 
-INSERT INTO payments."ShoppingCarts"(
-	"Id", "UserId")
-	VALUES (-1, -12);
 
-INSERT INTO payments."ShoppingCarts"(
-	"Id", "UserId")
-	VALUES (-2, -13);
-
-INSERT INTO payments."ShoppingCarts"(
-	"Id", "UserId")
-	VALUES (-3, -21);
 
 /* OrderItems */
 
-INSERT INTO payments."OrderItems"(
-    "Id", "TourName", "Price", "TourId", "CartId")
-VALUES 
-    (-1, 'Tour A', 150.00, 1, -1),
-    (-2, 'Tour B', 200.00, 2, -1),
-    (-3, 'Tour C', 120.00, 3, -2),
-    (-4, 'Tour D', 180.00, 4, -2),
-    (-5, 'Tour E', 250.00, 5, -3);
+
 
 /* PurchaseTokens */
 
-INSERT INTO payments."PurchaseTokens"(
-	"Id", "CartId", "UserId", "TourId")
-	VALUES (-1, -1, -12, -1);
 
-INSERT INTO payments."PurchaseTokens"(
-	"Id", "CartId", "UserId", "TourId")
-	VALUES (-2, -1, -12, -2);
+/* PaymentRecords */
 
-INSERT INTO payments."PurchaseTokens"(
-	"Id", "CartId", "UserId", "TourId")
-	VALUES (-3, -2, -13, -3);
+
+/* Coupons */
+
+
+/* Bundles */
+
+INSERT INTO payments."Bundles"(
+	"Id", "Name", "Price", "Status", "TourIds", "AuthorId")
+	VALUES 
+	  (225, 'Bundle1', 55, 1, ARRAY[225, 226]::integer[], 227);
+INSERT INTO payments."Bundles"(
+	"Id", "Name", "Price", "Status", "TourIds", "AuthorId")
+	VALUES 
+	 (226, 'Bundle1', 35, 1, ARRAY[226]::integer[], 227);
+
+
