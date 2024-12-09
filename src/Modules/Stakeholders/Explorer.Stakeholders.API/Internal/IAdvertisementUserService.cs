@@ -8,6 +8,5 @@ namespace Explorer.Stakeholders.API.Internal
     {
         Result<List<UserDto>> GetAllUsers();
         Result<List<ClubDto>> GetAllClubs();
-        Result<List<TourPreferenceDto>> GetByTouristId(int touristId);
     }
 }
