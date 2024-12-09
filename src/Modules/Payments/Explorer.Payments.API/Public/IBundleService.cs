@@ -19,4 +19,5 @@ public interface IBundleService
     Result<BundleDto> Get(int bundleId);
 
     Result<PagedResult<BundleDto>> GetPaged(int page, int pageSize);
+    Result<PagedResult<BundleDto>> GetByAuthorId(long authorId);
 }

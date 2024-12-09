@@ -56,7 +56,7 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public ActionResult Get(int id)
         {
