@@ -10,6 +10,7 @@ namespace Explorer.Encounter.API.Dtos
     {
         public enum EncounterStatus { Active, Draft, Archived }
         public enum EncounterType { Social, HiddenLocation, Misc }
+        public enum RequestStatus {Pending,Rejected,Public}
         public class EncounterDto
         {
             public long Id { get; set; } 
@@ -20,16 +21,12 @@ namespace Explorer.Encounter.API.Dtos
             public int XP { get; set; }
             public EncounterStatus Status { get; set; } 
             public EncounterType Type { get; set; } 
-            public object Data { get; set; } // ovde se mogu smestati vrednosti za Encounetr Types, sve ih prima
-            /*
-                Ako se ne mozete snaci sa Data, koristite ovo:
-
+            public RequestStatus RequestStatus { get; set; }
             public SocialDataDto? SocialData { get; set; }
             public HiddenLocationDataDto? HiddenLocationData { get; set; }
             public MiscDataDto? MiscData { get; set; }
-             */
-
-
+            public List<EncounterInstanceDto>? Instances { get; set; }
+            public bool IsRequired {  get; set; }
         }
     }
 

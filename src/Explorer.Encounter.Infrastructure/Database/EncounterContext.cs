@@ -21,7 +21,10 @@ namespace Explorer.Encounter.Infrastructure.Database
             // Configure owned types for Encounter
             modelBuilder.Entity<Core.Domain.Encounter>(builder =>
             {
-                builder.OwnsOne(e => e.HiddenLocationDetails, hidden =>
+                builder.Property(e => e.Instances)
+                    .HasColumnType("jsonb");
+
+                builder.OwnsOne(e => e.HiddenLocationData, hidden =>
                 {
                     hidden.Property(h => h.ImageUrl)
                           .IsRequired(false); // Optional property
@@ -29,7 +32,7 @@ namespace Explorer.Encounter.Infrastructure.Database
                           .IsRequired(); // Required property
                 });
 
-                builder.OwnsOne(e => e.SocialDetails, social =>
+                builder.OwnsOne(e => e.SocialData, social =>
                 {
                     social.Property(s => s.RequiredParticipants)
                           .IsRequired();
@@ -37,14 +40,14 @@ namespace Explorer.Encounter.Infrastructure.Database
                           .IsRequired();
                 });
 
-                builder.OwnsOne(e => e.MiscDetails, misc =>
+                builder.OwnsOne(e => e.MiscData, misc =>
                 {
                     misc.Property(m => m.ActionDescription)
                           .IsRequired(false); // Optional property
                 });
             });
 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
         }
     }
 }
