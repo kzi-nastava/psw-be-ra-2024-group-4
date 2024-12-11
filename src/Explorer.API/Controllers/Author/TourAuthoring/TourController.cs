@@ -61,6 +61,13 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+        [HttpPut("publish/{tourId:int}")]
+        public ActionResult<TourDto> Publish(long tourId)
+        {
+            var result = _tourService.Publish(tourId);
+            return CreateResponse(result);
+        }
+
 
         [HttpPut("reactivate/{tourId:int}")]
         public ActionResult<TourDto> Reactivate(long tourId)
