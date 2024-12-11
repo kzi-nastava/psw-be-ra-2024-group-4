@@ -18,18 +18,18 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
         private readonly ITourRepository _tourRepository;
         private readonly IKeyPointRepository _keyPointRepository;
         private readonly ITourReviewRepository _tourReviewRepository;
-        private readonly ISalesRepository _salesRepository;
+       // private readonly ISalesRepository _salesRepository;
                 
         IMapper _mapper { get; set; }
 
         public TourOverviewService(ITourRepository tourRepository, IKeyPointRepository keyPointRepository,
-            ITourReviewRepository tourReviewRepository, IMapper mapper, ISalesRepository salesRepository)
+            ITourReviewRepository tourReviewRepository, IMapper mapper/* ,ISalesRepository salesRepository*/)
         {
             this._tourRepository = tourRepository;
             this._keyPointRepository = keyPointRepository;
             this._tourReviewRepository = tourReviewRepository;
             this._mapper = mapper;
-            this._salesRepository= salesRepository;
+            //this._salesRepository= salesRepository;
         }
 
         public Result<PagedResult<TourReviewDto>> GetAllByTourId(int page, int pageSize, long tourId)
