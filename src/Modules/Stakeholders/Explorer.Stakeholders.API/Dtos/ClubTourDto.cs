@@ -8,10 +8,10 @@ namespace Explorer.Stakeholders.API.Dtos
 {
     public class ClubTourDto
     {
-        public int ClubId;
-        public int TourId;
-        public DateTime Date;
-        public int Discount;
-        public List<int> TouristIds;
+        public int ClubId { get; set; }
+        public int TourId { get; set; }
+        public DateTime Date { get; set; }
+        public int Discount { get; set; }
+        public List<int> TouristIds { get; set; }
     }
 }
