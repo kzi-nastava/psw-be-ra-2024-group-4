@@ -18,7 +18,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 
         public ClubTour GetById(long clubTourId)
         {
-            return _dbContext.ClubTours.FirstOrDefault(c => c.ClubId == clubTourId);
+            return _dbContext.ClubTours.FirstOrDefault(c => c.Id == clubTourId);
         }
 
         public List<ClubTour> GetAll()

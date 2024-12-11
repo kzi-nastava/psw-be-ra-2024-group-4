@@ -10,11 +10,11 @@ namespace Explorer.Stakeholders.Core.Domain
     public class ClubTour:Entity
     {
 
-        public int ClubId;
-        public int TourId;
-        public DateTime Date;
-        public int Discount;
-        public List<int> TouristIds;
+        public int ClubId { get; private set; }
+        public int TourId { get; private set; }
+        public DateTime Date { get; private set; }
+        public int Discount { get; private set; }
+        public List<int> TouristIds { get; private set; } = new List<int>();
 
         public ClubTour() { }
 
@@ -24,6 +24,7 @@ namespace Explorer.Stakeholders.Core.Domain
             TourId = tourId;
             Date = date;
             Discount = discount;
+            Validate();
         }
 
         private void Validate()
