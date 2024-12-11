@@ -38,6 +38,7 @@ public static class StakeholdersStartup
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IImageService, ImageService>();
+        services.AddScoped<IClubTourService, ClubTourService>();
     }
 
 
@@ -51,6 +52,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, StakeholdersContext>));
         services.AddScoped<IProblemRepository, ProblemRepository>();
         services.AddScoped<IClubRepository, ClubDatabaseRepository>();
+        services.AddScoped<IClubTourRepository, ClubTourDatabaseRepository>();
         services.AddScoped<IClubInvitationRepository, ClubInvitationDatabaseRepository>();
         services.AddScoped<IClubJoinRequestRepository, ClubJoinRequestRepository>();
         services.AddScoped<INotificationRepository, NotificationDatabaseRepository>();
