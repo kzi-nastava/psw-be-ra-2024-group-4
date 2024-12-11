@@ -222,6 +222,18 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return MapToDto(tour);
         }
 
+        public Result<List<TourDto>> GetAllPublised()
+        {
+            var tours = _tourRepository.GetPublished(0, 0).Results;
 
+            List<TourDto> mappedTours = new List<TourDto>();
+
+            foreach (var tour in tours)
+            {
+                mappedTours.Add(MapToDto(tour));
+            }
+
+            return Result.Ok(mappedTours);
+        }
     }
 }

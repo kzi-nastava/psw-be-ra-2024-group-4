@@ -5,17 +5,18 @@ using Explorer.Stakeholders.API.Internal;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using FluentResults;
+using System.Security.AccessControl;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class AdvertisementUserService : CrudService<UserDto, User>, IAdvertisementUserService
+    public class AdvertisementStakeholdersService :  IAdvertisementStakeholdersService
     {
-        private readonly ICrudRepository<User> _repository;
+        private readonly IUserService _userService;
         private readonly IClubService _clubService;
 
-        public AdvertisementUserService(ICrudRepository<User> repository, IMapper mapper, IClubService clubService) : base(repository, mapper)
+        public AdvertisementStakeholdersService(IUserService userService, IClubService clubService) 
         {
-            _repository = repository;
+            _userService = userService;
             _clubService = clubService;
         }
 
@@ -26,15 +27,7 @@ namespace Explorer.Stakeholders.Core.UseCases
 
         public Result<List<UserDto>> GetAllUsers()
         {
-            var results = _repository.GetPaged(0, 0);
-
-            List<UserDto> userDtos = new List<UserDto>();
-            foreach (var item in results.Results) 
-            {
-                userDtos.Add(MapToDto(item));
-            }
-
-            return userDtos;
+            return _userService.GetPaged(0, 0).Value.Results;
         }
     }
 }

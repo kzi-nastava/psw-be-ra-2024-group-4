@@ -4,7 +4,7 @@ using FluentResults;
 
 namespace Explorer.Stakeholders.API.Internal
 {
-    public interface IAdvertisementUserService
+    public interface IAdvertisementStakeholdersService
     {
         Result<List<UserDto>> GetAllUsers();
         Result<List<ClubDto>> GetAllClubs();
