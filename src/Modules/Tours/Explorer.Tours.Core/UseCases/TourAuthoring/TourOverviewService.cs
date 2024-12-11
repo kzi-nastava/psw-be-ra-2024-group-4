@@ -58,9 +58,9 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             {
                 return Result.Fail(ret.Errors);
             }
-            var activeSales = _salesRepository.GetAll()
-                    .Where(s => s.StartDate <= DateTime.Now && s.EndDate >= DateTime.Now)
-                    .ToList();
+            //var activeSales = _salesRepository.GetAll()
+            //        .Where(s => s.StartDate <= DateTime.Now && s.EndDate >= DateTime.Now)
+            //        .ToList();
 
             var pagedItems = new List<TourOverviewDto>();
 
@@ -74,24 +74,24 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                 //        .OrderByDescending(s => s.EndDate) // Nađi akciju sa najsvežijim završetkom
                 //        .FirstOrDefault();
 
-                var applicableSale = activeSales
-                    .Where(s => s.TourIds.Contains((int)tour.Id)) // Filtriraj samo sale koje sadrže turu
-                    .OrderByDescending(s => s.EndDate)           // Sortiraj po EndDate (najnoviji na početku)
-                    .ThenByDescending(s => s.Id)                // Ako više akcija ima isti EndDate, uzmi onu sa većim Id-jem
-                    .FirstOrDefault();                          // Uzmi prvu (najnoviju)
+                //var applicableSale = activeSales
+                //    .Where(s => s.TourIds.Contains((int)tour.Id)) // Filtriraj samo sale koje sadrže turu
+                //    .OrderByDescending(s => s.EndDate)           // Sortiraj po EndDate (najnoviji na početku)
+                //    .ThenByDescending(s => s.Id)                // Ako više akcija ima isti EndDate, uzmi onu sa većim Id-jem
+                //    .FirstOrDefault();                          // Uzmi prvu (najnoviju)
 
 
-                decimal? originalPrice = null;
-                decimal? discountPercentage = null;
+                //decimal? originalPrice = null;
+                //decimal? discountPercentage = null;
 
-                if (applicableSale != null)
-                {
-                    discountPercentage = Convert.ToDecimal(applicableSale.DiscountPercentage);
-                    originalPrice = Convert.ToDecimal(tour.Price);
-                }
-                var discountedPrice = applicableSale != null
-                       ? Math.Round(tour.Price - (tour.Price * applicableSale.DiscountPercentage / 100), 2)
-                       : tour.Price;
+                //if (applicableSale != null)
+                //{
+                //    discountPercentage = Convert.ToDecimal(applicableSale.DiscountPercentage);
+                //    originalPrice = Convert.ToDecimal(tour.Price);
+                //}
+                //var discountedPrice = applicableSale != null
+                //       ? Math.Round(tour.Price - (tour.Price * applicableSale.DiscountPercentage / 100), 2)
+                //       : tour.Price;
 
                 var newTourOverview = new TourOverviewDto()
                 {
@@ -100,13 +100,16 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
                     Tags = tags,
                     TourDifficulty = tour.Difficulty,
                     TourName = tour.Name,
-                    Price = applicableSale != null
-                        ? Convert.ToDecimal(Math.Round(tour.Price - (tour.Price * applicableSale.DiscountPercentage / 100), 2))
-                        : Convert.ToDecimal(tour.Price),
-                    OriginalPrice = applicableSale != null
-                        ? Convert.ToDecimal(tour.Price)
-                        : (decimal?)null, // Ako nema popusta, originalna cena nije dostupna
-                    DiscountPercentage = Convert.ToDecimal(applicableSale?.DiscountPercentage),
+                    //Price = applicableSale != null
+                    //    ? Convert.ToDecimal(Math.Round(tour.Price - (tour.Price * applicableSale.DiscountPercentage / 100), 2))
+                    //    : Convert.ToDecimal(tour.Price),
+                    //OriginalPrice = applicableSale != null
+                    //    ? Convert.ToDecimal(tour.Price)
+                    //    : (decimal?)null, // Ako nema popusta, originalna cena nije dostupna
+                    //DiscountPercentage = Convert.ToDecimal(applicableSale?.DiscountPercentage),
+                    Price = Convert.ToDecimal(tour.Price),
+                    OriginalPrice =  Convert.ToDecimal(tour.Price),
+                    DiscountPercentage = Convert.ToDecimal(tour.Price),
 
                     FirstKeyPoint = _mapper.Map<KeyPointDto>(tour.KeyPoints.First()),
                     Reviews = new List<TourReviewDto>()
