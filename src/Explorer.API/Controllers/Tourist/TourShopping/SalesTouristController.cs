@@ -8,11 +8,11 @@ namespace Explorer.API.Controllers.Tourist.TourShopping
 
     [Authorize(Policy = "touristPolicy")]
     [Route("api/tourist/sales")]
-    public class SalesController : BaseApiController
+    public class SalesTouristController : BaseApiController
     {
         private readonly ISalesService _salesService;
 
-        public SalesController(ISalesService salesService)
+        public SalesTouristController(ISalesService salesService)
         {
             _salesService = salesService;
         }
