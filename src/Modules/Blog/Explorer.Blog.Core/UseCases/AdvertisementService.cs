@@ -7,7 +7,9 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Internal;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Internal;
+using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using static Explorer.Stakeholders.API.Dtos.ClubDto;
 
 namespace Explorer.Blog.Core.UseCases
 {
@@ -46,40 +48,42 @@ namespace Explorer.Blog.Core.UseCases
 
         }
 
-        
-
-        public Result<AdvertisementDto> OperateAll()
+        public void Operate()
         {
-            
             List<AdvertisementDto> advertisements = ProlongValidity(GetAll());
-
+            
             //Gather the rest of the necessary data
             var tourists = _advertisementStakeholdersService.GetAllTourists().Value;
             var touristPreferences = _advertisementTourService.GetAllToursPreferences().Value;
             var tours = _advertisementTourService.GetAllTours().Value;   
             var clubs = _advertisementStakeholdersService.GetAllClubs().Value;
-
-
+            
+            //Get last valid date for tourAd and clubAd
             DateTime lastTourDate = FindLastTwoValidTo(advertisements).Item1;
             DateTime lastClubDate = FindLastTwoValidTo(advertisements).Item2;
 
             foreach (var tourist in tourists)
             {
-                //If tourist has tourPreferences make personalised ads
-                if(touristPreferences.Any(tp => tp.TouristId == tourist.Id) != null)
-                {
 
+                var tourPreference = touristPreferences.Find(tp => tp.TouristId == tourist.Id);
+                //If tourist has tourPreferences.Tags make personalised ads
+                if (tourPreference != null)
+                {
+                    var userTags = tourPreference.Tags;
+                    var convertedTourTags = userTags.Select(tag => (Tours.API.Dtos.TourTags)tag).ToList();
+                    var convertedClubTags = userTags.Select(tag => (ClubTags)tag).ToList();
+
+                    lastTourDate = CreateTourAd(tours.FindAll(t => t.Tags.Any(tag => convertedTourTags.Contains(tag))), tourist.Id, lastTourDate);
+                    lastClubDate = CreateClubAd(clubs.FindAll(t => t.Tags.Any(tag => convertedClubTags.Contains(tag))), tourist.Id, lastClubDate);
                 }
-                //If tourist does not have tourPreference make ads for all tours and clubs
+                //If tourist does not have tourPreference.Tags make ads for all tours and clubs
                 else
                 {
-                    
+                    lastTourDate = CreateTourAd(tours, tourist.Id, lastTourDate);
+                    lastClubDate = CreateClubAd(clubs, tourist.Id, lastClubDate);
                 }
             }
-
-            return null;
         }
-
 
         private List<AdvertisementDto> GetAll()
         {
@@ -95,7 +99,6 @@ namespace Explorer.Blog.Core.UseCases
             return mapped;
         }
 
-        //This method takes all the advertisements from the db and prolongs their validity
         private List<AdvertisementDto> ProlongValidity(List<AdvertisementDto> advertisements)
         {
             if (advertisements.Count == 0) return null;
@@ -131,7 +134,12 @@ namespace Explorer.Blog.Core.UseCases
         
         private (DateTime, DateTime) FindLastTwoValidTo(List<AdvertisementDto> advertisements)
         {
-            
+            if(advertisements == null)
+            {
+                DateTime newStartDate = DateTime.Today.AddHours(12);
+                return (newStartDate, newStartDate);
+            }
+
             List<AdvertisementDto> tourAdvertisements = advertisements.FindAll(a => a.TourId != 0);
             List<AdvertisementDto> clubAdvertisements = advertisements.FindAll(a => a.ClubId != 0);
 
@@ -157,14 +165,36 @@ namespace Explorer.Blog.Core.UseCases
             return advertisement;
         }
 
-        private List<AdvertisementDto> CreateForTours(List<TourDto> tours)
+        private AdvertisementDto Create(AdvertisementDto advertisement)
         {
-            return null;
+            advertisement.Id = _crudRepository.Create(MapToDomain(advertisement)).Id;
+
+            return advertisement;
         }
 
-        private List<AdvertisementDto> CreateForClubs(List<ClubDto> clubs)
+        private DateTime CreateTourAd(List<TourDto> tours, long touristId, DateTime lastValidDate)
         {
-            return null;
+           
+            foreach (var tour in tours)
+            {
+                lastValidDate = lastValidDate.AddDays(1);
+                AdvertisementDto newAd = new AdvertisementDto(touristId, tour.Id, 0, lastValidDate);
+                Create(newAd);
+            }
+
+            return lastValidDate;
+        }
+
+        private DateTime CreateClubAd(List<ClubDto> clubs, long touristId, DateTime lastValidDate)
+        {
+            foreach (var club in clubs)
+            {
+                lastValidDate = lastValidDate.AddDays(1);
+                AdvertisementDto newAd = new AdvertisementDto(touristId, 0, club.Id, lastValidDate);
+                Create(newAd);
+            }
+
+            return lastValidDate;
         }
     }
 }
