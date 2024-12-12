@@ -6,7 +6,7 @@ namespace Explorer.Stakeholders.API.Internal
 {
     public interface IAdvertisementStakeholdersService
     {
-        Result<List<UserDto>> GetAllUsers();
+        Result<List<UserDto>> GetAllTourists();
         Result<List<ClubDto>> GetAllClubs();
     }
 }

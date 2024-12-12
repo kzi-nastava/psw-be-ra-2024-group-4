@@ -13,6 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Explorer.Blog.Core.Domain.Posts;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.Blog.Infrastructure.Database.Repositories;
+using Explorer.Stakeholders.API.Internal;
+using Explorer.Stakeholders.Core.UseCases;
+using Explorer.Tours.API.Internal;
+using Explorer.Tours.Core.UseCases.TourAuthoring;
 
 namespace Explorer.Blog.Infrastructure;
 
@@ -33,6 +37,8 @@ public static class BlogStartup
         services.AddScoped<IPostService, PostService>();
         services.AddScoped<IImageService, ImageService>();
         services.AddScoped<IAdvertisementService, AdvertisementService>();
+        services.AddScoped<IAdvertisementStakeholdersService, AdvertisementStakeholdersService>();
+        services.AddScoped<IAdvertisementTourService, AdvertisementTourService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)

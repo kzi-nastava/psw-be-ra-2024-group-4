@@ -30,5 +30,6 @@ namespace Explorer.Stakeholders.Core.UseCases
             return Result.Ok(MapToDto(person));
             
         }
+
     }
 }

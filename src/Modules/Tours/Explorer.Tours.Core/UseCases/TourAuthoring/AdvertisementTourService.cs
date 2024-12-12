@@ -10,7 +10,7 @@ using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases.TourAuthoring
 {
-    internal class AdvertisementTourService : IAdvertisementTourService
+    public class AdvertisementTourService : IAdvertisementTourService
     {
         private readonly ITourService _tourService;
         private readonly ITourPreferenceService _tourPreferenceService;

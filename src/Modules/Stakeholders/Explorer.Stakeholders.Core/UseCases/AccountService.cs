@@ -46,7 +46,7 @@ namespace Explorer.Stakeholders.Core.UseCases
                 }
                 catch (Exception ex)
                 {
-                    if (account.Role != UserRole.Administrator.ToString())
+                    if (account.Role != API.Dtos.UserRole.Administrator.ToString())
                     {
                         return Result.Fail($"An error occurred while retrieving the person for account " +
                             $"{account.Id}: {ex.Message}");

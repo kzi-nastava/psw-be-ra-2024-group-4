@@ -25,9 +25,9 @@ namespace Explorer.Stakeholders.Core.UseCases
             return _clubService.GetPaged(0, 0).Value.Results;
         }
 
-        public Result<List<UserDto>> GetAllUsers()
+        public Result<List<UserDto>> GetAllTourists()
         {
-            return _userService.GetPaged(0, 0).Value.Results;
+            return _userService.GetPaged(0, 0).Value.Results.Where(t => t.Role == API.Dtos.UserRole.Tourist).ToList();
         }
     }
 }
