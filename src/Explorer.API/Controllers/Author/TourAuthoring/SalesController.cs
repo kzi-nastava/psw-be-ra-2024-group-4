@@ -42,7 +42,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         public ActionResult<List<SalesDto>> GetAll(int userId)
         {
 
-            var result = _salesService.GetAll(userId);
+            var result = _salesService.GetAllForUser(userId);
             return CreateResponse(result);
         }
 
