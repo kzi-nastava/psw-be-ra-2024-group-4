@@ -5,10 +5,11 @@ namespace Explorer.Blog.Core.Domain
     public class Advertisement : Entity
     {
         public long TouristId { get; private set; }
-        public long? TourId { get; private set; }
-        public long? ClubId { get; private set; }
+        public long TourId { get; private set; }
+        public long ClubId { get; private set; }
         public DateTime ValidTo { get; private set; }
 
+        public Advertisement() { }
         public Advertisement(long touristId, long tourId, long clubId, DateTime validTo) 
         {
             TouristId = touristId;

@@ -7,7 +7,6 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Internal;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Internal;
-using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using static Explorer.Stakeholders.API.Dtos.ClubDto;
 
@@ -48,7 +47,7 @@ namespace Explorer.Blog.Core.UseCases
 
         }
 
-        public void Operate()
+        public void ProcessAdvertisements()
         {
             List<AdvertisementDto> advertisements = ProlongValidity(GetAll());
             
@@ -70,7 +69,7 @@ namespace Explorer.Blog.Core.UseCases
                 if (tourPreference != null)
                 {
                     var userTags = tourPreference.Tags;
-                    var convertedTourTags = userTags.Select(tag => (Tours.API.Dtos.TourTags)tag).ToList();
+                    var convertedTourTags = userTags.Select(tag => (TourTags)tag).ToList();
                     var convertedClubTags = userTags.Select(tag => (ClubTags)tag).ToList();
 
                     lastTourDate = CreateTourAd(tours.FindAll(t => t.Tags.Any(tag => convertedTourTags.Contains(tag))), tourist.Id, lastTourDate);

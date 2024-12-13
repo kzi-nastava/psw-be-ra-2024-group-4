@@ -1,5 +1,3 @@
-using Explorer.Tours.Core.Domain;
-
 namespace Explorer.Stakeholders.API.Dtos;
 
 public class AccountRegistrationDto

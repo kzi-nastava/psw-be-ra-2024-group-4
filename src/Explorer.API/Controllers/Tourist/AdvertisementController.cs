@@ -14,11 +14,6 @@ namespace Explorer.API.Controllers.Tourist
             _advertisementService = advertisementService;
         }
 
-        //[HttpGet]
-        //public ActionResult<AdvertisementDto> Get() 
-        //{
-        //    return CreateResponse(_advertisementService.get)
-        //}
 
     }
 }

@@ -1,7 +1,4 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Core.Domain;
-
-namespace Explorer.Stakeholders.API.Dtos
+﻿namespace Explorer.Stakeholders.API.Dtos
 {
     public class PersonDto
     {

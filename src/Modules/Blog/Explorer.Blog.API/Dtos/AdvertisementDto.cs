@@ -8,6 +8,8 @@
         public long? ClubId { get; set; }
         public DateTime ValidTo { get; set; }
 
+        public AdvertisementDto() { }   
+
         public AdvertisementDto(long touristId, long tourId, long clubId, DateTime validTo) 
         {
             TouristId = touristId;

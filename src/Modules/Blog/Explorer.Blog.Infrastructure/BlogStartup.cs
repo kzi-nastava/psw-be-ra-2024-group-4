@@ -2,15 +2,12 @@ using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Domain;
 using Explorer.Blog.Core.Mappers;
 using Explorer.Blog.Core.UseCases.Administration;
-
 using Explorer.Blog.Core.UseCases;
-
 using Explorer.Blog.Infrastructure.Database;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Explorer.Blog.Core.Domain.Posts;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.Blog.Infrastructure.Database.Repositories;
 using Explorer.Stakeholders.API.Internal;
