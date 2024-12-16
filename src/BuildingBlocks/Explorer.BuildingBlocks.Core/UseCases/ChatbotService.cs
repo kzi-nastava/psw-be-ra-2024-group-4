@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Explorer.BuildingBlocks.Core.Domain;
+using System.Collections.Concurrent;
 
 
 
@@ -12,47 +14,72 @@ namespace Explorer.BuildingBlocks.Core.UseCases
 {
     public class ChatbotService : IChatbotService
     {
-        private readonly Dictionary<string, string> _responseDictionary;
-        private readonly HttpClient _httpClient;
+        private readonly DecisionTreeNode _root;
+        private readonly ConcurrentDictionary<long, DecisionTreeNode> _userContexts;
 
         public ChatbotService()
         {
-             _responseDictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-             {
-                 { "Where can I find tours?", "You can find tours on the Browse Tours page on Navbar." },
-                 { "How do I buy a tour?", "To buy a tour, go to the Browse Tours section and click on buy. You can see yout items in a Shopping cart. Click on checkout and buy tours." },
-                 { "How do I start a tour", "To start a tour, go to the My Tours section and click on Start tour. To follow the keypoints, go to PositionSimulator." }
-             };
-
-            _httpClient = new HttpClient();
+            _root = BuildDecisionTree();
+            _userContexts = new ConcurrentDictionary<long, DecisionTreeNode>();
         }
-        public async Task<string> GetResponseAsync(string userMessage)
+        public async Task<string> GetResponseAsync(string userMessage, long userId)
         {
            
             await Task.Delay(100);
 
-             if (_responseDictionary.ContainsKey(userMessage))
-             {
-                 return _responseDictionary[userMessage];
-             }
+            var currentNode = _userContexts.GetOrAdd(userId, _root);
 
-             var match = _responseDictionary.Keys
-               .FirstOrDefault(key => IsFuzzyMatch(userMessage, key));
+            if (userMessage.Equals("Back", StringComparison.OrdinalIgnoreCase))
+            {
+                if(currentNode.Parent != null)
+                {
+                    _userContexts[userId] = currentNode.Parent;
+                    return currentNode.Parent.Message;
+                }
 
-             if (match != null)
-             {
-                 return _responseDictionary[match];
-             }
+                return "You're already at the main menu.";
 
-             return "I don't understand the question.";
+            }
 
-          
+
+            if (currentNode.Responses.TryGetValue(userMessage, out var nextNode))
+            {
+                _userContexts[userId] = nextNode; 
+                return nextNode.Message;
+            }
+
+            return "I didn't understand that. Please try again.";
+
+
         }
 
-        private bool IsFuzzyMatch(string input, string key)
+        private DecisionTreeNode BuildDecisionTree()
         {
-           
-            return input.Contains(key, StringComparison.OrdinalIgnoreCase);
+            var root = new DecisionTreeNode("Hi, how can I help you?", null);
+
+            var appNode = new DecisionTreeNode("This app simplifies your travel experience by allowing you to browse and buy tours, start guided tours, and engage in exciting encounters—all in one place. Would you like to know more about developers?", root);
+            var toursNode = new DecisionTreeNode("Users can buy a variety of tours, including guided and self-paced options, featuring keypoints at popular landmarks, scenic locations, and cultural hotspots.", root);
+            var encountersNode = new DecisionTreeNode("You can discover social encounters with other users and unlock hidden encounters at secret locations for a unique and engaging experience.", root);
+
+            var findToursNode = new DecisionTreeNode("You can find tours on the Browse Tours page on the Navbar.", toursNode);
+            var startTourNode = new DecisionTreeNode("You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. ", findToursNode);
+
+            var completeTourNode = new DecisionTreeNode("You can follow keypoints in the Position Simulator, located on Navbar.", startTourNode);
+            var abandonTourNode = new DecisionTreeNode("You can click on Abandon tour button.", startTourNode);
+
+            root.Responses.Add("About the app", appNode);
+            root.Responses.Add("Tours", toursNode);
+            root.Responses.Add("Encounters", encountersNode);
+
+            toursNode.Responses.Add("Where can I find tours?", findToursNode);
+            toursNode.Responses.Add("How to start a tour", startTourNode);
+            startTourNode.Responses.Add("How to complete a tour?", completeTourNode);
+            startTourNode.Responses.Add("How to abandon a tour?", abandonTourNode);
+
+            return root;
+
+
         }
+
     }
 }

@@ -16,5 +16,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<PagedResult<UserDto>> GetPaged(int page, int pageSize);
         Result Delete(int id);
         Result<UserDto> GetUsername(long id);
+        long GetPersonId(long userId);
     }
 }

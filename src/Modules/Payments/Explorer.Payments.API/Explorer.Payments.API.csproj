@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Explorer.BuildingBlocks.Core\Explorer.BuildingBlocks.Core.csproj" />
+    <ProjectReference Include="..\..\Tours\Explorer.Tours.API\Explorer.Tours.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="Internal\" />
   </ItemGroup>
 

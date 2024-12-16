@@ -16,5 +16,27 @@ namespace Explorer.Stakeholders.API.Dtos
         public List<long> UserIds {get; set;}
         public string ImageBase64 {  get; set; }
 
+        public List<ClubTags> Tags { get; set; }
+
+        public enum ClubTags
+        {
+            Cycling,
+            Culture,
+            Adventure,
+            FamilyFriendly,
+            Nature,
+            CityTour,
+            Historical,
+            Relaxation,
+            Wildlife,
+            NightTour,
+            Beach,
+            Mountains,
+            Photography,
+            Guided,
+            SelfGuided
+        }
+
+
     }
 }

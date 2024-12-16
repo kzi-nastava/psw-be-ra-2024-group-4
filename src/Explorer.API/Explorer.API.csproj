@@ -20,6 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\Explorer.BuildingBlocks.Core\Explorer.BuildingBlocks.Core.csproj" />
     <ProjectReference Include="..\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\Explorer.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\Explorer.Encounter.API\Explorer.Encounter.API.csproj" />
+    <ProjectReference Include="..\Explorer.Encounter.Infrastructure\Explorer.Encounter.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Blog\Explorer.Blog.Core\Explorer.Blog.Core.csproj" />
     <ProjectReference Include="..\Modules\Blog\Explorer.Blog.Infrastructure\Explorer.Blog.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Payments\Explorer.Payments.API\Explorer.Payments.API.csproj" />
@@ -31,9 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Scripts\Encounters\" />
     <Folder Include="wwwroot\images\clubs\" />
     <Folder Include="wwwroot\images\blogs\" />
     <Folder Include="Controllers\Folder\" />
+    <Folder Include="wwwroot\images\encounters\" />
+    <Folder Include="wwwroot\images\quiz\" />
     <Folder Include="wwwroot\images\person\" />
     <Folder Include="wwwroot\images\NewFolder\" />
   </ItemGroup>

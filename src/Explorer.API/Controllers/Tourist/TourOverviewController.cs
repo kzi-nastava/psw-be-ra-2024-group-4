@@ -25,6 +25,14 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
 
+        [HttpGet("byId/{id:int}")]
+        public ActionResult<PagedResult<TourOverviewDto>> GetById(int id)
+        {
+            var result = _tourOverviewService.GetById(id);
+            return CreateResponse(result);
+        }
+
+
         [HttpGet("{id:int}")]
         public ActionResult<PagedResult<TourOverviewDto>> GetAllByTourId(long id, [FromQuery] int page, [FromQuery] int pageSize)
         {
