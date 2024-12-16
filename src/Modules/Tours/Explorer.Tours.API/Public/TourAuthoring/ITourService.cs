@@ -12,7 +12,6 @@ namespace Explorer.Tours.API.Public.TourAuthoring
     public interface ITourService
     {
         Result<TourDto> Create(TourDto dto);
-
         Result<List<TourDto>> GetByUserId(long userId);
         Result<PagedResult<EquipmentDto>> GetEquipment(long tourId);
         Result AddEquipmentToTour(long tourId, List<long> equipmentIds);
@@ -22,10 +21,9 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         Result UpdateDistance(long id, double distance);
         Result Archive(long id);
         Result Reactivate(long id);
-
         Result DeleteTour(int id);
         Result<TourDto> GetWithKeyPoints(int tourId);
         Result<TourDto> GetTourById(long id);
-
+        Result<PagedResult<TourDto>> GetPublised();
     }
 }
