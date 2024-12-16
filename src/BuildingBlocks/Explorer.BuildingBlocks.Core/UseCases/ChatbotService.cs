@@ -55,26 +55,26 @@ namespace Explorer.BuildingBlocks.Core.UseCases
 
         private DecisionTreeNode BuildDecisionTree()
         {
-            var root = new DecisionTreeNode("Hi, how can I help you?", null);
+            var root = new DecisionTreeNode("Hi, how can I help you?");
 
             var appNode = new DecisionTreeNode("This app simplifies your travel experience by allowing you to browse and buy tours, start guided tours, and engage in exciting encounters—all in one place. Would you like to know more about developers?", root);
             var toursNode = new DecisionTreeNode("Users can buy a variety of tours, including guided and self-paced options, featuring keypoints at popular landmarks, scenic locations, and cultural hotspots.", root);
             var encountersNode = new DecisionTreeNode("You can discover social encounters with other users and unlock hidden encounters at secret locations for a unique and engaging experience.", root);
 
-            var findToursNode = new DecisionTreeNode("You can find tours on the Browse Tours page on the Navbar.", toursNode);
-            var startTourNode = new DecisionTreeNode("You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. ", findToursNode);
+            var findToursNode = new DecisionTreeNode("You can find tours on the Browse Tours page on the Navbar.", root);
+            var startTourNode = new DecisionTreeNode("You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. ", root);
 
-            var completeTourNode = new DecisionTreeNode("You can follow keypoints in the Position Simulator, located on Navbar.", startTourNode);
-            var abandonTourNode = new DecisionTreeNode("You can click on Abandon tour button.", startTourNode);
+            var completeTourNode = new DecisionTreeNode("You can follow keypoints in the Position Simulator, located on Navbar.", root);
+            var abandonTourNode = new DecisionTreeNode("You can click on Abandon tour button.", root);
 
             root.Responses.Add("About the app", appNode);
             root.Responses.Add("Tours", toursNode);
             root.Responses.Add("Encounters", encountersNode);
 
-            toursNode.Responses.Add("Where can I find tours?", findToursNode);
-            toursNode.Responses.Add("How to start a tour", startTourNode);
-            startTourNode.Responses.Add("How to complete a tour?", completeTourNode);
-            startTourNode.Responses.Add("How to abandon a tour?", abandonTourNode);
+            root.Responses.Add("Where can I find tours", findToursNode);
+            root.Responses.Add("How to start a tour", startTourNode);
+            root.Responses.Add("How to complete a tour", completeTourNode);
+            root.Responses.Add("How to abandon a tour", abandonTourNode);
 
             return root;
 
