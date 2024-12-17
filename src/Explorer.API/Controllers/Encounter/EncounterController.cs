@@ -60,20 +60,46 @@ namespace Explorer.API.Controllers.Encounter
         }
 
         [HttpPost("{id:long}/complete")]
-        public ActionResult<EncounterDto> Complete(long id)
-        {
+        public ActionResult<EncounterDto> Complete(long id) {
             long userId = int.Parse(HttpContext.User.Claims
                 .First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+
+            // Complete the encounter
             var result = _encounterService.CompleteEncounter(userId, id);
+            if (!result.IsSuccess)
+                return BadRequest("Encounter failed to complete!");
 
-            if (!result.IsSuccess) return BadRequest("Encounter failed to complete!");
+            var encounterDto = result.Value;
+            var xp = encounterDto.XP;
 
-            var xp = result.Value.XP;
-            var xpResult = _personService.AddXP(userId, xp);
-            if (!xpResult.IsSuccess) return NotFound("Person not found!");
+            // If the encounter is social, all participants should receive XP
+            if (encounterDto.Type == EncounterType.Social) {
+                // Assuming EncounterDto.Instances or some property contains participants
+                var participantIds = encounterDto.Instances
+                    .Where(i => i.Status == EncounterInstanceStatus.Completed)
+                    .Select(i => i.UserId)
+                    .Distinct()
+                    .ToList();
+
+                foreach (var participantId in participantIds) {
+                    var xpResult = _personService.AddXP(participantId, xp);
+                    if (!xpResult.IsSuccess) {
+                        // Optional: Decide how to handle partial failures. 
+                        // Maybe continue awarding XP to others, or return an error.
+                        // For simplicity, return an error here:
+                        return NotFound($"Person with userId {participantId} not found!");
+                    }
+                }
+            }
+            else {
+                // For non-social encounters, just award XP to the user who completed it
+                var xpResult = _personService.AddXP(userId, xp);
+                if (!xpResult.IsSuccess) return NotFound("Person not found!");
+            }
 
             return CreateResponse(result);
         }
+
 
         [HttpGet]
         public ActionResult<EncounterDto> GetByLatLong([FromQuery] double latitude, [FromQuery] double longitude)
