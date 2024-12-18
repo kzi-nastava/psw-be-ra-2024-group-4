@@ -21,6 +21,7 @@ namespace Explorer.Tours.API.Public.TourAuthoring
         public Result GetById(long id);
         Result UpdateDistance(long id, double distance);
         Result Archive(long id);
+        Result Publish(long id);
         Result Reactivate(long id);
 
         Result DeleteTour(int id);
