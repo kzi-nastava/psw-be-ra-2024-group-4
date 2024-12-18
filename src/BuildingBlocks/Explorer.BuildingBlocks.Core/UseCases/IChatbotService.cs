@@ -8,6 +8,6 @@ namespace Explorer.BuildingBlocks.Core.UseCases
 {
     public interface IChatbotService
     {
-        Task<string> GetResponseAsync(string userMessage, long userId);
+        string GetResponse(string userMessage, long userId);
     }
 }

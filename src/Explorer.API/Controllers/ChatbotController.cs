@@ -17,16 +17,16 @@ namespace Explorer.API.Controllers
             _chatbotService = chatbotService;
         }
 
-        [HttpPost("message/{userid:int}")]
-        public async Task<IActionResult> GetResponse([FromBody] ChatMessageDto messageDto, long userid)
+        [HttpGet("message/{userid:int}")]
+        public ActionResult<string> GetResponse([FromQuery] string message, long userid)
         {
-            if (string.IsNullOrEmpty(messageDto.Message))
+            if (string.IsNullOrEmpty(message))
             {
                 return BadRequest("Message cannot be empty");
             }
 
-            var response = await _chatbotService.GetResponseAsync(messageDto.Message, userid);
-            return Ok(new { response });
+            var result =  _chatbotService.GetResponse(message, userid);
+            return Ok(result);
         }
     }
 }

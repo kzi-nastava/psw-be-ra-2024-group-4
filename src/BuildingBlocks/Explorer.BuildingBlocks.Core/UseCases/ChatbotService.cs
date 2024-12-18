@@ -22,10 +22,10 @@ namespace Explorer.BuildingBlocks.Core.UseCases
             _root = BuildDecisionTree();
             _userContexts = new ConcurrentDictionary<long, DecisionTreeNode>();
         }
-        public async Task<string> GetResponseAsync(string userMessage, long userId)
+        public string GetResponse(string userMessage, long userId)
         {
            
-            await Task.Delay(100);
+         
 
             var currentNode = _userContexts.GetOrAdd(userId, _root);
 
