@@ -71,10 +71,10 @@ namespace Explorer.BuildingBlocks.Core.UseCases
             root.Responses.Add("Tours", toursNode);
             root.Responses.Add("Encounters", encountersNode);
 
-            root.Responses.Add("Where can I find tours", findToursNode);
-            root.Responses.Add("How to start a tour", startTourNode);
-            root.Responses.Add("How to complete a tour", completeTourNode);
-            root.Responses.Add("How to abandon a tour", abandonTourNode);
+            root.Responses.Add("Where can I find tours?", findToursNode);
+            root.Responses.Add("How to start a tour?", startTourNode);
+            root.Responses.Add("How to complete a tour?", completeTourNode);
+            root.Responses.Add("How to abandon a tour?", abandonTourNode);
 
             return root;
 
