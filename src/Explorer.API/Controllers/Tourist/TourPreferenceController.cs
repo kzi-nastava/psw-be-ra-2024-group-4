@@ -53,5 +53,17 @@ namespace Explorer.API.Controllers.Tourist {
             if (result.IsFailed) return BadRequest(result.Errors);
             return NoContent();
         }
+
+        [HttpGet("has-preference/{touristId}")]
+        [Authorize(Policy = "touristPolicy")]
+        public IActionResult HasTourPreference(int touristId)
+        {
+            var result = _tourPreferenceService.HasTourPreference(touristId);
+            if (result.IsFailed) return BadRequest(result.Errors);
+            return Ok(result.Value);
+        }
+
+      
+
     }
 }
