@@ -22,11 +22,11 @@ namespace Explorer.API.Controllers
         {
             if (string.IsNullOrEmpty(message))
             {
-                return BadRequest("Message cannot be empty");
+                return BadRequest(new { message = "Message cannot be empty" });
             }
 
             var result =  _chatbotService.GetResponse(message, userid);
-            return Ok(result);
+            return Ok(new { message = result });
         }
     }
 }
