@@ -12,5 +12,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public string CurrentImage { get; set; }
         public string QuizImage { get; set; }
         public long UserId {  get; set; }
+        public string ImageBase64 { get; set; }
     }
 }

@@ -24,14 +24,6 @@ namespace Explorer.Stakeholders.Core.Domain
 
         public void Validate()
         {
-            if (CurrentImage != null)
-            {
-                throw new ArgumentException("Invalid image");
-            }
-            if (QuizImage != null)
-            {
-                throw new ArgumentException("Invalid quiz image");
-            }
         }
 
     }
