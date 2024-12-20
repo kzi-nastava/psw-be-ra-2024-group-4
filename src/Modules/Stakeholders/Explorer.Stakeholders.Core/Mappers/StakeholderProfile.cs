@@ -20,6 +20,7 @@ public class StakeholderProfile : Profile
         CreateMap<ProblemCommentDto,  ProblemComment>().ReverseMap();
         CreateMap<NotificationDto, Notification>().ReverseMap();
         CreateMap<ClubTourDto, ClubTour>().ReverseMap();
+        CreateMap<ClubMemberDto, ClubMember>().ReverseMap();
 
         CreateMap<AccountDto, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
