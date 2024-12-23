@@ -1,0 +1,44 @@
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Explorer.Tours.Core.Domain
+{
+    public class Badge : Entity
+    {
+        public long UserId { get; set; }
+
+        public BadgeName Name { get; set; }
+        public AchievementLevels Level { get; set; }
+
+        public enum BadgeName
+        {
+            ExplorerStep,
+            Globetrotter,
+            PhotoPro,
+            TourTaster,
+            SocialButterfly,
+            TravelBuddy,
+            CulturalEnthusiast,
+            AdventureSeeker,
+            NatureLover,
+            CityExplorer,
+            HistoricalBuff,
+            RelaxationGuru,
+            WildlifeWanderer,
+            BeachLover,
+            MountainConqueror,
+            PartyManiac
+        }
+        public enum AchievementLevels
+        {
+            Bronze,
+            Silver,
+            Gold,
+            None
+        }
+    }
+}
