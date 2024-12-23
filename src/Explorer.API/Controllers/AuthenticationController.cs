@@ -1,6 +1,9 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.UseCases;
+using FluentResults;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,12 +15,14 @@ public class AuthenticationController : BaseApiController
     private readonly IAuthenticationService _authenticationService;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly IImageService _imageService;
+    private readonly IUserService _userService;
 
-    public AuthenticationController(IAuthenticationService authenticationService,IImageService imageService, IWebHostEnvironment webHostEnvironment)
+    public AuthenticationController(IAuthenticationService authenticationService,IImageService imageService, IWebHostEnvironment webHostEnvironment, IUserService userService)
     {
         _authenticationService = authenticationService;
         _imageService = imageService;
         _webHostEnvironment = webHostEnvironment;
+        _userService = userService;
     }
 
     [HttpPost]
@@ -43,6 +48,24 @@ public class AuthenticationController : BaseApiController
     public ActionResult<AuthenticationTokensDto> Login([FromBody] CredentialsDto credentials)
     {
         var result = _authenticationService.Login(credentials);
-        return CreateResponse(result);
+
+        if (result.IsFailed)
+        {
+            return BadRequest("Invalid username or password.");
+        }
+        return Ok(result.Value);
     }
+
+
+    [HttpGet("check-username/{username}")]
+    public ActionResult<bool> CheckUsername(string username)
+    {
+        var result = _userService.ExistsByUsername(username);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value); 
+        }
+        return BadRequest(result.Errors);
+    }
+ 
 }

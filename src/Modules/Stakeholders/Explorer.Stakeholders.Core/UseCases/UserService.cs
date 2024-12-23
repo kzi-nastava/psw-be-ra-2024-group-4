@@ -39,5 +39,12 @@ namespace Explorer.Stakeholders.Core.UseCases
             var personId= _userRepository.GetPersonId(userId);
             return personId;
         }
+        public Result<bool> ExistsByUsername(string username)
+        {
+            var exists = _userRepository.Exists(username);
+            return Result.Ok(exists); 
+        }
+
+
     }
 }
