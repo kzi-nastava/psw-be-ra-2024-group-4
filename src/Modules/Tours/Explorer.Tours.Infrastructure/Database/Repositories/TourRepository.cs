@@ -144,5 +144,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
             return tour;
         }
+
+        public List<long> GetIdsByTag(TourTags tag)
+        {
+            return _dbSet
+        .Where(tour => tour.Tags.Contains(tag)) 
+        .Select(tour => tour.Id)
+        .ToList();
+        }
     }
 }

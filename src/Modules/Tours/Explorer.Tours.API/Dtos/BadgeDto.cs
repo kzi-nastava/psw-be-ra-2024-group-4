@@ -1,28 +1,27 @@
-﻿using Explorer.BuildingBlocks.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Core.Domain
+namespace Explorer.Tours.API.Dtos
 {
-    public class Badge : Entity
+    public class BadgeDto
     {
-        public long UserId { get; private set; }
+        public long Id { get; set; }
+        public long UserId { get;  set; }
 
-        public BadgeName Name { get; private set; }
-        public AchievementLevels Level { get; private set; }
-
-        public Badge(long userId, BadgeName name, AchievementLevels level) { 
-            UserId = userId;
-            Name = name;
-            Level = level;
-        }
+        public BadgeName Name { get; set; }
+        public AchievementLevels Level { get; set; }
 
         public enum BadgeName
         {
             ExplorerStep,
+            Globetrotter,
+            PhotoPro,
+            TourTaster,
+            SocialButterfly,
+            TravelBuddy,
             CulturalEnthusiast,
             AdventureSeeker,
             NatureLover,
@@ -32,11 +31,6 @@ namespace Explorer.Tours.Core.Domain
             WildlifeWanderer,
             BeachLover,
             MountainConqueror,
-            Globetrotter,
-            PhotoPro,
-            TourTaster,
-            SocialButterfly,
-            TravelBuddy,
             PartyManiac
         }
         public enum AchievementLevels

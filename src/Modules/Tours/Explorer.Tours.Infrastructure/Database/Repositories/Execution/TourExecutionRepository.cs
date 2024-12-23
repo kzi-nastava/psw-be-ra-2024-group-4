@@ -83,7 +83,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
                 .FirstOrDefault(te => te.TouristId == touristId && te.Status == TourExecutionStatus.Active);
         }
 
+        public bool CheckIfCompleted(long userId, long tourId)
+        {
+            var tourExecution = _dbContext.TourExecution
+                .FirstOrDefault(te => te.TouristId == userId && te.TourId == tourId);
 
+            return tourExecution != null && tourExecution.Status == TourExecutionStatus.Completed;
 
+        }
     }
 }

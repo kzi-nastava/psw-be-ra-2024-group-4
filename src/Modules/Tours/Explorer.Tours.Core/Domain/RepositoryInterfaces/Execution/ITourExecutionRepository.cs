@@ -24,5 +24,6 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces.Execution
         TourExecution? GetByTourAndTourist(long touristId, long tourId);
         public ICollection<KeyPoint> GetKeyPointsByTourId(long tourId);
         public TourExecution? GetActiveTourByTourist(long touristId);
+        bool CheckIfCompleted(long userId, long tourId);
     }
 }
