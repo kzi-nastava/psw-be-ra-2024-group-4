@@ -9,5 +9,6 @@ namespace Explorer.BuildingBlocks.Core.UseCases
     public interface IChatbotService
     {
         string GetResponse(string userMessage, long userId);
+        List<string> GetQuestionSet(string setTag);
     }
 }

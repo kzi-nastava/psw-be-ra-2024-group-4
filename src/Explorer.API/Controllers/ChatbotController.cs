@@ -2,6 +2,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Explorer.API.Controllers
 {
@@ -27,6 +28,13 @@ namespace Explorer.API.Controllers
 
             var result =  _chatbotService.GetResponse(message, userid);
             return Ok(new { message = result });
+        }
+
+        [HttpGet("questions")]
+        public ActionResult<List<string>> GetQuestions([FromQuery] string tag)
+        {
+            var result = _chatbotService.GetQuestionSet(tag);
+            return Ok(new { questions = result });
         }
     }
 }

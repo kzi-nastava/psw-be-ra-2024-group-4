@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Explorer.BuildingBlocks.Core.Domain;
 using System.Collections.Concurrent;
+using System.Collections;
 
 
 
@@ -14,72 +15,94 @@ namespace Explorer.BuildingBlocks.Core.UseCases
 {
     public class ChatbotService : IChatbotService
     {
-        private readonly DecisionTreeNode _root;
-        private readonly ConcurrentDictionary<long, DecisionTreeNode> _userContexts;
+        private Dictionary<string, List<string>> questionSets;
+        private Dictionary<string, string> rootSet;
+        private Dictionary<string, string> toursSet;
+        private Dictionary<string, string> tourExecutionSet;
+        private Dictionary<string, string> allSets;
+
+
 
         public ChatbotService()
         {
-            _root = BuildDecisionTree();
-            _userContexts = new ConcurrentDictionary<long, DecisionTreeNode>();
+            allSets = new Dictionary<string, string>();
+            BuildQuestionTree();
+           
         }
         public string GetResponse(string userMessage, long userId)
         {
-           
-         
 
-            var currentNode = _userContexts.GetOrAdd(userId, _root);
 
-            if (userMessage.Equals("Back", StringComparison.OrdinalIgnoreCase))
+            if (allSets.TryGetValue(userMessage, out string answer))
             {
-                if(currentNode.Parent != null)
-                {
-                    _userContexts[userId] = currentNode.Parent;
-                    return currentNode.Parent.Message;
-                }
-
-                return "You're already at the main menu.";
-
+                return answer;
             }
+            return "I didn't understand that.";
 
-
-            if (currentNode.Responses.TryGetValue(userMessage, out var nextNode))
-            {
-                _userContexts[userId] = nextNode; 
-                return nextNode.Message;
-            }
-
-            return "I didn't understand that. Please try again.";
 
 
         }
 
-        private DecisionTreeNode BuildDecisionTree()
+        public List<string> GetQuestionSet(string setTag)
         {
-            var root = new DecisionTreeNode("Hi, how can I help you?");
+            if (questionSets.TryGetValue(setTag, out List<string> questions))
+            {
+                return questions;
+            }
 
-            var appNode = new DecisionTreeNode("This app simplifies your travel experience by allowing you to browse and buy tours, start guided tours, and engage in exciting encounters—all in one place. Would you like to know more about developers?", root);
-            var toursNode = new DecisionTreeNode("Users can buy a variety of tours, including guided and self-paced options, featuring keypoints at popular landmarks, scenic locations, and cultural hotspots.", root);
-            var encountersNode = new DecisionTreeNode("You can discover social encounters with other users and unlock hidden encounters at secret locations for a unique and engaging experience.", root);
-
-            var findToursNode = new DecisionTreeNode("You can find tours on the Browse Tours page on the Navbar.", root);
-            var startTourNode = new DecisionTreeNode("You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. ", root);
-
-            var completeTourNode = new DecisionTreeNode("You can follow keypoints in the Position Simulator, located on Navbar.", root);
-            var abandonTourNode = new DecisionTreeNode("You can click on Abandon tour button.", root);
-
-            root.Responses.Add("About the app", appNode);
-            root.Responses.Add("Tours", toursNode);
-            root.Responses.Add("Encounters", encountersNode);
-
-            root.Responses.Add("Where can I find tours?", findToursNode);
-            root.Responses.Add("How to start a tour?", startTourNode);
-            root.Responses.Add("How to complete a tour?", completeTourNode);
-            root.Responses.Add("How to abandon a tour?", abandonTourNode);
-
-            return root;
-
+            List<string> placeholder = new List<string> {"No questions" };
+            return placeholder;
 
         }
 
+        private void BuildQuestionTree()
+        {
+            rootSet = new Dictionary<string, string>
+            {
+                {"About the app",  "This app simplifies your travel experience by allowing you to browse and buy tours, start guided tours, and engage in exciting encounters—all in one place. Would you like to know more about developers?"},
+                {"Tours",  "Users can buy a variety of tours, including guided and self-paced options, featuring keypoints at popular landmarks, scenic locations, and cultural hotspots."},
+                {"Encounters",  "You can discover social encounters with other users and unlock hidden encounters at secret locations for a unique and engaging experience."}
+            };
+
+            toursSet = new Dictionary<string, string>
+            {
+                {"Where can I find tours?",  "You can find tours on the Browse Tours page on the Navbar."},
+                {"How to start a tour?",  "You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. "}
+            };
+
+            tourExecutionSet = new Dictionary<string, string>
+            {
+                {"How to complete a tour?",  "You can follow keypoints in the Position Simulator, located on Navbar."},
+                {"How to abandon a tour?", "You can click on Abandon tour button." }
+            };
+
+
+            questionSets = new Dictionary<string, List<string>>
+            {
+                {"ROOT", new List<string>(rootSet.Keys) },
+                {"TOURS", new List<string>(toursSet.Keys) },
+                {"TOUR_EXECUTIONS", new List<string>(tourExecutionSet.Keys) },
+            };
+
+           
+
+
+            AddToAllSets(rootSet);
+            AddToAllSets(toursSet);
+            AddToAllSets(tourExecutionSet);
+
+            
+        }
+
+        private void AddToAllSets(Dictionary<string, string> questionAnswerSet)
+        {
+            foreach (var question_answer in questionAnswerSet)
+            {
+                if (!allSets.ContainsKey(question_answer.Key))
+                {
+                    allSets.Add(question_answer.Key, question_answer.Value);
+                }
+            }
+        }
     }
 }
