@@ -36,5 +36,12 @@ namespace Explorer.API.Controllers
             var result = _chatbotService.GetQuestionSet(tag);
             return Ok(new { questions = result });
         }
+
+        [HttpGet("search")]
+        public ActionResult<List<string>> GetSearchedQuestions([FromQuery] string query)
+        {
+            var result = _chatbotService.GetSearchedQuestions(query);
+            return Ok(new { questions = result });
+        }
     }
 }

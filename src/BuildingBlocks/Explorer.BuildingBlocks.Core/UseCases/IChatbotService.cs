@@ -10,5 +10,6 @@ namespace Explorer.BuildingBlocks.Core.UseCases
     {
         string GetResponse(string userMessage, long userId);
         List<string> GetQuestionSet(string setTag);
+        List<string> GetSearchedQuestions(string query);
     }
 }

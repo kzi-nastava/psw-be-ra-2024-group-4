@@ -21,11 +21,13 @@ namespace Explorer.BuildingBlocks.Core.UseCases
         private Dictionary<string, string> tourExecutionSet;
         private Dictionary<string, string> allSets;
 
-
+        private Dictionary<string, string> searchSets;
+        private FuzzySearcher fuzzySearcher;
 
         public ChatbotService()
         {
             allSets = new Dictionary<string, string>();
+            fuzzySearcher = new FuzzySearcher();
             BuildQuestionTree();
            
         }
@@ -103,6 +105,15 @@ namespace Explorer.BuildingBlocks.Core.UseCases
                     allSets.Add(question_answer.Key, question_answer.Value);
                 }
             }
+        }
+
+        public List<string> GetSearchedQuestions(string query)
+        {
+            List<string> allQuestions = allSets.Keys.ToList();
+            List<string> result = fuzzySearcher.FuzzySearch(query, allQuestions);
+
+            return result;
+
         }
     }
 }
