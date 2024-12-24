@@ -64,13 +64,14 @@ namespace Explorer.Tours.Core.UseCases.Badges
                         
                         
                     }
-                    //deo za lengthInKm
-                    checkSumOfLenth(userId);
+                    
 
                     
 
                     
                 }
+                //deo za lengthInKm
+                checkSumOfLenth(userId);
                 return Result.Ok();
             }
             catch (Exception e)
@@ -122,7 +123,7 @@ namespace Explorer.Tours.Core.UseCases.Badges
                 _badgeRepository.AddBadgeIfNotExist(Domain.Badge.BadgeName.ExplorerStep, Badge.AchievementLevels.None, userId);
             }
 
-            if (maxLength > 2000) {
+            if (maxLength > 400) {
                 _badgeRepository.AddBadgeIfNotExist(Domain.Badge.BadgeName.TourTaster, Badge.AchievementLevels.None, userId);
             }
 
