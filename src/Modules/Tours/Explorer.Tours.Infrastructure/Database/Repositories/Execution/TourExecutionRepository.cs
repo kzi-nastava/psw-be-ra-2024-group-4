@@ -91,5 +91,16 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories.Execution
             return tourExecution != null && tourExecution.Status == TourExecutionStatus.Completed;
 
         }
+
+        public List<long> FindAllCompletedForUser(long userId)
+        {
+            var results = _dbContext.TourExecution
+            .Where(te => te.TouristId == userId && te.Status == TourExecutionStatus.Completed)
+            .Select(te => te.TourId)
+            .ToList();
+
+            return results;
+
+        }
     }
 }

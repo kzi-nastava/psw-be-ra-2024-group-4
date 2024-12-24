@@ -23,5 +23,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         PagedResult<Tour> GetByKeyPoints(List<KeyPoint> keyPoints, int page, int pageSize);
         public Tour GetWithKeyPoints(int tourId);
         List<long> GetIdsByTag(Tours.TourTags tag);
+        double SumOfTourLenght(List<long> completedTourIds);
+        double FindMaxTourLength(List<long> completedTourIds);
     }
 }

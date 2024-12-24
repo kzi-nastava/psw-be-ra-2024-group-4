@@ -17,7 +17,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext = dbContext;
         }
 
-        public bool AddBadgeIfExist(Badge.BadgeName name, Badge.AchievementLevels level, long userId)
+        public bool AddBadgeIfNotExist(Badge.BadgeName name, Badge.AchievementLevels level, long userId)
         {
             var existingBadge = _dbContext.Badges
             .FirstOrDefault(b => b.Name == name && b.Level == level && b.UserId == userId);

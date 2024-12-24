@@ -12,6 +12,7 @@ using FluentResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,12 +40,13 @@ namespace Explorer.Tours.Core.UseCases.Badges
         {
             try
             {
-                Tour tour = _tourRepository.GetById(tourId);
+                //deo za tagove
+                Tour tour = _tourRepository.GetById(tourId); //dobavi koja tura je zavrsena
                 if (tour == null) {
                     return null;
                 }
                 int numForTag = 0;
-                foreach (var tag in tour.Tags)
+                foreach (var tag in tour.Tags) //za svaki tag iz ture
                 {
                     numForTag = 0;
                     List<long> tourIdsForTag = _tourRepository.GetIdsByTag(tag);
@@ -62,6 +64,11 @@ namespace Explorer.Tours.Core.UseCases.Badges
                         
                         
                     }
+                    //deo za lengthInKm
+                    checkSumOfLenth(userId);
+
+                    
+
                     
                 }
                 return Result.Ok();
@@ -71,6 +78,8 @@ namespace Explorer.Tours.Core.UseCases.Badges
                 return Result.Fail(FailureCode.NotFound).WithError(e.Message);
             }
         }
+
+        
 
         public void checkForCompletedTag(Domain.Tours.TourTags tag, int numForTag, long userId)
         {
@@ -93,9 +102,33 @@ namespace Explorer.Tours.Core.UseCases.Badges
                 badgeName = Domain.Badge.BadgeName.CulturalEnthusiast;
             }
 
-            _badgeRepository.AddBadgeIfExist(badgeName, level, userId);
+            _badgeRepository.AddBadgeIfNotExist(badgeName, level, userId);
 
         }
+
+
+        private void checkSumOfLenth(long userId)
+        {
+            List<long> completedTourIds = _tourExecutionRepository.FindAllCompletedForUser(userId);
+            double sumOfLenght = _tourRepository.SumOfTourLenght(completedTourIds);
+            double maxLength = _tourRepository.FindMaxTourLength(completedTourIds);
+
+            if (sumOfLenght > 1000)
+            {
+                _badgeRepository.AddBadgeIfNotExist(Domain.Badge.BadgeName.Globetrotter, Badge.AchievementLevels.None, userId);
+            }
+            else if (sumOfLenght > 100)
+            {
+                _badgeRepository.AddBadgeIfNotExist(Domain.Badge.BadgeName.ExplorerStep, Badge.AchievementLevels.None, userId);
+            }
+
+            if (maxLength > 2000) {
+                _badgeRepository.AddBadgeIfNotExist(Domain.Badge.BadgeName.TourTaster, Badge.AchievementLevels.None, userId);
+            }
+
+        }
+
+
 
         private readonly Dictionary<Domain.Tours.TourTags, Domain.Badge.BadgeName> _tagToBadgeMapping = new()
     {

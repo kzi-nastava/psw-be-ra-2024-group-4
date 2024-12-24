@@ -8,7 +8,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface IBadgeRepository
     {
-        bool AddBadgeIfExist(Badge.BadgeName name, Badge.AchievementLevels level, long userId);
+        bool AddBadgeIfNotExist(Badge.BadgeName name, Badge.AchievementLevels level, long userId);
 
         void Save();
     }
