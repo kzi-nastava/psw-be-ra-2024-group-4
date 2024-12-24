@@ -20,7 +20,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
         public TourExecutionQueryTests(ToursTestFactory factory) : base(factory) { }
 
         [Theory]
-        [InlineData(-21, -1, true)]  
+        [InlineData(-21, -2, true)]  
         [InlineData(-5, -7, false)] 
         public void GetByTourAndTouristId(long touristId, long tourId, bool shouldBeFound)
         {

@@ -79,6 +79,13 @@ namespace Explorer.Tours.Tests.Integration.Execution
                 completedExecution.ShouldNotBeNull();
                 completedExecution.Status.ShouldBe(Core.Domain.TourExecutions.TourExecutionStatus.Completed);
                 completedExecution.LastActivity.ShouldNotBeNull();
+                //deo za bedz
+                var newBadge = dbContext.Badges.FirstOrDefault(i => i.UserId == completedExecution.TouristId);
+                newBadge.ShouldNotBeNull();
+                newBadge.Name.ShouldBe(Core.Domain.Badge.BadgeName.HistoricalBuff);
+                newBadge.Level.ShouldBe(Core.Domain.Badge.AchievementLevels.Bronze);
+
+
             }
             else
             {
