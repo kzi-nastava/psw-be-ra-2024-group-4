@@ -17,4 +17,20 @@ public class ObjectDTO
 
 }
 
-public enum ObjectCategory { WC, Restaurant, Parking, Other }
+public enum ObjectCategory {
+    Wc,
+    Restaurant,
+    Parking,
+    Viewpoint,
+    Church,
+    Mosque,
+    Bridge,
+    Beach,
+    Park,
+    Fountain,
+    ShoppingCenter,
+    Museum,
+    MarketPlace,
+    NightClub,
+    Other
+}

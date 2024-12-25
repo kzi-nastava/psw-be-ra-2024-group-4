@@ -58,6 +58,20 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
             return CreateResponse(result);
         }
 
+        [HttpGet("objectcategories")]
+        public IActionResult GetObjectCategories()
+        {
+            var categories = Enum.GetValues(typeof(ObjectCategory))
+                .Cast<ObjectCategory>()
+                .Select(cat => new
+                {
+                    id = (int)cat,
+                    name = cat.ToString()
+                })
+                .ToList();
+            return Ok(categories);
+        }
+
     }
 }
 

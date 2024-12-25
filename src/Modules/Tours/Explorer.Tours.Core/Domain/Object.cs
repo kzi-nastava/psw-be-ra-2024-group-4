@@ -1,9 +1,28 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.Tours.Core.Domain
 {
-    public enum ObjectCategory { WC, Restaurant, Parking, Other}
+    public enum ObjectCategory
+    {
+        Wc,
+        Restaurant,
+        Parking,
+        Viewpoint,
+        Church,
+        Mosque,
+        Bridge,
+        Beach,
+        Park,
+        Fountain,
+        ShoppingCenter,
+        Museum,
+        MarketPlace,
+        NightClub,
+        Other
+    };
+
 
     public class Object: Entity
     {
