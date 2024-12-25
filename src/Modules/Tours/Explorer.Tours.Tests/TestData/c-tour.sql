@@ -60,7 +60,7 @@ VALUES (
     'PERFECT SAFARI TOUR',
     'Hard',
     ARRAY[2, 3, 5]::integer[], 
-    2,
+    0,
     100.0,  
     2, 
     15.0,  

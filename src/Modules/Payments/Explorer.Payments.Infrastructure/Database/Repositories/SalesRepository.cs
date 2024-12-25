@@ -25,7 +25,8 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
         {
             return _dbSet.Where(s => s.StartDate <= DateTime.Now && s.EndDate >= DateTime.Now).ToList();
         }
-        public List<Sales> GetAll(long userId)
+
+        public List<Sales> GetAllForUser(long userId)
         {
 
             return _dbContext.Sales
