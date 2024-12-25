@@ -69,7 +69,8 @@ namespace Explorer.BuildingBlocks.Core.UseCases
             toursSet = new Dictionary<string, string>
             {
                 {"Where can I find tours?",  "You can find tours on the Browse Tours page on the Navbar."},
-                {"How to start a tour?",  "You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. "}
+                {"How to start a tour?",  "You can start a tour after you you bought it, on My tours page, by clicking on Start a tour button. "},
+                {"How to buy a tour?", "You can buy a tour on the Browse Tours page. After clicking on 'Buy', the tour will appear in your cart." }
             };
 
             tourExecutionSet = new Dictionary<string, string>
