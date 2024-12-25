@@ -11,6 +11,7 @@ public class ObjectDTO
     public double Latitude { get; set; }
     public long UserId { get; set; }
     public PublicStatus PublicStatus { get; set; }
+    public string ImageBase64 { get; set; }
 
     public ObjectDTO() { }
 

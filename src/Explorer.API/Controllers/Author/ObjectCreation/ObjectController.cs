@@ -12,10 +12,14 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
     public class ObjectController : BaseApiController
     {
         private readonly IObjectService _objectService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-        public ObjectController(IObjectService objectService)
+        public ObjectController(IObjectService objectService,IWebHostEnvironment webHostEnvironment,IImageService imageService)
         {
             _objectService = objectService;
+            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -28,6 +32,14 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
         [HttpPost]
         public ActionResult<ObjectDTO> Create([FromBody] ObjectDTO objectDTO)
         {
+            if (!string.IsNullOrEmpty(objectDTO.ImageBase64))
+            {
+                var imageData = Convert.FromBase64String(objectDTO.ImageBase64.Split(',')[1]);
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "objects");
+
+                objectDTO.Image = _imageService.SaveImage(folderPath, imageData, "objects");
+            }
+
             var result = _objectService.Create(objectDTO);
             return CreateResponse(result);
         }
