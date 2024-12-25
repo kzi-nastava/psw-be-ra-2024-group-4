@@ -32,5 +32,7 @@ public enum ObjectCategory {
     Museum,
     MarketPlace,
     NightClub,
+    Stadium,
+    Fortress,
     Other
 }

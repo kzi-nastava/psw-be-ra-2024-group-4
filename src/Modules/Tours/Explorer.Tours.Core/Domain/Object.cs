@@ -20,6 +20,8 @@ namespace Explorer.Tours.Core.Domain
         Museum,
         MarketPlace,
         NightClub,
+        Stadium,
+        Fortress,
         Other
     };
 
