@@ -8,6 +8,11 @@ using System.Net.Http;
 using Explorer.BuildingBlocks.Core.Domain;
 using System.Collections.Concurrent;
 using System.Collections;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics.Metrics;
+using System.Diagnostics;
+using System.Numerics;
+using System.Reflection.Emit;
 
 
 
@@ -22,7 +27,10 @@ namespace Explorer.BuildingBlocks.Core.UseCases
         private Dictionary<string, string> couponSet;
         private Dictionary<string, string> tourPurchaseSet;
         private Dictionary<string, string> blogSet;
+        private Dictionary<string, string> encountersSet;
+        private Dictionary<string, string> encounterTypesSet;
         private Dictionary<string, string> allSets;
+        
 
         private Dictionary<string, string> searchSets;
         private FuzzySearcher fuzzySearcher;
@@ -108,6 +116,19 @@ namespace Explorer.BuildingBlocks.Core.UseCases
                 {"Can I upvote or downvote multiple times?","No, you can only cast one vote per blog. You can change your vote if needed" },
             };
 
+            encountersSet = new Dictionary<string, string>
+            {
+                {"What are encounters?","Encounters are challenges during the tour. They come in three types: Social, Misc, and Hidden Location. Completing an encounter earns you XP, which can be used to unlock badges." },
+                { "What do I get after I complete Encounter?","After you complete Encounter you gain XP which is used to level up and to obtain badges."},
+                { "Can I create an Encounter?","Yes, after you reach level 10, you will gain access to the form for creating an Encounter. This Encounter needs to be approved by the administrator so it may take a while before your Encounter is public."}
+            };
+            encounterTypesSet = new Dictionary<string, string>
+            {
+                {"What is Social Encounter?", "A Social Encounter is a challenge requiring a specific number of tourists. Once enough tourists activate encounter and are nearby, the challenge is completed for everyone involved." },
+                {"What is Misc Encounter?", "A Misc Encounter is a unique challenge with varying conditions defined by the creator. These conditions can involve solving puzzles, answering questions, or performing specific tasks to complete the challenge."},
+                {"What do I get after I complete Encounter ?", "After you complete Encounter you gain XP which is used to level up and to obtain badges."}
+
+            };
 
             questionSets = new Dictionary<string, List<string>>
             {
@@ -117,6 +138,8 @@ namespace Explorer.BuildingBlocks.Core.UseCases
                 {"TOUR_PURCHASE", new List<string>(tourPurchaseSet.Keys)},
                 {"COUPONS", new List<string>(couponSet.Keys) },
                 {"BLOGS" , new List<string>(blogSet.Keys) },
+                {"ENCOUNTERS", new List<string>(encountersSet.Keys) },
+                {"ENCOUNTER_TYPES", new List<string>(encounterTypesSet.Keys) }
             };
 
            
@@ -128,6 +151,8 @@ namespace Explorer.BuildingBlocks.Core.UseCases
             AddToAllSets(tourPurchaseSet);
             AddToAllSets(blogSet);
             AddToAllSets(couponSet);
+            AddToAllSets(encountersSet);
+            AddToAllSets(encounterTypesSet);
 
             
         }
