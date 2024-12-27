@@ -51,5 +51,13 @@ namespace Explorer.Tours.Core.UseCases.Administration {
             _tourPreferenceRepository.Add(newPreference);
             return Result.Ok();
         }
+
+        public Result<bool> HasTourPreference(int touristId)
+        {
+            var hasPreference=  _tourPreferenceRepository.GetByTouristId(touristId).Any();
+            return Result.Ok(hasPreference);
+
+        }
+
     }
 }

@@ -33,6 +33,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return problems;
             //return _db.Problem.Where(t => t.UserId == id).ToList();
         }
+
         public List<Problem> GetByTourId(long id)
         {
             return _db.Problem.Where(t => t.TourId == id).ToList();
