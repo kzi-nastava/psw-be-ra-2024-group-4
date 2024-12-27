@@ -56,6 +56,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.Infrastructure", "Modules\Payments\Explorer.Payments.Infrastructure\Explorer.Payments.Infrastructure.csproj", "{2BD26F3E-353C-4D39-89FE-AD62E5530776}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Payments.Tests", "Modules\Payments\Explorer.Payments.Tests\Explorer.Payments.Tests.csproj", "{BB8DD2B2-93D2-46DA-ABD0-144E64A1BD4B}"
+<<<<<<< HEAD
+=======
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encounter", "Encounter", "{3C2B32EC-CB48-473E-94C2-3F373DE9B898}"
 EndProject
@@ -66,6 +68,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounter.Infrastructure", "Explorer.Encounter.Infrastructure\Explorer.Encounter.Infrastructure.csproj", "{2AA2BAEF-0B33-42EC-B640-6143BAC3481C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounter.Tests", "Explorer.Encounter.Tests\Explorer.Encounter.Tests.csproj", "{46489478-BE48-4557-A04F-B9347579CF40}"
+>>>>>>> 7e9fba8b6389648bc151a2233e161324c4dea9ae
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
