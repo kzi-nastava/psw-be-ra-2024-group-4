@@ -61,7 +61,11 @@ public static class ToursStartup
         services.AddScoped<ITourOverviewService, TourOverviewService>();
 
         services.AddScoped<IImageService, ImageService>();
+
+        services.AddScoped<IChatbotService, ChatbotService>();
+
         services.AddScoped<ISalesService, SalesService>();
+
 
     }
 

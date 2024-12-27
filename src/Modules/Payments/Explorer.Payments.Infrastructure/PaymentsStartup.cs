@@ -29,10 +29,12 @@ namespace Explorer.Payments.Infrastructure
             services.AddScoped<IShoppingCartService, ShoppingService>();
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+            services.AddScoped<IChatbotService, ChatbotService>();
             services.AddScoped<IBundleService, BundleService>();
             services.AddScoped<IPaymentRecordService, PaymentRecordService>();
             services.AddScoped<ICouponService, CouponService>();
             services.AddScoped<ISalesService,SalesService>();
+
         }
 
         private static void SetupInfrastructure(IServiceCollection services)
