@@ -47,6 +47,13 @@ namespace Explorer.API.Controllers.Author.ObjectCreation
         [HttpPut("{id:int}")]
         public ActionResult<ObjectDTO> Update([FromBody] ObjectDTO objectDTO)
         {
+            if (!string.IsNullOrEmpty(objectDTO.ImageBase64)) {
+                var imageData = Convert.FromBase64String(objectDTO.ImageBase64.Split(',')[1]);
+                var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "objects");
+
+                objectDTO.Image = _imageService.SaveImage(folderPath, imageData, "objects");
+            }
+
             var result = _objectService.Update(objectDTO);
             return CreateResponse(result);
         }
