@@ -549,3 +549,4 @@ $RECYCLE.BIN/
 
 # Migrations
 src/**/Migrations/*
+*.png
