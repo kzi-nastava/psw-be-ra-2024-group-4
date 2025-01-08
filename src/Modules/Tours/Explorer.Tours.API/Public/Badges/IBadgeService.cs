@@ -11,5 +11,9 @@ namespace Explorer.Tours.API.Public.Badges
     public interface IBadgeService 
     {
         Result AddBadgeIfNeeded(long tourId, long userId);
+
+        Result<List<BadgeDto>> getAll();
+        Result<List<BadgeDto>> getAllNotRead();
+        Result<BadgeDto> readBadge(long badgeId);
     }
 }

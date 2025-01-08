@@ -14,10 +14,13 @@ namespace Explorer.Tours.Core.Domain
         public BadgeName Name { get; private set; }
         public AchievementLevels Level { get; private set; }
 
+        public bool IsRead { get; private set; }
+
         public Badge(long userId, BadgeName name, AchievementLevels level) { 
             UserId = userId;
             Name = name;
             Level = level;
+            IsRead = false;
         }
 
         public enum BadgeName
@@ -45,6 +48,11 @@ namespace Explorer.Tours.Core.Domain
             Silver,
             Gold,
             None
+        }
+
+        public void ReadBadge()
+        {
+            IsRead = true;
         }
     }
 }

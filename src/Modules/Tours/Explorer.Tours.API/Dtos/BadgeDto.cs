@@ -14,6 +14,8 @@ namespace Explorer.Tours.API.Dtos
         public BadgeName Name { get; set; }
         public AchievementLevels Level { get; set; }
 
+        public bool IsRead { get; set; }
+
         public enum BadgeName
         {
             ExplorerStep,

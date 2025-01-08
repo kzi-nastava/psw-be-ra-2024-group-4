@@ -129,7 +129,47 @@ namespace Explorer.Tours.Core.UseCases.Badges
 
         }
 
+        public Result<List<BadgeDto>> getAll()
+        {
+            var badges = _badgeRepository.getAll();
+            var badgeDtos = badges.Select(b => new BadgeDto
+            {
+                Id = b.Id,
+                Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
+                Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
+                UserId = b.UserId,
+            }).ToList();
 
+            return Result.Ok(badgeDtos);
+        }
+
+        public Result<List<BadgeDto>> getAllNotRead()
+        {
+            var badges = _badgeRepository.getAllNotRead();
+            var badgeDtos = badges.Select(b => new BadgeDto
+            {
+                Id = b.Id,
+                Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
+                Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
+                UserId = b.UserId,
+            }).ToList();
+
+            return Result.Ok(badgeDtos);
+        }
+
+        public Result<BadgeDto> readBadge(long badgeId)
+        {
+            var ex = _badgeRepository.getBadgeById(badgeId);
+            if (ex != null)
+            {
+                ex.ReadBadge();
+                var result = _badgeRepository.updateBadge(ex);
+                return Result.Ok(MapToDto(result));
+            }
+            return null;
+
+
+        }
 
         private readonly Dictionary<Domain.Tours.TourTags, Domain.Badge.BadgeName> _tagToBadgeMapping = new()
     {
