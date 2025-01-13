@@ -17,9 +17,9 @@ public class ToursContext : DbContext
    
     public DbSet<Explorer.Tours.Core.Domain.Object> Objects { get; set; }
 
-  
-
     public DbSet<TourExecution> TourExecution { get; set; }
+
+    public DbSet<Badge> Badges { get; set; }
     public DbSet<PositionSimulator> Positions { get; set; }
 
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}

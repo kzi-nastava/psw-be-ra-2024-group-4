@@ -7,7 +7,7 @@ VALUES
 INSERT INTO tours."TourExecution"(
     "Id", "TourId", "TouristId", "LocationId", "LastActivity", "Status", "CompletedKeys")
 VALUES 
-    (-2, -1, -21, -2, '2024-10-14 23:53:24.948+02', 1, 
+    (-2, -2, -21, -2, '2024-10-14 23:53:24.948+02', 1, 
         '[]');
 
 INSERT INTO tours."TourExecution"(

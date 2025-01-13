@@ -1,5 +1,6 @@
 ﻿using Explorer.API.Controllers.Execution;
 using Explorer.Tours.API.Dtos.TourExecutionDtos;
+using Explorer.Tours.API.Public.Badges;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
         public TourExecutionQueryTests(ToursTestFactory factory) : base(factory) { }
 
         [Theory]
-        [InlineData(-21, -1, true)]  
+        [InlineData(-21, -2, true)]  
         [InlineData(-5, -7, false)] 
         public void GetByTourAndTouristId(long touristId, long tourId, bool shouldBeFound)
         {
@@ -50,7 +51,7 @@ namespace Explorer.Tours.Tests.Integration.Execution
 
         private static TourExecutionController CreateController(IServiceScope scope)
         {
-            return new TourExecutionController(scope.ServiceProvider.GetRequiredService<ITourExecutionService>())
+            return new TourExecutionController(scope.ServiceProvider.GetRequiredService<ITourExecutionService>(), scope.ServiceProvider.GetRequiredService<IBadgeService>())
             {
                 ControllerContext = BuildContext("-1")
             };

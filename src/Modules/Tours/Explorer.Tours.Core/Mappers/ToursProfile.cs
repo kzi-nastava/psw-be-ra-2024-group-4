@@ -21,6 +21,7 @@ public class ToursProfile : Profile
        
         CreateMap<CompletedKeyPointDto, CompletedKeyPoint>().ReverseMap();
         CreateMap<PositionSimulatorDto, PositionSimulator>().ReverseMap();
+        CreateMap<BadgeDto, Badge>().ReverseMap();
         CreateMap<TourExecutionDto, TourExecution>().ReverseMap();
         CreateMap<TourExecutionDto, TourExecution>().IncludeAllDerived() //sluzi da budemo sigurni da lista keyPoints u dto bude ista kao i u klasi
             .ForMember(dest => dest.CompletedKeys, opt => 
