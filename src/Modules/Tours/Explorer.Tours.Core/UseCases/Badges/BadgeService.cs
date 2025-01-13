@@ -152,6 +152,7 @@ namespace Explorer.Tours.Core.UseCases.Badges
                 Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
                 Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
                 UserId = b.UserId,
+                IsRead = b.IsRead,
             }).ToList();
 
             return Result.Ok(badgeDtos);
@@ -180,6 +181,7 @@ namespace Explorer.Tours.Core.UseCases.Badges
                 Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
                 Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
                 UserId = b.UserId,
+                IsRead = b.IsRead,
             }).ToList();
 
             return Result.Ok(badgeDtos);

@@ -3,11 +3,13 @@ using Explorer.Encounter.API.Dtos.Explorer.Encounters.API.Dtos;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Badges;
 using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Badges
 {
+    //[Authorize(Policy = "touristPolicy")]
     [Route("api/badges")]
     public class BadgeContoller : BaseApiController
     {
