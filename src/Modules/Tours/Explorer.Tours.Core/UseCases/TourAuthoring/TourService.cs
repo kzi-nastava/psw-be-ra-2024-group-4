@@ -243,6 +243,10 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return MapToDto(tour);
         }
 
-
+        public Result<PagedResult<TourDto>> GetPublised()
+        {
+            var tours = _tourRepository.GetPublished(0, 0);
+            return MapToDto(tours);
+        }
     }
 }
