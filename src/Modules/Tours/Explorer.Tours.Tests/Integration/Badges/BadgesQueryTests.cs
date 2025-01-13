@@ -54,6 +54,37 @@ namespace Explorer.Tours.Tests.Integration.Badges
 
         }
 
+        public void GetAll_ShouldReturnAllBadgesById()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+
+            // Act
+            var result = (ObjectResult)controller.GetAllByUserId(-22).Result;
+
+            // Assert
+            result.StatusCode.ShouldBe(200);
+            result.Value.ShouldNotBeNull();
+
+        }
+
+        [Fact]
+        public void GetAll_ShouldReturnAllNotReadBadgesById()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+
+            // Act
+            var result = (ObjectResult)controller.GetAllNotReadByUserId(-22).Result;
+
+            // Assert
+            result.StatusCode.ShouldBe(200);
+            result.Value.ShouldNotBeNull();
+
+        }
+
 
         private static BadgeContoller CreateController(IServiceScope scope)
         {

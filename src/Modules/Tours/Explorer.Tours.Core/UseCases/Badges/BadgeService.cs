@@ -171,6 +171,34 @@ namespace Explorer.Tours.Core.UseCases.Badges
 
         }
 
+        public Result<List<BadgeDto>> getAllById(long userId)
+        {
+            var badges = _badgeRepository.getAllById(userId);
+            var badgeDtos = badges.Select(b => new BadgeDto
+            {
+                Id = b.Id,
+                Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
+                Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
+                UserId = b.UserId,
+            }).ToList();
+
+            return Result.Ok(badgeDtos);
+        }
+
+        public Result<List<BadgeDto>> getAllNotReadById(long userId)
+        {
+            var badges = _badgeRepository.getAllNotReadById(userId);
+            var badgeDtos = badges.Select(b => new BadgeDto
+            {
+                Id = b.Id,
+                Level = (API.Dtos.BadgeDto.AchievementLevels)b.Level,
+                Name = (API.Dtos.BadgeDto.BadgeName)b.Name,
+                UserId = b.UserId,
+            }).ToList();
+
+            return Result.Ok(badgeDtos);
+        }
+
         private readonly Dictionary<Domain.Tours.TourTags, Domain.Badge.BadgeName> _tagToBadgeMapping = new()
     {
         { Domain.Tours.TourTags.Culture, Domain.Badge.BadgeName.CulturalEnthusiast },

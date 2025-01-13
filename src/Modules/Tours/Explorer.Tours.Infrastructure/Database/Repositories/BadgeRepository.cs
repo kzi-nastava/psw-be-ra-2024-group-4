@@ -66,6 +66,19 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
         }
 
-        
+        public List<Badge> getAllById(long userId)
+        {
+            return _dbContext.Badges
+                .Where(b => b.UserId == userId) // Ensure it matches the userId
+                .ToList();
+        }
+
+        public List<Badge> getAllNotReadById(long userId)
+        {
+            return _dbContext.Badges
+                .Where(b => b.UserId == userId && !b.IsRead) // Match userId and IsRead
+                .ToList();
+        }
+
     }
 }

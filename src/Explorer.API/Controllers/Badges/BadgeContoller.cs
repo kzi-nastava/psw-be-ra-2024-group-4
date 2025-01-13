@@ -31,6 +31,20 @@ namespace Explorer.API.Controllers.Badges
             return CreateResponse(ret);
         }
 
+        [HttpGet("getById/{userId:long}")]
+        public ActionResult<PagedResult<BadgeDto>> GetAllByUserId(long userId)
+        {
+            var ret = _badgeService.getAllById(userId);
+            return CreateResponse(ret);
+        }
+
+        [HttpGet("getNotRead/{userId:long}")]
+        public ActionResult<PagedResult<BadgeDto>> GetAllNotReadByUserId(long userId)
+        {
+            var ret = _badgeService.getAllNotReadById(userId);
+            return CreateResponse(ret);
+        }
+
         [HttpPost("read/{badgeId:long}")]
         public ActionResult<BadgeDto> Read(int badgeId)
         {

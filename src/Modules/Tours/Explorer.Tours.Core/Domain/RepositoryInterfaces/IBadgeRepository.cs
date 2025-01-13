@@ -19,5 +19,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 
         Badge updateBadge(Badge updatedBadge);
         void Save();
+        List<Badge> getAllById(long userId);
+        List<Badge> getAllNotReadById(long userId);
     }
 }
