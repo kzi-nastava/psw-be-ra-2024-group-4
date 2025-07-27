@@ -39,6 +39,8 @@ public static class StakeholdersStartup
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IImageService, ImageService>();
         services.AddScoped<IChatbotService, ChatbotService>();
+        services.AddScoped<IClubTourService, ClubTourService>();
+        services.AddScoped<IClubMemberService, ClubMemberService>();
     }
 
 
@@ -47,11 +49,14 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<AppReview>), typeof(CrudDatabaseRepository<AppReview, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<Club>), typeof(CrudDatabaseRepository<Club, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<ClubTour>), typeof(CrudDatabaseRepository<ClubTour, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<Notification>), typeof(CrudDatabaseRepository<Notification, StakeholdersContext>));
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, StakeholdersContext>));
         services.AddScoped<IProblemRepository, ProblemRepository>();
         services.AddScoped<IClubRepository, ClubDatabaseRepository>();
+        services.AddScoped<IClubMemberRepository, ClubMemberDatabaseRepository>();
+        services.AddScoped<IClubTourRepository, ClubTourDatabaseRepository>();
         services.AddScoped<IClubInvitationRepository, ClubInvitationDatabaseRepository>();
         services.AddScoped<IClubJoinRequestRepository, ClubJoinRequestRepository>();
         services.AddScoped<INotificationRepository, NotificationDatabaseRepository>();
@@ -59,6 +64,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<ClubJoinRequest>), typeof(CrudDatabaseRepository<ClubJoinRequest, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<Person>), typeof(CrudDatabaseRepository<Person, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<User>), typeof(CrudDatabaseRepository<User, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<ClubMember>), typeof(CrudDatabaseRepository<ClubMember, StakeholdersContext>));
         services.AddScoped<IPersonRepository, PersonRepository>();
 
         services.AddDbContext<StakeholdersContext>(opt =>

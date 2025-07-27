@@ -13,5 +13,6 @@ namespace Explorer.Tours.API.Public.Administration {
         Task<List<TourPreferenceDto>> GetAllPreferencesAsync();
         Result UpdateTourPreference(int touristId, TourPreferenceDto preference);
         Result AddTourPreference(int touristId, TourPreferenceDto preference);
+        Result<bool> HasTourPreference(int touristId);
     }
 }

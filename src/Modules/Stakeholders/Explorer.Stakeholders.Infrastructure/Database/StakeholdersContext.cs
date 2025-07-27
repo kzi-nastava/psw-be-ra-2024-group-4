@@ -13,6 +13,8 @@ public class StakeholdersContext : DbContext
     public DbSet<Problem> Problem { get; set; }
 
     public DbSet<Club> Clubs { get; set; }
+    public DbSet<ClubMember> ClubMembers { get; set; }
+    public DbSet<ClubTour> ClubTours { get; set; }
     public DbSet<ClubInvitation> ClubInvitations { get; set; }
     public DbSet<ClubJoinRequest> ClubJoinRequests { get; set; }
     public DbSet <Notification> Notification { get; set; }
