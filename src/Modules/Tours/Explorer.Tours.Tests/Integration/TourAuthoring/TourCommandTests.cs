@@ -228,6 +228,65 @@ namespace Explorer.Tours.Tests
         }
 
         [Fact]
+        public void Publish_succeeds()
+        {
+            // Arrange - Input data
+            var tourId = -5;
+            var expectedResponseCode = 200;
+            var expectedStatus = TourStatus.Published;
+            var authorId = 2;
+
+            // Arrange - Controller and dbContext
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            // Act
+            var result = (OkResult)controller.Publish(tourId).Result;
+
+            // Assert - Response
+            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+            storedEntity.ShouldNotBeNull();
+            storedEntity.Status.ToString().ShouldBe(expectedStatus.ToString());
+        }
+
+        [Fact]
+
+        public void Publish_fails_invalid_status()
+        {
+            // Arrange - Input data
+            var tourId = -4;
+            var expectedResponseCode = 400;
+            var expectedStatus = TourStatus.Archived;
+            var authorId = 1;
+
+            // Arrange - Controller and dbContext
+            using var scope = Factory.Services.CreateScope();
+            var controller = CreateController(scope);
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToursContext>();
+
+            // Act
+            var result = controller.Publish(tourId).Result;
+
+
+            // Assert - Response
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            objectResult.ShouldNotBeNull();
+            objectResult.StatusCode.ShouldBe(expectedResponseCode);
+
+            // Assert - Database
+            var storedEntity = dbContext.Tour.FirstOrDefault(t => t.Id == tourId);
+            storedEntity.ShouldNotBeNull();
+            storedEntity.Status.ToString().ShouldBe(expectedStatus.ToString());
+        }
+
+
+
+        [Fact]
         public void Archive_succeeds()
         {
             // Arrange - Input data

@@ -38,6 +38,7 @@ public static class StakeholdersStartup
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IImageService, ImageService>();
+        services.AddScoped<IChatbotService, ChatbotService>();
         services.AddScoped<IClubTourService, ClubTourService>();
         services.AddScoped<IClubMemberService, ClubMemberService>();
     }

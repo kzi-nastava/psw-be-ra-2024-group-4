@@ -66,7 +66,8 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
         var authenticationService = scope.ServiceProvider.GetRequiredService<IAuthenticationService>();
         var imageService = scope.ServiceProvider.GetRequiredService<IImageService>();
         var webHostEnvironment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+        var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
 
-        return new AuthenticationController(authenticationService, imageService, webHostEnvironment);
+        return new AuthenticationController(authenticationService, imageService, webHostEnvironment, userService);
     }
 }

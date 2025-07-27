@@ -23,8 +23,10 @@ public class AuthenticationService : IAuthenticationService
     public Result<AuthenticationTokensDto> Login(CredentialsDto credentials)
     {
         var user = _userRepository.GetActiveByName(credentials.Username);
-        if (user == null || credentials.Password != user.Password) return Result.Fail(FailureCode.NotFound);
-
+        if (user == null || credentials.Password != user.Password)
+        {
+            return Result.Fail("Invalid username or password.");
+        }
         long personId;
         try
         {
@@ -36,6 +38,7 @@ public class AuthenticationService : IAuthenticationService
         }
         return _tokenGenerator.GenerateAccessToken(user, personId);
     }
+
 
     public Result<AuthenticationTokensDto> RegisterTourist(AccountRegistrationDto account)
     {
