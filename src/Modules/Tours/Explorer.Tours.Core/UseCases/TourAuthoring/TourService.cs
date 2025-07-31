@@ -145,6 +145,27 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             }
         }
 
+        public Result Publish(long id)
+        {
+            try
+            {
+                var tour = _tourRepository.GetById(id);
+                tour.Publish(tour.UserId);
+                _tourRepository.Save();
+                return Result.Ok();
+            }
+            catch (ArgumentException e)
+            {
+                return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+            }
+
+
+        }
+
         public Result UpdateDistance(long id, double distance)
         {
             try
@@ -222,6 +243,10 @@ namespace Explorer.Tours.Core.UseCases.TourAuthoring
             return MapToDto(tour);
         }
 
-
+        public Result<PagedResult<TourDto>> GetPublised()
+        {
+            var tours = _tourRepository.GetPublished(0, 0);
+            return MapToDto(tours);
+        }
     }
 }

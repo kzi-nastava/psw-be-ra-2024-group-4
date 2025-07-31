@@ -29,6 +29,8 @@ using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.UseCases;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Infrastructure.Database.Repositories;
+using Explorer.Tours.API.Public.Badges;
+using Explorer.Tours.Core.UseCases.Badges;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -59,9 +61,14 @@ public static class ToursStartup
         services.AddScoped<ITourExecutionService, TourExecutionService>();
         services.AddScoped<IPositionSimulatorService, PositionSimulatorService>();
         services.AddScoped<ITourOverviewService, TourOverviewService>();
+        services.AddScoped<IBadgeService, BadgeService>();
 
         services.AddScoped<IImageService, ImageService>();
+
+        services.AddScoped<IChatbotService, ChatbotService>();
+
         services.AddScoped<ISalesService, SalesService>();
+
 
     }
 
@@ -74,13 +81,16 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<PositionSimulator>), typeof(CrudDatabaseRepository<PositionSimulator, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Core.Domain.Object>), typeof(CrudDatabaseRepository<Core.Domain.Object, ToursContext>));
-       
+        services.AddScoped(typeof(ICrudRepository<Badge>), typeof(CrudDatabaseRepository<Badge, ToursContext>));
+
+
         services.AddScoped<ITourRepository, TourRepository>();
         services.AddScoped<IKeyPointRepository, KeyPointRepository>();
         services.AddScoped<IObjectRepository, ObjectRepository>();
         
         services.AddScoped<ITourExecutionRepository, TourExecutionRepository>();
         services.AddScoped<ITourReviewRepository, TourReviewRepository>();
+        services.AddScoped<IBadgeRepository, BadgeRepository>();
        
         services.AddScoped<ITourExecutionRepository, TourExecutionRepository>();
         services.AddScoped<ITourReviewRepository, TourReviewRepository>();

@@ -1,5 +1,6 @@
 ﻿using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Dtos.TourExecutionDtos;
+using Explorer.Tours.API.Public.Badges;
 using Explorer.Tours.API.Public.Execution;
 using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.Domain;
@@ -17,10 +18,12 @@ namespace Explorer.API.Controllers.Execution
     public class TourExecutionController : BaseApiController
     {
         private readonly ITourExecutionService _executionService;
+        private readonly IBadgeService _badgeService;
 
-        public TourExecutionController(ITourExecutionService tourService)
+        public TourExecutionController(ITourExecutionService tourService, IBadgeService badgeService)
         {
             _executionService = tourService;
+            _badgeService = badgeService;
         }
 
         [HttpPost]
@@ -39,7 +42,7 @@ namespace Explorer.API.Controllers.Execution
             {
                 return NotFound($"TourExecution with ID {executionId} not found.");
             }
-
+            _badgeService.AddBadgeIfNeeded(result.Value.TourId, result.Value.TouristId);
             return CreateResponse(result);
         }
 

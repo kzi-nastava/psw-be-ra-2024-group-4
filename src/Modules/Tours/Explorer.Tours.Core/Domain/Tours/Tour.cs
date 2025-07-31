@@ -62,6 +62,15 @@ namespace Explorer.Tours.Core.Domain.Tours
             Status = TourStatus.Archived;
         }
 
+        public void Publish(long authorId)
+        {
+            if (Status == TourStatus.Archived) throw new ArgumentException("Archived tour can't be published");
+            IsAuthor(authorId);
+
+            
+            Status = TourStatus.Published;
+        }
+
         private void IsAuthor(long userId)
         {
             if (UserId != userId) throw new UnauthorizedAccessException("User is not the author of the tour");
